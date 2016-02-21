@@ -1,0 +1,24 @@
+{
+  "name": "@stackscz/re-app",
+  "version": "0.1.0",
+  "description": "react + redux frontend codebase",
+  "main": "lib/index.js",
+  "repository": "https://github.com/stackscz/re-app",
+  "scripts": {
+    "ab": "node ./node_modules/@stackscz/re-app-builder"
+  },
+  "author": "@stackscz",
+  "license": "MIT",
+  "devDependencies": {
+    "@stackscz/re-app-builder": "git+https://github.com/stackscz/re-app-builder"
+  },
+  "dependencies": {
+    "classnames": "^2.2.3",
+    "lodash": "^4.5.0",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "redux": "^3.3.1",
+    "redux-devtools": "^3.1.1",
+    "redux-logger": "^2.5.2"
+  }
+}
