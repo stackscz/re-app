@@ -1,6 +1,6 @@
 {
-  "name": "@stackscz/re-app",
-  "version": "0.1.0",
+  "name": "re-app",
+  "version": "0.0.1",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": "https://github.com/stackscz/re-app",
@@ -10,7 +10,7 @@
   "author": "@stackscz",
   "license": "MIT",
   "devDependencies": {
-    "@stackscz/re-app-builder": "git+https://github.com/stackscz/re-app-builder"
+    "re-app-builder": "^0.0.1"
   },
   "dependencies": {
     "classnames": "^2.2.3",
