@@ -1,11 +1,12 @@
 {
   "name": "re-app",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": "https://github.com/stackscz/re-app",
   "scripts": {
-    "ab": "node ./node_modules/re-app-builder"
+    "ab": "node ./node_modules/re-app-builder",
+    "prepublish": "npm run ab build:prod"
   },
   "author": "@stackscz",
   "license": "MIT",
