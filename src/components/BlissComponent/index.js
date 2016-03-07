@@ -2,7 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import _ from 'lodash';
 
-export default class BlissComponent extends React.Component {
+export default ComposedComponent => class extends React.Component {
+
+	getModuleName() {
+		const {moduleName} = this.props;
+		return moduleName || ComposedComponent.name;
+	}
 
 	getClassName(name, modifiers, className) {
 		if (className) {
@@ -21,17 +26,18 @@ export default class BlissComponent extends React.Component {
 		return classNames(classes);
 	}
 
+	getElementClassName(elementName, modifiers) {
+		return this.getClassName(this.getModuleName() + '-' + elementName, modifiers);
+	}
+
 	render() {
-		const {children, name, modifiers, className, ...otherProps} = this.props;
+		const {children, modifiers, ...otherProps} = this.props;
 		return (
-			<this.props.tag {...otherProps} className={this.getClassName(name, modifiers, className)}>
+			<ComposedComponent {...otherProps}
+				getBlissModuleClassName={() => {return this.getClassName(this.getModuleName(), modifiers);}}
+				getBlissElementClassName={this.getElementClassName.bind(this)}>
 				{children}
-			</this.props.tag>
+			</ComposedComponent>
 		);
 	}
-}
-
-BlissComponent.propTypes = {
-	name: React.PropTypes.string.isRequired
-	//tag: React.PropTypes.oneOf([React.PropTypes.string, React.PropTypes.func]).isRequired
 };

@@ -1,6 +1,9 @@
 var path = require('path');
 
 module.exports = {
+	entry: {
+		'examples/components': './examples/components'
+	},
 	output: {
 		library: 're-app',
 		libraryTarget: 'umd'

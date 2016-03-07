@@ -7,18 +7,21 @@ common `react` components, `redux`, `react-router`, `redux-router`, `redux-saga`
 
 ### `BlissComponent`
 
-General purpose Css Bliss base component, which handles component className
+General purpose Css Bliss base component, which handles component className.
 
-Use as owner of your custom component:
+Use it to decorate your custom component:
 
     ...
+    @BlissComponent
     class Btn extends React.Component {
         render() {
-            const {children, tag, name, ...other} = this.props;
+            const {getBlissModuleClassName: bm, getBlissElementClassName: be} = this.props;
             return (
-                <BlissComponent tag="a" name="Btn" {...other}>
+                <button className={bm()}>
+                    <i className={be('icon')}></i>
                     {children}
-                </BlissComponent>
+                    <i className={be('icon', 'after lg')}></i>
+                </button>
             )
         }
     }
@@ -32,6 +35,15 @@ then
     
 renders as
     
-    <a className="Btn Btn--lg Btn--mint" href="/foo">
+    <button class="Btn Btn--lg Btn--mint" href="/foo">
+        <i class="Btn-icon"></i>
         foo
-    </a>
+        <i class="Btn-icon Btn-icon--after Btn-icon--lg"></i>
+    </button>
+
+## TODO
+
+- memoized selector helper(s)
+- consider immutable.js
+- saga helper(s)
+- tests
