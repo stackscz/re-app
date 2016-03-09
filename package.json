@@ -6,12 +6,16 @@
   "repository": "https://github.com/stackscz/re-app",
   "scripts": {
     "ab": "node ./node_modules/re-app-builder",
-    "prepublish": "npm run ab build:prod"
+    "docs:build": "node ./node_modules/yuidocjs/lib/cli.js --outdir docs -t node_modules/yuidoc-lucid-theme -H node_modules/yuidoc-lucid-theme/helpers/helpers.js ./src",
+    "docs:serve": "node ./node_modules/yuidocjs/lib/cli.js --server -t node_modules/yuidoc-lucid-theme -H node_modules/yuidoc-lucid-theme/helpers/helpers.js ./src",
+    "prepublish": "npm run ab build:prod && npm run ab docs:build"
   },
   "author": "@stackscz",
   "license": "MIT",
   "devDependencies": {
-    "re-app-builder": "^0.1.1"
+    "re-app-builder": "^0.1.1",
+    "yuidoc-lucid-theme": "^0.1.2",
+    "yuidocjs": "^0.10.0"
   },
   "peerDependencies": {
     "classnames": "^2.2.3",
@@ -21,5 +25,10 @@
     "redux": "^3.3.1",
     "redux-devtools": "^3.1.1",
     "redux-logger": "^2.5.2"
+  },
+  "yuidoc": {
+    "options": {
+      "linkNatives": "true"
+    }
   }
 }
