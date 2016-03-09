@@ -2,6 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import _ from 'lodash';
 
+/**
+ * Higher order component for managing CSS Bliss class names on components.
+ *
+ * @class BlissComponent
+ * @param ComposedComponent
+ */
 export default ComposedComponent => class extends React.Component {
 
 	getModuleName() {
