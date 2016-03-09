@@ -5,9 +5,17 @@ module.exports = {
 		'examples/components': './examples/components'
 	},
 	output: {
-		library: 're-app',
-		libraryTarget: 'umd'
+		libraryTarget: 'commonjs'
 	},
+	externals: [
+		'classnames',
+		'lodash',
+		'react',
+		'react-dom',
+		'redux',
+		'redux-devtools',
+		'redux-logger'
+	],
 	resolve: {
 		alias: {
 			're-app': path.join(__dirname, 'src'),
