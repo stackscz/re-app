@@ -1,10 +1,9 @@
-import assign from 'object-assign';
+import _ from 'lodash';
 
 export default function createConstants(constants, prefix) {
 	return constants.reduce((accumulatedConstants, constantName) => {
-		return assign(accumulatedConstants, {
+		return _.assign(accumulatedConstants, {
 			[constantName]: prefix + constantName
 		});
 	}, {});
 }
-
