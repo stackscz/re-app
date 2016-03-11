@@ -1,16 +1,16 @@
 /* eslint-disable */
 import { createStore as reduxCreateStore, applyMiddleware, compose, combineReducers} from 'redux';
-import { createDevTools } from 'redux-devtools';
+import DevTools from 're-app/components/DevTools';
 import createLogger from 'redux-logger';
 
 export default function createStore(reducers, initialState = {}) {
 	var rootReducer = combineReducers(reducers);
 
 	rootReducer = compose(
-		applyMiddleware([
+		applyMiddleware(
 			createLogger()
-		]),
-		createDevTools()
+		),
+		DevTools.instrument()
 	)(reduxCreateStore)(rootReducer, initialState);
 
 	return rootReducer;
