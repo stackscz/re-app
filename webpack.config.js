@@ -49,6 +49,7 @@ module.exports = [
 			'examples/decorators/app': ['./examples/decorators/app'],
 			'examples/decorators/container': ['./examples/decorators/container'],
 			'examples/modules/auth': ['./examples/modules/auth'],
+			'examples/decorators/form': ['./examples/decorators/form']
 		},
 		resolve: {
 			alias: {
