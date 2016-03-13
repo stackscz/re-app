@@ -1,20 +1,19 @@
 var path = require('path');
+var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
 	entry: {
-		'examples/components': './examples/components'
+		'examples/components': ['./examples/components'],
+		'utils': ['./src/utils'],
+		'decorators': ['./src/decorators'],
+		'components': ['./src/components']
 	},
 	output: {
-		libraryTarget: 'commonjs'
+		library: 're-app',
+		libraryTarget: 'umd'
 	},
 	externals: [
-		'classnames',
-		'lodash',
-		'react',
-		'react-dom',
-		'redux',
-		'redux-devtools',
-		'redux-logger'
+		nodeExternals()
 	],
 	resolve: {
 		alias: {
