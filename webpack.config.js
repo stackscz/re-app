@@ -5,12 +5,13 @@ module.exports = [
 	{
 		useDefaultEntryPoints: false,
 		entry: {
-			'examples/components': ['./examples/components']
+			'examples/components': ['./examples/components'],
+			'examples/decorators/app': ['./examples/decorators/app'],
 		},
 		resolve: {
 			alias: {
 				're-app': path.join(__dirname, 'src'),
-				're-app/examples': path.join(__dirname, 'examples')
+				're-app-examples': path.join(__dirname, 'examples')
 			}
 		}
 	},
@@ -30,7 +31,7 @@ module.exports = [
 		resolve: {
 			alias: {
 				're-app': path.join(__dirname, 'src'),
-				're-app/examples': path.join(__dirname, 'examples')
+				're-app-examples': path.join(__dirname, 'examples')
 			}
 		}
 	}
