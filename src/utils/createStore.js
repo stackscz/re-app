@@ -4,13 +4,19 @@ import { createStore as reduxCreateStore, applyMiddleware, compose, combineReduc
 import DevTools from 're-app/components/DevTools';
 import createLogger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
+import { routerMiddleware, routerReducer } from 'react-router-redux';
+
+import {browserHistory} from 'react-router';
 
 export default function createStore(config, initialState = {}) {
 
-	let reducers = config.reducers ? {...config.reducers} : {};
-	let sagas = config.sagas ? [...config.sagas] : [];
+	let reducers = config && config.reducers ? {...config.reducers} : {};
+	let sagas = config && config.sagas ? [...config.sagas] : [];
 
-	if (_.isArray(config.modules)) {
+	const router = createRouter();
+	reducers.reduxRouting = router.routing;
+
+	if (config && _.isArray(config.modules)) {
 		_.each(config.modules, (module) => {
 			if (module.reducers) {
 				reducers = {...reducers, ...module.reducers};
@@ -28,6 +34,7 @@ export default function createStore(config, initialState = {}) {
 	rootReducer = compose(
 		applyMiddleware(
 			createLogger(),
+			router.middleware,
 			sagaMiddleware
 		),
 		DevTools.instrument()
@@ -35,3 +42,15 @@ export default function createStore(config, initialState = {}) {
 
 	return rootReducer;
 }
+
+function createRouter() {
+
+	let finalHistoryFactory = browserHistory;
+
+	return {
+		middleware: routerMiddleware(finalHistoryFactory),
+		routing: routerReducer
+	}
+}
+
+
