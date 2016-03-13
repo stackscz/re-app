@@ -1,8 +1,8 @@
 import React from 'react';
-import BlissComponent from 'components/BlissComponent';
+import blissComponent from 're-app/decorators/blissComponent';
 import './BlessedComponent.less';
 
-@BlissComponent
+@blissComponent
 export default class BlessedComponent extends React.Component {
 	render() {
 		const {getBlissModuleClassName: bm, getBlissElementClassName: be} = this.props;
