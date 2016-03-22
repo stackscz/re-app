@@ -7,6 +7,7 @@ module.exports = [
 		entry: {
 			'examples/components': ['./examples/components'],
 			'examples/decorators/app': ['./examples/decorators/app'],
+			'examples/decorators/container': ['./examples/decorators/container'],
 		},
 		resolve: {
 			alias: {
