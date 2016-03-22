@@ -1,5 +1,5 @@
 import React from 'react';
-import blissComponent from 're-app/decorators/blissComponent';
+import {blissComponent} from 're-app/decorators';
 import './BlessedComponent.less';
 
 @blissComponent
