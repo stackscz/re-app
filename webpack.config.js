@@ -48,6 +48,7 @@ module.exports = [
 			'examples/decorators/blissComponent': ['./examples/decorators/blissComponent'],
 			'examples/decorators/app': ['./examples/decorators/app'],
 			'examples/decorators/container': ['./examples/decorators/container'],
+			'examples/modules/auth': ['./examples/modules/auth'],
 		},
 		resolve: {
 			alias: {
