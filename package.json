@@ -6,6 +6,7 @@
   "repository": "https://github.com/stackscz/re-app",
   "scripts": {
     "ab": "node ./node_modules/re-app-builder",
+    "test": "babel-node ./node_modules/tape/bin/tape ./tests/**/*.js | node ./node_modules/tap-spec/bin/cmd.js",
     "prepublish": "npm run ab build:prod"
   },
   "author": "@stackscz",
@@ -14,11 +15,14 @@
     "re-app-builder": "^0.2.1",
     "redux-devtools-dock-monitor": "^1.1.0",
     "redux-devtools-log-monitor": "^1.0.5",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.5.1",
     "webpack-node-externals": "^1.0.0"
   },
   "dependencies": {
     "classnames": "^2.2.3",
     "history": "^1.17.0",
+    "invariant": "^2.2.1",
     "lodash": "^4.5.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
@@ -33,6 +37,7 @@
   "peerDependencies": {
     "classnames": "^2.2.3",
     "history": "^1.17.0",
+    "invariant": "^2.2.1",
     "lodash": "^4.5.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
