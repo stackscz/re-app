@@ -41,6 +41,10 @@ renders as
         <i class="Btn-icon Btn-icon--after Btn-icon--lg"></i>
     </button>
 
+## Testing
+
+Tests are stored in `tests` folder, run them by executing `npm run test`
+
 ## TODO
 
 - memoized selector helper(s)
