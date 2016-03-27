@@ -43,7 +43,7 @@ renders as
 
 ## Testing
 
-Tests are stored in `tests` folder, run them by executing `npm run test`
+Tests are stored in `tests` folder. Run them by executing `npm run test` (you have to have `babel-node` installed globally, `npm install -g babel-node`)
 
 ## TODO
 
