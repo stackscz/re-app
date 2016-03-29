@@ -31,8 +31,7 @@ module.exports = [
 		],
 		resolve: {
 			alias: {
-				're-app': path.join(__dirname, 'src'),
-				're-app-examples': path.join(__dirname, 'examples')
+				're-app': path.join(__dirname, 'src')
 			}
 		}
 	}

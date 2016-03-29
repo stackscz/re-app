@@ -6,12 +6,14 @@
   "repository": "https://github.com/stackscz/re-app",
   "scripts": {
     "ab": "node ./node_modules/re-app-builder",
-    "test": "babel-node ./node_modules/tape/bin/tape ./tests/**/*.js | node ./node_modules/tap-spec/bin/cmd.js",
+    "test": "NODE_ENV=test babel-node ./node_modules/tape/bin/tape ./tests/**/*.js | node ./node_modules/tap-spec/bin/cmd.js",
+    "test:file": "NODE_ENV=test babel-node ./node_modules/tape/bin/tape",
     "prepublish": "npm run ab build:prod"
   },
   "author": "@stackscz",
   "license": "MIT",
   "devDependencies": {
+    "babel-plugin-webpack-alias": "^1.1.1",
     "re-app-builder": "^0.2.1",
     "redux-devtools-dock-monitor": "^1.1.0",
     "redux-devtools-log-monitor": "^1.0.5",
