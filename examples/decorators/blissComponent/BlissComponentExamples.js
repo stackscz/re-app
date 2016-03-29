@@ -6,7 +6,7 @@ export default class BlissComponentExamples extends React.Component {
 		return (
 			<div className="ExampleGroup">
 				<h1>BlissComponent</h1>
-				<h2>Example "BlessedComponent" decorated with BlissComponent</h2>
+				<h2>Example "BlessedComponent" decorated with blissComponent</h2>
 				<div className="ExampleGroup-item">
 					<pre>
 						&lt;BlessedComponent /&gt;
@@ -41,4 +41,3 @@ export default class BlissComponentExamples extends React.Component {
 		);
 	}
 }
-

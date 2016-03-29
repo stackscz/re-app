@@ -1,8 +1,8 @@
-import '../index.less';
+import '../../index.less';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import BlissComponentExamples from './BlissComponent';
+import BlissComponentExamples from './BlissComponentExamples';
 
 ReactDOM.render(
 	<div>

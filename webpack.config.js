@@ -5,7 +5,7 @@ module.exports = [
 	{
 		useDefaultEntryPoints: false,
 		entry: {
-			'examples/components': ['./examples/components'],
+			'examples/decorators/blissComponent': ['./examples/decorators/blissComponent'],
 			'examples/decorators/app': ['./examples/decorators/app'],
 			'examples/decorators/container': ['./examples/decorators/container'],
 		},
