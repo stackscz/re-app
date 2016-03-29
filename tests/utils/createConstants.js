@@ -1,5 +1,5 @@
 import test from 'tape';
-import createConstants from '../../src/utils/createConstants';
+import {createConstants} from 're-app/utils';
 
 test('createConstants test', (t) => {
 
