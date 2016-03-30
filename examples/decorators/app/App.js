@@ -31,7 +31,7 @@ export default class App extends React.Component {
 
 	addItem() {
 		this.context.store.dispatch({type: 'ADD_ITEM'});
-		this.setState(); // Force rerender App component
+		this.forceUpdate(); // Force rerender App component
 	}
 
 	render() {
