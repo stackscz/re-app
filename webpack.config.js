@@ -1,5 +1,25 @@
 var path = require('path');
 var nodeExternals = require('webpack-node-externals');
+var fs = require('fs');
+
+function getDirectories(srcpath) {
+	return fs.readdirSync(srcpath).filter(function (file) {
+		return fs.statSync(path.join(srcpath, file)).isDirectory();
+	});
+}
+
+console.log();
+
+var libraryEntryPoints = {
+	'utils': ['./src/utils'],
+	'decorators': ['./src/decorators'],
+	'components': ['./src/components']
+};
+
+var modulesNames = getDirectories(path.join(__dirname, 'src/modules'));
+modulesNames.forEach(function (moduleName) {
+	libraryEntryPoints[path.join('modules', moduleName)] = ['./' + path.join('src', 'modules', moduleName)];
+});
 
 module.exports = [
 	{
@@ -17,11 +37,8 @@ module.exports = [
 		}
 	},
 	{
-		entry: {
-			'utils': ['./src/utils'],
-			'decorators': ['./src/decorators'],
-			'components': ['./src/components']
-		},
+		useDefaultEntryPoints: false,
+		entry: libraryEntryPoints,
 		output: {
 			library: 're-app',
 			libraryTarget: 'umd'
