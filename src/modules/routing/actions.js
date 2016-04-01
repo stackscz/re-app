@@ -1,5 +1,5 @@
-export const SET_ROUTES 		= 're-app/location/SET_ROUTES';
-export const NAVIGATE 			= 're-app/location/NAVIGATE';
+export const SET_ROUTES 		= 're-app/routing/SET_ROUTES';
+export const NAVIGATE 			= 're-app/routing/NAVIGATE';
 
 export function setRoutes(routes) {
 	return {type: SET_ROUTES, payload: routes};
