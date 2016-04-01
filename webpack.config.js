@@ -24,6 +24,26 @@ modulesNames.forEach(function (moduleName) {
 module.exports = [
 	{
 		useDefaultEntryPoints: false,
+		devServer: {
+			historyApiFallback: {
+				index: 'index.html',
+				rewrites: [
+					{ from: /\/examples\/decorators\/router/, to: '/examples/decorators/router.html'}
+				]
+			}
+		},
+		entry: {
+			'examples/decorators/router': ['./examples/decorators/router'],
+		},
+		resolve: {
+			alias: {
+				're-app': path.join(__dirname, 'src'),
+				're-app-examples': path.join(__dirname, 'examples')
+			}
+		}
+	},
+	{
+		useDefaultEntryPoints: false,
 		entry: {
 			'examples/decorators/blissComponent': ['./examples/decorators/blissComponent'],
 			'examples/decorators/app': ['./examples/decorators/app'],
