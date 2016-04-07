@@ -1,28 +1,32 @@
+/* eslint-disable */
 import _ from 'lodash';
 import invariant from 'invariant';
 import { isCancelError } from 'redux-saga';
 import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
+import { getApiService, getUser, getAuthContext } from 're-app/selectors';
 import {
 	LOGIN,
 	LOGIN_FAILURE,
 	LOGOUT,
-	init,
+	initialize,
 	loginSuccess,
 	loginFailure,
 	logoutSuccess,
 	logoutFailure
 } from './actions';
-import {getApiService, getUser, getAuth} from './selectors';
 
 export function* authFlow() {
-	yield put(init());
+	const ApiService = yield select(getApiService);
+	const initialAuthContext = yield select(getAuthContext);
+	const serviceAuthContext = yield call(ApiService.initializeAuth, initialAuthContext);
+	yield put(initialize(serviceAuthContext));
 	while (true) { // eslint-disable-line no-constant-condition
 		const user = yield select(getUser);
-		let authorizeTask;
+		let authorizeTask = null;
 		let logoutTask;
 		if (!user) {
 			const loginAction = yield take(LOGIN);
-			const authContext = yield select(getAuth);
+			const authContext = yield select(getAuthContext);
 			authorizeTask = yield fork(authorize, loginAction.payload, authContext);
 			if (logoutTask) {
 				yield cancel(logoutTask);
@@ -30,8 +34,10 @@ export function* authFlow() {
 		}
 
 		const action = yield take([LOGOUT, LOGIN_FAILURE]);
-		if (action.type === LOGOUT && authorizeTask) {
-			yield cancel(authorizeTask);
+		if (action.type === LOGOUT) {
+			if (authorizeTask) {
+				yield cancel(authorizeTask);
+			}
 			yield call(logout);
 		}
 	}
@@ -52,7 +58,7 @@ export function* authorize(credentials, authContext) {
 
 export function* logout() {
 	const ApiService = yield select(getApiService);
-	const authContext = yield select(getAuth);
+	const authContext = yield select(getAuthContext);
 	try {
 		yield call(ApiService.logout, authContext);
 		yield put(logoutSuccess());

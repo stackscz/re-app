@@ -1,0 +1,55 @@
+{
+  "schemas": {
+    "posts": {
+      "name": "posts",
+      "idField": "id",
+      "fields": {
+        "title": {
+          "name": "username",
+          "type": "string",
+          "label": "Username",
+          "isPrimaryKey": false,
+          "defaultValue": null,
+          "validations": {
+            "allowEmpty": true,
+            "maxLength": 255
+          },
+          "readonly": false
+        },
+        "created": {
+          "name": "created",
+          "type": "datetime",
+          "label": "Created",
+          "isPrimaryKey": false,
+          "readonly": true
+        },
+        "tags": {
+          "name": "tags",
+          "multiple": true,
+          "label": "Tags",
+          "isPrimaryKey": false,
+          "defaultValue": null,
+          "validations": [],
+          "collectionName": "tags",
+          "readonly": false
+        }
+      }
+    }
+  },
+  "fieldsets": {
+    "posts": {
+      "detail": [
+        "title",
+        "tags",
+        "created"
+      ],
+      "grid": [
+        "title",
+        "created"
+      ],
+      "form": [
+        "title"
+      ]
+    }
+  }
+}

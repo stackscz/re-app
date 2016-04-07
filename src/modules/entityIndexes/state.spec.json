@@ -1,0 +1,72 @@
+{
+  "indexes": {
+    "n5bh4jg5432jkn5432jh": {
+      "collectionName": "posts",
+      "filter": {
+        "fields": {
+          "title": true
+        },
+        "include": [
+          "tags"
+        ],
+        "limit": 10,
+        "offset": 0,
+        "order": {
+          "title": "DESC"
+        },
+        "where": {
+          "title": {
+            "like": "Fo"
+          },
+          "foo": "bar"
+        },
+        "existingCount": 100
+      },
+      "index": [
+        1
+      ]
+    },
+    "nbhvg54j4njbh5bb3op5": {
+      "collectionName": "posts",
+      "filter": {
+        "id": 2
+      },
+      "index": [
+        2
+      ]
+    },
+    "989fds54j4njbh5bbmn12": {
+      "collectionName": "tags",
+      "filter": null,
+      "index": [
+        1,
+        2
+      ]
+    }
+  },
+  "entities": {
+    "posts": {
+      "1": {
+        "title": "Foo 1",
+        "tags": [
+          2
+        ]
+      },
+      "2": {
+        "title": "Foo 2",
+        "tags": [
+          1,
+          2
+        ]
+      }
+    },
+    "tags": {
+      "1": {
+        "title": "Bar 1"
+      },
+      "2": {
+        "title": "Bar 2"
+      }
+    }
+  }
+}

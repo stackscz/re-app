@@ -1,0 +1,26 @@
+{
+  "editors": {
+    "mn4bh5v432j5nk423h": {
+      "collectionName": "posts",
+      "primaryKey": 1,
+      "entity": {
+        "id": 1,
+        "title": "Foo 1",
+        "tags": [
+          {
+            "id": 1,
+            "title": "Bar 1"
+          }
+        ]
+      }
+    },
+    "hu67h5v432j5nm8klk": {
+      "collectionName": "tags",
+      "primaryKey": 2,
+      "entity": {
+        "id": 2,
+        "title": "Bar 2"
+      }
+    }
+  }
+}
