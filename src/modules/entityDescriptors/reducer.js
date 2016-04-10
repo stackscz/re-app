@@ -12,10 +12,6 @@ export default createReducer({
 	fieldsets: {},
 	mappings: {}
 }, {
-	//[INITIALIZE]: (state) => {
-	//	validateObject(1, PropTypes.func);
-	//	return state;
-	//},
 	[GENERATE_MAPPINGS]: (state) => {
 		return update(state, {
 			mappings: {

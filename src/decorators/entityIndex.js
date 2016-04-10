@@ -2,6 +2,7 @@
 import React from 'react';
 import { container } from 're-app/decorators';
 import { actions as entityIndexActions } from 're-app/modules/entityIndexes';
+import { actions as routingActions } from 're-app/modules/routing';
 import hash from 'object-hash';
 import { denormalize } from 'denormalizr';
 
@@ -15,7 +16,15 @@ export default function entityIndex() {
 		@container(
 			(state, props) => {
 				const collectionName = props.routeParams.collectionName;
-				const filter = props.location.query.filter;
+				//const filter = props.location.query.filter;
+				let { filter } = props.location.query;
+				if (!filter) {
+					filter = {
+						offset: 0,
+						limit: 10
+					}
+				}
+
 				const indexHash = hash({
 					collectionName,
 					filter
@@ -30,16 +39,30 @@ export default function entityIndex() {
 				const entities = (entityIndex ? entityIndex.index.map((id) => {
 					return denormalize(entityDictionary[id], state.entityIndexes.entities, entityMapping);
 				}) : []);
+
+
 				return {
 					entitySchema,
 					entityGridFields,
-					entities
+					entities,
+					errors: entityIndex && entityIndex.errors,
+					existingCount: entityIndex && entityIndex.existingCount,
+					fetching: entityIndex && entityIndex.fetching,
+					ready: entityIndex && entityIndex.ready,
+					filter
 				};
 			},
 			(dispatch, props) => {
 				return {
-					ensureEntityIndex: () => {
-						dispatch(entityIndexActions.ensureEntityIndex(props.routeParams.collectionName, props.location.query.filter));
+					ensureEntityIndex: (collectionName, filter) => {
+						dispatch(entityIndexActions.ensureEntityIndex(collectionName, filter));
+					},
+					handleFilterChange(filter) {
+						dispatch(routingActions.navigate({
+							name: 'entity_index',
+							params: {collectionName: props.routeParams.collectionName},
+							query: {filter}
+						}))
 					}
 				};
 			}
@@ -47,14 +70,13 @@ export default function entityIndex() {
 		class EntityIndexContainer extends React.Component {
 
 			componentDidMount() {
-				const { ensureEntityIndex } = this.props;
-				ensureEntityIndex();
+				const { ensureEntityIndex, entitySchema, filter } = this.props;
+				ensureEntityIndex(entitySchema.name, filter);
 			}
 
 			render() {
-				const { ensureEntityIndex, ...otherProps } = this.props;
 				return (
-					<EntityIndexComponent {...otherProps} />
+					<EntityIndexComponent {...this.props} />
 				);
 			}
 		}

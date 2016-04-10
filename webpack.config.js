@@ -11,6 +11,7 @@ function getDirectories(srcpath) {
 console.log();
 
 var libraryEntryPoints = {
+	'utils/createHistory': ['./src/utils/createHistory'],
 	'utils': ['./src/utils'],
 	'decorators': ['./src/decorators'],
 	'components': ['./src/components']

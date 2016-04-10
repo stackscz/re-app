@@ -21,26 +21,23 @@ export function *entityDescriptors() {
 	const schemas = yield select(getEntitySchemas);
 	if (_.isEmpty(schemas)) {
 		yield call(loadEntityDescriptors);
-	} else {
-		validateObject(schemas, schemasSchema);
-		yield put(generateMappings());
 	}
+	validateObject(schemas, schemasSchema);
+	yield put(generateMappings());
 }
 
 export function *loadEntityDescriptors(action) {
 	const ApiService = yield select(getApiService);
 	const authContext = yield select(getAuthContext);
 	try {
-		const {schemas, fieldsets, entities} = yield call(ApiService.getEntitySchemas, authContext);
+		const {schemas, fieldsets} = yield call(ApiService.getEntitySchemas, authContext);
 		validateObject(schemas, schemasSchema);
 		validateObject(fieldsets, fieldsetsSchema);
 		yield put(loadEntityDescriptorsSuccess({schemas, fieldsets}));
-		yield put(generateMappings());
-		for (let collectionName of Object.keys(entities)) {
-			const indexHash = hash({collectionName, filter: undefined});
-			const entityMapping = yield select(getEntityMappingGetter(collectionName));
-			yield put(entityIndexesActions.fetchEntityIndexSuccess(collectionName, undefined, indexHash, entityMapping, entities[collectionName].length, entities[collectionName]));
-		}
+		//for (let collectionName of Object.keys(entities)) {
+		//	const entityMapping = yield select(getEntityMappingGetter(collectionName));
+		//	yield put(entityIndexesActions.receiveEntityIndex(collectionName, undefined, entityMapping, entities[collectionName].length, entities[collectionName]));
+		//}
 	} catch (e) {
 		if (!isCancelError(e)) {
 			yield put(loadEntityDescriptorsFailure());

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from 'react';
-import { Router as ReactRouter, browserHistory, createRoutes } from 'react-router';
+import { Router as ReactRouter, createRoutes } from 'react-router';
+import createHistory from 're-app/utils/createHistory';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { actions as routingActions } from 're-app/modules/routing';
 
@@ -12,7 +13,8 @@ export default function router(store) {
 	return function wrapWithRouter(AppComponent) {
 		const routes = AppComponent.getRoutes();
 		const internalRoutes = createRoutes(routes);
-		const history = syncHistoryWithStore(browserHistory, store, {selectLocationState: (state) => (state.reduxRouting)});
+		var foo = createHistory();
+		const history = syncHistoryWithStore(foo, store, {selectLocationState: (state) => (state.reduxRouting)});
 
 		store.dispatch(routingActions.setRoutes(internalRoutes));
 
