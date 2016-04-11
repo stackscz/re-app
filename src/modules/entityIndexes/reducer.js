@@ -13,10 +13,11 @@ import {
 } from  './actions';
 import hash from 'object-hash';
 import { normalize, arrayOf } from 'normalizr';
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 
 export default createReducer({
 	indexes: {},
+	existingCounts: {},
 	entities: {}
 }, {
 	[ENSURE_ENTITY_INDEX]: (state, action) => {
@@ -27,7 +28,7 @@ export default createReducer({
 			return update(state, {
 				indexes: {
 					[indexHash]: {
-						'$set': {
+						$set: {
 							collectionName,
 							filter,
 							ready: false,
@@ -46,7 +47,7 @@ export default createReducer({
 		return update(state, {
 			indexes: {
 				[indexHash]: {
-					ready: {'$set': true}
+					ready: {$set: true}
 				}
 			}
 		});
@@ -56,7 +57,7 @@ export default createReducer({
 		return update(state, {
 			indexes: {
 				[indexHash]: {
-					ready: {'$set': false}
+					ready: {$set: false}
 				}
 			}
 		});
@@ -66,28 +67,31 @@ export default createReducer({
 		return update(state, {
 			indexes: {
 				[indexHash]: {
-					fetching: {'$set': true}
+					fetching: {$set: true}
 				}
 			}
 		});
 	},
 	[FETCH_ENTITY_INDEX_SUCCESS]: (state, action) => {
 		const {indexHash, entityMapping, existingCount, entities} = action.payload;
+		const collectionName = state.indexes[indexHash].collectionName;
 		const normalized = normalize(entities, arrayOf(entityMapping));
 		let newState = update(state, {
 			indexes: {
 				[indexHash]: {
-					index: {'$set': normalized.result},
-					fetching: {'$set': false},
-					existingCount: {'$set': existingCount}
+					index: {$set: normalized.result},
+					fetching: {$set: false}
 				}
+			},
+			existingCounts: {
+				[collectionName]: {$set: existingCount}
 			}
 		});
 		_.each(normalized.entities, (dictionary, collectionName) => {
 			if (!newState.entities[collectionName]) {
 				newState = update(newState, {
 					entities: {
-						[collectionName]: {'$set': {}}
+						[collectionName]: {$set: {}}
 					}
 				})
 			}
@@ -104,8 +108,8 @@ export default createReducer({
 		return update(state, {
 			indexes: {
 				[indexHash]: {
-					fetching: {'$set': false},
-					errors: {'$set': errors}
+					fetching: {$set: false},
+					errors: {$set: errors}
 				}
 			}
 		});
@@ -118,7 +122,7 @@ export default createReducer({
 			if (!newState.entities[collectionName]) {
 				newState = update(newState, {
 					entities: {
-						[collectionName]: {'$set': {}}
+						[collectionName]: {$set: {}}
 					}
 				})
 			}

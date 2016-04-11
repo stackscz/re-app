@@ -13,7 +13,7 @@ import {
 } from './actions';
 import { actions as entityIndexesActions } from 're-app/modules/entityIndexes';
 import { validateObject } from 're-app/utils';
-import { schemas as schemasSchema, fieldsets as fieldsetsSchema } from './stateSchema';
+import { schemas as schemasSchema, fieldsets as fieldsetsSchema } from './state.spec.js';
 import { getApiService, getAuthContext, getEntitySchemas, getEntityMappingGetter } from 're-app/selectors';
 
 export function *entityDescriptors() {

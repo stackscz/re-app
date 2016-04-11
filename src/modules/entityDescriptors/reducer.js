@@ -5,7 +5,7 @@ import { createReducer } from 're-app/utils';
 import { INITIALIZE, LOAD_ENTITY_DESCRIPTORS_SUCCESS, GENERATE_MAPPINGS } from './actions';
 import { Schema, arrayOf } from 'normalizr';
 import { validateObject } from 're-app/utils';
-import update from 'react-addons-update';
+import update from 'immutability-helper';
 
 export default createReducer({
 	schemas: {},

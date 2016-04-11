@@ -51,7 +51,7 @@ export function* authorize(credentials, authContext) {
 		yield put(loginSuccess(result));
 	} catch (e) {
 		if (!isCancelError(e)) {
-			yield put(loginFailure());
+			yield put(loginFailure(e));
 		}
 	}
 }

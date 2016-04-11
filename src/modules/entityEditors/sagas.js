@@ -10,7 +10,13 @@ import {
 } from './actions';
 import { actions as entityIndexesActions } from 're-app/modules/entityIndexes';
 import { validateObject } from 're-app/utils';
-import { getApiService, getAuthContext, getEntitySchemas, getEntityMappingGetter } from 're-app/selectors';
+import {
+	getApiService,
+	getAuthContext,
+	getEntitySchemas,
+	getEntityMappingGetter,
+	getDenormalizedEntityGetter
+} from 're-app/selectors';
 
 export function *entityEditorsSaga() {
 	yield takeEvery(LOAD_ENTITY, loadEntityTask);
@@ -20,13 +26,18 @@ export function *loadEntityTask(action) {
 	const { collectionName, entityId } = action.payload;
 
 	yield put(entityIndexesActions.ensureEntity(collectionName, entityId));
-	const successAction = yield take((action) => {
-		return action.type === entityIndexesActions.ENSURE_ENTITY_SUCCESS
-			&& action.payload.collectionName === collectionName
-			&& action.payload.entityId === entityId;
+	yield take((action) => {
+		const { type: actionType, payload: actionPayload } = action;
+		if (!actionPayload) {
+			return false;
+		}
+		const {collectionName: actionCollectionName,entityId: actionEntityId} = actionPayload;
+		return actionType === entityIndexesActions.ENSURE_ENTITY_SUCCESS
+			&& actionCollectionName === collectionName
+			&& actionEntityId === entityId;
 	});
-	const { entity } = successAction.payload;
-	yield put(loadEntitySuccess(collectionName, entityId, entity));
+	const denormalizedEntity = yield select(getDenormalizedEntityGetter(collectionName, entityId, 1));
+	yield put(loadEntitySuccess(collectionName, entityId, denormalizedEntity));
 }
 
 export default [entityEditorsSaga];

@@ -1,16 +1,13 @@
 /* eslint-disable */
 import { useRouterHistory, browserHistory } from 'react-router';
-//import createRouterHistory from 'react-router/lib/createRouterHistory';
 import createHistoryLib from 'history/lib/createBrowserHistory';
 import useQueries from 'history/lib/useQueries';
 import qs from 'qs';
 
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 
-//const history = browserHistory;
 var history = undefined;
 if (canUseDOM) {
-	debugger;
 	history = useRouterHistory(createHistoryLib)({
 		parseQueryString: function (queryString) {
 			const parsedQueryObject = qs.parse(queryString);

@@ -8,20 +8,22 @@ import {
 } from './actions';
 import { Schema, arrayOf } from 'normalizr';
 import { validateObject } from 're-app/utils';
-import update from 'react-addons-update';
-import hash from 'object-hash';
+import update from 'immutability-helper';
 
 export default createReducer({
 	editors: {}
 }, {
 	[LOAD_ENTITY]: (state, action) => {
 		const { collectionName, entityId } = action.payload;
-		const editorHash = hash({collectionName, entityId});
 		return update(state, {
 			editors: {
-				[editorHash]: {
-					'$set': {
-						ready: false
+				$merge: {
+					[collectionName]: {
+						[entityId]: {
+							ready: false,
+							collectionName,
+							entityId
+						}
 					}
 				}
 			}
@@ -29,13 +31,12 @@ export default createReducer({
 	},
 	[LOAD_ENTITY_SUCCESS]: (state, action) => {
 		const { collectionName, entityId, entity } = action.payload;
-		const editorHash = hash({collectionName, entityId});
 		return update(state, {
 			editors: {
-				[editorHash]: {
-					'$set': {
-						entity,
-						ready: true
+				[collectionName]: {
+					[entityId]: {
+						data: {$set: entity},
+						ready: {$set: true}
 					}
 				}
 			}

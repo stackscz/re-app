@@ -1,4 +1,5 @@
 /* eslint-disable */
+import _ from 're-app/utils/lodash';
 import React from 'react';
 import { container } from 're-app/decorators';
 import { actions as entityEditorsActions } from 're-app/modules/entityEditors';
@@ -15,46 +16,45 @@ export default function entityEditor() {
 
 		@container(
 			(state, props) => {
-				const collectionName = props.routeParams.collectionName;
-				const entityId = props.routeParams.id;
-
+				const { collectionName, id } = props.routeParams;
+				const entityId = _.revealNumber(id);
 
 				const entitySchema = state.entityDescriptors.schemas[collectionName];
-				//const entityMapping = state.entityDescriptors.mappings[collectionName];
 				const entityFormFieldset = state.entityDescriptors.fieldsets[collectionName].form;
 				const entityFormFields = entityFormFieldset || Object.keys(entitySchema.fields);
-
-				//const entityDictionary = state.entityIndexes.entities[collectionName];
-				//const entity = (entityDictionary && entityDictionary[entityId]) ? denormalize(entityDictionary[entityId], state.entityIndexes.entities, entityMapping) : null;
-				const entity = getDenormalizedEntityGetter(collectionName, entityId)(state);
+				const entityEditor = _.get(state.entityEditors, ['editors', collectionName, entityId], {
+					ready: false,
+					collectionName,
+					entityId
+				});
 
 				return {
 					entitySchema,
 					entityFormFields,
-					entity
+					entityEditor
 				};
 			},
 			(dispatch, props) => {
 				return {
-					ensureCurrentEntity: () => {
-						dispatch(entityEditorsActions.loadEntity(props.routeParams.collectionName, props.routeParams.id));
-						//dispatch(entityIndexesActions.ensureEntity(props.routeParams.collectionName, props.routeParams.id));
+					loadEntity: () => {
+						const { collectionName, id } = props.routeParams;
+						dispatch(entityEditorsActions.loadEntity(collectionName, _.revealNumber(id)));
 					},
-					//mergeEntity: (collectionName, entity) => {
-					//	dispatch(entityIndexesActions.mergeEntity(collectionName, entity));
-					//}
+					mergeEntity: (collectionName, entity) => {
+						dispatch(entityEditorsActions.mergeEntity(collectionName, entity));
+					}
 				};
 			}
 		)
 		class EntityEditorContainer extends React.Component {
 
 			componentDidMount() {
-				const { ensureCurrentEntity } = this.props;
-				ensureCurrentEntity();
+				const { loadEntity } = this.props;
+				loadEntity();
 			}
 
 			render() {
-				const { ensureCurrentEntity, ...otherProps } = this.props;
+				const { loadEntity, ...otherProps } = this.props;
 				return (
 					<EntityEditorComponent {...otherProps} />
 				);
