@@ -13,7 +13,9 @@ update.extend('$delete', (value, original) => {
 });
 
 /**
+ *	Higher order component (container) for displaying listing of entities
  *
+ * dependencies: entityIndex module
  *
  */
 export default function entityIndex() {
@@ -39,7 +41,7 @@ export default function entityIndex() {
 					filter: internalFilter
 				});
 				const entityIndex = state.entityIndexes.indexes[indexHash];
-				const entityDictionary = state.entityIndexes.entities[collectionName];
+				const entityDictionary = state.entityStorage.collections[collectionName];
 				const entitySchema = state.entityDescriptors.schemas[collectionName];
 				const entityMapping = state.entityDescriptors.mappings[collectionName];
 				const entityGridFieldset = state.entityDescriptors.fieldsets[collectionName].grid;
@@ -47,9 +49,8 @@ export default function entityIndex() {
 
 				// TODO switch to denormalize arrayOf when supported
 				const entities = (entityIndex ? entityIndex.index.map((id) => {
-					return denormalize(entityDictionary[id], state.entityIndexes.entities, entityMapping);
+					return denormalize(entityDictionary[id], state.entityStorage.collections, entityMapping);
 				}) : []);
-
 
 				return {
 					entitySchema,

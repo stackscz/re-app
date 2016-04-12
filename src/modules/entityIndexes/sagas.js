@@ -3,6 +3,7 @@
 import hash from 'object-hash';
 import { take, call, select, put } from 'redux-saga/effects';
 import { takeEvery, isCancelError } from 'redux-saga';
+import { normalize, arrayOf } from 'normalizr';
 import {
 	getApiService,
 	getAuthContext,
@@ -12,25 +13,16 @@ import {
 } from 're-app/selectors';
 import {
 	ENSURE_ENTITY_INDEX
-	,ENSURE_ENTITY
 	,ensureEntityIndexSuccess
 	,ensureEntityIndexFailure
 	,fetchEntityIndex
 	,fetchEntityIndexSuccess
 	,fetchEntityIndexFailure
-	,ensureEntitySuccess
-	,ensureEntityFailure
-	,fetchEntity
-	,fetchEntitySuccess
-	,fetchEntityFailure
 } from './actions';
+import { actions as entityStorageActions } from 're-app/modules/entityStorage';
 
 export function *entityIndexesFlow() {
 	yield takeEvery(ENSURE_ENTITY_INDEX, ensureEntityIndexTask);
-}
-
-export function *entityFlow() {
-	yield takeEvery(ENSURE_ENTITY, ensureEntityTask);
 }
 
 export function *ensureEntityIndexTask(action) {
@@ -60,7 +52,9 @@ export function *fetchEntityIndexTask(indexHash) {
 	try {
 		const result = yield call(ApiService.getEntityIndex, collectionName, filter, authContext);
 		const entityMapping = yield select(getEntityMappingGetter(collectionName));
-		yield put(fetchEntityIndexSuccess(indexHash, entityMapping, result.existingCount, result.data));
+		const normalized = normalize(result.data, arrayOf(entityMapping));
+		yield put(entityStorageActions.storeEntities(normalized.entities));
+		yield put(fetchEntityIndexSuccess(indexHash, normalized.result, result.existingCount));
 	} catch (e) {
 		if (!isCancelError(e)) {
 			//debugger;
@@ -70,43 +64,4 @@ export function *fetchEntityIndexTask(indexHash) {
 	}
 }
 
-export function *ensureEntityTask(action) {
-	const { collectionName, entityId: id } = action.payload;
-
-	let entity;
-	try {
-		entity = yield select(getEntityGetter(collectionName, id));
-	} catch (e) {
-		entity = null;
-	}
-	if (!entity) {
-		try {
-			yield call(fetchEntityTask, collectionName, id);
-			const fetchedEntity = yield select(getEntityGetter(collectionName, id));
-			yield put(ensureEntitySuccess(collectionName, id, fetchedEntity));
-		} catch (e) {
-			if (!isCancelError(e)) {
-				yield put(ensureEntityFailure(collectionName, id));
-			}
-		}
-	} else {
-		yield put(ensureEntitySuccess(collectionName, id, entity));
-	}
-}
-
-export function *fetchEntityTask(collectionName, id) {
-	const ApiService = yield select(getApiService);
-	const authContext = yield select(getAuthContext);
-	try {
-		const result = yield call(ApiService.getEntity, collectionName, id, authContext);
-		const entityMapping = yield select(getEntityMappingGetter(collectionName));
-		yield put(fetchEntitySuccess(collectionName, id, entityMapping, result.data));
-	} catch (e) {
-		if (!isCancelError(e)) {
-			yield put(fetchEntityFailure(collectionName, id));
-			throw e;
-		}
-	}
-}
-
-export default [entityIndexesFlow, entityFlow];
+export default [entityIndexesFlow];

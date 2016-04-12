@@ -3,8 +3,8 @@ import _ from 'lodash';
 import { PropTypes } from 'react';
 import { createReducer } from 're-app/utils';
 import {
-	LOAD_ENTITY,
-	LOAD_ENTITY_SUCCESS
+	LOAD_EDITOR,
+	LOAD_EDITOR_SUCCESS
 } from './actions';
 import { Schema, arrayOf } from 'normalizr';
 import { validateObject } from 're-app/utils';
@@ -13,7 +13,7 @@ import update from 'immutability-helper';
 export default createReducer({
 	editors: {}
 }, {
-	[LOAD_ENTITY]: (state, action) => {
+	[LOAD_EDITOR]: (state, action) => {
 		const { collectionName, entityId } = action.payload;
 		return update(state, {
 			editors: {
@@ -29,7 +29,7 @@ export default createReducer({
 			}
 		});
 	},
-	[LOAD_ENTITY_SUCCESS]: (state, action) => {
+	[LOAD_EDITOR_SUCCESS]: (state, action) => {
 		const { collectionName, entityId, entity } = action.payload;
 		return update(state, {
 			editors: {

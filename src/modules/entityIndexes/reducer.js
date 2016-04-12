@@ -7,9 +7,7 @@ import {
 	ENSURE_ENTITY_INDEX_FAILURE,
 	FETCH_ENTITY_INDEX,
 	FETCH_ENTITY_INDEX_SUCCESS,
-	FETCH_ENTITY_INDEX_FAILURE,
-	RECEIVE_ENTITY_INDEX,
-	FETCH_ENTITY_SUCCESS
+	FETCH_ENTITY_INDEX_FAILURE
 } from  './actions';
 import hash from 'object-hash';
 import { normalize, arrayOf } from 'normalizr';
@@ -17,8 +15,7 @@ import update from 'immutability-helper';
 
 export default createReducer({
 	indexes: {},
-	existingCounts: {},
-	entities: {}
+	existingCounts: {}
 }, {
 	[ENSURE_ENTITY_INDEX]: (state, action) => {
 		const {collectionName, filter} = action.payload;
@@ -73,13 +70,12 @@ export default createReducer({
 		});
 	},
 	[FETCH_ENTITY_INDEX_SUCCESS]: (state, action) => {
-		const {indexHash, entityMapping, existingCount, entities} = action.payload;
+		const {indexHash, index, existingCount} = action.payload;
 		const collectionName = state.indexes[indexHash].collectionName;
-		const normalized = normalize(entities, arrayOf(entityMapping));
-		let newState = update(state, {
+		return update(state, {
 			indexes: {
 				[indexHash]: {
-					index: {$set: normalized.result},
+					index: {$set: index},
 					fetching: {$set: false}
 				}
 			},
@@ -87,21 +83,6 @@ export default createReducer({
 				[collectionName]: {$set: existingCount}
 			}
 		});
-		_.each(normalized.entities, (dictionary, collectionName) => {
-			if (!newState.entities[collectionName]) {
-				newState = update(newState, {
-					entities: {
-						[collectionName]: {$set: {}}
-					}
-				})
-			}
-			newState = update(newState, {
-				entities: {
-					[collectionName]: {'$merge': dictionary}
-				}
-			});
-		});
-		return newState;
 	},
 	[FETCH_ENTITY_INDEX_FAILURE]: (state, action) => {
 		const {indexHash, errors} = action.payload;
@@ -113,25 +94,5 @@ export default createReducer({
 				}
 			}
 		});
-	},
-	[FETCH_ENTITY_SUCCESS]: (state, action) => {
-		const {entityMapping, entity} = action.payload;
-		const normalized = normalize(entity, entityMapping);
-		let newState = state;
-		_.each(normalized.entities, (dictionary, collectionName) => {
-			if (!newState.entities[collectionName]) {
-				newState = update(newState, {
-					entities: {
-						[collectionName]: {$set: {}}
-					}
-				})
-			}
-			newState = update(newState, {
-				entities: {
-					[collectionName]: {'$merge': dictionary}
-				}
-			});
-		});
-		return newState;
 	}
 });

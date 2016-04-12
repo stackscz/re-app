@@ -1,21 +1,21 @@
-import {PropTypes} from 'react';
+import {PropTypes as T} from 'react';
 
-const schemas = PropTypes.objectOf(PropTypes.shape({
-	name: PropTypes.string.isRequired,
-	idFieldName: PropTypes.string.isRequired,
-	fields: PropTypes.objectOf(PropTypes.shape({
-		name: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired
+const schemas = T.objectOf(T.shape({
+	name: T.string.isRequired,
+	idFieldName: T.string.isRequired,
+	fields: T.objectOf(T.shape({
+		name: T.string.isRequired,
+		type: T.string.isRequired
 	})).isRequired
 })).isRequired;
 
-const fieldsets = PropTypes.objectOf(PropTypes.shape({
-	grid: PropTypes.arrayOf(PropTypes.string),
-	detail: PropTypes.arrayOf(PropTypes.string),
-	form: PropTypes.arrayOf(PropTypes.string)
+const fieldsets = T.objectOf(T.shape({
+	grid: T.arrayOf(T.string),
+	detail: T.arrayOf(T.string),
+	form: T.arrayOf(T.string)
 })).isRequired;
 
-export default PropTypes.shape({
+export default T.shape({
 	schemas,
 	fieldsets
 });

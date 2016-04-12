@@ -1,21 +1,21 @@
-export const LOAD_ENTITY = 're-app/entityEditors/LOAD_ENTITY';
-export const LOAD_ENTITY_SUCCESS = 're-app/entityEditors/LOAD_ENTITY_SUCCESS';
-export const LOAD_ENTITY_FAILURE = 're-app/entityEditors/LOAD_ENTITY_FAILURE';
+export const LOAD_EDITOR = 're-app/entityEditors/LOAD_EDITOR';
+export const LOAD_EDITOR_SUCCESS = 're-app/entityEditors/LOAD_EDITOR_SUCCESS';
+export const LOAD_EDITOR_FAILURE = 're-app/entityEditors/LOAD_EDITOR_FAILURE';
 
 export const MERGE_ENTITY = 're-app/entityEditors/MERGE_ENTITY';
 
-export function loadEntity(collectionName, entityId) {
-	return {type: LOAD_ENTITY, payload: {collectionName, entityId}};
+export function loadEditor(collectionName, entityId) {
+	return {type: LOAD_EDITOR, payload: {collectionName, entityId}};
 }
 
-export function loadEntitySuccess(collectionName, entityId, entity) {
-	return {type: LOAD_ENTITY_SUCCESS, payload: {collectionName, entityId, entity}};
+export function loadEditorSuccess(collectionName, entityId, entity) {
+	return {type: LOAD_EDITOR_SUCCESS, payload: {collectionName, entityId, entity}};
 }
 
-export function loadEntityFailure(collectionName, entityId) {
-	return {type: LOAD_ENTITY_FAILURE, payload: {collectionName, entityId}};
+export function loadEditorFailure(collectionName, entityId) {
+	return {type: LOAD_EDITOR_FAILURE, payload: {collectionName, entityId}};
 }
 
-export function mergeEntity(collectionName, data) {
-	return {type: MERGE_ENTITY, payload: {collectionName, data}};
+export function mergeEntity(editorHash, data) {
+	return {type: MERGE_ENTITY, payload: {editorHash, data}};
 }

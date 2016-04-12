@@ -36,9 +36,9 @@ export default function entityEditor() {
 			},
 			(dispatch, props) => {
 				return {
-					loadEntity: () => {
+					loadEditor: () => {
 						const { collectionName, id } = props.routeParams;
-						dispatch(entityEditorsActions.loadEntity(collectionName, _.revealNumber(id)));
+						dispatch(entityEditorsActions.loadEditor(collectionName, _.revealNumber(id)));
 					},
 					mergeEntity: (collectionName, entity) => {
 						dispatch(entityEditorsActions.mergeEntity(collectionName, entity));
@@ -49,12 +49,12 @@ export default function entityEditor() {
 		class EntityEditorContainer extends React.Component {
 
 			componentDidMount() {
-				const { loadEntity } = this.props;
-				loadEntity();
+				const { loadEditor } = this.props;
+				loadEditor();
 			}
 
 			render() {
-				const { loadEntity, ...otherProps } = this.props;
+				const { loadEditor, ...otherProps } = this.props;
 				return (
 					<EntityEditorComponent {...otherProps} />
 				);
