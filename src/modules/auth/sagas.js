@@ -9,6 +9,7 @@ import {
 	LOGIN_FAILURE,
 	LOGOUT,
 	initialize,
+	initializeFinish,
 	loginSuccess,
 	loginFailure,
 	logoutSuccess,
@@ -16,10 +17,11 @@ import {
 } from './actions';
 
 export function* authFlow() {
+	yield put(initialize());
 	const ApiService = yield select(getApiService);
 	const initialAuthContext = yield select(getAuthContext);
 	const serviceAuthContext = yield call(ApiService.initializeAuth, initialAuthContext);
-	yield put(initialize(serviceAuthContext));
+	yield put(initializeFinish(serviceAuthContext));
 	while (true) { // eslint-disable-line no-constant-condition
 		const user = yield select(getUser);
 		let authorizeTask = null;
@@ -47,7 +49,7 @@ export function* authorize(credentials, authContext) {
 	const ApiService = yield select(getApiService);
 	try {
 		const result = yield call(ApiService.login, credentials, authContext);
-		invariant(_.isObject(result.user), 'ApiService login() implementation should return object containing user object');
+		invariant(_.isObject(result.user), 'ApiService login() implementation should return object containing user key');
 		yield put(loginSuccess(result));
 	} catch (e) {
 		if (!isCancelError(e)) {

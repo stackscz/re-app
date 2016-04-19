@@ -1,28 +1,41 @@
 import { createReducer } from 're-app/utils';
 
-import { INITIALIZE, LOGIN, LOGIN_SUCCESS, LOGOUT_SUCCESS, LOGIN_FAILURE } from './actions';
+import {
+	INITIALIZE,
+	INITIALIZE_FINISH,
+	LOGIN,
+	LOGIN_SUCCESS,
+	LOGIN_FAILURE,
+	LOGOUT_SUCCESS
+} from './actions';
 
 export default createReducer(
 	{
 		user: null,
-		errors: []
+		errors: [],
+		initializing: false,
+		authenticating: false
 	},
 	{
-		[LOGIN]: (state, action) => {
-			return {...state, errors: []};
+		[INITIALIZE]: (state) => {
+			return {...state, initializing: true};
 		},
-		[INITIALIZE]: (state, action) => {
-			return {...state, ...action.payload};
+		[INITIALIZE_FINISH]: (state, action) => {
+			return {...state, ...action.payload, initializing: false};
+		},
+		[LOGIN]: (state) => {
+			return {...state, errors: [], authenticating: true};
 		},
 		[LOGIN_SUCCESS]: (state, action) => {
-			return {...state, ...action.payload, user: action.payload.user};
-		},
-		[LOGOUT_SUCCESS]: (state) => {
-			return {...state, user: null};
+			const { user } = action.payload;
+			return {...state, user, authenticating: false};
 		},
 		[LOGIN_FAILURE]: (state, action) => {
 			const { errors } = action.payload;
-			return {...state, errors};
+			return {...state, errors, authenticating: false};
+		},
+		[LOGOUT_SUCCESS]: (state) => {
+			return {...state, user: null};
 		}
 	}
 );

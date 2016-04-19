@@ -1,13 +1,17 @@
 /* eslint-disable */
 import { createReducer } from 're-app/utils';
-import { LOCATION_CHANGE } from 'react-router-redux';
 import { LOCATION_REACHED, SET_ROUTES } from './actions';
 
-export default createReducer({}, {
-	[LOCATION_CHANGE]: (state, action) => {
-		return {...state, location: action.payload};
+export default createReducer({
+	location: null,
+	routes: []
+}, {
+	[LOCATION_REACHED]: (state, action) => {
+		const { location } = action.payload;
+		return {...state, location};
 	},
 	[SET_ROUTES]: (state, action) => {
-		return {...state, routes: action.payload};
+		const { routes } = action.payload;
+		return {...state, routes};
 	}
 });

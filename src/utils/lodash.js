@@ -1,9 +1,15 @@
 import _ from 'lodash';
 
+function isNormalInteger(str) {
+	return /^\+?(0|[1-9]\d*)$/.test(str);
+}
+
 _.mixin({
 	revealNumber: (val) => {
-		const numVal = parseFloat(val);
-		return isNaN(numVal) ? val : numVal;
+		if(isNormalInteger(val)) {
+			return parseInt(val, 10);
+		}
+		return val;
 	}
 });
 

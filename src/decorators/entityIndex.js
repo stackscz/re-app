@@ -5,12 +5,7 @@ import { actions as entityIndexActions } from 're-app/modules/entityIndexes';
 import { actions as routingActions } from 're-app/modules/routing';
 import hash from 'object-hash';
 import { denormalize } from 'denormalizr';
-import update from 'immutability-helper';
-update.extend('$delete', (value, original) => {
-	const result = update(original, {[value]: {$set: undefined}});
-	delete result[value];
-	return result;
-});
+import update from 're-app/utils/immutabilityHelper';
 
 /**
  *	Higher order component (container) for displaying listing of entities
@@ -90,7 +85,7 @@ export default function entityIndex() {
 		)
 		class EntityIndexContainer extends React.Component {
 
-			componentDidMount() {
+			componentWillMount() {
 				const { ensureEntityIndex, entitySchema, filter } = this.props;
 				ensureEntityIndex(entitySchema.name, filter);
 			}
