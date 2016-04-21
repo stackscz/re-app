@@ -2,6 +2,10 @@
 
 common `react` components, `redux`, `react-router`, `redux-router`, `redux-saga` boilerplate and helper codebase
 
+## Development
+
+To build re-app one time, run `npm run build`. To watch changes in sources and build on the fly run `npm run build:watch`. 
+Resulting CommonJS build files are located in `lib` directory.
 
 ## Components
 
