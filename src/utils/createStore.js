@@ -5,7 +5,7 @@ import DevTools from 're-app/components/DevTools';
 import createLogger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
-import {browserHistory} from 'react-router';
+import createHistory from 're-app/utils/createHistory';
 import { reducer as formReducer } from 'redux-form';
 
 export default function createStore(config, initialState = {}) {
@@ -46,7 +46,7 @@ export default function createStore(config, initialState = {}) {
 
 function createRouter() {
 
-	let finalHistoryFactory = browserHistory;
+	let finalHistoryFactory = createHistory();
 
 	return {
 		middleware: routerMiddleware(finalHistoryFactory),
