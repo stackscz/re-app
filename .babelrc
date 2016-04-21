@@ -4,18 +4,14 @@
     "es2015",
     "stage-0"
   ],
-  "env": {
-    "test": {
-      "plugins": [
-        "transform-decorators-legacy",
-        "transform-runtime",
-        [
-          "babel-plugin-webpack-alias",
-          {
-            "config": "./babel-test-alias.js"
-          }
-        ]
-      ]
-    }
-  }
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-runtime",
+    [
+      "babel-plugin-webpack-alias",
+      {
+        "config": "./babel-test-alias.js"
+      }
+    ]
+  ]
 }
