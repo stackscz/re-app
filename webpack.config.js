@@ -8,8 +8,6 @@ function getDirectories(srcpath) {
 	});
 }
 
-console.log();
-
 var libraryEntryPoints = {
 	'utils': ['./src/utils'],
 	'decorators': ['./src/decorators'],
