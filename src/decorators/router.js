@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from 'react';
 import { Router as ReactRouter, createRoutes } from 'react-router';
 import createHistory from 're-app/utils/createHistory';
@@ -33,7 +32,7 @@ export default function router(store) {
 					}
 
 					render() {
-						return <Component {...this.props} />
+						return <Component {...this.props} />;
 					}
 				}
 
