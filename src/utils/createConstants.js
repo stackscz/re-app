@@ -2,6 +2,7 @@ import _ from 'lodash';
 import invariant from 'invariant';
 
 /**
+ * @deprecated Constants should be declared as true es6 constants to allow static analysis of code
  * Utility function to create object of constants
  *
  * Example:
