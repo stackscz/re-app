@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { createReducer } from 're-app/utils';
 import { LOCATION_REACHED, SET_ROUTES } from './actions';
 

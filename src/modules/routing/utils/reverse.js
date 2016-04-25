@@ -1,8 +1,6 @@
-/* eslint-disable */
-
 import {formatPattern} from 'react-router/lib/PatternUtils';
 
-function normalize(str, options) {
+function normalize(str) {
 
 	// make sure protocol is followed by two slashes
 	str = str.replace(/:\//g, '://');
@@ -30,7 +28,7 @@ export default function reverse(routes, name, params, parentPath = '') {
 	}
 
 	for (let i = 0; i < routes.length; i++) {
-		let route = routes[i];
+		const route = routes[i];
 		let currentPath;
 		if (route.path && route.path[0] === '/') {
 			// Absolute path.
@@ -45,13 +43,13 @@ export default function reverse(routes, name, params, parentPath = '') {
 		}
 
 		if (route.indexRoute) {
-			let url = reverse([route.indexRoute], name, params, currentPath);
+			const url = reverse([route.indexRoute], name, params, currentPath);
 			if (url) {
 				return url;
 			}
 		}
 		if (route.childRoutes) {
-			let url = reverse(route.childRoutes, name, params, currentPath);
+			const url = reverse(route.childRoutes, name, params, currentPath);
 			if (url) {
 				return url;
 			}
