@@ -43,7 +43,7 @@ export default class Select extends Component {
 			<select
 				className="form-control"
 				multiple={multiple}
-				onBlur={event => onBlur(this._parseValue.apply(this, [event]))}
+				onBlur={event => onBlur && onBlur(this._parseValue.apply(this, [event]))}
 				onChange={event => onChange(this._parseValue.apply(this, [event]))}
 				value={value}
 				{...otherProps}>
