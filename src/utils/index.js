@@ -1,9 +1,9 @@
-import createConstants from 're-app/utils/createConstants';
-import createReducer from 're-app/utils/createReducer';
-import createStore from 're-app/utils/createStore';
-import createModule from 're-app/utils/createModule';
-import validateObject from 're-app/utils/validateObject';
-import trimSchema from 're-app/utils/trimSchema';
+import createConstants from './createConstants';
+import createReducer from './createReducer';
+import createStore from './createStore';
+import createModule from './createModule';
+import validateObject from './validateObject';
+import trimSchema from './trimSchema';
 
 export {
 	createConstants,
