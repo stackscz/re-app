@@ -32,10 +32,16 @@ export default ComposedComponent => class extends React.Component {
 
 	render() {
 		const {children, modifiers, ...otherProps} = this.props;
+		const getBlissModuleClassName = () => {
+			return this.getClassName(this.getModuleName(), modifiers);
+		};
+		const getBlissElementClassName = this.getElementClassName.bind(this);
 		return (
 			<ComposedComponent {...otherProps}
-				getBlissModuleClassName={() => {return this.getClassName(this.getModuleName(), modifiers);}}
-				getBlissElementClassName={this.getElementClassName.bind(this)}>
+				getBlissModuleClassName={getBlissModuleClassName}
+				bm={getBlissModuleClassName}
+				getBlissElementClassName={getBlissElementClassName}
+				be={getBlissElementClassName}>
 				{children}
 			</ComposedComponent>
 		);
