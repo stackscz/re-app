@@ -1,5 +1,4 @@
 import React from 'react';
-import {container} from 're-app/decorators';
 
 export default class Listing extends React.Component {
 

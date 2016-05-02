@@ -5,8 +5,6 @@ export default class BlissComponentExamples extends React.Component {
 	render() {
 		return (
 			<div className="ExampleGroup">
-				<h1>BlissComponent</h1>
-				<h2>Example "BlessedComponent" decorated with blissComponent</h2>
 				<div className="ExampleGroup-item">
 					<pre>
 						&lt;BlessedComponent /&gt;
@@ -22,7 +20,7 @@ export default class BlissComponentExamples extends React.Component {
 				<div className="ExampleGroup-item">
 					<pre>
 						&lt;BlessedComponent modifiers=&quot;lg&quot;/&gt;
-					</pre>
+					</pre>LabeledArea>
 					<BlessedComponent modifiers="lg"/>
 				</div>
 				<div className="ExampleGroup-item">
@@ -36,6 +34,12 @@ export default class BlissComponentExamples extends React.Component {
 						&lt;BlessedComponent modifiers=&quot;lg mint&quot;/&gt;
 					</pre>
 					<BlessedComponent modifiers="lg mint"/>
+				</div>
+				<div className="ExampleGroup-item">
+					<pre>
+						&lt;BlessedComponent modifiers=&quot;lg mint excentric&quot;/&gt;
+					</pre>
+					<BlessedComponent modifiers="lg mint excentric"/>
 				</div>
 			</div>
 		);

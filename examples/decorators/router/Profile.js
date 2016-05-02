@@ -3,7 +3,7 @@ import {container} from 're-app/decorators';
 import {Link} from 're-app/components';
 
 @container((state, props)=> {
-	let username = props.routeParams.username;
+	const username = props.routeParams.username;
 	return {
 		username,
 		menuItems: [
@@ -14,7 +14,7 @@ import {Link} from 're-app/components';
 			{
 				title: 'Sessions',
 				location: {name: 'profile_sessions', params: {username}}
-			},
+			}
 		]
 	};
 })
@@ -33,7 +33,7 @@ export default class Profile extends React.Component {
 								<li key={idx}>
 									<Link to={item.location}>{item.title}</Link>
 								</li>
-							)
+							);
 						})}
 					</ul>
 				</nav>

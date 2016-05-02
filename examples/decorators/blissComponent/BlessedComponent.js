@@ -6,6 +6,8 @@ import './BlessedComponent.less';
 export default class BlessedComponent extends React.Component {
 	render() {
 		const {getBlissModuleClassName: bm, getBlissElementClassName: be} = this.props;
+		// ... or use shortcuts directly
+		//const {bm, be} = this.props;
 		return (
 			<div className={bm()}>
 				<div className={be('header')}>

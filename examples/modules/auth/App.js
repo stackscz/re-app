@@ -1,20 +1,22 @@
-import 're-app-examples/index.less';
-
 import React from 'react';
-import {DevTools} from 're-app/components';
 
 import {app, container} from 're-app/decorators';
-import {createStore, createReducer} from 're-app/utils';
+import {createStore} from 're-app/utils';
+import apiModule from 're-app/modules/api';
 import authModule from 're-app/modules/auth';
 import ApiService from 're-app/mocks/ApiService';
 import {login, logout} from 're-app/modules/auth/actions';
 
+import LabeledArea from 're-app-examples/LabeledArea';
+
 const store = createStore({
 	modules: [
+		apiModule,
 		authModule
-	],
-	reducers: {
-		apiService: createReducer(ApiService)
+	]
+}, {
+	api: {
+		service: ApiService
 	}
 });
 
@@ -36,10 +38,15 @@ export default class App extends React.Component {
 		const {login, logout} = this.props;
 		return (
 			<div className="App">
-				<pre>{JSON.stringify(this.props.state, null, 2)}</pre>
-				<button onClick={login}>login</button>
-				<button onClick={logout}>logout</button>
-				<DevTools />
+				<div className="well">
+					{this.props.state.auth.user ?
+						<button className="btn btn-danger" onClick={logout}>logout</button> :
+						<button className="btn btn-success" onClick={login}>login</button>
+					}
+				</div>
+				<LabeledArea title="complete app state">
+					<pre>{JSON.stringify(this.props.state, null, 2)}</pre>
+				</LabeledArea>
 			</div>
 		);
 	}

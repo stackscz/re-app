@@ -11,13 +11,11 @@ const codeFiles = [
 	}
 ];
 
-export default class AuthModuleExample extends React.Component {
+export default class ApiModuleExample extends React.Component {
 
 	render() {
 		return (
-			<Example readme={require('!!raw!./README.md')}
-					 codeFiles={codeFiles}
-					 sourcePath="modules/auth">
+			<Example readme={require('!!raw!./README.md')} codeFiles={codeFiles} sourcePath="modules/api">
 				<App />
 			</Example>
 		);

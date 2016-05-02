@@ -1,11 +1,11 @@
 /**
- * Example of @form decorator usage
+ * Example of auth module usage
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import ExamplesRouter from './ExamplesRouter';
 
 ReactDOM.render(
-	<App />,
+	<ExamplesRouter />,
 	document.getElementById('root')
 );
