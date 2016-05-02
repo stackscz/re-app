@@ -8,11 +8,11 @@ import { actions as routingActions } from 're-app/modules/routing';
  * Wraps component with react-router + redux-router
  *
  */
-export default function router(store) {
+export default function router(store, configHistory) {
 	return function wrapWithRouter(AppComponent) {
 		const routes = AppComponent.getRoutes();
 		const internalRoutes = createRoutes(routes);
-		const history = syncHistoryWithStore(createHistory(), store, {selectLocationState: (state) => (state.reduxRouting)});
+		const history = syncHistoryWithStore(configHistory || createHistory(), store, {selectLocationState: (state) => (state.reduxRouting)});
 
 		store.dispatch(routingActions.setRoutes(internalRoutes));
 

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import _ from 'lodash';
 import { createStore as reduxCreateStore, applyMiddleware, compose, combineReducers} from 'redux';
 import DevTools from 're-app/components/DevTools';
@@ -8,12 +7,12 @@ import { routerMiddleware, routerReducer } from 'react-router-redux';
 import createHistory from 're-app/utils/createHistory';
 import { reducer as formReducer } from 'redux-form';
 
-export default function createStore(config, initialState = {}) {
+export default function createStore(config = {}, initialState = {}) {
 
 	let reducers = config && config.reducers ? {...config.reducers} : {};
 	let sagas = config && config.sagas ? [...config.sagas] : [];
 
-	const router = createRouter();
+	const router = createRouter(config.router);
 	reducers.reduxRouting = router.routing;
 	reducers.form = formReducer;
 
@@ -44,14 +43,14 @@ export default function createStore(config, initialState = {}) {
 	return rootReducer;
 }
 
-function createRouter() {
+function createRouter(routerConfig = {}) {
 
-	let finalHistoryFactory = createHistory();
+	const finalHistory = routerConfig.history || createHistory();
 
 	return {
-		middleware: routerMiddleware(finalHistoryFactory),
+		middleware: routerMiddleware(finalHistory),
 		routing: routerReducer
-	}
+	};
 }
 
 
