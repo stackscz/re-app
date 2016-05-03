@@ -19,7 +19,7 @@
     "bootstrap": "^3.3.6",
     "marked": "^0.3.5",
     "prismjs": "^1.4.1",
-    "re-app-builder": "^0.2.4",
+    "re-app-builder": "^0.2.6",
     "redux-devtools-dock-monitor": "^1.1.0",
     "redux-devtools-log-monitor": "^1.0.5",
     "tap-spec": "^4.1.1",
