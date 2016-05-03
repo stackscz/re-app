@@ -89,3 +89,7 @@ Handles entity editors
 
 Dependency root is a module with no dependencies. A module depends on every module on oriented paths leading to dependency roots. There should be no cycles.
 See the proposed tree [here](http://knsv.github.io/mermaid/live_editor/#/edit/Z3JhcGggUkwKCmFwaQpyb3V0aW5nCmF1dGgKYXV0aCAtLT4gYXBpCmVudGl0eURlc2NyaXB0b3JzCmVudGl0eURlc2NyaXB0b3JzIC0tPiBhcGkKZW50aXR5U3RvcmFnZQplbnRpdHlTdG9yYWdlIC0tPiBlbnRpdHlEZXNjcmlwdG9ycwplbnRpdHlJbmRleGVzCmVudGl0eUluZGV4ZXMgLS0-IGVudGl0eVN0b3JhZ2UKZW50aXR5RWRpdG9ycwplbnRpdHlFZGl0b3JzIC0tPiBlbnRpdHlTdG9yYWdlCmZsYXNoCm1vZGFscw)
+
+# License
+
+This project is licensed under the terms of the MIT license. See `LICENSE.md`.
