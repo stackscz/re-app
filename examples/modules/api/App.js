@@ -1,13 +1,13 @@
 import React from 'react';
 
-import {app, container} from 're-app/decorators';
-import {createStore} from 're-app/utils';
-import ApiService from 're-app/mocks/ApiService';
-import apiModule from 're-app/modules/api';
-import {setHost} from 're-app/modules/api/actions';
+import {app, container} from 're-app/lib/decorators';
+import {createStore} from 're-app/lib/utils';
+import ApiService from 're-app/lib/mocks/ApiService';
+import apiModule from 're-app/lib/modules/api';
+import {setHost} from 're-app/lib/modules/api/actions';
 
-import Select from 're-app/components/Select';
-import Checkbox from 're-app/components/Checkbox';
+import Select from 're-app/lib/components/Select';
+import Checkbox from 're-app/lib/components/Checkbox';
 
 import LabeledArea from 're-app-examples/LabeledArea';
 

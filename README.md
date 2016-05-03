@@ -14,9 +14,10 @@ To watch changes in sources and build on the fly run
 
 Resulting CommonJS build files are located in `lib` directory.
 
-To develop examples, run
+To develop examples, run both commands simultaneously
     
-    npm run ab dev
+    npm run build:watch # builds library and watches changes
+    npm run ab dev # builds examples
 
 Website featuring `re-app` examples will then be served on http://127.0.0.1:8080
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Link from 're-app/components/Link';
+import Link from 're-app/lib/components/Link';
 
 export default class ExamplesAppRoot extends React.Component {
 

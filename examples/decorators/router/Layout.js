@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, BackBtn } from 're-app/components';
+import { Link, BackBtn } from 're-app/lib/components';
 
 import LabeledArea from 're-app-examples/LabeledArea';
 

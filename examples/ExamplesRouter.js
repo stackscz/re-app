@@ -6,11 +6,12 @@ import { Route, IndexRoute, IndexRedirect } from 'react-router';
 import ExamplesAppRoot from './ExamplesAppRoot';
 import ExamplesHomeScreen from './ExamplesHomeScreen';
 import ExampleScreen from './ExampleScreen';
+import ApiServiceExampleScreen from './ApiService';
 import NotFoundScreen from './decorators/router/NotFoundScreen';
 
-import {app, router} from 're-app/decorators';
-import {createStore, createReducer} from 're-app/utils';
-import routingModule from 're-app/modules/routing';
+import {app, router} from 're-app/lib/decorators';
+import {createStore, createReducer} from 're-app/lib/utils';
+import routingModule from 're-app/lib/modules/routing';
 
 // create hash history implementation to overcome gh-pages limitations
 import createHashHistory from 'history/lib/createHashHistory';
@@ -38,6 +39,7 @@ export default class ExamplesRouter {
 				<IndexRedirect to="examples"/>
 				<Route path="examples" component={ExamplesAppRoot}>
 					<IndexRoute name="home" component={ExamplesHomeScreen}/>
+					<Route path="api-service" name="api_service_example" component={ApiServiceExampleScreen}/>
 					<Route path=":group" name="example_group" component={ExampleScreen}/>
 					<Route path=":group/:name" name="example" component={ExampleScreen}/>
 				</Route>

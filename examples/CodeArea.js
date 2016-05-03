@@ -1,7 +1,7 @@
 import React from 'react';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-twilight.css';
-import './index.less';
+import './CodeArea.less';
 
 export default class CodeArea extends React.Component {
 

@@ -8,9 +8,9 @@
     "transform-decorators-legacy",
     "transform-runtime",
     [
-      "babel-plugin-webpack-alias",
+      "webpack-alias",
       {
-        "config": "./babel-test-alias.js"
+        "config": "./babel-alias.js"
       }
     ]
   ]

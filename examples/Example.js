@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
-import './index.less';
-import { container } from 're-app/decorators';
+import './Example.less';
+import { container } from 're-app/lib/decorators';
 import CodeArea from 're-app-examples/CodeArea';
 import Markdown from 're-app-examples/Markdown';
 import classnames from 'classnames';

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { container } from 're-app/decorators';
+import { container } from 're-app/lib/decorators';
 
 @container((state) => ({repository: state.repository}))
 export default class ExamplesHomeScreen extends React.Component {
@@ -11,8 +11,7 @@ export default class ExamplesHomeScreen extends React.Component {
 			<div className="container-fluid">
 				<p>
 					<code>re-app</code> integrates several killer libraries into opinionated, terribly evil framework,
-					to provide base
-					needed for modern web application development.
+					to provide base needed for modern web application development.
 				</p>
 				<p>
 					This website features usage examples of <code>re-app</code> library in form of sample applications.

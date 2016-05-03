@@ -1,8 +1,8 @@
 import React from 'react';
 import Dashboard from './Dashboard';
 
-import {app} from 're-app/decorators';
-import {createStore} from 're-app/utils';
+import {app} from 're-app/lib/decorators';
+import {createStore} from 're-app/lib/utils';
 
 const store = createStore({
 	reducers: {

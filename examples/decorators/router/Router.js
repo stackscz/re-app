@@ -9,9 +9,9 @@ import BasicInfo from './BasicInfo';
 import Sessions from './Sessions';
 import NotFoundScreen from './NotFoundScreen';
 
-import {app, router} from 're-app/decorators';
-import {createStore} from 're-app/utils';
-import routingModule from 're-app/modules/routing';
+import {app, router} from 're-app/lib/decorators';
+import {createStore} from 're-app/lib/utils';
+import routingModule from 're-app/lib/modules/routing';
 
 // create in-memory history implementation to avoid conflict with parent app
 import createMemoryHistory from 'history/lib/createMemoryHistory';

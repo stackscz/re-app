@@ -1,5 +1,5 @@
 import React from 'react';
-import {container} from 're-app/decorators';
+import {container} from 're-app/lib/decorators';
 
 @container((state, props)=> {
 	return {

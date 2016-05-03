@@ -1,11 +1,11 @@
 import React from 'react';
 
-import {app, container} from 're-app/decorators';
-import {createStore} from 're-app/utils';
-import apiModule from 're-app/modules/api';
-import authModule from 're-app/modules/auth';
-import ApiService from 're-app/mocks/ApiService';
-import {login, logout} from 're-app/modules/auth/actions';
+import {app, container} from 're-app/lib/decorators';
+import {createStore} from 're-app/lib/utils';
+import apiModule from 're-app/lib/modules/api';
+import authModule from 're-app/lib/modules/auth';
+import ApiService from 're-app/lib/mocks/ApiService';
+import {login, logout} from 're-app/lib/modules/auth/actions';
 
 import LabeledArea from 're-app-examples/LabeledArea';
 

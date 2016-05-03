@@ -1,6 +1,6 @@
 import React from 'react';
-import {container} from 're-app/decorators';
-import {Link} from 're-app/components';
+import {container} from 're-app/lib/decorators';
+import {Link} from 're-app/lib/components';
 
 @container((state, props)=> {
 	const username = props.routeParams.username;
