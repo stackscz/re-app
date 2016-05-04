@@ -11,8 +11,9 @@ export default class DecoratorsExamples extends React.Component {
 		return (
 			<div className="container-fluid">
 				<h1>Decorators</h1>
-				<Markdown content={require('!!raw!./README.md')} />
-				<ExampleGroup tabLinks={generateTabLinks('decorators', ['app', 'container', 'router', 'blissComponent'])}>
+				<Markdown content={require('!!raw!./README.md')}/>
+				<ExampleGroup
+					tabLinks={generateTabLinks('decorators', ['app', 'container', 'router', 'blissComponent'])}>
 					{ children }
 				</ExampleGroup>
 			</div>

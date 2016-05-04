@@ -8,11 +8,14 @@ export default class CodeArea extends React.Component {
 	static propTypes = {
 		title: React.PropTypes.string,
 		code: React.PropTypes.string,
+		children: React.PropTypes.string,
 		language: React.PropTypes.string.isRequired
 	};
 
 	static defaultProps = {
-		language: 'jsx'
+		language: 'jsx',
+		code: '',
+		children: ''
 	};
 
 	getHighlightedCode() {

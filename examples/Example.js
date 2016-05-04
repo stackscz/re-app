@@ -36,7 +36,7 @@ export default class Example extends React.Component {
 
 	getSourceTreeLink() {
 		const { repository: {rootUrl}, sourcePath } = this.props;
-		if(sourcePath) {
+		if (sourcePath) {
 			const url = rootUrl + 'src/' + sourcePath;
 			return (
 				<span className="Example-codeLink">
@@ -63,6 +63,7 @@ export default class Example extends React.Component {
 				</div>
 
 				<div className="row">
+					{children &&
 					<div className="col-xs-12 col-sm-6">
 						<h1>
 							Example&nbsp;
@@ -78,7 +79,8 @@ export default class Example extends React.Component {
 								</div>
 							</div>
 						</div>
-					</div>
+					</div>}
+					{codeFiles.length > 0 &&
 					<div className="col-xs-12 col-sm-6">
 						<div className="clearfix">
 							<h1>
@@ -100,7 +102,7 @@ export default class Example extends React.Component {
 							))}
 						</ul>
 						<div className="tab-content">
-							{codeFiles && codeFiles.filter((codeFile) => codeFile.name === activeCodeFileName).map((codeFile) => (
+							{codeFiles.filter((codeFile) => codeFile.name === activeCodeFileName).map((codeFile) => (
 								<div key={codeFile.description} className="tab-pane">
 									<CodeArea className="Example-code" title={codeFile.description}>
 										{ codeFile.content }
@@ -108,7 +110,7 @@ export default class Example extends React.Component {
 								</div>
 							))}
 						</div>
-					</div>
+					</div>}
 				</div>
 			</div>
 		);

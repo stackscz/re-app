@@ -5,6 +5,7 @@ import { Route, IndexRoute, IndexRedirect } from 'react-router';
 
 import ExamplesAppRoot from './ExamplesAppRoot';
 import ExamplesHomeScreen from './ExamplesHomeScreen';
+import ExampleGroupScreen from './ExampleGroupScreen';
 import ExampleScreen from './ExampleScreen';
 import ApiServiceExampleScreen from './ApiService';
 import NotFoundScreen from './decorators/router/NotFoundScreen';
@@ -26,7 +27,7 @@ const store = createStore({
 		repository: createReducer({rootUrl: 'https://github.com/stackscz/re-app/tree/master/'})
 	},
 	router: {
-		history // use in-memory history, for now, put it as param to @router decorator, too! See below.
+		history // use hash history, for now, put it as param to @router decorator, too! See below.
 	}
 });
 
@@ -40,11 +41,16 @@ export default class ExamplesRouter {
 				<Route path="examples" component={ExamplesAppRoot}>
 					<IndexRoute name="home" component={ExamplesHomeScreen}/>
 					<Route path="api-service" name="api_service_example" component={ApiServiceExampleScreen}/>
-					<Route path=":group" name="example_group" component={ExampleScreen}/>
-					<Route path=":group/:name" name="example" component={ExampleScreen}/>
+					<Route path=":group" name="example_group" component={ExampleGroupScreen}>
+						<Route path=":name" name="example" component={ExampleScreen}/>
+					</Route>
 				</Route>
 				<Route path="*" component={NotFoundScreen}/>
 			</Route>
 		);
 	}
 }
+
+
+//<Route path=":group" name="example_group" component={ExampleScreen}/>
+//<Route path=":group/:name" name="example" component={ExampleScreen}/>

@@ -27,7 +27,10 @@ const store = createStore({
 
 @app(store)
 @container(
-	(state) => ({api: state.api}), // mapStateToProps
+	(state) => ({ // mapStateToProps
+		state,
+		api: state.api
+	}),
 	(dispatch) => ({ // mapDispatchToProps
 		setHost: (ssl, name) => {
 			dispatch(setHost(ssl, name));
@@ -47,7 +50,7 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		const { api: {host} } = this.props;
+		const { state, api: {host} } = this.props;
 		return (
 			<div className="App">
 				<div className="well">
@@ -63,8 +66,8 @@ export default class App extends React.Component {
 						SSL
 					</label>
 				</div>
-				<LabeledArea title="api.host state subtree">
-					<pre>{JSON.stringify(host, null, 2)}</pre>
+				<LabeledArea title="Complete app state">
+					<pre>{JSON.stringify(state, null, 2)}</pre>
 				</LabeledArea>
 			</div>
 		);

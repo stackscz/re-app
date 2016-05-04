@@ -1,1 +1,1 @@
-Components are stateless components, ready to use in your app. 
+Components are stateless React components, ready for use in your app. 

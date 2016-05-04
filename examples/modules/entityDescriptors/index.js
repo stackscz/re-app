@@ -7,22 +7,17 @@ const codeFiles = [
 	{
 		name: './App.js',
 		content: require('!!raw!./App.js'),
-		description: 'App using api module'
-	},
-	{
-		name: './LoginForm.js',
-		content: require('!!raw!./LoginForm.js'),
-		description: 'Login form component'
+		description: 'App using entityDescriptors module'
 	}
 ];
 
-export default class AuthModuleExample extends React.Component {
+export default class EntityDescriptorsModuleExample extends React.Component {
 
 	render() {
 		return (
 			<Example readme={require('!!raw!./README.md')}
 					 codeFiles={codeFiles}
-					 sourcePath="modules/auth">
+					 sourcePath="modules/entityDescriptors">
 				<App />
 			</Example>
 		);
