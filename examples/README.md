@@ -35,6 +35,10 @@
 
 # Creating project from scratch with <a href="https://github.com/stackscz/re-app-builder" target="_blank">`re-app-builder` <i class="fa fa-external-link"></i></a>
 
+<div class="alert alert-warning">
+    <i class="fa fa-exclamation-triangle"></i>
+    Make sure you are using at least `npm@3` and `node@4`.
+</div>
 
 `cd` into empty project directory and run these commands
 
@@ -58,7 +62,6 @@ Create `public/index.html`
 Create `src/index.js`, for example:
 
     /* eslint-disable */
-    import _ from 'lodash';
     import React from 'react';
     import ReactDOM from 'react-dom';
     

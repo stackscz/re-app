@@ -2,7 +2,15 @@
 
 Common `react` components, `redux`, `react-router`, `redux-router`, `redux-saga` boilerplate and helper codebase
 
+## Installation
+
+Make sure you are using at least `npm@3` and `node@4`.
+
+    npm install --save-dev re-app
+
 ## Development
+
+To develop `re-app` and/or examples, clone this repository.
 
 To build re-app one time, run 
 
