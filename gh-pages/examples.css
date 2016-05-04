@@ -6724,6 +6724,9 @@ button.close {
     display: none !important;
   }
 }
+body {
+  padding-top: 70px;
+}
 a {
   cursor: pointer;
 }
@@ -6742,21 +6745,6 @@ pre {
 .Link.isActive {
   color: royalblue;
   background: #cccccc;
-}
-.Example-readme {
-  padding-bottom: 46px;
-}
-.Example .tab-content {
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  padding: 10px;
-}
-.Example .tab-content > .tab-pane {
-  display: block;
-}
-.Example-codeLink {
-  font-size: 50%;
 }
 /**
  * prism.js Twilight theme
@@ -6971,6 +6959,21 @@ pre[data-line] {
   background: transparent;
   border-radius: 0;
 }
+.Example-readme {
+  padding-bottom: 46px;
+}
+.Example .tab-content {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+.Example .tab-content > .tab-pane {
+  display: block;
+}
+.Example-codeLink {
+  font-size: 50%;
+}
 .BlessedComponent {
   background: #000;
   color: #ffffff;
@@ -7004,6 +7007,17 @@ pre[data-line] {
 }
 .BlessedComponent--excentric .BlessedComponent-header {
   background: #000;
+}
+.PaperOrientationInput-paper {
+  border: 1px solid black;
+}
+.PaperOrientationInput-paper--horizontal {
+  width: 300px;
+  height: 200px;
+}
+.PaperOrientationInput-paper--vertical {
+  width: 200px;
+  height: 300px;
 }
 .json-inspector,
 .json-inspector__selection {
