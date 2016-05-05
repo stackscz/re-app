@@ -45,26 +45,32 @@ export default class App extends React.Component {
 		const {login, logout, authErrors, state} = this.props;
 		return (
 			<div className="App">
-				<div className="well">
-
-					{state.auth.user ?
-						(
-							<div>
-								<p>Cool, now you can logout ...</p>
-								<button className="btn btn-danger" onClick={logout}>logout</button>
-							</div>
-						) :
-						(
-							<div>
-								<p>
-									<small>pssss... correct credentials are <code>username/password</code></small>
-								</p>
-								{authErrors.length > 0 && <pre>{JSON.stringify(authErrors, null, 2)}</pre>}
-								<LoginForm onLogin={login}/>
-							</div>
-						)
-					}
-				</div>
+				{state.auth.initialized && !state.auth.initializing ?
+					<div className="well">
+						{state.auth.user ?
+							(
+								<div>
+									<p>Cool, now you can logout ...</p>
+									<button className="btn btn-danger" onClick={logout}>logout</button>
+								</div>
+							) :
+							(
+								<div>
+									<p>
+										<small>pssss... correct credentials are <code>username/password</code></small>
+									</p>
+									{authErrors.length > 0 && <pre>{JSON.stringify(authErrors, null, 2)}</pre>}
+									<LoginForm onLogin={login}/>
+									{state.auth.authenticating &&
+									<div><i className="fa fa-cog fa-spin fa-lg"/> initializing...</div>}
+								</div>
+							)
+						}
+					</div> :
+					<div>
+						<i className="fa fa-cog fa-spin fa-lg"/> logging in...
+					</div>
+				}
 
 				<div className="row">
 					<div className="col-xs-6">
