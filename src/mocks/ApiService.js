@@ -3,6 +3,8 @@ import { Schema, arrayOf } from 'normalizr';
 import { denormalize } from 'denormalizr';
 import invariant from 'invariant';
 
+const API_LATENCY = 2000;
+
 export default {
 	/**
 	 * Called on auth module bootstrap.
@@ -29,7 +31,7 @@ export default {
 	 */
 	initializeAuth: (apiContext, authContext) => {
 		logBoldMessage('ApiService.initializeAuth called');
-		return new Promise((resolve) => {
+		return DelayedPromise((resolve) => {
 			// possibly set user and possibly modify authContext
 			const updatedAuthContext = {
 				...authContext,
@@ -50,7 +52,7 @@ export default {
 	 */
 	login: (credentials, apiContext, authContext) => {
 		logBoldMessage('ApiService.login called');
-		return new Promise((resolve, reject) => {
+		return DelayedPromise((resolve, reject) => {
 			if (isCredentialsValid(credentials)) {
 				// set user and possibly modify authContext
 				resolve({
@@ -80,7 +82,7 @@ export default {
 	 * @returns {Promise}
 	 */
 	logout: (apiContext, authContext) => {
-		return new Promise(resolve => {
+		return DelayedPromise(resolve => {
 			logBoldMessage('ApiService.logout called');
 			resolve({...authContext});
 		});
@@ -94,9 +96,8 @@ export default {
 	 */
 	getEntityDescriptors: (apiContext, authContext) => {
 		logBoldMessage('ApiService.getEntityDescriptors called');
-		return new Promise((resolve, reject) => {
-			//const { credentials } = authContext;
-			//return reject('fofo');
+		return DelayedPromise((resolve, reject) => {
+			//return reject({errors:[]});
 			resolve(entityDescriptors);
 		});
 	},
@@ -112,7 +113,7 @@ export default {
 	getEntityIndex: (collectionName, filter, apiContext, authContext) => {
 		logBoldMessage('ApiService.getEntityIndex called');
 		invariant(_.isUndefined(filter), 'filtering is not supported in mock implementation of ApiService');
-		return new Promise((resolve) => {
+		return DelayedPromise((resolve) => {
 			const result = _.mapValues(entities[collectionName], (entity) => {
 				return denormalize(entity, entities, mappings[collectionName])
 			});
@@ -130,7 +131,7 @@ export default {
 	 */
 	getEntity: (collectionName, id, apiContext, authContext) => {
 		logBoldMessage('ApiService.getEntity called');
-		return new Promise((resolve) => {
+		return DelayedPromise((resolve) => {
 			const result = denormalize(entities[collectionName][id], entities, mappings[collectionName]);
 			resolve(result);
 		});
@@ -253,4 +254,12 @@ function logBoldMessage(message) {
 	console.log('XXX XXX XXX XXX XXX XXX XXX');
 	console.log(['XXX', message].join(' '));
 	console.log('XXX XXX XXX XXX XXX XXX XXX');
+}
+
+function DelayedPromise(handler) {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			handler(resolve, reject);
+		}, API_LATENCY);
+	});
 }
