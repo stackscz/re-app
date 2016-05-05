@@ -1,4 +1,5 @@
-import { createReducer } from 're-app/utils';
+import { createCheckedReducer } from 're-app/utils';
+import { t } from 'redux-tcomb';
 
 import {
 	INITIALIZE,
@@ -9,7 +10,14 @@ import {
 	LOGOUT_SUCCESS
 } from './actions';
 
-export default createReducer(
+export default createCheckedReducer(
+	t.struct({
+		user: t.maybe(t.Object),
+		errors: t.list(t.Object),
+		initializing: t.Boolean,
+		initialized: t.Boolean,
+		authenticating: t.Boolean
+	}),
 	{
 		user: null,
 		errors: [],
