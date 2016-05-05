@@ -20,6 +20,7 @@ import { useRouterHistory } from 'react-router';
 const history = useRouterHistory(createHashHistory)();
 
 const store = createStore({
+	logging: false,
 	modules: [
 		routingModule
 	],

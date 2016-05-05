@@ -32,7 +32,9 @@ export default function createStore(config = {}, initialState = {}) {
 	];
 	if (process.env.NODE_ENV === 'development') {
 		middleware.push(require('redux-immutable-state-invariant')());
-		middleware.push(require('redux-logger')());
+		if (config.logging !== false) {
+			middleware.push(require('redux-logger')());
+		}
 	}
 
 	const enhancers = [applyMiddleware(...middleware)];
