@@ -6746,6 +6746,9 @@ pre {
   color: royalblue;
   background: #cccccc;
 }
+.DevTools {
+  height: 400px;
+}
 /**
  * prism.js Twilight theme
  * Based (more or less) on the Twilight theme originally of Textmate fame.
