@@ -2,6 +2,7 @@
 import React from 'react';
 
 import LabeledArea from 're-app-examples/LabeledArea';
+import DevTools from 're-app/lib/components/DevTools';
 
 import {app, container} from 're-app/lib/decorators';
 import {createStore} from 're-app/lib/utils';
@@ -13,8 +14,7 @@ import ApiService from 're-app/lib/mocks/ApiService'; // mock api service
 
 const store = createStore({
 	modules: [
-		apiModule, // api module must be configured
-		authModule, // auth modules must be configured
+		apiModule, // with api module configured
 		entityDescriptorsModule
 	]
 }, {
@@ -40,9 +40,18 @@ export default class App extends React.Component {
 					When empty, it tries to fetch descriptors object from ApiService.
 					Then GENERATE_MAPPINGS action is dispatched and normalizr mappings are computed from schemas.
 				</p>
-				<LabeledArea title="Complete app state">
-					<pre>{JSON.stringify(state, null, 2)}</pre>
-				</LabeledArea>
+				<div className="row">
+					<div className="col-xs-6">
+						<LabeledArea title="Complete app state">
+							<pre>{JSON.stringify(state, null, 2)}</pre>
+						</LabeledArea>
+					</div>
+					<div className="col-xs-6">
+						<LabeledArea title="Redux action log">
+							<DevTools />
+						</LabeledArea>
+					</div>
+				</div>
 			</div>
 		);
 	}

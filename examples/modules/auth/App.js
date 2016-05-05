@@ -1,12 +1,14 @@
 /* eslint-disable */
 import React from 'react';
 
+import LabeledArea from 're-app-examples/LabeledArea';
+import DevTools from 're-app/lib/components/DevTools';
+
 import {app, container} from 're-app/lib/decorators';
 import {createStore} from 're-app/lib/utils';
 import apiModule from 're-app/lib/modules/api';
 import authModule from 're-app/lib/modules/auth';
 import {login, logout} from 're-app/lib/modules/auth/actions';
-import LabeledArea from 're-app-examples/LabeledArea';
 import LoginForm from './LoginForm';
 
 import ApiService from 're-app/lib/mocks/ApiService'; // mock api service
@@ -63,9 +65,19 @@ export default class App extends React.Component {
 						)
 					}
 				</div>
-				<LabeledArea title="Complete app state">
-					<pre>{JSON.stringify(state, null, 2)}</pre>
-				</LabeledArea>
+
+				<div className="row">
+					<div className="col-xs-6">
+						<LabeledArea title="Complete app state">
+							<pre>{JSON.stringify(state, null, 2)}</pre>
+						</LabeledArea>
+					</div>
+					<div className="col-xs-6">
+						<LabeledArea title="Redux action log">
+							<DevTools />
+						</LabeledArea>
+					</div>
+				</div>
 			</div>
 		);
 	}

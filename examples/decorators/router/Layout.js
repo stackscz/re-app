@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, BackBtn } from 're-app/lib/components';
 
 import LabeledArea from 're-app-examples/LabeledArea';
+import DevTools from 're-app/lib/components/DevTools';
 
 var menuItems = [
 	{
@@ -44,7 +45,7 @@ export default class Layout extends React.Component {
 							<ul>
 								<li>
 									<BackBtn className="btn btn-xs btn-default">
-										<i className="fa fa-arrow-left" />
+										<i className="fa fa-arrow-left"/>
 										Back
 									</BackBtn>
 								</li>
@@ -62,9 +63,18 @@ export default class Layout extends React.Component {
 						</div>
 					</div>
 				</div>
-				<LabeledArea title="Complete app state">
-					<pre>{JSON.stringify(this.context.store.getState(), null, 2)}</pre>
-				</LabeledArea>
+				<div className="row">
+					<div className="col-xs-6">
+						<LabeledArea title="Complete app state">
+							<pre>{JSON.stringify(this.context.store.getState(), null, 2)}</pre>
+						</LabeledArea>
+					</div>
+					<div className="col-xs-6">
+						<LabeledArea title="Redux action log">
+							<DevTools />
+						</LabeledArea>
+					</div>
+				</div>
 			</div>
 		);
 	}

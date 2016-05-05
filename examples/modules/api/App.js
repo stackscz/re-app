@@ -10,6 +10,7 @@ import Select from 're-app/lib/components/Select';
 import Checkbox from 're-app/lib/components/Checkbox';
 
 import LabeledArea from 're-app-examples/LabeledArea';
+import DevTools from 're-app/lib/components/DevTools';
 
 const store = createStore({
 	modules: [
@@ -66,9 +67,18 @@ export default class App extends React.Component {
 						SSL
 					</label>
 				</div>
-				<LabeledArea title="Complete app state">
-					<pre>{JSON.stringify(state, null, 2)}</pre>
-				</LabeledArea>
+				<div className="row">
+					<div className="col-xs-6">
+						<LabeledArea title="Complete app state">
+							<pre>{JSON.stringify(state, null, 2)}</pre>
+						</LabeledArea>
+					</div>
+					<div className="col-xs-6">
+						<LabeledArea title="Redux action log">
+							<DevTools />
+						</LabeledArea>
+					</div>
+				</div>
 			</div>
 		);
 	}

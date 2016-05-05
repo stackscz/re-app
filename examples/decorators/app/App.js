@@ -3,6 +3,7 @@ import React from 'react';
 import { app } from 're-app/lib/decorators';
 import { createStore } from 're-app/lib/utils';
 import LabeledArea from 're-app-examples/LabeledArea';
+import DevTools from 're-app/lib/components/DevTools';
 
 const store = createStore({
 	reducers: {
@@ -48,9 +49,18 @@ export default class App extends React.Component {
 						})}
 					</div>
 				</div>
-				<LabeledArea title="Complete app state">
-					<pre><code>{JSON.stringify(state, null, 2)}</code></pre>
-				</LabeledArea>
+				<div className="row">
+					<div className="col-xs-6">
+						<LabeledArea title="Complete app state">
+							<pre><code>{JSON.stringify(state, null, 2)}</code></pre>
+						</LabeledArea>
+					</div>
+					<div className="col-xs-6">
+						<LabeledArea title="Redux action log">
+							<DevTools />
+						</LabeledArea>
+					</div>
+				</div>
 			</div>
 		);
 	}
