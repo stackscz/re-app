@@ -54,6 +54,7 @@
     "redux-form": "^5.0.1",
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.10.2",
+    "redux-tcomb": "^0.1.6",
     "validate.js": "^0.9.0"
   },
   "npmName": "re-app"
