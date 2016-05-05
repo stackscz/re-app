@@ -9,8 +9,3 @@ Initial state of module:
     	fieldsets: {}, // fieldsets description object
     	mappings: {} // normalizr schemas
     }
-
-### Depends on modules
-
-- `api`
-- `auth`
