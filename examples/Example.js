@@ -10,7 +10,7 @@ import classnames from 'classnames';
 export default class Example extends React.Component {
 
 	static propTypes = {
-		readme: React.PropTypes.string.isRequired,
+		readme: React.PropTypes.string,
 		codeFiles: React.PropTypes.arrayOf(React.PropTypes.shape({
 			name: React.PropTypes.string.isRequired,
 			content: React.PropTypes.string.isRequired,
@@ -58,20 +58,14 @@ export default class Example extends React.Component {
 		const { activeCodeFileName } = this.state;
 		return (
 			<div className="Example">
-				<div className="Example-readme">
+				{readme && <div className="Example-readme">
 					<Markdown content={readme}/>
-				</div>
+				</div>}
 
 				<div className="row">
 					{children &&
 					<div className="col-xs-12 col-sm-6">
-						<h1>
-							Example&nbsp;
-							<span className="badge" role="alert">
-								<i className="fa fa-exclamation-triangle"/>&nbsp;
-								Open DevTools to see redux action log.
-							</span>
-						</h1>
+						<h1>Example</h1>
 						<div className="Example-content">
 							<div className="panel panel-default">
 								<div className="panel-body">
