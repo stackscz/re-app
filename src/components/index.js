@@ -1,8 +1,8 @@
-import DevTools from 're-app/components/DevTools';
-import JsonInspector from 're-app/components/JsonInspector';
-import Link from 're-app/components/Link';
-import Btn from 're-app/components/Btn';
-import BackBtn from 're-app/components/BackBtn';
+import DevTools from './DevTools';
+import JsonInspector from './JsonInspector';
+import Link from './Link';
+import Btn from './Btn';
+import BackBtn from './BackBtn';
 
 export {
 	DevTools,
