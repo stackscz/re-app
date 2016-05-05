@@ -14,6 +14,7 @@ export default createReducer(
 		user: null,
 		errors: [],
 		initializing: false,
+		initialized: false,
 		authenticating: false
 	},
 	{

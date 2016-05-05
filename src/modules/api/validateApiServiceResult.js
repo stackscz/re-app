@@ -1,8 +1,7 @@
 import validateObject from 're-app/utils/validateObject';
+import invariant from 'invariant';
 
 export default function validateApiServiceResult(functionName, result, propType) {
 	const error = validateObject(result, propType);
-	if (error) {
-		console.warn('ApiService result validation failed for function "' + functionName + '"', error.message);
-	}
+	invariant(!error,'ApiService result validation failed for function "%s": %s', functionName, error && error.message);
 }

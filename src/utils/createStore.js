@@ -1,7 +1,5 @@
 import _ from 'lodash';
 import { createStore as reduxCreateStore, applyMiddleware, compose, combineReducers} from 'redux';
-import DevTools from 're-app/components/DevTools';
-import createLogger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
 import createHistory from 're-app/utils/createHistory';
@@ -27,20 +25,27 @@ export default function createStore(config = {}, initialState = {}) {
 		});
 	}
 
+	const sagaMiddleware = createSagaMiddleware();
+	const middleware = [
+		sagaMiddleware,
+		router.middleware
+	];
+	if (process.env.NODE_ENV === 'development') {
+		middleware.push(require('redux-immutable-state-invariant')());
+		middleware.push(require('redux-logger')());
+	}
+
+	const enhancers = [applyMiddleware(...middleware)];
+	if (process.env.NODE_ENV === 'development') {
+		enhancers.push(require('re-app/components/DevTools').default.instrument());
+	}
 
 	var rootReducer = combineReducers(reducers);
-	var sagaMiddleware = createSagaMiddleware(...sagas);
-
-	rootReducer = compose(
-		applyMiddleware(
-			createLogger(),
-			router.middleware,
-			sagaMiddleware
-		),
-		DevTools.instrument()
-	)(reduxCreateStore)(rootReducer, initialState);
-
-	return rootReducer;
+	const store = compose(...enhancers)(reduxCreateStore)(rootReducer, initialState);
+	if (sagas.length) {
+		sagaMiddleware.run(...sagas);
+	}
+	return store;
 }
 
 function createRouter(routerConfig = {}) {

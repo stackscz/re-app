@@ -1,4 +1,5 @@
 import validateApiServiceResult from 're-app/modules/api/validateApiServiceResult';
+import validateApiServiceErrorResult from 're-app/modules/api/validateApiServiceErrorResult';
 import {
 	initializeAuth as initializeAuthResultType,
 	login as loginResultType,
@@ -7,7 +8,6 @@ import {
 	logoutError as logoutErrorResultType
 } from 're-app/modules/api/resultTypes';
 
-import { isCancelError } from 'redux-saga';
 import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
 
 import { getApiContext, getApiService } from 're-app/modules/api/selectors';
@@ -63,10 +63,8 @@ export function* authorize(credentials, apiContext, authContext) {
 		validateApiServiceResult('login', result, loginResultType);
 		yield put(loginSuccess(result));
 	} catch (e) {
-		if (!isCancelError(e)) {
-			validateApiServiceResult('loginError', e, loginErrorResultType);
-			yield put(loginFailure(e));
-		}
+		validateApiServiceErrorResult('login', e, loginErrorResultType);
+		yield put(loginFailure(e.errors));
 	}
 }
 
@@ -79,10 +77,8 @@ export function* logout() {
 		validateApiServiceResult('logout', logoutResult, logoutResultType);
 		yield put(logoutSuccess());
 	} catch (e) {
-		if (!isCancelError(e)) {
-			validateApiServiceResult('logoutError', e, logoutErrorResultType);
-			yield put(logoutFailure());
-		}
+		validateApiServiceErrorResult('logout', e, logoutErrorResultType);
+		yield put(logoutFailure());
 	}
 }
 

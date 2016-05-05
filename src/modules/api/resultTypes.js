@@ -7,7 +7,9 @@ export const login = T.shape({
 		username: T.string.isRequired
 	})
 });
-export const loginError = T.object.isRequired; // TODO
+export const loginError = T.shape({
+	errors: T.array.isRequired
+}).isRequired; // TODO
 
 export const logout = T.object.isRequired;
 export const logoutError = T.object.isRequired; // TODO
@@ -17,7 +19,7 @@ export const getEntityDescriptors = T.shape({
 		name: T.string.isRequired,
 		idFieldName: T.string.isRequired,
 		displayFieldName: T.string.isRequired,
-		isFilterable: T.string.isRequired,
+		isFilterable: T.bool.isRequired,
 		fields: T.objectOf(T.shape({
 			name: T.string.isRequired,
 			type: T.string.isRequired
@@ -29,7 +31,9 @@ export const getEntityDescriptors = T.shape({
 		form: T.arrayOf(T.string)
 	})).isRequired
 });
-export const getEntityDescriptorsError = T.object.isRequired; // TODO
+export const getEntityDescriptorsError = T.shape({
+	errors: T.arrayOf(T.object.isRequired).isRequired
+}).isRequired;
 
 export const getEntityIndex = T.shape({
 	data: T.arrayOf(T.object).isRequired,

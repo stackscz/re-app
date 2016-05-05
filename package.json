@@ -27,6 +27,7 @@
     "re-app-builder": "^0.2.6",
     "redux-devtools-dock-monitor": "^1.1.0",
     "redux-devtools-log-monitor": "^1.0.5",
+    "redux-immutable-state-invariant": "^1.2.3",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",
     "webpack-node-externals": "^1.0.0"
@@ -52,7 +53,7 @@
     "redux-devtools": "^3.1.1",
     "redux-form": "^5.0.1",
     "redux-logger": "^2.6.1",
-    "redux-saga": "^0.9.4",
+    "redux-saga": "^0.10.2",
     "validate.js": "^0.9.0"
   },
   "npmName": "re-app"
