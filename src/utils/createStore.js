@@ -30,22 +30,24 @@ export default function createStore(config = {}, initialState = {}) {
 		sagaMiddleware,
 		router.middleware
 	];
-	if (process.env.NODE_ENV === 'development') {
-		middleware.push(require('redux-immutable-state-invariant')());
+	if (process.env.NODE_ENV !== 'production') {
+		//middleware.push(require('redux-immutable-state-invariant')()); // does not handle circular dependencies
 		if (config.logging !== false) {
 			middleware.push(require('redux-logger')());
 		}
 	}
 
 	const enhancers = [applyMiddleware(...middleware)];
-	if (process.env.NODE_ENV === 'development') {
+	if (process.env.NODE_ENV !== 'production') {
 		enhancers.push(require('re-app/components/DevTools').default.instrument());
 	}
 
 	var rootReducer = combineReducers(reducers);
 	const store = compose(...enhancers)(reduxCreateStore)(rootReducer, initialState);
 	if (sagas.length) {
-		sagaMiddleware.run(...sagas);
+		sagas.forEach((saga) => {
+			sagaMiddleware.run(saga);
+		});
 	}
 	return store;
 }
