@@ -3,6 +3,7 @@ import { put, select } from 'redux-saga/effects';
 import { NAVIGATE, locationReached } from './actions';
 import resolveLocation from './utils/resolveLocation';
 import { push, LOCATION_CHANGE } from 'react-router-redux';
+import { getRoutes } from './selectors';
 
 export function* watchNavigate() {
 	yield* takeLatest(NAVIGATE, navigateTask);
@@ -10,7 +11,7 @@ export function* watchNavigate() {
 
 export function* navigateTask(action) {
 	const { to } = action.payload;
-	yield put(push(resolveLocation(to, yield select(state => state.routing.routes))));
+	yield put(push(resolveLocation(to, yield select(getRoutes))));
 }
 
 export function* watchLocationChange() {
