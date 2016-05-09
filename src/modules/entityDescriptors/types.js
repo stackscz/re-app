@@ -1,37 +1,37 @@
-import { t } from 'redux-tcomb';
+import _ from 'lodash';
+import t from 'tcomb';
 
-const SchemasDictionary = t.refinement(
+export const EntityFieldSchema = t.struct({
+	name: t.String,
+	type: t.String
+});
+
+export const EntitySchema = t.struct({
+	name: t.String,
+	idFieldName: t.String,
+	displayFieldName: t.String,
+	isFilterable: t.Boolean,
+	fields: t.refinement(
+		t.dict(
+			t.String,
+			EntityFieldSchema
+		),
+		(dictionary) => {
+			return _.every(dictionary, (item, key) => item.name === key);
+		},
+		'Schema fields dictionary'
+	)
+});
+
+export const SchemasDictionary = t.refinement(
 	t.dict(
 		t.String,
-		t.struct({
-			name: t.String,
-			idFieldName: t.String,
-			displayFieldName: t.String,
-			isFilterable: t.Boolean,
-			fields: t.refinement(
-				t.dict(
-					t.String,
-					t.struct({
-						name: t.String,
-						type: t.String
-					})
-				),
-				(dictionary)=> {
-					return _.every(dictionary, (item, key) => item.name === key);
-				},
-				'Schema fields dictionary'
-			)
-		})
+		EntitySchema
 	),
-	(dictionary)=> {
+	(dictionary) => {
 		return _.every(dictionary, (item, key) => item.name === key);
 	},
 	'Schemas dictionary'
 );
 
-const FieldsetsDictionary = t.dict(t.String, t.dict(t.String, t.list(t.String)));
-
-export {
-	SchemasDictionary,
-	FieldsetsDictionary
-}
+export const FieldsetsDictionary = t.dict(t.String, t.dict(t.String, t.list(t.String)));

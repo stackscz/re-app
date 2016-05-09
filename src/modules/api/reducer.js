@@ -1,16 +1,9 @@
-import { createCheckedReducer } from 're-app/utils';
+import { createReducer } from 're-app/utils';
 import { SET_HOST } from './actions';
+import { ApiContext } from './types';
 
-import { t } from 'redux-tcomb';
-
-export default createCheckedReducer(
-	t.struct({
-		host: t.maybe(t.struct({
-			name: t.String,
-			ssl: t.Boolean
-		})),
-		service: t.maybe(t.Object)
-	}),
+export default createReducer(
+	ApiContext,
 	{
 		host: null,
 		service: null

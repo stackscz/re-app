@@ -1,14 +1,13 @@
-import validateApiServiceResult from 're-app/modules/api/validateApiServiceResult';
-import validateApiServiceErrorResult from 're-app/modules/api/validateApiServiceErrorResult';
-import {
-	initializeAuth as initializeAuthResultType,
-	login as loginResultType,
-	loginError as loginErrorResultType,
-	logout as logoutResultType,
-	logoutError as logoutErrorResultType
-} from 're-app/modules/api/resultTypes';
-
 import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
+
+import { apiServiceResultTypeInvariant } from 're-app/utils';
+import t from 'tcomb';
+import {
+	AuthContext,
+	AuthenticatedAuthContext,
+	UnauthenticatedAuthContext,
+	AuthError
+} from './types';
 
 import { getApiContext, getApiService } from 're-app/modules/api/selectors';
 import { getUser, getAuthContext } from './selectors';
@@ -31,7 +30,7 @@ export function* authFlow() {
 	yield put(initialize(initializedAuthContext));
 	const apiContext = yield select(getApiContext);
 	const serviceAuthContext = yield call(ApiService.initializeAuth, apiContext, initializedAuthContext);
-	validateApiServiceResult('initializeAuth', serviceAuthContext, initializeAuthResultType);
+	apiServiceResultTypeInvariant(serviceAuthContext, AuthContext);
 	yield put(initializeFinish(serviceAuthContext));
 	while (true) { // eslint-disable-line no-constant-condition
 		const user = yield select(getUser);
@@ -60,10 +59,10 @@ export function* authorize(credentials, apiContext, authContext) {
 	const ApiService = yield select(getApiService);
 	try {
 		const result = yield call(ApiService.login, credentials, apiContext, authContext);
-		validateApiServiceResult('login', result, loginResultType);
+		apiServiceResultTypeInvariant(result, t.struct({user: t.Object}));
 		yield put(loginSuccess(result));
 	} catch (e) {
-		validateApiServiceErrorResult('login', e, loginErrorResultType);
+		apiServiceResultTypeInvariant(e, AuthError);
 		yield put(loginFailure(e.errors));
 	}
 }
@@ -74,10 +73,10 @@ export function* logout() {
 	const apiContext = yield select(getApiContext);
 	try {
 		const logoutResult = yield call(ApiService.logout, apiContext, authContext);
-		validateApiServiceResult('logout', logoutResult, logoutResultType);
+		apiServiceResultTypeInvariant(logoutResult, t.Any);
 		yield put(logoutSuccess());
 	} catch (e) {
-		validateApiServiceErrorResult('logout', e, logoutErrorResultType);
+		apiServiceResultTypeInvariant(e, AuthError);
 		yield put(logoutFailure());
 	}
 }

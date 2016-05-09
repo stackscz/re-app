@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import { createCheckedReducer } from 're-app/utils';
-import { t } from 'redux-tcomb';
+import { createReducer } from 're-app/utils';
+import t from 'tcomb';
 import {
 	SchemasDictionary,
-FieldsetsDictionary
+	FieldsetsDictionary
 } from './types';
 import {
 	RECEIVE_ENTITY_DESCRIPTORS,
@@ -12,7 +12,7 @@ import {
 import { Schema, arrayOf } from 'normalizr';
 import update from 'immutability-helper';
 
-export default createCheckedReducer(
+export default createReducer(
 	t.struct({
 		schemas: SchemasDictionary,
 		fieldsets: FieldsetsDictionary

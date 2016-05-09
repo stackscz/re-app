@@ -1,6 +1,5 @@
 import test from 'tape';
 import ApiService from 're-app/mocks/ApiService';
-import { validateObject } from 're-app/utils';
 
 const goodCredetials = {username: 'username', password: 'password'};
 const badCredetials = {username: 'johndoe', password: 'password'};
