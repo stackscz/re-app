@@ -13,9 +13,9 @@ import {
 
 import {
 	SchemasDictionary,
-	FieldsetsDictionary,
-	Error
+	FieldsetsDictionary
 } from './types';
+import t from 'tcomb';
 
 import {
 	ApiErrorResult
