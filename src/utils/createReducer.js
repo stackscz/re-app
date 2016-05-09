@@ -3,10 +3,9 @@ import _ from 'lodash';
 import { typeInvariant } from 're-app/utils';
 import invariant from 'invariant';
 import t from 'tcomb';
+import { INIT } from 're-app/utils/actions';
 
 export default function createReducer(stateType, initialState, handlers) {
-	var serverStateMerged = false;
-
 	if (arguments.length < 3) {
 		handlers = initialState;
 		initialState = stateType;
@@ -18,31 +17,24 @@ export default function createReducer(stateType, initialState, handlers) {
 	invariant(!_.isUndefined(initialState), 'First argument of `createReducer` should be value representing initial state of reducer.');
 	invariant(_.isUndefined(handlers) || _.isObject(handlers), 'Second argument of `createReducer` should be object containing reducer functions keyed by redux action type which they handle.');
 
-	return function reducer(state, action) {
-		// don't do this, https://github.com/reactjs/redux/issues/186
-		//if (action.type === '@@INIT') {
-		//	state = {...initialState, ...state};
-		//}
+	return function reducer(state = initialState, action) {
+		// ignore unknown actions
 
-		if (typeof state === 'undefined') {
-			state = initialState;
-		} else if (!serverStateMerged) {
+		if (action.type === INIT) {
 			state = {...initialState, ...state};
-			serverStateMerged = true;
-		}
-
-		if (serverStateMerged && stateType && process.env.NODE_ENV !== 'production') {
-			typeInvariant(state, stateType, 'before reducer');
+			if (stateType && process.env.NODE_ENV !== 'production') {
+				typeInvariant(state, stateType, 'Invalid state after @@re-app/INIT');
+			}
+			return state;
 		}
 
 		if (handlers && handlers.hasOwnProperty(action.type)) {
 			state = handlers[action.type](state, action);
-		}
 
-		if (serverStateMerged && stateType && process.env.NODE_ENV !== 'production') {
-			typeInvariant(state, stateType, 'after reducer');
+			if (stateType && process.env.NODE_ENV !== 'production') {
+				typeInvariant(state, stateType, 'Invalid state after reducer.');
+			}
 		}
-
 		return state;
 	};
 }

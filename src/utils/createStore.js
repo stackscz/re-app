@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
 import createHistory from 're-app/utils/createHistory';
 import { reducer as formReducer } from 'redux-form';
+import { init } from 're-app/utils/actions';
 
 export default function createStore(config = {}, initialState = {}) {
 
@@ -44,6 +45,7 @@ export default function createStore(config = {}, initialState = {}) {
 
 	var rootReducer = combineReducers(reducers);
 	const store = compose(...enhancers)(reduxCreateStore)(rootReducer, initialState);
+	store.dispatch(init());
 	if (sagas.length) {
 		sagas.forEach((saga) => {
 			sagaMiddleware.run(saga);
