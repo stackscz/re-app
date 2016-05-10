@@ -1,10 +1,24 @@
 import _ from 'lodash';
 import t from 'tcomb';
 
-export const EntityFieldSchema = t.struct({
+export const EntityValueFieldSchema = t.struct({
 	name: t.String,
 	type: t.String
 });
+
+export const EntityAssociationFieldSchema = t.struct({
+	name: t.String,
+	type: t.refinement(t.String, (x) => x === 'association', 'Association type value'),
+	collectionName: t.String
+});
+
+export const EntityFieldSchema = t.union([EntityValueFieldSchema, EntityAssociationFieldSchema]);
+EntityFieldSchema.dispatch = (x) => {
+	if(x.type === 'association') {
+		return EntityAssociationFieldSchema;
+	}
+	return EntityValueFieldSchema;
+};
 
 export const EntitySchema = t.struct({
 	name: t.String,
