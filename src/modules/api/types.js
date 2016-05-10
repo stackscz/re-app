@@ -1,6 +1,6 @@
 import t from 'tcomb';
 
-const ApiService = t.struct({
+export const ApiService = t.struct({
 	getInitialAuthContext: t.Function,
 	initializeAuth: t.Function,
 	login: t.Function,
