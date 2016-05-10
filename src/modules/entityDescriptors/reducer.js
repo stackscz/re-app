@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import { createReducer } from 're-app/utils';
 import t from 'tcomb';
+import { validate } from 'tcomb-validation';
 import {
 	SchemasDictionary,
-	FieldsetsDictionary
+	FieldsetsDictionary,
+	EntityAssociationFieldSchema
 } from './types';
 import {
 	RECEIVE_ENTITY_DESCRIPTORS,
@@ -36,7 +38,7 @@ export default createReducer(
 						// define normalizr schemas
 						_.each(state.schemas, (schema) => {
 							_.each(schema.fields, (field) => {
-								if (field.collectionName) {
+								if (validate(field, EntityAssociationFieldSchema).isValid()) {
 									const assocMapping = mappings[field.collectionName];
 									mappings[schema.name].define({
 										[field.name]: field.isMultiple ? arrayOf(assocMapping) : assocMapping
