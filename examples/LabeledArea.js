@@ -1,5 +1,4 @@
 import React from 'react';
-import './index.less';
 
 export default class LabeledArea extends React.Component {
 

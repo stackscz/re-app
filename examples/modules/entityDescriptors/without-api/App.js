@@ -2,6 +2,7 @@
 import React from 'react';
 
 import LabeledArea from 're-app-examples/LabeledArea';
+import LabeledJsonInspector from 're-app-examples/LabeledJsonInspector';
 import DevTools from 're-app/lib/components/DevTools';
 
 import {app, container} from 're-app/lib/decorators';
@@ -57,9 +58,7 @@ export default class App extends React.Component {
 				</p>
 				<div className="row">
 					<div className="col-xs-6">
-						<LabeledArea title="Complete app state">
-							<pre>{JSON.stringify(state, null, 2)}</pre>
-						</LabeledArea>
+						<LabeledJsonInspector title="Complete app state" data={state} />
 					</div>
 					<div className="col-xs-6">
 						<LabeledArea title="Redux action log">

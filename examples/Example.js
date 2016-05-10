@@ -6,7 +6,9 @@ import CodeArea from 're-app-examples/CodeArea';
 import Markdown from 're-app-examples/Markdown';
 import classnames from 'classnames';
 
-@container((state) => ({repository: state.repository}))
+@container(
+	(state) => ({repository: state.repository})
+)
 export default class Example extends React.Component {
 
 	static propTypes = {
@@ -64,7 +66,7 @@ export default class Example extends React.Component {
 
 				<div className="row">
 					{children &&
-					<div className="col-xs-12 col-sm-6">
+					<div className="col-xs-12 col-lg-6">
 						<h1>Example</h1>
 						<div className="Example-content">
 							<div className="panel panel-default">
@@ -75,7 +77,7 @@ export default class Example extends React.Component {
 						</div>
 					</div>}
 					{codeFiles.length > 0 &&
-					<div className="col-xs-12 col-sm-6">
+					<div className="col-xs-12 col-lg-6">
 						<div className="clearfix">
 							<h1>
 								Code

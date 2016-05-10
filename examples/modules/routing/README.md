@@ -1,6 +1,6 @@
 # `routing`
 
-Handles entity data
+Handles routing state
 
 ### Depends on modules
 

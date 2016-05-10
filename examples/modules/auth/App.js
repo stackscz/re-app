@@ -2,6 +2,7 @@
 import React from 'react';
 
 import LabeledArea from 're-app-examples/LabeledArea';
+import LabeledJsonInspector from 're-app-examples/LabeledJsonInspector';
 import DevTools from 're-app/lib/components/DevTools';
 
 import {app, container} from 're-app/lib/decorators';
@@ -62,21 +63,19 @@ export default class App extends React.Component {
 									{authErrors.length > 0 && <pre>{JSON.stringify(authErrors, null, 2)}</pre>}
 									<LoginForm onLogin={login}/>
 									{state.auth.authenticating &&
-									<div><i className="fa fa-cog fa-spin fa-lg"/> initializing...</div>}
+									<div><i className="fa fa-cog fa-spin fa-lg"/> logging in...</div>}
 								</div>
 							)
 						}
 					</div> :
-					<div>
-						<i className="fa fa-cog fa-spin fa-lg"/> logging in...
+					<div className="well">
+						<i className="fa fa-cog fa-spin fa-lg"/> initializing...
 					</div>
 				}
 
 				<div className="row">
 					<div className="col-xs-6">
-						<LabeledArea title="Complete app state">
-							<pre>{JSON.stringify(state, null, 2)}</pre>
-						</LabeledArea>
+						<LabeledJsonInspector title="Complete app state" data={state}/>
 					</div>
 					<div className="col-xs-6">
 						<LabeledArea title="Redux action log">
