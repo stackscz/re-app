@@ -3,6 +3,8 @@ import app from './app';
 import container from './container';
 import router from './router';
 import form from './form';
+import entityIndex from './entityIndex';
+import entityEditor from './entityEditor';
 
 export {
 	blissComponent
@@ -10,4 +12,6 @@ export {
 	,container
 	,router
 	,form
+	,entityIndex
+	,entityEditor
 };

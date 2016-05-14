@@ -1,0 +1,5413 @@
+@charset "UTF-8";
+/*! rubix - v3.0.0 - 2015-07-22 [copyright: SketchPixy LLP, email: support@sketchpixy.com] */
+@charset "UTF-8"; /*! rubix - v3.0.0 - 2015-07-22 [copyright: SketchPixy LLP, email: support@sketchpixy.com] */
+@keyframes vex-flipin-horizontal {
+    0% {
+        opacity: 0;
+        transform: rotateY(-90deg);
+        -webkit-transform: rotateY(-90deg);
+        -moz-transform: rotateY(-90deg);
+        -ms-transform: rotateY(-90deg);
+        -o-transform: rotateY(-90deg)
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(0);
+        -webkit-transform: rotateY(0);
+        -moz-transform: rotateY(0);
+        -ms-transform: rotateY(0);
+        -o-transform: rotateY(0)
+    }
+}
+
+@-webkit-keyframes vex-flipin-horizontal {
+    0% {
+        opacity: 0;
+        transform: rotateY(-90deg);
+        -webkit-transform: rotateY(-90deg);
+        -moz-transform: rotateY(-90deg);
+        -ms-transform: rotateY(-90deg);
+        -o-transform: rotateY(-90deg)
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(0);
+        -webkit-transform: rotateY(0);
+        -moz-transform: rotateY(0);
+        -ms-transform: rotateY(0);
+        -o-transform: rotateY(0)
+    }
+}
+
+@keyframes vex-flipout-horizontal {
+    0% {
+        opacity: 1;
+        transform: rotateY(0);
+        -webkit-transform: rotateY(0);
+        -moz-transform: rotateY(0);
+        -ms-transform: rotateY(0);
+        -o-transform: rotateY(0)
+    }
+    100% {
+        opacity: 0;
+        transform: rotateY(90deg);
+        -webkit-transform: rotateY(90deg);
+        -moz-transform: rotateY(90deg);
+        -ms-transform: rotateY(90deg);
+        -o-transform: rotateY(90deg)
+    }
+}
+
+@-webkit-keyframes vex-flipout-horizontal {
+    0% {
+        opacity: 1;
+        transform: rotateY(0);
+        -webkit-transform: rotateY(0);
+        -moz-transform: rotateY(0);
+        -ms-transform: rotateY(0);
+        -o-transform: rotateY(0)
+    }
+    100% {
+        opacity: 0;
+        transform: rotateY(90deg);
+        -webkit-transform: rotateY(90deg);
+        -moz-transform: rotateY(90deg);
+        -ms-transform: rotateY(90deg);
+        -o-transform: rotateY(90deg)
+    }
+}
+
+.vex.vex-theme-flat-attack {
+    -webkit-perspective: 1300px;
+    -ms-perspective: 1300px;
+    -o-perspective: 1300px;
+    perspective: 1300px;
+    -webkit-perspective-origin: 50% 150px;
+    -ms-perspective-origin: 50% 150px;
+    -o-perspective-origin: 50% 150px;
+    perspective-origin: 50% 150px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    font-size: 1.5em
+}
+
+.vex.vex-theme-flat-attack.vex-closing .vex-content {
+    animation: vex-flipout-horizontal .5s;
+    -webkit-animation: vex-flipout-horizontal .5s;
+    -moz-animation: vex-flipout-horizontal .5s;
+    -ms-animation: vex-flipout-horizontal .5s;
+    -o-animation: vex-flipout-horizontal .5s;
+    -webkit-backface-visibility: hidden
+}
+
+.vex.vex-theme-flat-attack .vex-content {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    animation: vex-flipin-horizontal .5s;
+    -webkit-animation: vex-flipin-horizontal .5s;
+    -moz-animation: vex-flipin-horizontal .5s;
+    -ms-animation: vex-flipin-horizontal .5s;
+    -o-animation: vex-flipin-horizontal .5s;
+    -webkit-backface-visibility: hidden;
+    font-family: Lato, sans-serif;
+    font-weight: 200;
+    background: #fff;
+    color: #444;
+    padding: 2em 2em 3em;
+    line-height: 1.5em;
+    position: relative;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 600px
+}
+
+.vex.vex-theme-flat-attack .vex-content h1, .vex.vex-theme-flat-attack .vex-content h2, .vex.vex-theme-flat-attack .vex-content h3, .vex.vex-theme-flat-attack .vex-content h4, .vex.vex-theme-flat-attack .vex-content h5, .vex.vex-theme-flat-attack .vex-content h6, .vex.vex-theme-flat-attack .vex-content li, .vex.vex-theme-flat-attack .vex-content p, .vex.vex-theme-flat-attack .vex-content ul {
+    color: inherit
+}
+
+.vex.vex-theme-flat-attack .vex-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer
+}
+
+.vex.vex-theme-flat-attack .vex-close:before {
+    font-family: Lato, sans-serif;
+    font-weight: 100;
+    line-height: 1px;
+    padding-top: .5em;
+    display: block;
+    font-size: 2em;
+    text-indent: 1px;
+    overflow: hidden;
+    height: 1.25em;
+    width: 1.25em;
+    text-align: center;
+    top: 0;
+    right: 0;
+    color: #fff;
+    background: #666
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-message {
+    margin-bottom: .5em
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=text], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=time], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=url], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=week], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=date], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=datetime], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=datetime-local], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=email], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=month], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=number], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=password], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=search], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=tel], .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input textarea {
+    border-radius: 3px;
+    background: #f0f0f0;
+    width: 100%;
+    padding: .25em .67em;
+    border: 0;
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    min-height: 2.5em;
+    margin: 0 0 .25em
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=text]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=time]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=url]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=week]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=date]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=datetime]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=datetime-local]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=email]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=month]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=number]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=password]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=search]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input input[type=tel]:focus, .vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-input textarea:focus {
+    box-shadow: inset 0 0 0 2px #666;
+    outline: 0
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-buttons {
+    padding-top: 1em;
+    margin-bottom: -3em;
+    margin-left: -2em;
+    margin-right: -2em
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-form .vex-dialog-buttons:after {
+    content: "";
+    display: table;
+    clear: both
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-button {
+    border-radius: 0;
+    border: 0;
+    margin: 0;
+    float: right;
+    padding: .5em 1em;
+    font-size: 1.13em;
+    text-transform: uppercase;
+    font-weight: 200;
+    letter-spacing: .1em;
+    line-height: 1em;
+    font-family: inherit
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-button.vex-last {
+    margin-left: 0
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-button:focus {
+    outline: 0
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-button.vex-dialog-button-primary {
+    background: #666;
+    color: #fff
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-button.vex-dialog-button-primary:focus {
+    box-shadow: inset 0 3px rgba(0, 0, 0, .2)
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-button.vex-dialog-button-secondary {
+    background: #fff;
+    color: #ccc
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-button.vex-dialog-button-secondary:focus {
+    box-shadow: inset 0 3px #aaa;
+    background: #eee;
+    color: #777
+}
+
+.vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-close:before, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-buttons .vex-dialog-button.vex-dialog-button-primary {
+    background: #ff7ea7
+}
+
+.vex.vex-theme-flat-attack .vex-dialog-button.vex-dialog-button-secondary:active, .vex.vex-theme-flat-attack .vex-dialog-button.vex-dialog-button-secondary:hover {
+    color: #777
+}
+
+.vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=text]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=time]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=url]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=week]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=date]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=datetime]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=datetime-local]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=email]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=month]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=number]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=password]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=search]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input input[type=tel]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-pink .vex-dialog-form .vex-dialog-input textarea:focus {
+    box-shadow: inset 0 0 0 2px #ff7ea7
+}
+
+.vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-close:before, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-buttons .vex-dialog-button.vex-dialog-button-primary {
+    background: #ce4a55
+}
+
+.vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=text]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=time]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=url]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=week]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=date]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=datetime]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=datetime-local]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=email]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=month]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=number]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=password]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=search]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input input[type=tel]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-red .vex-dialog-form .vex-dialog-input textarea:focus {
+    box-shadow: inset 0 0 0 2px #ce4a55
+}
+
+.vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-close:before, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-buttons .vex-dialog-button.vex-dialog-button-primary {
+    background: #34b989
+}
+
+.vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=text]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=time]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=url]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=week]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=date]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=datetime]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=datetime-local]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=email]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=month]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=number]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=password]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=search]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input input[type=tel]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-green .vex-dialog-form .vex-dialog-input textarea:focus {
+    box-shadow: inset 0 0 0 2px #34b989
+}
+
+.vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-close:before, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-buttons .vex-dialog-button.vex-dialog-button-primary {
+    background: #477fa5
+}
+
+.vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=text]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=time]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=url]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=week]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=date]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=datetime]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=datetime-local]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=email]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=month]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=number]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=password]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=search]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input input[type=tel]:focus, .vex.vex-theme-flat-attack.vex-theme-flat-attack-blue .vex-dialog-form .vex-dialog-input textarea:focus {
+    box-shadow: inset 0 0 0 2px #477fa5
+}
+
+.vex-loading-spinner.vex-theme-flat-attack {
+    height: 4em;
+    width: 4em
+}
+
+.ionTabs__head {
+    border-bottom: 1px solid #cecece
+}
+
+.ionTabs__tab {
+    font-size: 11px;
+    line-height: 13px;
+    background: #ededed;
+    border: 1px solid #cecece;
+    border-bottom: none;
+    padding: 7px 25px;
+    margin-right: 10px;
+    color: #484848;
+    margin-top: 10px;
+    text-align: center;
+    min-width: 50px
+}
+
+.ionTabs__tab:hover {
+    background: #e5e5e5
+}
+
+.ionTabs__tab.ionTabs__tab_state_active {
+    top: 1px;
+    margin-top: 0;
+    padding: 12px 25px 11px;
+    background: #fff;
+    color: #d71410;
+    border-top-color: #d71410;
+    border-bottom: 1px solid #fff
+}
+
+.ionTabs__body {
+    background: #fff;
+    border: 1px solid #cecece;
+    border-top: none
+}
+
+.ionTabs__item {
+    padding: 15px 26px
+}
+
+.ionTabs__preloader {
+    height: 50px;
+    background: url(/imgs/preloader-flat.gif) 25px 50% no-repeat
+}
+
+@-webkit-keyframes ui-spinner-rotate-right {
+    0% {
+        -webkit-transform: rotate(0)
+    }
+    25%, 50% {
+        -webkit-transform: rotate(180deg)
+    }
+    100%, 75% {
+        -webkit-transform: rotate(360deg)
+    }
+}
+
+@-webkit-keyframes ui-spinner-rotate-left {
+    0%, 25% {
+        -webkit-transform: rotate(0)
+    }
+    50%, 75% {
+        -webkit-transform: rotate(180deg)
+    }
+    100% {
+        -webkit-transform: rotate(360deg)
+    }
+}
+
+@keyframes ui-spinner-rotate-right {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    25%, 50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg)
+    }
+    100%, 75% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+@keyframes ui-spinner-rotate-left {
+    0%, 25% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    50%, 75% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg)
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+.messenger-spinner {
+    position: relative;
+    border-radius: 100%
+}
+
+ul.messenger.messenger-spinner-active .messenger-spinner .messenger-spinner {
+    display: block
+}
+
+.messenger-spinner .messenger-spinner-side {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute
+}
+
+.messenger-spinner .messenger-spinner-side .messenger-spinner-fill {
+    border-radius: 999px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear
+}
+
+.messenger-spinner .messenger-spinner-side-left {
+    left: 0
+}
+
+.messenger-spinner .messenger-spinner-side-left .messenger-spinner-fill {
+    left: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    -webkit-animation-name: ui-spinner-rotate-left;
+    animation-name: ui-spinner-rotate-left;
+    -webkit-transform-origin: 0 50%;
+    -ms-transform-origin: 0 50%;
+    transform-origin: 0 50%
+}
+
+.messenger-spinner .messenger-spinner-side-right {
+    left: 50%
+}
+
+.messenger-spinner .messenger-spinner-side-right .messenger-spinner-fill {
+    left: -100%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    -webkit-animation-name: ui-spinner-rotate-right;
+    animation-name: ui-spinner-rotate-right;
+    -webkit-transform-origin: 100% 50%;
+    -ms-transform-origin: 100% 50%;
+    transform-origin: 100% 50%
+}
+
+ul.messenger-theme-flat {
+    border-radius: 4px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background: #404040
+}
+
+ul.messenger-theme-flat.messenger-empty {
+    display: none
+}
+
+ul.messenger-theme-flat .messenger-message {
+    box-shadow: inset 0 1px rgba(255, 255, 255, .13), inset 48px 0 0 #292929;
+    border-radius: 0;
+    position: relative;
+    border: 0;
+    margin-bottom: 0;
+    font-size: 13px;
+    background: 0 0;
+    color: #f0f0f0;
+    font-weight: 500;
+    padding: 10px 30px 13px 65px
+}
+
+ul.messenger-theme-flat .messenger-message .messenger-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #888;
+    opacity: 1;
+    font-weight: 700;
+    display: block;
+    font-size: 20px;
+    line-height: 20px;
+    padding: 8px 10px 7px 7px;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+    -webkit-appearance: none
+}
+
+.irs-from, .irs-max, .irs-min, .irs-single, .irs-to {
+    font-size: 10px;
+    line-height: 1.333;
+    text-shadow: none
+}
+
+ul.messenger-theme-flat .messenger-message .messenger-close:hover {
+    color: #bbb
+}
+
+ul.messenger-theme-flat .messenger-message .messenger-close:active {
+    color: #777
+}
+
+ul.messenger-theme-flat .messenger-message .messenger-actions {
+    float: none;
+    margin-top: 10px
+}
+
+ul.messenger-theme-flat .messenger-message .messenger-actions a {
+    border-radius: 4px;
+    text-decoration: none;
+    color: #aaa;
+    background: #2e2e2e;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 4px 11px 6px;
+    text-transform: capitalize
+}
+
+ul.messenger-theme-flat .messenger-message .messenger-actions a:hover {
+    color: #f0f0f0;
+    background: #2e2e2e
+}
+
+ul.messenger-theme-flat .messenger-message .messenger-actions a:active {
+    background: #292929;
+    color: #aaa
+}
+
+ul.messenger-theme-flat .messenger-message .messenger-actions .messenger-phrase {
+    display: none
+}
+
+ul.messenger-theme-flat .messenger-message .messenger-message-inner:before {
+    border-radius: 50%;
+    position: absolute;
+    left: 17px;
+    display: block;
+    content: " ";
+    top: 50%;
+    margin-top: -8px;
+    height: 13px;
+    width: 13px;
+    z-index: 20
+}
+
+ul.messenger-theme-flat .messenger-message.alert-success .messenger-message-inner:before {
+    background: #5fca4a
+}
+
+ul.messenger-theme-flat .messenger-message.alert-info .messenger-message-inner:before {
+    background: #61c4b8
+}
+
+ul.messenger-theme-flat .messenger-message.alert-error .messenger-message-inner:before {
+    background: #dd6a45
+}
+
+ul.messenger-theme-flat .messenger-message.alert-error.messenger-retry-soon .messenger-spinner {
+    width: 32px;
+    height: 32px;
+    background: 0 0
+}
+
+ul.messenger-theme-flat .messenger-message.alert-error.messenger-retry-soon .messenger-spinner .messenger-spinner-side .messenger-spinner-fill {
+    background: #dd6a45;
+    -webkit-animation-duration: 20s;
+    animation-duration: 20s;
+    opacity: 1
+}
+
+ul.messenger-theme-flat .messenger-message.alert-error.messenger-retry-soon .messenger-spinner:after {
+    content: "";
+    background: #292929;
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    display: block
+}
+
+ul.messenger-theme-flat .messenger-message.alert-error.messenger-retry-later .messenger-spinner {
+    width: 32px;
+    height: 32px;
+    background: 0 0
+}
+
+ul.messenger-theme-flat .messenger-message.alert-error.messenger-retry-later .messenger-spinner .messenger-spinner-side .messenger-spinner-fill {
+    background: #dd6a45;
+    -webkit-animation-duration: 600s;
+    animation-duration: 600s;
+    opacity: 1
+}
+
+ul.messenger-theme-flat .messenger-message.alert-error.messenger-retry-later .messenger-spinner:after {
+    content: "";
+    background: #292929;
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    display: block
+}
+
+ul.messenger-theme-flat .messenger-message-slot.messenger-last .messenger-message {
+    border-radius: 4px 4px 0 0;
+    box-shadow: inset 48px 0 0 #292929
+}
+
+ul.messenger-theme-flat .messenger-message-slot.messenger-first .messenger-message {
+    border-radius: 0 0 4px 4px;
+    box-shadow: inset 0 1px rgba(255, 255, 255, .13), inset 48px 0 0 #292929
+}
+
+ul.messenger-theme-flat .messenger-message-slot.messenger-first.messenger-last .messenger-message {
+    border-radius: 4px;
+    box-shadow: inset 48px 0 0 #292929
+}
+
+ul.messenger-theme-flat .messenger-spinner {
+    display: block;
+    position: absolute;
+    left: 7px;
+    top: 50%;
+    margin-top: -18px;
+    height: 32px;
+    width: 32px;
+    z-index: 10
+}
+
+.irs-diapason, .irs-line-left, .irs-line-mid, .irs-line-right, .irs-slider {
+    background: url(/imgs/sprite-skin-flat.png) repeat-x
+}
+
+.irs {
+    height: 40px
+}
+
+.irs-with-grid {
+    height: 60px
+}
+
+.irs-line {
+    height: 12px;
+    top: 25px
+}
+
+.irs-line-left {
+    height: 12px;
+    background-position: 0 -30px
+}
+
+.irs-line-mid {
+    height: 12px;
+    background-position: 0 0
+}
+
+.irs-line-right {
+    height: 12px;
+    background-position: 100% -30px
+}
+
+.irs-diapason {
+    height: 12px;
+    top: 25px;
+    background-position: 0 -60px
+}
+
+.irs-slider {
+    width: 16px;
+    height: 18px;
+    top: 22px;
+    background-position: 0 -90px
+}
+
+#irs-active-slider, .irs-slider:hover {
+    background-position: 0 -120px
+}
+
+.irs-max, .irs-min {
+    color: #999;
+    top: 0;
+    padding: 1px 3px;
+    background: #e1e4e9;
+    border-radius: 4px
+}
+
+.irs-from, .irs-single, .irs-to {
+    color: #fff;
+    padding: 1px 5px;
+    background: #ed5565;
+    border-radius: 4px
+}
+
+.irs-from:after, .irs-single:after, .irs-to:after {
+    position: absolute;
+    display: block;
+    content: "";
+    bottom: -6px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -3px;
+    overflow: hidden;
+    border: 3px solid transparent;
+    border-top-color: #ed5565
+}
+
+.irs-grid-pol {
+    background: #e1e4e9
+}
+
+.irs-grid-text {
+    color: #999
+}
+
+.bs-example > .dropdown > .dropdown-toggle {
+    float: left
+}
+
+.bs-example > .dropdown > .dropdown-menu {
+    clear: left;
+    display: block;
+    position: static;
+    margin-bottom: 5px
+}
+
+html.default .datepicker table tr td span.active, html.default .datepicker table tr td span.active.disabled, html.default .datepicker table tr td span.active.disabled:hover, html.default .datepicker table tr td span.active:hover, html.default .datepicker table tr td.active, html.default .datepicker table tr td.active.disabled, html.default .datepicker table tr td.active.disabled:hover, html.default .datepicker table tr td.active:hover {
+    background: #E76049 !important
+}
+
+html.default .list-bg-theme > .list-group-item.active {
+    background: #E76049 !important;
+    color: #fff !important
+}
+
+html.default .list-fg-theme > .list-group-item {
+    color: #E76049
+}
+
+html.default .rubix-panel-header .nav-theme.nav-tabs > li > a, html.default .rubix-panel-header .nav-theme.nav-tabs > li > a:focus, html.default .rubix-panel-header .nav-theme.nav-tabs > li > a:hover {
+    color: #fff
+}
+
+html.default .rubix-panel-header .nav-theme.nav-tabs > li.active > a:focus, html.default .rubix-panel-header .nav-theme.nav-tabs > li.active > a:hover {
+    color: #E76049
+}
+
+html.default .nav-theme.nav-tabs {
+    border-color: #E76049
+}
+
+html.default .nav-theme.nav-tabs > li.active > a, html.default .nav-theme.nav-tabs > li > a, html.default .nav-theme.nav-tabs > li > a:focus, html.default .nav-theme.nav-tabs > li > a:hover {
+    color: #E76049;
+    border-color: #E76049 #E76049 transparent
+}
+
+html.default .nav-theme.nav-pills > li.active > a, html.default .nav-theme.nav-pills > li > a:focus, html.default .nav-theme.nav-pills > li > a:hover {
+    background: #E76049;
+    color: #fff
+}
+
+html.default .dropup .menu-theme, html.default .menu-theme {
+    border-color: #E76049
+}
+
+html.default .dropup .menu-theme > li > a:hover, html.default .menu-theme > li > a:hover {
+    background: rgba(231, 96, 73, .05)
+}
+
+html.default .btn-theme, html.default .dropup .menu-theme > .active > a, html.default .dropup .menu-theme > .active > a:focus, html.default .dropup .menu-theme > .active > a:hover, html.default .menu-theme > .active > a, html.default .menu-theme > .active > a:focus, html.default .menu-theme > .active > a:hover {
+    background: #E76049;
+    color: #fff
+}
+
+html.default .btn-theme {
+    outline: 0;
+    border-color: #E76049
+}
+
+html.default .btn-theme.btn-outlined {
+    color: #E76049;
+    background: 0 0
+}
+
+html.default .btn-theme.btn-outlined.btn-onlyOnHover {
+    color: #89949B
+}
+
+html.default .btn-theme.active, html.default .btn-theme:active, html.default .btn-theme:focus, html.default .btn-theme:hover {
+    outline: 0;
+    color: #fff;
+    background: #ed8776;
+    border-color: #ed8776
+}
+
+html.default .btn-theme.active.btn-outlined, html.default .btn-theme:active.btn-outlined, html.default .btn-theme:focus.btn-outlined, html.default .btn-theme:hover.btn-outlined {
+    background: #E76049;
+    color: #fff;
+    border-color: #E76049
+}
+
+html.default .btn-theme.btn-inverse.btn-outlined {
+    color: #fff;
+    border-color: #fff
+}
+
+html.default .btn-theme.btn-inverse.btn-outlined.active, html.default .btn-theme.btn-inverse.btn-outlined:active, html.default .btn-theme.btn-inverse.btn-outlined:focus, html.default .btn-theme.btn-inverse.btn-outlined:hover {
+    color: #E76049;
+    background: #fff;
+    border-color: #fff
+}
+
+html.default .btn-theme.btn-inverse.btn-outlined.active.btn-retainBg, html.default .btn-theme.btn-inverse.btn-outlined:active.btn-retainBg, html.default .btn-theme.btn-inverse.btn-outlined:focus.btn-retainBg, html.default .btn-theme.btn-inverse.btn-outlined:hover.btn-retainBg {
+    background: #E76049;
+    color: #fff;
+    border-color: #E76049
+}
+
+html.default .tl-theme .rubix-timeline-body > ul > li:before {
+    border-color: #E76049
+}
+
+html.default .border-theme {
+    border-color: #E76049 !important
+}
+
+html.default .border-theme .rubix-timeline-body > ul, html.default .border-theme.rubix-timeline-view:before {
+    border-color: #E76049
+}
+
+html.default .border-focus-theme:focus, html.default .border-hover-theme:hover {
+    border-color: #E76049 !important
+}
+
+html.default .fg-focus-theme:focus, html.default .fg-hover-theme:hover, html.default .fg-theme, html.default .fg-theme .tab-container.plain > .nav-tabs > .b-tab.active > a, html.default .fg-theme.fg-tab-active .tab-container > .nav-tabs > .b-tab.active > a, html.default .fg-theme > .tab-container > .nav-tabs > .b-tab > a {
+    color: #E76049
+}
+
+html.default .bg-focus-theme:focus, html.default .bg-hover-theme:hover, html.default .bg-theme {
+    background: #E76049
+}
+
+html.default .bg-theme > .tab-container > .nav-tabs > .b-tab.open > a {
+    background: rgba(0, 0, 0, .03)
+}
+
+html.default .bg-theme > .tab-container > .nav-tabs > .b-tab > .dropdown-menu > li.active > a {
+    background: #E76049
+}
+
+html.default .bg-theme table td, html.default .bg-theme th {
+    border-color: rgba(0, 0, 0, .05) !important
+}
+
+html.default, html.default body {
+    background: #fff;
+    overflow-x: hidden;
+    color: #89949B
+}
+
+html.default body #app-container {
+    overflow: hidden
+}
+
+html.default body #container > div:first-child#navbar #rubix-nav-header {
+    margin: 0
+}
+
+html.default body #container > div:first-child#body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.default body #container.container-open > #sidebar {
+    left: 0
+}
+
+html.default body #container.container-open #rubix-nav-header {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.default body #container.container-open #rubix-nav-header {
+        margin-right: 0
+    }
+}
+
+html.default body #container.container-open > #body, html.default body #container.container-open > #footer-container {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.default body #container.container-open > #body, html.default body #container.container-open > #footer-container {
+        margin-right: 0
+    }
+}
+
+html.default body #navbar {
+    width: 100%
+}
+
+html.default body #rubix-nav-header {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    border: none;
+    margin-left: 0;
+    background: #273135
+}
+
+html.default body #rubix-nav-header .navbar-brand {
+    width: 100%;
+    text-align: center;
+    color: #89949B
+}
+
+html.default body #rubix-nav-header .navbar-brand > img {
+    top: -3px;
+    position: relative
+}
+
+@media (max-width: 320px) {
+    html.default body #rubix-nav-header .navbar-brand > img {
+        width: 80px;
+        left: -10px
+    }
+}
+
+html.default body #rubix-nav-header .navbar-content {
+    height: 75px
+}
+
+html.default body #rubix-nav-header .navbar-nav {
+    margin: 0;
+    display: inline-block
+}
+
+html.default body #rubix-nav-header .navbar-nav:first-child {
+    margin-left: -25px
+}
+
+html.default body #rubix-nav-header .navbar-nav:last-child {
+    margin-right: -25px
+}
+
+html.default body #rubix-nav-header .navbar-nav > li > a {
+    border: none;
+    padding: 25px;
+    display: block
+}
+
+html.default body #rubix-nav-header .navbar-nav > li > a > .rubix-icon {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.divider {
+    height: 75px;
+    border: 1px solid rgba(59, 70, 72, .45)
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.dropdown.open > a {
+    color: #fff;
+    background: 0 0
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.active > a, html.default body #rubix-nav-header .navbar-nav > li > a {
+    height: 75px;
+    font-size: 26px;
+    background: 0 0;
+    text-align: center;
+    color: #89949B
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.active > a:hover, html.default body #rubix-nav-header .navbar-nav > li.pressed > a, html.default body #rubix-nav-header .navbar-nav > li > a:hover {
+    color: #fff
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.logout > a, html.default body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    width: 80px;
+    font-size: 30px;
+    padding-left: 0;
+    padding-right: 0
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.logout > a {
+    color: #fff;
+    background: #E76049
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.logout > a:hover {
+    background: #F4654D
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    color: #fff;
+    background: #2AA38B
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.sidebar-btn > a:hover {
+    background: #2EB398
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.collapse-left > a {
+    padding-left: 0
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.collapse-right > a {
+    padding-right: 0
+}
+
+html.default body #rubix-nav-header .navbar-nav > li.small-font > a {
+    font-size: 20px
+}
+
+html.default body #rubix-nav-header .navbar-nav > li .notification-badge {
+    font-size: 10px;
+    padding: 3px 5px;
+    margin-left: -5px;
+    line-height: 9px;
+    margin-top: -10px;
+    position: absolute
+}
+
+@media (min-width: 990px) {
+    html.default body #rubix-nav-header {
+        margin-left: 250px
+    }
+}
+
+html.default body #flag-menu-btn > img {
+    top: -2px;
+    position: relative
+}
+
+html.default body .lang-menu-text {
+    line-height: 32px
+}
+
+html.default body #flag-menu, html.default body #notifications-menu, html.default body #rss-menu, html.default body #settings-menu {
+    border: none;
+    margin-top: 0;
+    overflow: visible;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2);
+    border-top: 5px solid #E76049 !important
+}
+
+html.default body #flag-menu:after, html.default body #notifications-menu:after, html.default body #rss-menu:after, html.default body #settings-menu:after {
+    top: -14px;
+    right: 25px;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #E76049
+}
+
+html.default body #notifications-menu > li, html.default body #rss-menu > li {
+    border-bottom: 1px solid #f2f2f2
+}
+
+html.default body #notifications-menu > li:last-child, html.default body #rss-menu > li:last-child {
+    border-bottom: none
+}
+
+html.default body #notifications-menu > li > a > .container-fluid, html.default body #rss-menu > li > a > .container-fluid {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+html.default body #notifications-menu > li > a > .container-fluid > .row > .avatar-container, html.default body #rss-menu > li > a > .container-fluid > .row > .avatar-container {
+    width: 75px;
+    padding-right: 10px
+}
+
+html.default body #notifications-menu > li > a > .container-fluid > .row > .avatar-container .label, html.default body #rss-menu > li > a > .container-fluid > .row > .avatar-container .label {
+    font-size: 8px
+}
+
+html.default body #notifications-menu > li > a > .container-fluid > .row > .notification-container, html.default body #rss-menu > li > a > .container-fluid > .row > .notification-container {
+    width: 225px
+}
+
+html.default body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time, html.default body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.default body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon, html.default body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon {
+    margin-right: 5px
+}
+
+html.default body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-header, html.default body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-bottom: 5px
+}
+
+html.default body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-details, html.default body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-details {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.default body #notifications-menu .notification-footer-btn, html.default body #rss-menu .notification-footer-btn {
+    margin: 0;
+    height: 100%;
+    font-size: 12px;
+    border-radius: 0;
+    font-weight: 700;
+    padding: 6px 12px;
+    border: none !important;
+    color: #98A0A3 !important;
+    background: #F9FAFB !important
+}
+
+html.default body #notifications-menu .notification-footer-btn:focus, html.default body #notifications-menu .notification-footer-btn:hover, html.default body #rss-menu .notification-footer-btn:focus, html.default body #rss-menu .notification-footer-btn:hover {
+    border: none !important;
+    background: #eaedf1 !important
+}
+
+html.default body #notifications-menu .notification-footer-btn.left-btn, html.default body #rss-menu .notification-footer-btn.left-btn {
+    border-right: 1px solid #DDE1E6 !important
+}
+
+html.default body #sidebar {
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    position: fixed;
+    overflow: hidden;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    left: -250px;
+    width: 250px;
+    background: #273135
+}
+
+html.default body #sidebar #avatar {
+    height: 75px;
+    background: #FA7252
+}
+
+html.default body #sidebar #avatar img {
+    top: 17px;
+    position: relative
+}
+
+html.default body #sidebar #avatar-col {
+    margin-left: -5px
+}
+
+html.default body #sidebar #demo-progress {
+    margin: 0;
+    top: 30px;
+    height: 4px;
+    width: 115px;
+    border-radius: 0;
+    position: relative;
+    background: #DE5939
+}
+
+html.default body #sidebar #demo-icon {
+    top: 3px;
+    float: right;
+    font-size: 18px;
+    position: relative;
+    color: #DE5939
+}
+
+html.default body #sidebar .sidebar-controls-container {
+    width: 250px;
+    height: 35px;
+    display: table;
+    visibility: visible;
+    background: #DE5939
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls {
+    display: table-row
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn {
+    border: none;
+    outline: 0;
+    font-size: 16px;
+    cursor: pointer;
+    background: 0 0;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    border-right: 1px solid #cf4d2e
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a {
+    outline: 0;
+    color: #993F31
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:focus, html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:hover {
+    border: none
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active {
+    background: #ba4e3b !important
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active > a {
+    color: #FA7252
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn:hover {
+    background: rgba(0, 0, 0, .04)
+}
+
+html.default body #sidebar .sidebar-item {
+    height: 35px;
+    background: #1F282D
+}
+
+html.default body #sidebar #sidebar-container {
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    top: 110px
+}
+
+html.default body #sidebar #sidebar-container > .sidebar {
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+html.default body .sidebar-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-top: 25px;
+    font-weight: 700;
+    padding-bottom: 12px;
+    color: rgba(137, 148, 155, .4)
+}
+
+html.default body .sidebar-nav {
+    padding: 0;
+    list-style: none;
+    margin-left: 25px;
+    border-left: 2px solid rgba(59, 70, 72, .5)
+}
+
+html.default body .sidebar-nav > li {
+    height: 45px;
+    outline: 0;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative
+}
+
+html.default body .sidebar-nav > li > a {
+    height: 45px;
+    border: none;
+    outline: 0;
+    color: #89949B;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    text-decoration: none;
+    padding: 15px 0 15px 25px
+}
+
+html.default body .sidebar-nav > li > a > .rubix-icon {
+    width: 16px;
+    height: 17px;
+    vertical-align: top;
+    display: inline-block
+}
+
+html.default body .sidebar-nav > li > a > .name {
+    line-height: 16px;
+    vertical-align: top
+}
+
+html.default body .sidebar-nav > li > a > .name > span > .label {
+    float: right;
+    margin-top: -3px;
+    padding: 5px 10px;
+    margin-right: 30px
+}
+
+html.default body .sidebar-nav > li > a > .rubix-icon ~ .name {
+    margin-left: 10px
+}
+
+html.default body .sidebar-nav > li > a:focus, html.default body .sidebar-nav > li > a:hover {
+    border: none;
+    background: rgba(0, 0, 0, .2)
+}
+
+html.default body .sidebar-nav > li.open:before, html.default body .sidebar-nav > li:hover:before {
+    display: none
+}
+
+html.default body .sidebar-nav > li.open {
+    height: 100%
+}
+
+html.default body .sidebar-nav > li.open > a {
+    background: rgba(0, 0, 0, .2)
+}
+
+html.default body .sidebar-nav > li:before {
+    left: 0;
+    top: 22px;
+    width: 15px;
+    content: ' ';
+    position: absolute;
+    display: inline-block;
+    border: 1px solid rgba(59, 70, 72, .5)
+}
+
+html.default body .sidebar-nav > li.active {
+    border-left: 5px solid #E76049
+}
+
+html.default body .sidebar-nav > li.active > a {
+    background: rgba(0, 0, 0, .4);
+    padding-left: 20px
+}
+
+html.default body .sidebar-nav > li.active > a:hover {
+    background: rgba(0, 0, 0, .4)
+}
+
+html.default body .sidebar-nav > li.active:before {
+    display: none
+}
+
+html.default body .sidebar-nav > li.active:after {
+    top: 11px;
+    right: 0;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 10px solid #E9F0F5
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav {
+    border: none;
+    margin-left: -25px;
+    margin-right: -25px
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav > li:before {
+    display: none
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav > li > a {
+    font-size: 16px;
+    line-height: 16px;
+    padding: 15px 25px
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav > li > a > .name {
+    line-height: 18px;
+    margin-left: 15px
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav > li > a > .rubix-icon {
+    width: 18px;
+    height: 19px;
+    display: inline-block
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav > li.active > a {
+    padding-left: 20px
+}
+
+html.default body #navbar ~ #sidebar {
+    top: 75px
+}
+
+html.default body #body {
+    left: 0;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    z-index: 100;
+    margin-left: 0;
+    position: relative;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    background: #E9F0F5;
+    margin-top: 25px;
+    padding-bottom: 25px
+}
+
+html.default body #navbar ~ #body {
+    margin-top: 74px;
+    padding-top: 25px
+}
+
+html.default body #sidebar + #body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.default body .external-event {
+    background: #E76049
+}
+
+html.default body #footer {
+    padding: 10px;
+    position: relative;
+    color: #CCD6DF;
+    background: #89949B
+}
+
+html.default body #footer-container {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+@media (min-width: 990px) {
+    html.default body #sidebar {
+        left: 0
+    }
+
+    html.default body #sidebar ~ #body, html.default body #sidebar ~ #footer-container {
+        margin-left: 250px
+    }
+}
+
+html.green .datepicker table tr td span.active, html.green .datepicker table tr td span.active.disabled, html.green .datepicker table tr td span.active.disabled:hover, html.green .datepicker table tr td span.active:hover, html.green .datepicker table tr td.active, html.green .datepicker table tr td.active.disabled, html.green .datepicker table tr td.active.disabled:hover, html.green .datepicker table tr td.active:hover {
+    background: #2EB398 !important
+}
+
+html.green .list-bg-theme > .list-group-item.active {
+    background: #2EB398 !important;
+    color: #fff !important
+}
+
+html.green .list-fg-theme > .list-group-item {
+    color: #2EB398
+}
+
+html.green .rubix-panel-header .nav-theme.nav-tabs > li > a, html.green .rubix-panel-header .nav-theme.nav-tabs > li > a:focus, html.green .rubix-panel-header .nav-theme.nav-tabs > li > a:hover {
+    color: #fff
+}
+
+html.green .rubix-panel-header .nav-theme.nav-tabs > li.active > a:focus, html.green .rubix-panel-header .nav-theme.nav-tabs > li.active > a:hover {
+    color: #2EB398
+}
+
+html.green .nav-theme.nav-tabs {
+    border-color: #2EB398
+}
+
+html.green .nav-theme.nav-tabs > li.active > a, html.green .nav-theme.nav-tabs > li > a, html.green .nav-theme.nav-tabs > li > a:focus, html.green .nav-theme.nav-tabs > li > a:hover {
+    color: #2EB398;
+    border-color: #2EB398 #2EB398 transparent
+}
+
+html.green .nav-theme.nav-pills > li.active > a, html.green .nav-theme.nav-pills > li > a:focus, html.green .nav-theme.nav-pills > li > a:hover {
+    background: #2EB398;
+    color: #fff
+}
+
+html.green .dropup .menu-theme, html.green .menu-theme {
+    border-color: #2EB398
+}
+
+html.green .dropup .menu-theme > li > a:hover, html.green .menu-theme > li > a:hover {
+    background: rgba(46, 179, 152, .05)
+}
+
+html.green .btn-theme, html.green .dropup .menu-theme > .active > a, html.green .dropup .menu-theme > .active > a:focus, html.green .dropup .menu-theme > .active > a:hover, html.green .menu-theme > .active > a, html.green .menu-theme > .active > a:focus, html.green .menu-theme > .active > a:hover {
+    background: #2EB398;
+    color: #fff
+}
+
+html.green .btn-theme {
+    outline: 0;
+    border-color: #2EB398
+}
+
+html.green .btn-theme.btn-outlined {
+    color: #2EB398;
+    background: 0 0
+}
+
+html.green .btn-theme.btn-outlined.btn-onlyOnHover {
+    color: #89949B
+}
+
+html.green .btn-theme.active, html.green .btn-theme:active, html.green .btn-theme:focus, html.green .btn-theme:hover {
+    outline: 0;
+    color: #fff;
+    background: #45cfb3;
+    border-color: #45cfb3
+}
+
+html.green .btn-theme.active.btn-outlined, html.green .btn-theme:active.btn-outlined, html.green .btn-theme:focus.btn-outlined, html.green .btn-theme:hover.btn-outlined {
+    background: #2EB398;
+    color: #fff;
+    border-color: #2EB398
+}
+
+html.green .btn-theme.btn-inverse.btn-outlined {
+    color: #fff;
+    border-color: #fff
+}
+
+html.green .btn-theme.btn-inverse.btn-outlined.active, html.green .btn-theme.btn-inverse.btn-outlined:active, html.green .btn-theme.btn-inverse.btn-outlined:focus, html.green .btn-theme.btn-inverse.btn-outlined:hover {
+    color: #2EB398;
+    background: #fff;
+    border-color: #fff
+}
+
+html.green .btn-theme.btn-inverse.btn-outlined.active.btn-retainBg, html.green .btn-theme.btn-inverse.btn-outlined:active.btn-retainBg, html.green .btn-theme.btn-inverse.btn-outlined:focus.btn-retainBg, html.green .btn-theme.btn-inverse.btn-outlined:hover.btn-retainBg {
+    background: #2EB398;
+    color: #fff;
+    border-color: #2EB398
+}
+
+html.green .tl-theme .rubix-timeline-body > ul > li:before {
+    border-color: #2EB398
+}
+
+html.green .border-theme {
+    border-color: #2EB398 !important
+}
+
+html.green .border-theme .rubix-timeline-body > ul, html.green .border-theme.rubix-timeline-view:before {
+    border-color: #2EB398
+}
+
+html.green .border-focus-theme:focus, html.green .border-hover-theme:hover {
+    border-color: #2EB398 !important
+}
+
+html.green .fg-focus-theme:focus, html.green .fg-hover-theme:hover, html.green .fg-theme, html.green .fg-theme .tab-container.plain > .nav-tabs > .b-tab.active > a, html.green .fg-theme.fg-tab-active .tab-container > .nav-tabs > .b-tab.active > a, html.green .fg-theme > .tab-container > .nav-tabs > .b-tab > a {
+    color: #2EB398
+}
+
+html.green .bg-focus-theme:focus, html.green .bg-hover-theme:hover, html.green .bg-theme {
+    background: #2EB398
+}
+
+html.green .bg-theme > .tab-container > .nav-tabs > .b-tab.open > a {
+    background: rgba(0, 0, 0, .03)
+}
+
+html.green .bg-theme > .tab-container > .nav-tabs > .b-tab > .dropdown-menu > li.active > a {
+    background: #2EB398
+}
+
+html.green .bg-theme table td, html.green .bg-theme th {
+    border-color: rgba(0, 0, 0, .05) !important
+}
+
+html.green, html.green body {
+    background: #fff;
+    overflow-x: hidden;
+    color: #89949B
+}
+
+html.green body #app-container {
+    overflow: hidden
+}
+
+html.green body #container > div:first-child#navbar #rubix-nav-header {
+    margin: 0
+}
+
+html.green body #container > div:first-child#body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.green body #container.container-open > #sidebar {
+    left: 0
+}
+
+html.green body #container.container-open #rubix-nav-header {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.green body #container.container-open #rubix-nav-header {
+        margin-right: 0
+    }
+}
+
+html.green body #container.container-open > #body, html.green body #container.container-open > #footer-container {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.green body #container.container-open > #body, html.green body #container.container-open > #footer-container {
+        margin-right: 0
+    }
+}
+
+html.green body #navbar {
+    width: 100%
+}
+
+html.green body #rubix-nav-header {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    border: none;
+    margin-left: 0;
+    background: #273135
+}
+
+html.green body #rubix-nav-header .navbar-brand {
+    width: 100%;
+    text-align: center;
+    color: #89949B
+}
+
+html.green body #rubix-nav-header .navbar-brand > img {
+    top: -3px;
+    position: relative
+}
+
+@media (max-width: 320px) {
+    html.green body #rubix-nav-header .navbar-brand > img {
+        width: 80px;
+        left: -10px
+    }
+}
+
+html.green body #rubix-nav-header .navbar-content {
+    height: 75px
+}
+
+html.green body #rubix-nav-header .navbar-nav {
+    margin: 0;
+    display: inline-block
+}
+
+html.green body #rubix-nav-header .navbar-nav:first-child {
+    margin-left: -25px
+}
+
+html.green body #rubix-nav-header .navbar-nav:last-child {
+    margin-right: -25px
+}
+
+html.green body #rubix-nav-header .navbar-nav > li > a {
+    border: none;
+    padding: 25px;
+    display: block
+}
+
+html.green body #rubix-nav-header .navbar-nav > li > a > .rubix-icon {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.divider {
+    height: 75px;
+    border: 1px solid rgba(59, 70, 72, .45)
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.dropdown.open > a {
+    color: #fff;
+    background: 0 0
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.active > a, html.green body #rubix-nav-header .navbar-nav > li > a {
+    height: 75px;
+    font-size: 26px;
+    background: 0 0;
+    text-align: center;
+    color: #89949B
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.active > a:hover, html.green body #rubix-nav-header .navbar-nav > li.pressed > a, html.green body #rubix-nav-header .navbar-nav > li > a:hover {
+    color: #fff
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.logout > a, html.green body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    width: 80px;
+    font-size: 30px;
+    padding-left: 0;
+    padding-right: 0
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.logout > a {
+    color: #fff;
+    background: #2EB398
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.logout > a:hover {
+    background: #31C0A3
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    color: #fff;
+    background: #2AA38B
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.sidebar-btn > a:hover {
+    background: #2EB398
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.collapse-left > a {
+    padding-left: 0
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.collapse-right > a {
+    padding-right: 0
+}
+
+html.green body #rubix-nav-header .navbar-nav > li.small-font > a {
+    font-size: 20px
+}
+
+html.green body #rubix-nav-header .navbar-nav > li .notification-badge {
+    font-size: 10px;
+    padding: 3px 5px;
+    margin-left: -5px;
+    line-height: 9px;
+    margin-top: -10px;
+    position: absolute
+}
+
+@media (min-width: 990px) {
+    html.green body #rubix-nav-header {
+        margin-left: 250px
+    }
+}
+
+html.green body #flag-menu-btn > img {
+    top: -2px;
+    position: relative
+}
+
+html.green body .lang-menu-text {
+    line-height: 32px
+}
+
+html.green body #flag-menu, html.green body #notifications-menu, html.green body #rss-menu, html.green body #settings-menu {
+    border: none;
+    margin-top: 0;
+    overflow: visible;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2);
+    border-top: 5px solid #2EB398 !important
+}
+
+html.green body #flag-menu:after, html.green body #notifications-menu:after, html.green body #rss-menu:after, html.green body #settings-menu:after {
+    top: -14px;
+    right: 25px;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #2EB398
+}
+
+html.green body #notifications-menu > li, html.green body #rss-menu > li {
+    border-bottom: 1px solid #f2f2f2
+}
+
+html.green body #notifications-menu > li:last-child, html.green body #rss-menu > li:last-child {
+    border-bottom: none
+}
+
+html.green body #notifications-menu > li > a > .container-fluid, html.green body #rss-menu > li > a > .container-fluid {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+html.green body #notifications-menu > li > a > .container-fluid > .row > .avatar-container, html.green body #rss-menu > li > a > .container-fluid > .row > .avatar-container {
+    width: 75px;
+    padding-right: 10px
+}
+
+html.green body #notifications-menu > li > a > .container-fluid > .row > .avatar-container .label, html.green body #rss-menu > li > a > .container-fluid > .row > .avatar-container .label {
+    font-size: 8px
+}
+
+html.green body #notifications-menu > li > a > .container-fluid > .row > .notification-container, html.green body #rss-menu > li > a > .container-fluid > .row > .notification-container {
+    width: 225px
+}
+
+html.green body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time, html.green body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.green body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon, html.green body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon {
+    margin-right: 5px
+}
+
+html.green body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-header, html.green body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-bottom: 5px
+}
+
+html.green body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-details, html.green body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-details {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.green body #notifications-menu .notification-footer-btn, html.green body #rss-menu .notification-footer-btn {
+    margin: 0;
+    height: 100%;
+    font-size: 12px;
+    border-radius: 0;
+    font-weight: 700;
+    padding: 6px 12px;
+    border: none !important;
+    color: #98A0A3 !important;
+    background: #F9FAFB !important
+}
+
+html.green body #notifications-menu .notification-footer-btn:focus, html.green body #notifications-menu .notification-footer-btn:hover, html.green body #rss-menu .notification-footer-btn:focus, html.green body #rss-menu .notification-footer-btn:hover {
+    border: none !important;
+    background: #eaedf1 !important
+}
+
+html.green body #notifications-menu .notification-footer-btn.left-btn, html.green body #rss-menu .notification-footer-btn.left-btn {
+    border-right: 1px solid #DDE1E6 !important
+}
+
+html.green body #sidebar {
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    position: fixed;
+    overflow: hidden;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    left: -250px;
+    width: 250px;
+    background: #273135
+}
+
+html.green body #sidebar #avatar {
+    height: 75px;
+    background: #56B596
+}
+
+html.green body #sidebar #avatar img {
+    top: 17px;
+    position: relative
+}
+
+html.green body #sidebar #avatar-col {
+    margin-left: -5px
+}
+
+html.green body #sidebar #demo-progress {
+    margin: 0;
+    top: 30px;
+    height: 4px;
+    width: 115px;
+    border-radius: 0;
+    position: relative;
+    background: #279982
+}
+
+html.green body #sidebar #demo-icon {
+    top: 3px;
+    float: right;
+    font-size: 18px;
+    position: relative;
+    color: #279982
+}
+
+html.green body #sidebar .sidebar-controls-container {
+    width: 250px;
+    height: 35px;
+    display: table;
+    visibility: visible;
+    background: #279982
+}
+
+html.green body #sidebar .sidebar-controls-container > .sidebar-controls {
+    display: table-row
+}
+
+html.green body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn {
+    border: none;
+    outline: 0;
+    font-size: 16px;
+    cursor: pointer;
+    background: 0 0;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    border-right: 1px solid #25917b
+}
+
+html.green body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a {
+    outline: 0;
+    color: #1B6858
+}
+
+html.green body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:focus, html.green body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:hover {
+    border: none
+}
+
+html.green body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active {
+    background: #1E7362 !important
+}
+
+html.green body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active > a {
+    color: #56B596
+}
+
+html.green body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn:hover {
+    background: rgba(0, 0, 0, .04)
+}
+
+html.green body #sidebar .sidebar-item {
+    height: 35px;
+    background: #1F282D
+}
+
+html.green body #sidebar #sidebar-container {
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    top: 110px
+}
+
+html.green body #sidebar #sidebar-container > .sidebar {
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+html.green body .sidebar-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-top: 25px;
+    font-weight: 700;
+    padding-bottom: 12px;
+    color: rgba(137, 148, 155, .4)
+}
+
+html.green body .sidebar-nav {
+    padding: 0;
+    list-style: none;
+    margin-left: 25px;
+    border-left: 2px solid rgba(59, 70, 72, .5)
+}
+
+html.green body .sidebar-nav > li {
+    height: 45px;
+    outline: 0;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative
+}
+
+html.green body .sidebar-nav > li > a {
+    height: 45px;
+    border: none;
+    outline: 0;
+    color: #89949B;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    text-decoration: none;
+    padding: 15px 0 15px 25px
+}
+
+html.green body .sidebar-nav > li > a > .rubix-icon {
+    width: 16px;
+    height: 17px;
+    vertical-align: top;
+    display: inline-block
+}
+
+html.green body .sidebar-nav > li > a > .name {
+    line-height: 16px;
+    vertical-align: top
+}
+
+html.green body .sidebar-nav > li > a > .name > span > .label {
+    float: right;
+    margin-top: -3px;
+    padding: 5px 10px;
+    margin-right: 30px
+}
+
+html.green body .sidebar-nav > li > a > .rubix-icon ~ .name {
+    margin-left: 10px
+}
+
+html.green body .sidebar-nav > li > a:focus, html.green body .sidebar-nav > li > a:hover {
+    border: none;
+    background: rgba(0, 0, 0, .2)
+}
+
+html.green body .sidebar-nav > li.open:before, html.green body .sidebar-nav > li:hover:before {
+    display: none
+}
+
+html.green body .sidebar-nav > li.open {
+    height: 100%
+}
+
+html.green body .sidebar-nav > li.open > a {
+    background: rgba(0, 0, 0, .2)
+}
+
+html.green body .sidebar-nav > li:before {
+    left: 0;
+    top: 22px;
+    width: 15px;
+    content: ' ';
+    position: absolute;
+    display: inline-block;
+    border: 1px solid rgba(59, 70, 72, .5)
+}
+
+html.green body .sidebar-nav > li.active {
+    border-left: 5px solid #2EB398
+}
+
+html.green body .sidebar-nav > li.active > a {
+    background: rgba(0, 0, 0, .4);
+    padding-left: 20px
+}
+
+html.green body .sidebar-nav > li.active > a:hover {
+    background: rgba(0, 0, 0, .4)
+}
+
+html.green body .sidebar-nav > li.active:before {
+    display: none
+}
+
+html.green body .sidebar-nav > li.active:after {
+    top: 11px;
+    right: 0;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 10px solid #E9F0F5
+}
+
+html.green body .sidebar-nav-container > .sidebar-nav {
+    border: none;
+    margin-left: -25px;
+    margin-right: -25px
+}
+
+html.green body .sidebar-nav-container > .sidebar-nav > li:before {
+    display: none
+}
+
+html.green body .sidebar-nav-container > .sidebar-nav > li > a {
+    font-size: 16px;
+    line-height: 16px;
+    padding: 15px 25px
+}
+
+html.green body .sidebar-nav-container > .sidebar-nav > li > a > .name {
+    line-height: 18px;
+    margin-left: 15px
+}
+
+html.green body .sidebar-nav-container > .sidebar-nav > li > a > .rubix-icon {
+    width: 18px;
+    height: 19px;
+    display: inline-block
+}
+
+html.green body .sidebar-nav-container > .sidebar-nav > li.active > a {
+    padding-left: 20px
+}
+
+html.green body #navbar ~ #sidebar {
+    top: 75px
+}
+
+html.green body #body {
+    left: 0;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    z-index: 100;
+    margin-left: 0;
+    position: relative;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    background: #E9F0F5;
+    margin-top: 25px;
+    padding-bottom: 25px
+}
+
+html.green body #navbar ~ #body {
+    margin-top: 74px;
+    padding-top: 25px
+}
+
+html.green body #sidebar + #body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.green body .external-event {
+    background: #2EB398
+}
+
+html.green body #footer {
+    padding: 10px;
+    position: relative;
+    color: #CCD6DF;
+    background: #89949B
+}
+
+html.green body #footer-container {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+@media (min-width: 990px) {
+    html.green body #sidebar {
+        left: 0
+    }
+
+    html.green body #sidebar ~ #body, html.green body #sidebar ~ #footer-container {
+        margin-left: 250px
+    }
+}
+
+html.blue .datepicker table tr td span.active, html.blue .datepicker table tr td span.active.disabled, html.blue .datepicker table tr td span.active.disabled:hover, html.blue .datepicker table tr td span.active:hover, html.blue .datepicker table tr td.active, html.blue .datepicker table tr td.active.disabled, html.blue .datepicker table tr td.active.disabled:hover, html.blue .datepicker table tr td.active:hover {
+    background: #79B0EC !important
+}
+
+html.blue .list-bg-theme > .list-group-item.active {
+    background: #79B0EC !important;
+    color: #fff !important
+}
+
+html.blue .list-fg-theme > .list-group-item {
+    color: #79B0EC
+}
+
+html.blue .rubix-panel-header .nav-theme.nav-tabs > li > a, html.blue .rubix-panel-header .nav-theme.nav-tabs > li > a:focus, html.blue .rubix-panel-header .nav-theme.nav-tabs > li > a:hover {
+    color: #fff
+}
+
+html.blue .rubix-panel-header .nav-theme.nav-tabs > li.active > a:focus, html.blue .rubix-panel-header .nav-theme.nav-tabs > li.active > a:hover {
+    color: #79B0EC
+}
+
+html.blue .nav-theme.nav-tabs {
+    border-color: #79B0EC
+}
+
+html.blue .nav-theme.nav-tabs > li.active > a, html.blue .nav-theme.nav-tabs > li > a, html.blue .nav-theme.nav-tabs > li > a:focus, html.blue .nav-theme.nav-tabs > li > a:hover {
+    color: #79B0EC;
+    border-color: #79B0EC #79B0EC transparent
+}
+
+html.blue .btn-theme, html.blue .dropup .menu-theme, html.blue .menu-theme {
+    border-color: #79B0EC
+}
+
+html.blue .nav-theme.nav-pills > li.active > a, html.blue .nav-theme.nav-pills > li > a:focus, html.blue .nav-theme.nav-pills > li > a:hover {
+    background: #79B0EC;
+    color: #fff
+}
+
+html.blue .dropup .menu-theme > li > a:hover, html.blue .menu-theme > li > a:hover {
+    background: rgba(121, 176, 236, .05)
+}
+
+html.blue .btn-theme, html.blue .dropup .menu-theme > .active > a, html.blue .dropup .menu-theme > .active > a:focus, html.blue .dropup .menu-theme > .active > a:hover, html.blue .menu-theme > .active > a, html.blue .menu-theme > .active > a:focus, html.blue .menu-theme > .active > a:hover {
+    background: #79B0EC;
+    color: #fff
+}
+
+html.blue .btn-theme {
+    outline: 0
+}
+
+html.blue .btn-theme.btn-outlined {
+    color: #79B0EC;
+    background: 0 0
+}
+
+html.blue .btn-theme.btn-outlined.btn-onlyOnHover {
+    color: #89949B
+}
+
+html.blue .btn-theme.active, html.blue .btn-theme:active, html.blue .btn-theme:focus, html.blue .btn-theme:hover {
+    outline: 0;
+    color: #fff;
+    background: #a6caf2;
+    border-color: #a6caf2
+}
+
+html.blue .btn-theme.active.btn-outlined, html.blue .btn-theme:active.btn-outlined, html.blue .btn-theme:focus.btn-outlined, html.blue .btn-theme:hover.btn-outlined {
+    background: #79B0EC;
+    color: #fff;
+    border-color: #79B0EC
+}
+
+html.blue .btn-theme.btn-inverse.btn-outlined {
+    color: #fff;
+    border-color: #fff
+}
+
+html.blue .btn-theme.btn-inverse.btn-outlined.active, html.blue .btn-theme.btn-inverse.btn-outlined:active, html.blue .btn-theme.btn-inverse.btn-outlined:focus, html.blue .btn-theme.btn-inverse.btn-outlined:hover {
+    color: #79B0EC;
+    background: #fff;
+    border-color: #fff
+}
+
+html.blue .btn-theme.btn-inverse.btn-outlined.active.btn-retainBg, html.blue .btn-theme.btn-inverse.btn-outlined:active.btn-retainBg, html.blue .btn-theme.btn-inverse.btn-outlined:focus.btn-retainBg, html.blue .btn-theme.btn-inverse.btn-outlined:hover.btn-retainBg {
+    background: #79B0EC;
+    color: #fff;
+    border-color: #79B0EC
+}
+
+html.blue .tl-theme .rubix-timeline-body > ul > li:before {
+    border-color: #79B0EC
+}
+
+html.blue .border-theme {
+    border-color: #79B0EC !important
+}
+
+html.blue .border-theme .rubix-timeline-body > ul, html.blue .border-theme.rubix-timeline-view:before {
+    border-color: #79B0EC
+}
+
+html.blue .border-focus-theme:focus, html.blue .border-hover-theme:hover {
+    border-color: #79B0EC !important
+}
+
+html.blue .fg-focus-theme:focus, html.blue .fg-hover-theme:hover, html.blue .fg-theme, html.blue .fg-theme .tab-container.plain > .nav-tabs > .b-tab.active > a, html.blue .fg-theme.fg-tab-active .tab-container > .nav-tabs > .b-tab.active > a, html.blue .fg-theme > .tab-container > .nav-tabs > .b-tab > a {
+    color: #79B0EC
+}
+
+html.blue .bg-focus-theme:focus, html.blue .bg-hover-theme:hover, html.blue .bg-theme {
+    background: #79B0EC
+}
+
+html.blue .bg-theme > .tab-container > .nav-tabs > .b-tab.open > a {
+    background: rgba(0, 0, 0, .03)
+}
+
+html.blue .bg-theme > .tab-container > .nav-tabs > .b-tab > .dropdown-menu > li.active > a {
+    background: #79B0EC
+}
+
+html.blue .bg-theme table td, html.blue .bg-theme th {
+    border-color: rgba(0, 0, 0, .05) !important
+}
+
+html.blue, html.blue body {
+    background: #fff;
+    overflow-x: hidden;
+    color: #89949B
+}
+
+html.blue body #app-container {
+    overflow: hidden
+}
+
+html.blue body #container > div:first-child#navbar #rubix-nav-header {
+    margin: 0
+}
+
+html.blue body #container > div:first-child#body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.blue body #container.container-open > #sidebar {
+    left: 0
+}
+
+html.blue body #container.container-open #rubix-nav-header {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.blue body #container.container-open #rubix-nav-header {
+        margin-right: 0
+    }
+}
+
+html.blue body #container.container-open > #body, html.blue body #container.container-open > #footer-container {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.blue body #container.container-open > #body, html.blue body #container.container-open > #footer-container {
+        margin-right: 0
+    }
+}
+
+html.blue body #navbar {
+    width: 100%
+}
+
+html.blue body #rubix-nav-header {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    border: none;
+    margin-left: 0;
+    background: #273135
+}
+
+html.blue body #rubix-nav-header .navbar-brand {
+    width: 100%;
+    text-align: center;
+    color: #89949B
+}
+
+html.blue body #rubix-nav-header .navbar-brand > img {
+    top: -3px;
+    position: relative
+}
+
+@media (max-width: 320px) {
+    html.blue body #rubix-nav-header .navbar-brand > img {
+        width: 80px;
+        left: -10px
+    }
+}
+
+html.blue body #rubix-nav-header .navbar-content {
+    height: 75px
+}
+
+html.blue body #rubix-nav-header .navbar-nav {
+    margin: 0;
+    display: inline-block
+}
+
+html.blue body #rubix-nav-header .navbar-nav:first-child {
+    margin-left: -25px
+}
+
+html.blue body #rubix-nav-header .navbar-nav:last-child {
+    margin-right: -25px
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li > a {
+    border: none;
+    padding: 25px;
+    display: block
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li > a > .rubix-icon {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.divider {
+    height: 75px;
+    border: 1px solid rgba(59, 70, 72, .45)
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.dropdown.open > a {
+    color: #fff;
+    background: 0 0
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.active > a, html.blue body #rubix-nav-header .navbar-nav > li > a {
+    height: 75px;
+    font-size: 26px;
+    background: 0 0;
+    text-align: center;
+    color: #89949B
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.active > a:hover, html.blue body #rubix-nav-header .navbar-nav > li.pressed > a, html.blue body #rubix-nav-header .navbar-nav > li > a:hover {
+    color: #fff
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.logout > a, html.blue body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    width: 80px;
+    font-size: 30px;
+    padding-left: 0;
+    padding-right: 0
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.logout > a {
+    color: #fff;
+    background: #6FA2D9
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.logout > a:hover {
+    background: #80BAF9
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    color: #fff;
+    background: #2AA38B
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.sidebar-btn > a:hover {
+    background: #2EB398
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.collapse-left > a {
+    padding-left: 0
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.collapse-right > a {
+    padding-right: 0
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li.small-font > a {
+    font-size: 20px
+}
+
+html.blue body #rubix-nav-header .navbar-nav > li .notification-badge {
+    font-size: 10px;
+    padding: 3px 5px;
+    margin-left: -5px;
+    line-height: 9px;
+    margin-top: -10px;
+    position: absolute
+}
+
+@media (min-width: 990px) {
+    html.blue body #rubix-nav-header {
+        margin-left: 250px
+    }
+}
+
+html.blue body #flag-menu-btn > img {
+    top: -2px;
+    position: relative
+}
+
+html.blue body .lang-menu-text {
+    line-height: 32px
+}
+
+html.blue body #flag-menu, html.blue body #notifications-menu, html.blue body #rss-menu, html.blue body #settings-menu {
+    border: none;
+    margin-top: 0;
+    overflow: visible;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2);
+    border-top: 5px solid #79B0EC !important
+}
+
+html.blue body #flag-menu:after, html.blue body #notifications-menu:after, html.blue body #rss-menu:after, html.blue body #settings-menu:after {
+    top: -14px;
+    right: 25px;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #79B0EC
+}
+
+html.blue body #notifications-menu > li, html.blue body #rss-menu > li {
+    border-bottom: 1px solid #f2f2f2
+}
+
+html.blue body #notifications-menu > li:last-child, html.blue body #rss-menu > li:last-child {
+    border-bottom: none
+}
+
+html.blue body #notifications-menu > li > a > .container-fluid, html.blue body #rss-menu > li > a > .container-fluid {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+html.blue body #notifications-menu > li > a > .container-fluid > .row > .avatar-container, html.blue body #rss-menu > li > a > .container-fluid > .row > .avatar-container {
+    width: 75px;
+    padding-right: 10px
+}
+
+html.blue body #notifications-menu > li > a > .container-fluid > .row > .avatar-container .label, html.blue body #rss-menu > li > a > .container-fluid > .row > .avatar-container .label {
+    font-size: 8px
+}
+
+html.blue body #notifications-menu > li > a > .container-fluid > .row > .notification-container, html.blue body #rss-menu > li > a > .container-fluid > .row > .notification-container {
+    width: 225px
+}
+
+html.blue body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time, html.blue body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.blue body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon, html.blue body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon {
+    margin-right: 5px
+}
+
+html.blue body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-header, html.blue body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-bottom: 5px
+}
+
+html.blue body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-details, html.blue body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-details {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.blue body #notifications-menu .notification-footer-btn, html.blue body #rss-menu .notification-footer-btn {
+    margin: 0;
+    height: 100%;
+    font-size: 12px;
+    border-radius: 0;
+    font-weight: 700;
+    padding: 6px 12px;
+    border: none !important;
+    color: #98A0A3 !important;
+    background: #F9FAFB !important
+}
+
+html.blue body #notifications-menu .notification-footer-btn:focus, html.blue body #notifications-menu .notification-footer-btn:hover, html.blue body #rss-menu .notification-footer-btn:focus, html.blue body #rss-menu .notification-footer-btn:hover {
+    border: none !important;
+    background: #eaedf1 !important
+}
+
+html.blue body #notifications-menu .notification-footer-btn.left-btn, html.blue body #rss-menu .notification-footer-btn.left-btn {
+    border-right: 1px solid #DDE1E6 !important
+}
+
+html.blue body #sidebar {
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    position: fixed;
+    overflow: hidden;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    left: -250px;
+    width: 250px;
+    background: #273135
+}
+
+html.blue body #sidebar #avatar {
+    height: 75px;
+    background: #80BAF9
+}
+
+html.blue body #sidebar #avatar img {
+    top: 17px;
+    position: relative
+}
+
+html.blue body #sidebar #avatar-col {
+    margin-left: -5px
+}
+
+html.blue body #sidebar #demo-progress {
+    margin: 0;
+    top: 30px;
+    height: 4px;
+    width: 115px;
+    border-radius: 0;
+    position: relative;
+    background: #6FA2D9
+}
+
+html.blue body #sidebar #demo-icon {
+    top: 3px;
+    float: right;
+    font-size: 18px;
+    position: relative;
+    color: #6FA2D9
+}
+
+html.blue body #sidebar .sidebar-controls-container {
+    width: 250px;
+    height: 35px;
+    display: table;
+    visibility: visible;
+    background: #6FA2D9
+}
+
+html.blue body #sidebar .sidebar-controls-container > .sidebar-controls {
+    display: table-row
+}
+
+html.blue body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn {
+    border: none;
+    outline: 0;
+    font-size: 16px;
+    cursor: pointer;
+    background: 0 0;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    border-right: 1px solid #6C9DD2
+}
+
+html.blue body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a {
+    outline: 0;
+    color: #52779e
+}
+
+html.blue body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:focus, html.blue body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:hover {
+    border: none
+}
+
+html.blue body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active {
+    background: #80BAF9 !important
+}
+
+html.blue body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active > a {
+    color: #357bc7
+}
+
+html.blue body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn:hover {
+    background: rgba(0, 0, 0, .04)
+}
+
+html.blue body #sidebar .sidebar-item {
+    height: 35px;
+    background: #1F282D
+}
+
+html.blue body #sidebar #sidebar-container {
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    top: 110px
+}
+
+html.blue body #sidebar #sidebar-container > .sidebar {
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+html.blue body .sidebar-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-top: 25px;
+    font-weight: 700;
+    padding-bottom: 12px;
+    color: rgba(137, 148, 155, .4)
+}
+
+html.blue body .sidebar-nav {
+    padding: 0;
+    list-style: none;
+    margin-left: 25px;
+    border-left: 2px solid rgba(59, 70, 72, .5)
+}
+
+html.blue body .sidebar-nav > li {
+    height: 45px;
+    outline: 0;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative
+}
+
+html.blue body .sidebar-nav > li > a {
+    height: 45px;
+    border: none;
+    outline: 0;
+    color: #89949B;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    text-decoration: none;
+    padding: 15px 0 15px 25px
+}
+
+html.blue body .sidebar-nav > li > a > .rubix-icon {
+    width: 16px;
+    height: 17px;
+    vertical-align: top;
+    display: inline-block
+}
+
+html.blue body .sidebar-nav > li > a > .name {
+    line-height: 16px;
+    vertical-align: top
+}
+
+html.blue body .sidebar-nav > li > a > .name > span > .label {
+    float: right;
+    margin-top: -3px;
+    padding: 5px 10px;
+    margin-right: 30px
+}
+
+html.blue body .sidebar-nav > li > a > .rubix-icon ~ .name {
+    margin-left: 10px
+}
+
+html.blue body .sidebar-nav > li > a:focus, html.blue body .sidebar-nav > li > a:hover {
+    border: none;
+    background: rgba(0, 0, 0, .2)
+}
+
+html.blue body .sidebar-nav > li.open:before, html.blue body .sidebar-nav > li:hover:before {
+    display: none
+}
+
+html.blue body .sidebar-nav > li.open {
+    height: 100%
+}
+
+html.blue body .sidebar-nav > li.open > a {
+    background: rgba(0, 0, 0, .2)
+}
+
+html.blue body .sidebar-nav > li:before {
+    left: 0;
+    top: 22px;
+    width: 15px;
+    content: ' ';
+    position: absolute;
+    display: inline-block;
+    border: 1px solid rgba(59, 70, 72, .5)
+}
+
+html.blue body .sidebar-nav > li.active {
+    border-left: 5px solid #79B0EC
+}
+
+html.blue body .sidebar-nav > li.active > a {
+    background: rgba(0, 0, 0, .4);
+    padding-left: 20px
+}
+
+html.blue body .sidebar-nav > li.active > a:hover {
+    background: rgba(0, 0, 0, .4)
+}
+
+html.blue body .sidebar-nav > li.active:before {
+    display: none
+}
+
+html.blue body .sidebar-nav > li.active:after {
+    top: 11px;
+    right: 0;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 10px solid #E9F0F5
+}
+
+html.blue body .sidebar-nav-container > .sidebar-nav {
+    border: none;
+    margin-left: -25px;
+    margin-right: -25px
+}
+
+html.blue body .sidebar-nav-container > .sidebar-nav > li:before {
+    display: none
+}
+
+html.blue body .sidebar-nav-container > .sidebar-nav > li > a {
+    font-size: 16px;
+    line-height: 16px;
+    padding: 15px 25px
+}
+
+html.blue body .sidebar-nav-container > .sidebar-nav > li > a > .name {
+    line-height: 18px;
+    margin-left: 15px
+}
+
+html.blue body .sidebar-nav-container > .sidebar-nav > li > a > .rubix-icon {
+    width: 18px;
+    height: 19px;
+    display: inline-block
+}
+
+html.blue body .sidebar-nav-container > .sidebar-nav > li.active > a {
+    padding-left: 20px
+}
+
+html.blue body #navbar ~ #sidebar {
+    top: 75px
+}
+
+html.blue body #body {
+    left: 0;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    z-index: 100;
+    margin-left: 0;
+    position: relative;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    background: #E9F0F5;
+    margin-top: 25px;
+    padding-bottom: 25px
+}
+
+html.blue body #navbar ~ #body {
+    margin-top: 74px;
+    padding-top: 25px
+}
+
+html.blue body #sidebar + #body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.blue body .external-event {
+    background: #79B0EC
+}
+
+html.blue body #footer {
+    padding: 10px;
+    position: relative;
+    color: #CCD6DF;
+    background: #89949B
+}
+
+html.blue body #footer-container {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+@media (min-width: 990px) {
+    html.blue body #sidebar {
+        left: 0
+    }
+
+    html.blue body #sidebar ~ #body, html.blue body #sidebar ~ #footer-container {
+        margin-left: 250px
+    }
+}
+
+html.purple .datepicker table tr td span.active, html.purple .datepicker table tr td span.active.disabled, html.purple .datepicker table tr td span.active.disabled:hover, html.purple .datepicker table tr td span.active:hover, html.purple .datepicker table tr td.active, html.purple .datepicker table tr td.active.disabled, html.purple .datepicker table tr td.active.disabled:hover, html.purple .datepicker table tr td.active:hover {
+    background: #B4A1DD !important
+}
+
+html.purple .list-bg-theme > .list-group-item.active {
+    background: #B4A1DD !important;
+    color: #fff !important
+}
+
+html.purple .list-fg-theme > .list-group-item {
+    color: #B4A1DD
+}
+
+html.purple .rubix-panel-header .nav-theme.nav-tabs > li > a, html.purple .rubix-panel-header .nav-theme.nav-tabs > li > a:focus, html.purple .rubix-panel-header .nav-theme.nav-tabs > li > a:hover {
+    color: #fff
+}
+
+html.purple .rubix-panel-header .nav-theme.nav-tabs > li.active > a:focus, html.purple .rubix-panel-header .nav-theme.nav-tabs > li.active > a:hover {
+    color: #B4A1DD
+}
+
+html.purple .nav-theme.nav-tabs {
+    border-color: #B4A1DD
+}
+
+html.purple .nav-theme.nav-tabs > li.active > a, html.purple .nav-theme.nav-tabs > li > a, html.purple .nav-theme.nav-tabs > li > a:focus, html.purple .nav-theme.nav-tabs > li > a:hover {
+    color: #B4A1DD;
+    border-color: #B4A1DD #B4A1DD transparent
+}
+
+html.purple .nav-theme.nav-pills > li.active > a, html.purple .nav-theme.nav-pills > li > a:focus, html.purple .nav-theme.nav-pills > li > a:hover {
+    background: #B4A1DD;
+    color: #fff
+}
+
+html.purple .dropup .menu-theme, html.purple .menu-theme {
+    border-color: #B4A1DD
+}
+
+html.purple .dropup .menu-theme > li > a:hover, html.purple .menu-theme > li > a:hover {
+    background: rgba(180, 161, 221, .05)
+}
+
+html.purple .btn-theme, html.purple .dropup .menu-theme > .active > a, html.purple .dropup .menu-theme > .active > a:focus, html.purple .dropup .menu-theme > .active > a:hover, html.purple .menu-theme > .active > a, html.purple .menu-theme > .active > a:focus, html.purple .menu-theme > .active > a:hover {
+    background: #B4A1DD;
+    color: #fff
+}
+
+html.purple .btn-theme {
+    outline: 0;
+    border-color: #B4A1DD
+}
+
+html.purple .btn-theme.btn-outlined {
+    color: #B4A1DD;
+    background: 0 0
+}
+
+html.purple .btn-theme.btn-outlined.btn-onlyOnHover {
+    color: #89949B
+}
+
+html.purple .btn-theme.active, html.purple .btn-theme:active, html.purple .btn-theme:focus, html.purple .btn-theme:hover {
+    outline: 0;
+    color: #fff;
+    background: #d2c6eb;
+    border-color: #d2c6eb
+}
+
+html.purple .btn-theme.active.btn-outlined, html.purple .btn-theme:active.btn-outlined, html.purple .btn-theme:focus.btn-outlined, html.purple .btn-theme:hover.btn-outlined {
+    background: #B4A1DD;
+    color: #fff;
+    border-color: #B4A1DD
+}
+
+html.purple .btn-theme.btn-inverse.btn-outlined {
+    color: #fff;
+    border-color: #fff
+}
+
+html.purple .btn-theme.btn-inverse.btn-outlined.active, html.purple .btn-theme.btn-inverse.btn-outlined:active, html.purple .btn-theme.btn-inverse.btn-outlined:focus, html.purple .btn-theme.btn-inverse.btn-outlined:hover {
+    color: #B4A1DD;
+    background: #fff;
+    border-color: #fff
+}
+
+html.purple .btn-theme.btn-inverse.btn-outlined.active.btn-retainBg, html.purple .btn-theme.btn-inverse.btn-outlined:active.btn-retainBg, html.purple .btn-theme.btn-inverse.btn-outlined:focus.btn-retainBg, html.purple .btn-theme.btn-inverse.btn-outlined:hover.btn-retainBg {
+    background: #B4A1DD;
+    color: #fff;
+    border-color: #B4A1DD
+}
+
+html.purple .tl-theme .rubix-timeline-body > ul > li:before {
+    border-color: #B4A1DD
+}
+
+html.purple .border-theme {
+    border-color: #B4A1DD !important
+}
+
+html.purple .border-theme .rubix-timeline-body > ul, html.purple .border-theme.rubix-timeline-view:before {
+    border-color: #B4A1DD
+}
+
+html.purple .border-focus-theme:focus, html.purple .border-hover-theme:hover {
+    border-color: #B4A1DD !important
+}
+
+html.purple .fg-focus-theme:focus, html.purple .fg-hover-theme:hover, html.purple .fg-theme, html.purple .fg-theme .tab-container.plain > .nav-tabs > .b-tab.active > a, html.purple .fg-theme.fg-tab-active .tab-container > .nav-tabs > .b-tab.active > a, html.purple .fg-theme > .tab-container > .nav-tabs > .b-tab > a {
+    color: #B4A1DD
+}
+
+html.purple .bg-focus-theme:focus, html.purple .bg-hover-theme:hover, html.purple .bg-theme {
+    background: #B4A1DD
+}
+
+html.purple .bg-theme > .tab-container > .nav-tabs > .b-tab.open > a {
+    background: rgba(0, 0, 0, .03)
+}
+
+html.purple .bg-theme > .tab-container > .nav-tabs > .b-tab > .dropdown-menu > li.active > a {
+    background: #B4A1DD
+}
+
+html.purple .bg-theme table td, html.purple .bg-theme th {
+    border-color: rgba(0, 0, 0, .05) !important
+}
+
+html.purple, html.purple body {
+    background: #fff;
+    overflow-x: hidden;
+    color: #89949B
+}
+
+html.purple body #app-container {
+    overflow: hidden
+}
+
+html.purple body #container > div:first-child#navbar #rubix-nav-header {
+    margin: 0
+}
+
+html.purple body #container > div:first-child#body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.purple body #container.container-open > #sidebar {
+    left: 0
+}
+
+html.purple body #container.container-open #rubix-nav-header {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.purple body #container.container-open #rubix-nav-header {
+        margin-right: 0
+    }
+}
+
+html.purple body #container.container-open > #body, html.purple body #container.container-open > #footer-container {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.purple body #container.container-open > #body, html.purple body #container.container-open > #footer-container {
+        margin-right: 0
+    }
+}
+
+html.purple body #navbar {
+    width: 100%
+}
+
+html.purple body #rubix-nav-header {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    border: none;
+    margin-left: 0;
+    background: #273135
+}
+
+html.purple body #rubix-nav-header .navbar-brand {
+    width: 100%;
+    text-align: center;
+    color: #89949B
+}
+
+html.purple body #rubix-nav-header .navbar-brand > img {
+    top: -3px;
+    position: relative
+}
+
+@media (max-width: 320px) {
+    html.purple body #rubix-nav-header .navbar-brand > img {
+        width: 80px;
+        left: -10px
+    }
+}
+
+html.purple body #rubix-nav-header .navbar-content {
+    height: 75px
+}
+
+html.purple body #rubix-nav-header .navbar-nav {
+    margin: 0;
+    display: inline-block
+}
+
+html.purple body #rubix-nav-header .navbar-nav:first-child {
+    margin-left: -25px
+}
+
+html.purple body #rubix-nav-header .navbar-nav:last-child {
+    margin-right: -25px
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li > a {
+    border: none;
+    padding: 25px;
+    display: block
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li > a > .rubix-icon {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.divider {
+    height: 75px;
+    border: 1px solid rgba(59, 70, 72, .45)
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.dropdown.open > a {
+    color: #fff;
+    background: 0 0
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.active > a, html.purple body #rubix-nav-header .navbar-nav > li > a {
+    height: 75px;
+    font-size: 26px;
+    background: 0 0;
+    text-align: center;
+    color: #89949B
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.active > a:hover, html.purple body #rubix-nav-header .navbar-nav > li.pressed > a, html.purple body #rubix-nav-header .navbar-nav > li > a:hover {
+    color: #fff
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.logout > a, html.purple body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    width: 80px;
+    font-size: 30px;
+    padding-left: 0;
+    padding-right: 0
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.logout > a {
+    color: #fff;
+    background: #A593CA
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.logout > a:hover {
+    background: #BEAAEA
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    color: #fff;
+    background: #2AA38B
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.sidebar-btn > a:hover {
+    background: #2EB398
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.collapse-left > a {
+    padding-left: 0
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.collapse-right > a {
+    padding-right: 0
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li.small-font > a {
+    font-size: 20px
+}
+
+html.purple body #rubix-nav-header .navbar-nav > li .notification-badge {
+    font-size: 10px;
+    padding: 3px 5px;
+    margin-left: -5px;
+    line-height: 9px;
+    margin-top: -10px;
+    position: absolute
+}
+
+@media (min-width: 990px) {
+    html.purple body #rubix-nav-header {
+        margin-left: 250px
+    }
+}
+
+html.purple body #flag-menu-btn > img {
+    top: -2px;
+    position: relative
+}
+
+html.purple body .lang-menu-text {
+    line-height: 32px
+}
+
+html.purple body #flag-menu, html.purple body #notifications-menu, html.purple body #rss-menu, html.purple body #settings-menu {
+    border: none;
+    margin-top: 0;
+    overflow: visible;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2);
+    border-top: 5px solid #B4A1DD !important
+}
+
+html.purple body #flag-menu:after, html.purple body #notifications-menu:after, html.purple body #rss-menu:after, html.purple body #settings-menu:after {
+    top: -14px;
+    right: 25px;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #B4A1DD
+}
+
+html.purple body #notifications-menu > li, html.purple body #rss-menu > li {
+    border-bottom: 1px solid #f2f2f2
+}
+
+html.purple body #notifications-menu > li:last-child, html.purple body #rss-menu > li:last-child {
+    border-bottom: none
+}
+
+html.purple body #notifications-menu > li > a > .container-fluid, html.purple body #rss-menu > li > a > .container-fluid {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+html.purple body #notifications-menu > li > a > .container-fluid > .row > .avatar-container, html.purple body #rss-menu > li > a > .container-fluid > .row > .avatar-container {
+    width: 75px;
+    padding-right: 10px
+}
+
+html.purple body #notifications-menu > li > a > .container-fluid > .row > .avatar-container .label, html.purple body #rss-menu > li > a > .container-fluid > .row > .avatar-container .label {
+    font-size: 8px
+}
+
+html.purple body #notifications-menu > li > a > .container-fluid > .row > .notification-container, html.purple body #rss-menu > li > a > .container-fluid > .row > .notification-container {
+    width: 225px
+}
+
+html.purple body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time, html.purple body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.purple body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon, html.purple body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon {
+    margin-right: 5px
+}
+
+html.purple body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-header, html.purple body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-bottom: 5px
+}
+
+html.purple body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-details, html.purple body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-details {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.purple body #notifications-menu .notification-footer-btn, html.purple body #rss-menu .notification-footer-btn {
+    margin: 0;
+    height: 100%;
+    font-size: 12px;
+    border-radius: 0;
+    font-weight: 700;
+    padding: 6px 12px;
+    border: none !important;
+    color: #98A0A3 !important;
+    background: #F9FAFB !important
+}
+
+html.purple body #notifications-menu .notification-footer-btn:focus, html.purple body #notifications-menu .notification-footer-btn:hover, html.purple body #rss-menu .notification-footer-btn:focus, html.purple body #rss-menu .notification-footer-btn:hover {
+    border: none !important;
+    background: #eaedf1 !important
+}
+
+html.purple body #notifications-menu .notification-footer-btn.left-btn, html.purple body #rss-menu .notification-footer-btn.left-btn {
+    border-right: 1px solid #DDE1E6 !important
+}
+
+html.purple body #sidebar {
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    position: fixed;
+    overflow: hidden;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    left: -250px;
+    width: 250px;
+    background: #273135
+}
+
+html.purple body #sidebar #avatar {
+    height: 75px;
+    background: #BEAAEA
+}
+
+html.purple body #sidebar #avatar img {
+    top: 17px;
+    position: relative
+}
+
+html.purple body #sidebar #avatar-col {
+    margin-left: -5px
+}
+
+html.purple body #sidebar #demo-progress {
+    margin: 0;
+    top: 30px;
+    height: 4px;
+    width: 115px;
+    border-radius: 0;
+    position: relative;
+    background: #A593CA
+}
+
+html.purple body #sidebar #demo-icon {
+    top: 3px;
+    float: right;
+    font-size: 18px;
+    position: relative;
+    color: #A593CA
+}
+
+html.purple body #sidebar .sidebar-controls-container {
+    width: 250px;
+    height: 35px;
+    display: table;
+    visibility: visible;
+    background: #A593CA
+}
+
+html.purple body #sidebar .sidebar-controls-container > .sidebar-controls {
+    display: table-row
+}
+
+html.purple body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn {
+    border: none;
+    outline: 0;
+    font-size: 16px;
+    cursor: pointer;
+    background: 0 0;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    border-right: 1px solid #9F8EC3
+}
+
+html.purple body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a {
+    outline: 0;
+    color: #706489
+}
+
+html.purple body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:focus, html.purple body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:hover {
+    border: none
+}
+
+html.purple body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active {
+    background: #BEAAEA !important
+}
+
+html.purple body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active > a {
+    color: #4C445D
+}
+
+html.purple body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn:hover {
+    background: rgba(0, 0, 0, .04)
+}
+
+html.purple body #sidebar .sidebar-item {
+    height: 35px;
+    background: #1F282D
+}
+
+html.purple body #sidebar #sidebar-container {
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    top: 110px
+}
+
+html.purple body #sidebar #sidebar-container > .sidebar {
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+html.purple body .sidebar-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-top: 25px;
+    font-weight: 700;
+    padding-bottom: 12px;
+    color: rgba(137, 148, 155, .4)
+}
+
+html.purple body .sidebar-nav {
+    padding: 0;
+    list-style: none;
+    margin-left: 25px;
+    border-left: 2px solid rgba(59, 70, 72, .5)
+}
+
+html.purple body .sidebar-nav > li {
+    height: 45px;
+    outline: 0;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative
+}
+
+html.purple body .sidebar-nav > li > a {
+    height: 45px;
+    border: none;
+    outline: 0;
+    color: #89949B;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    text-decoration: none;
+    padding: 15px 0 15px 25px
+}
+
+html.purple body .sidebar-nav > li > a > .rubix-icon {
+    width: 16px;
+    height: 17px;
+    vertical-align: top;
+    display: inline-block
+}
+
+html.purple body .sidebar-nav > li > a > .name {
+    line-height: 16px;
+    vertical-align: top
+}
+
+html.purple body .sidebar-nav > li > a > .name > span > .label {
+    float: right;
+    margin-top: -3px;
+    padding: 5px 10px;
+    margin-right: 30px
+}
+
+html.purple body .sidebar-nav > li > a > .rubix-icon ~ .name {
+    margin-left: 10px
+}
+
+html.purple body .sidebar-nav > li > a:focus, html.purple body .sidebar-nav > li > a:hover {
+    border: none;
+    background: rgba(0, 0, 0, .2)
+}
+
+html.purple body .sidebar-nav > li.open:before, html.purple body .sidebar-nav > li:hover:before {
+    display: none
+}
+
+html.purple body .sidebar-nav > li.open {
+    height: 100%
+}
+
+html.purple body .sidebar-nav > li.open > a {
+    background: rgba(0, 0, 0, .2)
+}
+
+html.purple body .sidebar-nav > li:before {
+    left: 0;
+    top: 22px;
+    width: 15px;
+    content: ' ';
+    position: absolute;
+    display: inline-block;
+    border: 1px solid rgba(59, 70, 72, .5)
+}
+
+html.purple body .sidebar-nav > li.active {
+    border-left: 5px solid #B4A1DD
+}
+
+html.purple body .sidebar-nav > li.active > a {
+    background: rgba(0, 0, 0, .4);
+    padding-left: 20px
+}
+
+html.purple body .sidebar-nav > li.active > a:hover {
+    background: rgba(0, 0, 0, .4)
+}
+
+html.purple body .sidebar-nav > li.active:before {
+    display: none
+}
+
+html.purple body .sidebar-nav > li.active:after {
+    top: 11px;
+    right: 0;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 10px solid #E9F0F5
+}
+
+html.purple body .sidebar-nav-container > .sidebar-nav {
+    border: none;
+    margin-left: -25px;
+    margin-right: -25px
+}
+
+html.purple body .sidebar-nav-container > .sidebar-nav > li:before {
+    display: none
+}
+
+html.purple body .sidebar-nav-container > .sidebar-nav > li > a {
+    font-size: 16px;
+    line-height: 16px;
+    padding: 15px 25px
+}
+
+html.purple body .sidebar-nav-container > .sidebar-nav > li > a > .name {
+    line-height: 18px;
+    margin-left: 15px
+}
+
+html.purple body .sidebar-nav-container > .sidebar-nav > li > a > .rubix-icon {
+    width: 18px;
+    height: 19px;
+    display: inline-block
+}
+
+html.purple body .sidebar-nav-container > .sidebar-nav > li.active > a {
+    padding-left: 20px
+}
+
+html.purple body #navbar ~ #sidebar {
+    top: 75px
+}
+
+html.purple body #body {
+    left: 0;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    z-index: 100;
+    margin-left: 0;
+    position: relative;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    background: #E9F0F5;
+    margin-top: 25px;
+    padding-bottom: 25px
+}
+
+html.purple body #navbar ~ #body {
+    margin-top: 74px;
+    padding-top: 25px
+}
+
+html.purple body #sidebar + #body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.purple body .external-event {
+    background: #B4A1DD
+}
+
+html.purple body #footer {
+    padding: 10px;
+    position: relative;
+    color: #CCD6DF;
+    background: #89949B
+}
+
+html.purple body #footer-container {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+@media (min-width: 990px) {
+    html.purple body #sidebar {
+        left: 0
+    }
+
+    html.purple body #sidebar ~ #body, html.purple body #sidebar ~ #footer-container {
+        margin-left: 250px
+    }
+}
+
+html.brown .datepicker table tr td span.active, html.brown .datepicker table tr td span.active.disabled, html.brown .datepicker table tr td span.active.disabled:hover, html.brown .datepicker table tr td span.active:hover, html.brown .datepicker table tr td.active, html.brown .datepicker table tr td.active.disabled, html.brown .datepicker table tr td.active.disabled:hover, html.brown .datepicker table tr td.active:hover {
+    background: #A8553A !important
+}
+
+html.brown .list-bg-theme > .list-group-item.active {
+    background: #A8553A !important;
+    color: #fff !important
+}
+
+html.brown .list-fg-theme > .list-group-item {
+    color: #A8553A
+}
+
+html.brown .rubix-panel-header .nav-theme.nav-tabs > li > a, html.brown .rubix-panel-header .nav-theme.nav-tabs > li > a:focus, html.brown .rubix-panel-header .nav-theme.nav-tabs > li > a:hover {
+    color: #fff
+}
+
+html.brown .rubix-panel-header .nav-theme.nav-tabs > li.active > a:focus, html.brown .rubix-panel-header .nav-theme.nav-tabs > li.active > a:hover {
+    color: #A8553A
+}
+
+html.brown .nav-theme.nav-tabs {
+    border-color: #A8553A
+}
+
+html.brown .nav-theme.nav-tabs > li.active > a, html.brown .nav-theme.nav-tabs > li > a, html.brown .nav-theme.nav-tabs > li > a:focus, html.brown .nav-theme.nav-tabs > li > a:hover {
+    color: #A8553A;
+    border-color: #A8553A #A8553A transparent
+}
+
+html.brown .nav-theme.nav-pills > li.active > a, html.brown .nav-theme.nav-pills > li > a:focus, html.brown .nav-theme.nav-pills > li > a:hover {
+    background: #A8553A;
+    color: #fff
+}
+
+html.brown .dropup .menu-theme, html.brown .menu-theme {
+    border-color: #A8553A
+}
+
+html.brown .dropup .menu-theme > li > a:hover, html.brown .menu-theme > li > a:hover {
+    background: rgba(168, 85, 58, .05)
+}
+
+html.brown .btn-theme, html.brown .dropup .menu-theme > .active > a, html.brown .dropup .menu-theme > .active > a:focus, html.brown .dropup .menu-theme > .active > a:hover, html.brown .menu-theme > .active > a, html.brown .menu-theme > .active > a:focus, html.brown .menu-theme > .active > a:hover {
+    background: #A8553A;
+    color: #fff
+}
+
+html.brown .btn-theme {
+    outline: 0;
+    border-color: #A8553A
+}
+
+html.brown .btn-theme.btn-outlined {
+    color: #A8553A;
+    background: 0 0
+}
+
+html.brown .btn-theme.btn-outlined.btn-onlyOnHover {
+    color: #89949B
+}
+
+html.brown .btn-theme.active, html.brown .btn-theme:active, html.brown .btn-theme:focus, html.brown .btn-theme:hover {
+    outline: 0;
+    color: #fff;
+    background: #c36e52;
+    border-color: #c36e52
+}
+
+html.brown .btn-theme.active.btn-outlined, html.brown .btn-theme:active.btn-outlined, html.brown .btn-theme:focus.btn-outlined, html.brown .btn-theme:hover.btn-outlined {
+    background: #A8553A;
+    color: #fff;
+    border-color: #A8553A
+}
+
+html.brown .btn-theme.btn-inverse.btn-outlined {
+    color: #fff;
+    border-color: #fff
+}
+
+html.brown .btn-theme.btn-inverse.btn-outlined.active, html.brown .btn-theme.btn-inverse.btn-outlined:active, html.brown .btn-theme.btn-inverse.btn-outlined:focus, html.brown .btn-theme.btn-inverse.btn-outlined:hover {
+    color: #A8553A;
+    background: #fff;
+    border-color: #fff
+}
+
+html.brown .btn-theme.btn-inverse.btn-outlined.active.btn-retainBg, html.brown .btn-theme.btn-inverse.btn-outlined:active.btn-retainBg, html.brown .btn-theme.btn-inverse.btn-outlined:focus.btn-retainBg, html.brown .btn-theme.btn-inverse.btn-outlined:hover.btn-retainBg {
+    background: #A8553A;
+    color: #fff;
+    border-color: #A8553A
+}
+
+html.brown .tl-theme .rubix-timeline-body > ul > li:before {
+    border-color: #A8553A
+}
+
+html.brown .border-theme {
+    border-color: #A8553A !important
+}
+
+html.brown .border-theme .rubix-timeline-body > ul, html.brown .border-theme.rubix-timeline-view:before {
+    border-color: #A8553A
+}
+
+html.brown .border-focus-theme:focus, html.brown .border-hover-theme:hover {
+    border-color: #A8553A !important
+}
+
+html.brown .fg-focus-theme:focus, html.brown .fg-hover-theme:hover, html.brown .fg-theme, html.brown .fg-theme .tab-container.plain > .nav-tabs > .b-tab.active > a, html.brown .fg-theme.fg-tab-active .tab-container > .nav-tabs > .b-tab.active > a, html.brown .fg-theme > .tab-container > .nav-tabs > .b-tab > a {
+    color: #A8553A
+}
+
+html.brown .bg-focus-theme:focus, html.brown .bg-hover-theme:hover, html.brown .bg-theme {
+    background: #A8553A
+}
+
+html.brown .bg-theme > .tab-container > .nav-tabs > .b-tab.open > a {
+    background: rgba(0, 0, 0, .03)
+}
+
+html.brown .bg-theme > .tab-container > .nav-tabs > .b-tab > .dropdown-menu > li.active > a {
+    background: #A8553A
+}
+
+html.brown .bg-theme table td, html.brown .bg-theme th {
+    border-color: rgba(0, 0, 0, .05) !important
+}
+
+html.brown, html.brown body {
+    background: #fff;
+    overflow-x: hidden;
+    color: #89949B
+}
+
+html.brown body #app-container {
+    overflow: hidden
+}
+
+html.brown body #container > div:first-child#navbar #rubix-nav-header {
+    margin: 0
+}
+
+html.brown body #container > div:first-child#body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.brown body #container.container-open > #sidebar {
+    left: 0
+}
+
+html.brown body #container.container-open #rubix-nav-header {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.brown body #container.container-open #rubix-nav-header {
+        margin-right: 0
+    }
+}
+
+html.brown body #container.container-open > #body, html.brown body #container.container-open > #footer-container {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.brown body #container.container-open > #body, html.brown body #container.container-open > #footer-container {
+        margin-right: 0
+    }
+}
+
+html.brown body #navbar {
+    width: 100%
+}
+
+html.brown body #rubix-nav-header {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    border: none;
+    margin-left: 0;
+    background: #273135
+}
+
+html.brown body #rubix-nav-header .navbar-brand {
+    width: 100%;
+    text-align: center;
+    color: #89949B
+}
+
+html.brown body #rubix-nav-header .navbar-brand > img {
+    top: -3px;
+    position: relative
+}
+
+@media (max-width: 320px) {
+    html.brown body #rubix-nav-header .navbar-brand > img {
+        width: 80px;
+        left: -10px
+    }
+}
+
+html.brown body #rubix-nav-header .navbar-content {
+    height: 75px
+}
+
+html.brown body #rubix-nav-header .navbar-nav {
+    margin: 0;
+    display: inline-block
+}
+
+html.brown body #rubix-nav-header .navbar-nav:first-child {
+    margin-left: -25px
+}
+
+html.brown body #rubix-nav-header .navbar-nav:last-child {
+    margin-right: -25px
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li > a {
+    border: none;
+    padding: 25px;
+    display: block
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li > a > .rubix-icon {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.divider {
+    height: 75px;
+    border: 1px solid rgba(59, 70, 72, .45)
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.dropdown.open > a {
+    color: #fff;
+    background: 0 0
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.active > a, html.brown body #rubix-nav-header .navbar-nav > li > a {
+    height: 75px;
+    font-size: 26px;
+    background: 0 0;
+    text-align: center;
+    color: #89949B
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.active > a:hover, html.brown body #rubix-nav-header .navbar-nav > li.pressed > a, html.brown body #rubix-nav-header .navbar-nav > li > a:hover {
+    color: #fff
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.logout > a, html.brown body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    width: 80px;
+    font-size: 30px;
+    padding-left: 0;
+    padding-right: 0
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.logout > a {
+    color: #fff;
+    background: #954B33
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.logout > a:hover {
+    background: #B55B3E
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    color: #fff;
+    background: #2AA38B
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.sidebar-btn > a:hover {
+    background: #2EB398
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.collapse-left > a {
+    padding-left: 0
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.collapse-right > a {
+    padding-right: 0
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li.small-font > a {
+    font-size: 20px
+}
+
+html.brown body #rubix-nav-header .navbar-nav > li .notification-badge {
+    font-size: 10px;
+    padding: 3px 5px;
+    margin-left: -5px;
+    line-height: 9px;
+    margin-top: -10px;
+    position: absolute
+}
+
+@media (min-width: 990px) {
+    html.brown body #rubix-nav-header {
+        margin-left: 250px
+    }
+}
+
+html.brown body #flag-menu-btn > img {
+    top: -2px;
+    position: relative
+}
+
+html.brown body .lang-menu-text {
+    line-height: 32px
+}
+
+html.brown body #flag-menu, html.brown body #notifications-menu, html.brown body #rss-menu, html.brown body #settings-menu {
+    border: none;
+    margin-top: 0;
+    overflow: visible;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2);
+    border-top: 5px solid #A8553A !important
+}
+
+html.brown body #flag-menu:after, html.brown body #notifications-menu:after, html.brown body #rss-menu:after, html.brown body #settings-menu:after {
+    top: -14px;
+    right: 25px;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #A8553A
+}
+
+html.brown body #notifications-menu > li, html.brown body #rss-menu > li {
+    border-bottom: 1px solid #f2f2f2
+}
+
+html.brown body #notifications-menu > li:last-child, html.brown body #rss-menu > li:last-child {
+    border-bottom: none
+}
+
+html.brown body #notifications-menu > li > a > .container-fluid, html.brown body #rss-menu > li > a > .container-fluid {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+html.brown body #notifications-menu > li > a > .container-fluid > .row > .avatar-container, html.brown body #rss-menu > li > a > .container-fluid > .row > .avatar-container {
+    width: 75px;
+    padding-right: 10px
+}
+
+html.brown body #notifications-menu > li > a > .container-fluid > .row > .avatar-container .label, html.brown body #rss-menu > li > a > .container-fluid > .row > .avatar-container .label {
+    font-size: 8px
+}
+
+html.brown body #notifications-menu > li > a > .container-fluid > .row > .notification-container, html.brown body #rss-menu > li > a > .container-fluid > .row > .notification-container {
+    width: 225px
+}
+
+html.brown body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time, html.brown body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.brown body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon, html.brown body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon {
+    margin-right: 5px
+}
+
+html.brown body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-header, html.brown body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-bottom: 5px
+}
+
+html.brown body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-details, html.brown body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-details {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.brown body #notifications-menu .notification-footer-btn, html.brown body #rss-menu .notification-footer-btn {
+    margin: 0;
+    height: 100%;
+    font-size: 12px;
+    border-radius: 0;
+    font-weight: 700;
+    padding: 6px 12px;
+    border: none !important;
+    color: #98A0A3 !important;
+    background: #F9FAFB !important
+}
+
+html.brown body #notifications-menu .notification-footer-btn:focus, html.brown body #notifications-menu .notification-footer-btn:hover, html.brown body #rss-menu .notification-footer-btn:focus, html.brown body #rss-menu .notification-footer-btn:hover {
+    border: none !important;
+    background: #eaedf1 !important
+}
+
+html.brown body #notifications-menu .notification-footer-btn.left-btn, html.brown body #rss-menu .notification-footer-btn.left-btn {
+    border-right: 1px solid #DDE1E6 !important
+}
+
+html.brown body #sidebar {
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    position: fixed;
+    overflow: hidden;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    left: -250px;
+    width: 250px;
+    background: #273135
+}
+
+html.brown body #sidebar #avatar {
+    height: 75px;
+    background: #B55B3E
+}
+
+html.brown body #sidebar #avatar img {
+    top: 17px;
+    position: relative
+}
+
+html.brown body #sidebar #avatar-col {
+    margin-left: -5px
+}
+
+html.brown body #sidebar #demo-progress {
+    margin: 0;
+    top: 30px;
+    height: 4px;
+    width: 115px;
+    border-radius: 0;
+    position: relative;
+    background: #954B33
+}
+
+html.brown body #sidebar #demo-icon {
+    top: 3px;
+    float: right;
+    font-size: 18px;
+    position: relative;
+    color: #954B33
+}
+
+html.brown body #sidebar .sidebar-controls-container {
+    width: 250px;
+    height: 35px;
+    display: table;
+    visibility: visible;
+    background: #954B33
+}
+
+html.brown body #sidebar .sidebar-controls-container > .sidebar-controls {
+    display: table-row
+}
+
+html.brown body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn {
+    border: none;
+    outline: 0;
+    font-size: 16px;
+    cursor: pointer;
+    background: 0 0;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    border-right: 1px solid #8E4831
+}
+
+html.brown body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a {
+    outline: 0;
+    color: #F47C54
+}
+
+html.brown body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:focus, html.brown body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:hover {
+    border: none
+}
+
+html.brown body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active {
+    background: #B55B3E !important
+}
+
+html.brown body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active > a {
+    color: #6f3826
+}
+
+html.brown body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn:hover {
+    background: rgba(0, 0, 0, .04)
+}
+
+html.brown body #sidebar .sidebar-item {
+    height: 35px;
+    background: #1F282D
+}
+
+html.brown body #sidebar #sidebar-container {
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    top: 110px
+}
+
+html.brown body #sidebar #sidebar-container > .sidebar {
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+html.brown body .sidebar-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-top: 25px;
+    font-weight: 700;
+    padding-bottom: 12px;
+    color: rgba(137, 148, 155, .4)
+}
+
+html.brown body .sidebar-nav {
+    padding: 0;
+    list-style: none;
+    margin-left: 25px;
+    border-left: 2px solid rgba(59, 70, 72, .5)
+}
+
+html.brown body .sidebar-nav > li {
+    height: 45px;
+    outline: 0;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative
+}
+
+html.brown body .sidebar-nav > li > a {
+    height: 45px;
+    border: none;
+    outline: 0;
+    color: #89949B;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    text-decoration: none;
+    padding: 15px 0 15px 25px
+}
+
+html.brown body .sidebar-nav > li > a > .rubix-icon {
+    width: 16px;
+    height: 17px;
+    vertical-align: top;
+    display: inline-block
+}
+
+html.brown body .sidebar-nav > li > a > .name {
+    line-height: 16px;
+    vertical-align: top
+}
+
+html.brown body .sidebar-nav > li > a > .name > span > .label {
+    float: right;
+    margin-top: -3px;
+    padding: 5px 10px;
+    margin-right: 30px
+}
+
+html.brown body .sidebar-nav > li > a > .rubix-icon ~ .name {
+    margin-left: 10px
+}
+
+html.brown body .sidebar-nav > li > a:focus, html.brown body .sidebar-nav > li > a:hover {
+    border: none;
+    background: rgba(0, 0, 0, .2)
+}
+
+html.brown body .sidebar-nav > li.open:before, html.brown body .sidebar-nav > li:hover:before {
+    display: none
+}
+
+html.brown body .sidebar-nav > li.open {
+    height: 100%
+}
+
+html.brown body .sidebar-nav > li.open > a {
+    background: rgba(0, 0, 0, .2)
+}
+
+html.brown body .sidebar-nav > li:before {
+    left: 0;
+    top: 22px;
+    width: 15px;
+    content: ' ';
+    position: absolute;
+    display: inline-block;
+    border: 1px solid rgba(59, 70, 72, .5)
+}
+
+html.brown body .sidebar-nav > li.active {
+    border-left: 5px solid #A8553A
+}
+
+html.brown body .sidebar-nav > li.active > a {
+    background: rgba(0, 0, 0, .4);
+    padding-left: 20px
+}
+
+html.brown body .sidebar-nav > li.active > a:hover {
+    background: rgba(0, 0, 0, .4)
+}
+
+html.brown body .sidebar-nav > li.active:before {
+    display: none
+}
+
+html.brown body .sidebar-nav > li.active:after {
+    top: 11px;
+    right: 0;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 10px solid #E9F0F5
+}
+
+html.brown body .sidebar-nav-container > .sidebar-nav {
+    border: none;
+    margin-left: -25px;
+    margin-right: -25px
+}
+
+html.brown body .sidebar-nav-container > .sidebar-nav > li:before {
+    display: none
+}
+
+html.brown body .sidebar-nav-container > .sidebar-nav > li > a {
+    font-size: 16px;
+    line-height: 16px;
+    padding: 15px 25px
+}
+
+html.brown body .sidebar-nav-container > .sidebar-nav > li > a > .name {
+    line-height: 18px;
+    margin-left: 15px
+}
+
+html.brown body .sidebar-nav-container > .sidebar-nav > li > a > .rubix-icon {
+    width: 18px;
+    height: 19px;
+    display: inline-block
+}
+
+html.brown body .sidebar-nav-container > .sidebar-nav > li.active > a {
+    padding-left: 20px
+}
+
+html.brown body #navbar ~ #sidebar {
+    top: 75px
+}
+
+html.brown body #body {
+    left: 0;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    z-index: 100;
+    margin-left: 0;
+    position: relative;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    background: #E9F0F5;
+    margin-top: 25px;
+    padding-bottom: 25px
+}
+
+html.brown body #navbar ~ #body {
+    margin-top: 74px;
+    padding-top: 25px
+}
+
+html.brown body #sidebar + #body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.brown body .external-event {
+    background: #A8553A
+}
+
+html.brown body #footer {
+    padding: 10px;
+    position: relative;
+    color: #CCD6DF;
+    background: #89949B
+}
+
+html.brown body #footer-container {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+@media (min-width: 990px) {
+    html.brown body #sidebar {
+        left: 0
+    }
+
+    html.brown body #sidebar ~ #body, html.brown body #sidebar ~ #footer-container {
+        margin-left: 250px
+    }
+}
+
+a {
+    color: #2EB398
+}
+
+a:focus, a:hover {
+    color: #2EB398;
+    border-color: #2EB398
+}
+
+.form-control {
+    border-color: #ddd
+}
+
+.form-control:focus {
+    box-shadow: none !important;
+    border-color: #2EB398
+}
+
+.rubix-panel-container {
+    background: #fff
+}
+
+.rubix-panel-container.bordered {
+    border: 1px solid rgba(206, 219, 236, .75);
+    box-shadow: 0 2px 0 0 rgba(206, 219, 236, .5)
+}
+
+.form-control.select2-container.select2-dropdown-open, .select2-container .select2-choice, .select2-container-active .select2-choice, .select2-container-active .select2-choices, .select2-container-multi .select2-choices, .select2-container-multi.select2-container-active .select2-choices, .select2-drop-active, .select2-drop.select2-drop-above.select2-drop-active, .select2-dropdown-open.select2-drop-above .select2-choice, .select2-dropdown-open.select2-drop-above .select2-choices {
+    border-width: 2px;
+    border-color: #2EB398
+}
+
+.rubix-panel-container.noOverflow {
+    overflow: visible
+}
+
+.btn, .rubix-panel-controls {
+    color: #89949B
+}
+
+.select2-container-multi .select2-choices {
+    border-radius: 0
+}
+
+.select2-container .select2-choice .select2-arrow {
+    color: #fff;
+    border-radius: 0;
+    background: #2EB398;
+    border-color: #2EB398
+}
+
+.select2-results .select2-highlighted {
+    background: #2EB398
+}
+
+.tt-suggestion.tt-is-under-cursor {
+    color: #fff;
+    background: #68A0A5
+}
+
+.dropdown-header {
+    font-family: Lato, sans-serif;
+    color: #98A0A3;
+    background: #F9FAFB;
+    border-bottom: 1px solid #F2F2F2
+}
+
+.dropdown-menu, .tt-dropdown-menu {
+    border: none;
+    outline: 0;
+    margin-top: 5px;
+    min-width: 200px;
+    overflow: hidden;
+    border-radius: 5px
+}
+
+.dropdown-menu.double-width, .tt-dropdown-menu.double-width {
+    min-width: 325px
+}
+
+.dropdown-menu > li > a {
+    outline: 0;
+    color: #89949B
+}
+
+.dropdown-menu > li > a:hover {
+    color: #89949B;
+    background: rgba(104, 160, 165, .6)
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+    color: #fff;
+    background: #68A0A5
+}
+
+.dropdown-menu > .disabled > a, .dropdown-menu > .disabled > a:focus, .dropdown-menu > .disabled > a:hover {
+    background: 0 0;
+    color: rgba(137, 148, 155, .5)
+}
+
+.dropup .dropdown-menu, .navbar-fixed-bottom .dropdown .dropdown-menu {
+    border: none;
+    margin-top: 0;
+    min-width: 200px;
+    border-radius: 5px;
+    margin-bottom: 5px
+}
+
+.breadcrumb > li > a:focus, .breadcrumb > li > a:hover, html.cyan .nav-theme.nav-tabs {
+    border-color: #68A0A5
+}
+
+.dropup .dropdown-menu.double-width, .navbar-fixed-bottom .dropdown .dropdown-menu.double-width {
+    min-width: 325px
+}
+
+.pagination {
+    margin: 0 0 25px
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background: #68A0A5;
+    border-color: #68A0A5
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: inherit
+}
+
+.breadcrumb > li > a {
+    color: #68A0A5
+}
+
+html {
+    letter-spacing: .5px
+}
+
+html.cyan .datepicker table tr td span.active, html.cyan .datepicker table tr td span.active.disabled, html.cyan .datepicker table tr td span.active.disabled:hover, html.cyan .datepicker table tr td span.active:hover, html.cyan .datepicker table tr td.active, html.cyan .datepicker table tr td.active.disabled, html.cyan .datepicker table tr td.active.disabled:hover, html.cyan .datepicker table tr td.active:hover {
+    background: #68A0A5 !important
+}
+
+html.cyan .list-bg-theme > .list-group-item.active {
+    background: #68A0A5 !important;
+    color: #fff !important
+}
+
+html.cyan .list-fg-theme > .list-group-item {
+    color: #68A0A5
+}
+
+html.cyan .rubix-panel-header .nav-theme.nav-tabs > li > a, html.cyan .rubix-panel-header .nav-theme.nav-tabs > li > a:focus, html.cyan .rubix-panel-header .nav-theme.nav-tabs > li > a:hover {
+    color: #fff
+}
+
+html.cyan .rubix-panel-header .nav-theme.nav-tabs > li.active > a:focus, html.cyan .rubix-panel-header .nav-theme.nav-tabs > li.active > a:hover {
+    color: #68A0A5
+}
+
+html.cyan .nav-theme.nav-tabs > li.active > a, html.cyan .nav-theme.nav-tabs > li > a, html.cyan .nav-theme.nav-tabs > li > a:focus, html.cyan .nav-theme.nav-tabs > li > a:hover {
+    color: #68A0A5;
+    border-color: #68A0A5 #68A0A5 transparent
+}
+
+html.cyan .btn-theme, html.cyan .dropup .menu-theme, html.cyan .menu-theme {
+    border-color: #68A0A5
+}
+
+html.cyan .nav-theme.nav-pills > li.active > a, html.cyan .nav-theme.nav-pills > li > a:focus, html.cyan .nav-theme.nav-pills > li > a:hover {
+    background: #68A0A5;
+    color: #fff
+}
+
+html.cyan .dropup .menu-theme > li > a:hover, html.cyan .menu-theme > li > a:hover {
+    background: rgba(104, 160, 165, .05)
+}
+
+html.cyan .btn-theme, html.cyan .dropup .menu-theme > .active > a, html.cyan .dropup .menu-theme > .active > a:focus, html.cyan .dropup .menu-theme > .active > a:hover, html.cyan .menu-theme > .active > a, html.cyan .menu-theme > .active > a:focus, html.cyan .menu-theme > .active > a:hover {
+    background: #68A0A5;
+    color: #fff
+}
+
+html.cyan .btn-theme {
+    outline: 0
+}
+
+html.cyan .btn-theme.btn-outlined {
+    color: #68A0A5;
+    background: 0 0
+}
+
+html.cyan .btn-theme.btn-outlined.btn-onlyOnHover {
+    color: #89949B
+}
+
+html.cyan .btn-theme.active, html.cyan .btn-theme:active, html.cyan .btn-theme:focus, html.cyan .btn-theme:hover {
+    outline: 0;
+    color: #fff;
+    background: #88b4b8;
+    border-color: #88b4b8
+}
+
+html.cyan .btn-theme.active.btn-outlined, html.cyan .btn-theme:active.btn-outlined, html.cyan .btn-theme:focus.btn-outlined, html.cyan .btn-theme:hover.btn-outlined {
+    background: #68A0A5;
+    color: #fff;
+    border-color: #68A0A5
+}
+
+html.cyan .btn-theme.btn-inverse.btn-outlined {
+    color: #fff;
+    border-color: #fff
+}
+
+html.cyan .btn-theme.btn-inverse.btn-outlined.active, html.cyan .btn-theme.btn-inverse.btn-outlined:active, html.cyan .btn-theme.btn-inverse.btn-outlined:focus, html.cyan .btn-theme.btn-inverse.btn-outlined:hover {
+    color: #68A0A5;
+    background: #fff;
+    border-color: #fff
+}
+
+html.cyan .btn-theme.btn-inverse.btn-outlined.active.btn-retainBg, html.cyan .btn-theme.btn-inverse.btn-outlined:active.btn-retainBg, html.cyan .btn-theme.btn-inverse.btn-outlined:focus.btn-retainBg, html.cyan .btn-theme.btn-inverse.btn-outlined:hover.btn-retainBg {
+    background: #68A0A5;
+    color: #fff;
+    border-color: #68A0A5
+}
+
+html.cyan .tl-theme .rubix-timeline-body > ul > li:before {
+    border-color: #68A0A5
+}
+
+html.cyan .border-theme {
+    border-color: #68A0A5 !important
+}
+
+html.cyan .border-theme .rubix-timeline-body > ul, html.cyan .border-theme.rubix-timeline-view:before {
+    border-color: #68A0A5
+}
+
+html.cyan .border-focus-theme:focus, html.cyan .border-hover-theme:hover {
+    border-color: #68A0A5 !important
+}
+
+html.cyan .fg-focus-theme:focus, html.cyan .fg-hover-theme:hover, html.cyan .fg-theme, html.cyan .fg-theme .tab-container.plain > .nav-tabs > .b-tab.active > a, html.cyan .fg-theme.fg-tab-active .tab-container > .nav-tabs > .b-tab.active > a, html.cyan .fg-theme > .tab-container > .nav-tabs > .b-tab > a {
+    color: #68A0A5
+}
+
+html.cyan .bg-focus-theme:focus, html.cyan .bg-hover-theme:hover, html.cyan .bg-theme {
+    background: #68A0A5
+}
+
+html.cyan .bg-theme > .tab-container > .nav-tabs > .b-tab.open > a {
+    background: rgba(0, 0, 0, .03)
+}
+
+html.cyan .bg-theme > .tab-container > .nav-tabs > .b-tab > .dropdown-menu > li.active > a {
+    background: #68A0A5
+}
+
+html.cyan .bg-theme table td, html.cyan .bg-theme th {
+    border-color: rgba(0, 0, 0, .05) !important
+}
+
+html.cyan, html.cyan body {
+    background: #fff;
+    overflow-x: hidden;
+    color: #89949B
+}
+
+html.cyan body #app-container {
+    overflow: hidden
+}
+
+html.cyan body #container > div:first-child#navbar #rubix-nav-header {
+    margin: 0
+}
+
+html.cyan body #container > div:first-child#body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.cyan body #container.container-open > #sidebar {
+    left: 0
+}
+
+html.cyan body #container.container-open #rubix-nav-header {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.cyan body #container.container-open #rubix-nav-header {
+        margin-right: 0
+    }
+}
+
+html.cyan body #container.container-open > #body, html.cyan body #container.container-open > #footer-container {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.cyan body #container.container-open > #body, html.cyan body #container.container-open > #footer-container {
+        margin-right: 0
+    }
+}
+
+html.cyan body #navbar {
+    width: 100%
+}
+
+html.cyan body #rubix-nav-header {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    border: none;
+    margin-left: 0;
+    background: #273135
+}
+
+html.cyan body #rubix-nav-header .navbar-brand {
+    width: 100%;
+    text-align: center;
+    color: #89949B
+}
+
+html.cyan body #rubix-nav-header .navbar-brand > img {
+    top: -3px;
+    position: relative
+}
+
+@media (max-width: 320px) {
+    html.cyan body #rubix-nav-header .navbar-brand > img {
+        width: 80px;
+        left: -10px
+    }
+}
+
+html.cyan body #rubix-nav-header .navbar-content {
+    height: 75px
+}
+
+html.cyan body #rubix-nav-header .navbar-nav {
+    margin: 0;
+    display: inline-block
+}
+
+html.cyan body #rubix-nav-header .navbar-nav:first-child {
+    margin-left: -25px
+}
+
+html.cyan body #rubix-nav-header .navbar-nav:last-child {
+    margin-right: -25px
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li > a {
+    border: none;
+    padding: 25px;
+    display: block
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li > a > .rubix-icon {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.divider {
+    height: 75px;
+    border: 1px solid rgba(59, 70, 72, .45)
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.dropdown.open > a {
+    color: #fff;
+    background: 0 0
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.active > a, html.cyan body #rubix-nav-header .navbar-nav > li > a {
+    height: 75px;
+    font-size: 26px;
+    background: 0 0;
+    text-align: center;
+    color: #89949B
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.active > a:hover, html.cyan body #rubix-nav-header .navbar-nav > li.pressed > a, html.cyan body #rubix-nav-header .navbar-nav > li > a:hover {
+    color: #fff
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.logout > a, html.cyan body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    width: 80px;
+    font-size: 30px;
+    padding-left: 0;
+    padding-right: 0
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.logout > a {
+    color: #fff;
+    background: #5C8E92
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.logout > a:hover {
+    background: #70ACB2
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.sidebar-btn > a {
+    color: #fff;
+    background: #2AA38B
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.sidebar-btn > a:hover {
+    background: #2EB398
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.collapse-left > a {
+    padding-left: 0
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.collapse-right > a {
+    padding-right: 0
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li.small-font > a {
+    font-size: 20px
+}
+
+html.cyan body #rubix-nav-header .navbar-nav > li .notification-badge {
+    font-size: 10px;
+    padding: 3px 5px;
+    margin-left: -5px;
+    line-height: 9px;
+    margin-top: -10px;
+    position: absolute
+}
+
+@media (min-width: 990px) {
+    html.cyan body #rubix-nav-header {
+        margin-left: 250px
+    }
+}
+
+html.cyan body #flag-menu-btn > img {
+    top: -2px;
+    position: relative
+}
+
+html.cyan body .lang-menu-text {
+    line-height: 32px
+}
+
+html.cyan body #flag-menu, html.cyan body #notifications-menu, html.cyan body #rss-menu, html.cyan body #settings-menu {
+    border: none;
+    margin-top: 0;
+    overflow: visible;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2);
+    border-top: 5px solid #68A0A5 !important
+}
+
+html.cyan body #flag-menu:after, html.cyan body #notifications-menu:after, html.cyan body #rss-menu:after, html.cyan body #settings-menu:after {
+    top: -14px;
+    right: 25px;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #68A0A5
+}
+
+html.cyan body #notifications-menu > li, html.cyan body #rss-menu > li {
+    border-bottom: 1px solid #f2f2f2
+}
+
+html.cyan body #notifications-menu > li:last-child, html.cyan body #rss-menu > li:last-child {
+    border-bottom: none
+}
+
+html.cyan body #notifications-menu > li > a > .container-fluid, html.cyan body #rss-menu > li > a > .container-fluid {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+html.cyan body #notifications-menu > li > a > .container-fluid > .row > .avatar-container, html.cyan body #rss-menu > li > a > .container-fluid > .row > .avatar-container {
+    width: 75px;
+    padding-right: 10px
+}
+
+html.cyan body #notifications-menu > li > a > .container-fluid > .row > .avatar-container .label, html.cyan body #rss-menu > li > a > .container-fluid > .row > .avatar-container .label {
+    font-size: 8px
+}
+
+html.cyan body #notifications-menu > li > a > .container-fluid > .row > .notification-container, html.cyan body #rss-menu > li > a > .container-fluid > .row > .notification-container {
+    width: 225px
+}
+
+html.cyan body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time, html.cyan body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.cyan body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon, html.cyan body #rss-menu > li > a > .container-fluid > .row > .notification-container > .time > strong > .rubix-icon {
+    margin-right: 5px
+}
+
+html.cyan body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-header, html.cyan body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-bottom: 5px
+}
+
+html.cyan body #notifications-menu > li > a > .container-fluid > .row > .notification-container > .message-details, html.cyan body #rss-menu > li > a > .container-fluid > .row > .notification-container > .message-details {
+    line-height: 1;
+    font-size: 10px;
+    padding-bottom: 5px
+}
+
+html.cyan body #notifications-menu .notification-footer-btn, html.cyan body #rss-menu .notification-footer-btn {
+    margin: 0;
+    height: 100%;
+    font-size: 12px;
+    border-radius: 0;
+    font-weight: 700;
+    padding: 6px 12px;
+    border: none !important;
+    color: #98A0A3 !important;
+    background: #F9FAFB !important
+}
+
+html.cyan body #notifications-menu .notification-footer-btn:focus, html.cyan body #notifications-menu .notification-footer-btn:hover, html.cyan body #rss-menu .notification-footer-btn:focus, html.cyan body #rss-menu .notification-footer-btn:hover {
+    border: none !important;
+    background: #eaedf1 !important
+}
+
+html.cyan body #notifications-menu .notification-footer-btn.left-btn, html.cyan body #rss-menu .notification-footer-btn.left-btn {
+    border-right: 1px solid #DDE1E6 !important
+}
+
+html.cyan body #sidebar {
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    position: fixed;
+    overflow: hidden;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    left: -250px;
+    width: 250px;
+    background: #273135
+}
+
+html.cyan body #sidebar #avatar {
+    height: 75px;
+    background: #70ACB2
+}
+
+html.cyan body #sidebar #avatar img {
+    top: 17px;
+    position: relative
+}
+
+html.cyan body #sidebar #avatar-col {
+    margin-left: -5px
+}
+
+html.cyan body #sidebar #demo-progress {
+    margin: 0;
+    top: 30px;
+    height: 4px;
+    width: 115px;
+    border-radius: 0;
+    position: relative;
+    background: #5C8E92
+}
+
+html.cyan body #sidebar #demo-icon {
+    top: 3px;
+    float: right;
+    font-size: 18px;
+    position: relative;
+    color: #5C8E92
+}
+
+html.cyan body #sidebar .sidebar-controls-container {
+    width: 250px;
+    height: 35px;
+    display: table;
+    visibility: visible;
+    background: #5C8E92
+}
+
+html.cyan body #sidebar .sidebar-controls-container > .sidebar-controls {
+    display: table-row
+}
+
+html.cyan body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn {
+    border: none;
+    outline: 0;
+    font-size: 16px;
+    cursor: pointer;
+    background: 0 0;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    border-right: 1px solid #58878B
+}
+
+html.cyan body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a {
+    outline: 0;
+    color: #91bfc4
+}
+
+html.cyan body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:focus, html.cyan body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:hover {
+    border: none
+}
+
+html.cyan body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active {
+    background: #70ACB2 !important
+}
+
+html.cyan body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn.active > a {
+    color: #487073
+}
+
+html.cyan body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn:hover {
+    background: rgba(0, 0, 0, .04)
+}
+
+html.cyan body #sidebar .sidebar-item {
+    height: 35px;
+    background: #1F282D
+}
+
+html.cyan body #sidebar #sidebar-container {
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    top: 110px
+}
+
+html.cyan body #sidebar #sidebar-container > .sidebar {
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    overflow: hidden;
+    position: absolute;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+html.cyan body .sidebar-header {
+    line-height: 1;
+    font-size: 12px;
+    padding-top: 25px;
+    font-weight: 700;
+    padding-bottom: 12px;
+    color: rgba(137, 148, 155, .4)
+}
+
+html.cyan body .sidebar-nav {
+    padding: 0;
+    list-style: none;
+    margin-left: 25px;
+    border-left: 2px solid rgba(59, 70, 72, .5)
+}
+
+html.cyan body .sidebar-nav > li {
+    height: 45px;
+    outline: 0;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative
+}
+
+html.cyan body .sidebar-nav > li > a {
+    height: 45px;
+    border: none;
+    outline: 0;
+    color: #89949B;
+    display: block;
+    font-size: 14px;
+    line-height: 14px;
+    text-decoration: none;
+    padding: 15px 0 15px 25px
+}
+
+html.cyan body .sidebar-nav > li > a > .rubix-icon {
+    width: 16px;
+    height: 17px;
+    vertical-align: top;
+    display: inline-block
+}
+
+html.cyan body .sidebar-nav > li > a > .name {
+    line-height: 16px;
+    vertical-align: top
+}
+
+html.cyan body .sidebar-nav > li > a > .name > span > .label {
+    float: right;
+    margin-top: -3px;
+    padding: 5px 10px;
+    margin-right: 30px
+}
+
+html.cyan body .sidebar-nav > li > a > .rubix-icon ~ .name {
+    margin-left: 10px
+}
+
+html.cyan body .sidebar-nav > li > a:focus, html.cyan body .sidebar-nav > li > a:hover {
+    border: none;
+    background: rgba(0, 0, 0, .2)
+}
+
+html.cyan body .sidebar-nav > li.open:before, html.cyan body .sidebar-nav > li:hover:before {
+    display: none
+}
+
+html.cyan body .sidebar-nav > li.open {
+    height: 100%
+}
+
+html.cyan body .sidebar-nav > li.open > a {
+    background: rgba(0, 0, 0, .2)
+}
+
+html.cyan body .sidebar-nav > li:before {
+    left: 0;
+    top: 22px;
+    width: 15px;
+    content: ' ';
+    position: absolute;
+    display: inline-block;
+    border: 1px solid rgba(59, 70, 72, .5)
+}
+
+html.cyan body .sidebar-nav > li.active {
+    border-left: 5px solid #68A0A5
+}
+
+html.cyan body .sidebar-nav > li.active > a {
+    background: rgba(0, 0, 0, .4);
+    padding-left: 20px
+}
+
+html.cyan body .sidebar-nav > li.active > a:hover {
+    background: rgba(0, 0, 0, .4)
+}
+
+html.cyan body .sidebar-nav > li.active:before {
+    display: none
+}
+
+html.cyan body .sidebar-nav > li.active:after {
+    top: 11px;
+    right: 0;
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 10px solid #E9F0F5
+}
+
+html.cyan body .sidebar-nav-container > .sidebar-nav {
+    border: none;
+    margin-left: -25px;
+    margin-right: -25px
+}
+
+html.cyan body .sidebar-nav-container > .sidebar-nav > li:before {
+    display: none
+}
+
+html.cyan body .sidebar-nav-container > .sidebar-nav > li > a {
+    font-size: 16px;
+    line-height: 16px;
+    padding: 15px 25px
+}
+
+html.cyan body .sidebar-nav-container > .sidebar-nav > li > a > .name {
+    line-height: 18px;
+    margin-left: 15px
+}
+
+html.cyan body .sidebar-nav-container > .sidebar-nav > li > a > .rubix-icon {
+    width: 18px;
+    height: 19px;
+    display: inline-block
+}
+
+html.cyan body .sidebar-nav-container > .sidebar-nav > li.active > a {
+    padding-left: 20px
+}
+
+html.cyan body #navbar ~ #sidebar {
+    top: 75px
+}
+
+html.cyan body #body {
+    left: 0;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    z-index: 100;
+    margin-left: 0;
+    position: relative;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    background: #E9F0F5;
+    margin-top: 25px;
+    padding-bottom: 25px
+}
+
+html.cyan body #navbar ~ #body {
+    margin-top: 74px;
+    padding-top: 25px
+}
+
+html.cyan body #sidebar + #body {
+    margin-top: 0;
+    padding-top: 25px
+}
+
+html.cyan body .external-event {
+    background: #68A0A5
+}
+
+html.cyan body #footer {
+    padding: 10px;
+    position: relative;
+    color: #CCD6DF;
+    background: #89949B
+}
+
+html.cyan body #footer-container {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease
+}
+
+@media (min-width: 990px) {
+    html.cyan body #sidebar {
+        left: 0
+    }
+
+    html.cyan body #sidebar ~ #body, html.cyan body #sidebar ~ #footer-container {
+        margin-left: 250px
+    }
+}
+
+html .sidebar-nav > li > a > .toggle-button {
+    top: 14px;
+    right: 15px;
+    position: absolute;
+    -webkit-transform-origin: 4px;
+    -ms-transform-origin: 4px;
+    transform-origin: 4px;
+    -webkit-transition: all .125s ease;
+    transition: all .125s ease
+}
+
+html .sidebar-nav > li > a > .toggle-button.open {
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg)
+}
+
+html .sidebar-nav > li > a > .toggle-button.opposite {
+    -webkit-transform-origin: 12px;
+    -ms-transform-origin: 12px;
+    transform-origin: 12px
+}
+
+html .sidebar-nav > li > a > .toggle-button.opposite.open {
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+
+html.touch, html.touch #app-container, html.touch #app-container > #container, html.touch > body {
+    position: relative;
+    overflow: hidden !important
+}
+
+html.touch #body {
+    top: 0;
+    bottom: 0;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0 !important;
+    position: fixed !important;
+    overflow: hidden !important;
+    margin-bottom: 0 !important;
+    min-height: 100% !important;
+    margin-top: -100px !important
+}
+
+html.touch #body > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-x: hidden !important;
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    padding-top: 200px
+}
+
+html.static #rubix-nav-header, html.static #sidebar, html.touch #footer {
+    position: relative !important
+}
+
+html.touch #body > div > div {
+    overflow-x: hidden
+}
+
+html.touch #sidebar {
+    overflow: hidden !important
+}
+
+html.touch #sidebar #sidebar-container > .sidebar {
+    overflow-x: hidden !important;
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar
+}
+
+html.touch #footer, html.touch #footer-container {
+    display: block !important
+}
+
+html.static, html.static #app-container, html.static body {
+    background: #273135
+}
+
+html.static #body {
+    margin-top: -40px !important
+}
+
+html.static #rubix-nav-header {
+    position: static;
+    margin-top: -110px;
+    margin-bottom: -110px;
+    margin-left: -25px !important;
+    margin-right: -25px
+}
+
+html.static #sidebar, html.static #sidebar #sidebar-container, html.static #sidebar .sidebar {
+    overflow: visible !important
+}
+
+html.boxed, html.boxed body {
+    height: 100%;
+    overflow: hidden
+}
+
+html.static #container.container-open #rubix-nav-header {
+    margin-left: 225px !important
+}
+
+@media (min-width: 990px) {
+    html.static #rubix-nav-header {
+        margin-left: 225px !important
+    }
+
+    html.static #container.container-open #rubix-nav-header {
+        margin-right: -25px !important
+    }
+}
+
+html.boxed {
+    background: url(/imgs/congruent_outline.png) #333
+}
+
+html.boxed body {
+    margin: 0;
+    width: 100%;
+    background: 0 0;
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease
+}
+
+html.boxed body #rubix-nav-header {
+    margin: 0;
+    position: absolute
+}
+
+html.boxed body #sidebar {
+    top: 75px
+}
+
+html.boxed body #container.container-open > #sidebar {
+    left: 0
+}
+
+html.boxed body #container.container-open #rubix-nav-header {
+    margin-left: 0;
+    margin-right: 0
+}
+
+html.boxed body #container.container-open > #body, html.boxed body #container.container-open > #footer-container {
+    margin-left: 250px;
+    margin-right: -250px
+}
+
+@media (min-width: 990px) {
+    html.boxed body #container.container-open > #body, html.boxed body #container.container-open > #footer-container {
+        margin-right: 0;
+        margin-left: 250px
+    }
+}
+
+html.boxed body > #app-container {
+    height: 100%;
+    overflow: hidden;
+    position: relative
+}
+
+html.boxed body > #app-container #rubix-nav-header {
+    position: relative
+}
+
+html.boxed body > #app-container #sidebar {
+    margin: 0;
+    position: absolute
+}
+
+html.boxed body > #app-container #body {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    margin-left: 0;
+    position: absolute;
+    padding-bottom: 25px;
+    padding-top: 200px;
+    margin-top: -175px !important;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+html.boxed body > #app-container #footer, html.boxed body > #app-container #footer-container {
+    display: none
+}
+
+html.boxed body > #app-container #navbar ~ #body {
+    margin-top: 0;
+    top: 69px
+}
+
+@media (min-width: 990px) {
+    html.boxed body {
+        width: 990px;
+        margin: auto;
+        box-shadow: 0 0 15px rgba(0, 0, 0, .5)
+    }
+
+    html.boxed body > #app-container {
+        margin: auto
+    }
+
+    html.boxed body > #app-container #navbar {
+        padding: 0
+    }
+
+    html.boxed body > #app-container #sidebar {
+        margin-left: 0
+    }
+
+    html.boxed body > #app-container #sidebar ~ #body, html.boxed body > #app-container #sidebar ~ #body ~ #footer-container {
+        right: 0;
+        margin-left: 250px
+    }
+}
+
+html.static.boxed {
+    height: auto;
+    overflow: auto;
+    overflow-x: hidden
+}
+
+html.static.boxed body {
+    height: auto;
+    overflow: visible;
+    overflow-x: hidden
+}
+
+html.static.boxed body #app-container {
+    overflow: hidden
+}
+
+html.static.boxed body #container.container-open #rubix-nav-header {
+    margin-left: 0 !important;
+    margin-right: 0 !important
+}
+
+html.static.boxed body #navbar {
+    width: 100%
+}
+
+html.static.boxed body #rubix-nav-header {
+    margin-right: 0;
+    margin-top: -110px;
+    margin-left: 0 !important
+}
+
+html.static.boxed body #body {
+    overflow: hidden !important;
+    padding-top: 95px !important;
+    position: relative !important;
+    padding-bottom: 95px !important
+}
+
+html.static.boxed body #footer, html.static.boxed body #footer-container {
+    display: block !important
+}
+
+html.static.boxed body #footer-container {
+    margin-top: 25px
+}

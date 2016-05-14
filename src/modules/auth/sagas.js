@@ -4,8 +4,6 @@ import { apiServiceResultTypeInvariant } from 're-app/utils';
 import t from 'tcomb';
 import {
 	AuthContext,
-	AuthenticatedAuthContext,
-	UnauthenticatedAuthContext,
 	AuthError
 } from './types';
 
@@ -56,9 +54,9 @@ export function* authFlow() {
 }
 
 export function* authorize(credentials, apiContext, authContext) {
-	const ApiService = yield select(getApiService);
+	const apiService = yield select(getApiService);
 	try {
-		const result = yield call(ApiService.login, credentials, apiContext, authContext);
+		const result = yield call(apiService.login, credentials, apiContext, authContext);
 		apiServiceResultTypeInvariant(result, t.struct({user: t.Object}));
 		yield put(loginSuccess(result));
 	} catch (e) {
@@ -68,12 +66,11 @@ export function* authorize(credentials, apiContext, authContext) {
 }
 
 export function* logout() {
-	const ApiService = yield select(getApiService);
+	const apiService = yield select(getApiService);
 	const authContext = yield select(getAuthContext);
 	const apiContext = yield select(getApiContext);
 	try {
-		const logoutResult = yield call(ApiService.logout, apiContext, authContext);
-		apiServiceResultTypeInvariant(logoutResult, t.Any);
+		yield call(apiService.logout, apiContext, authContext);
 		yield put(logoutSuccess());
 	} catch (e) {
 		apiServiceResultTypeInvariant(e, AuthError);

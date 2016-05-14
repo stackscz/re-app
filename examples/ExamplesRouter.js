@@ -1,3 +1,4 @@
+/* eslint-disable */
 import 're-app-examples/index.less';
 
 import React from 'react';
@@ -9,6 +10,8 @@ import ExampleGroupScreen from './ExampleGroupScreen';
 import ExampleScreen from './ExampleScreen';
 import ApiServiceExampleScreen from './ApiService';
 import NotFoundScreen from './decorators/router/NotFoundScreen';
+
+import AppLayoutExample from './components/AppLayout';
 
 import {app, router} from 're-app/lib/decorators';
 import {createStore, createReducer} from 're-app/lib/utils';
@@ -39,6 +42,7 @@ export default class ExamplesRouter {
 		return (
 			<Route path="/">
 				<IndexRedirect to="examples"/>
+				<Route path="examples/components/AppLayout" component={AppLayoutExample}/>
 				<Route path="examples" component={ExamplesAppRoot}>
 					<IndexRoute name="home" component={ExamplesHomeScreen}/>
 					<Route path="api-service" name="api_service_example" component={ApiServiceExampleScreen}/>

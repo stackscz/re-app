@@ -1,0 +1,299 @@
+@sidebar-fixed-open-width: 768px;
+@sidebar-width: 290px;
+@header-height: 56px;
+
+@color-visible: #929292;
+//@color-visible-dimmed: #de5939; // original
+@color-visible-dimmed: darken(@color-visible, 1.5%);
+//@color-dark-neutral: #273135; // original
+@color-dark-neutral: #dbdbdb;
+//@color-sidebar-toggle: #2aa38b; //original
+@color-sidebar-toggle: @color-visible;
+@color-right-menu: @color-dark-neutral;
+
+.AppLayout {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  &-sidebar {
+    top: 0;
+    bottom: 0;
+    z-index: 2000;
+    position: fixed;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    left: -@sidebar-width;
+    width: @sidebar-width;
+    background: @color-dark-neutral;
+    #avatar {
+      height: @header-height;
+      background: @color-visible;
+      img {
+        top: 17px;
+        position: relative;
+      }
+    }
+    #avatar-col {
+      margin-left: -5px;
+    }
+    #sidebar-container {
+      bottom: 0;
+      width: @sidebar-width;
+      overflow: hidden;
+      position: absolute;
+      top: 110px;
+      > .sidebar {
+        top: 0;
+        bottom: 0;
+        width: @sidebar-width;
+        overflow: hidden;
+        position: absolute;
+        -webkit-transition: all .3s ease;
+        transition: all .3s ease;
+      }
+    }
+    + #body {
+      margin-top: 0;
+      padding-top: 25px;
+    }
+  }
+
+  &-sidebarContent {
+    position: absolute;
+    top: @header-height + 40px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &-sidebarToggle {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: @header-height;
+    height: @header-height;
+    line-height: @header-height;
+    display: block;
+    text-align: center;
+    font-size: 200%;
+  }
+
+  &-content {
+    position: relative;
+    left: 0;
+    z-index: 100;
+    margin-left: 0;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    padding-bottom: 25px;
+  }
+
+  &-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    min-height: @header-height;
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    border: none;
+    margin-left: 0;
+    background: @color-dark-neutral;
+    .navbar-brand {
+      width: 100%;
+      text-align: center;
+      color: #89949b;
+      > img {
+        top: -3px;
+        position: relative;
+      }
+    }
+    .navbar-content {
+      height: @header-height;
+    }
+    .navbar-nav {
+      margin: 0;
+      display: inline-block;
+      > li.active > a:hover, > li.pressed > a, > li > a:hover {
+        color: #ffffff;
+      }
+      > li > a {
+        border: none;
+        padding: 25px;
+        display: block;
+        height: @header-height;
+        font-size: 26px;
+        background: 0 0;
+        text-align: center;
+        color: #89949b;
+        > .AppLayout-icon {
+          -moz-osx-font-smoothing: grayscale;
+          -webkit-font-smoothing: antialiased;
+        }
+      }
+      > li .notification-badge {
+        font-size: 10px;
+        padding: 3px 5px;
+        margin-left: -5px;
+        line-height: 9px;
+        margin-top: -10px;
+        position: absolute;
+      }
+      > li.divider {
+        height: @header-height;
+        border: 1px solid rgba(59, 70, 72, 0.45);
+      }
+      > li.dropdown.open > a {
+        color: #ffffff;
+        background: 0 0;
+      }
+      > li.active > a {
+        height: @header-height;
+        font-size: 26px;
+        background: 0 0;
+        text-align: center;
+        color: #89949b;
+      }
+      > li.logout > a {
+        width: 80px;
+        font-size: 30px;
+        padding-left: 0;
+        padding-right: 0;
+        color: #ffffff;
+        background: @color-right-menu;
+      }
+      > li.logout > a:hover {
+        background: #f4654d;
+      }
+      > li.sidebar-btn > a {
+        width: 80px;
+        font-size: 30px;
+        padding-left: 0;
+        padding-right: 0;
+        color: #ffffff;
+        background: @color-sidebar-toggle;
+      }
+      > li.sidebar-btn > a:hover {
+        //background: #2eb398;
+        background: darken(@color-sidebar-toggle, 4%);
+      }
+      > li.collapse-left > a {
+        padding-left: 0;
+      }
+      > li.collapse-right > a {
+        padding-right: 0;
+      }
+      > li.small-font > a {
+        font-size: 20px;
+      }
+    }
+    .navbar-nav:first-child {
+      margin-left: -15px;
+    }
+    .navbar-nav:last-child {
+      margin-right: -15px;
+    }
+  }
+  &-headerContent {
+    padding-left: @header-height;
+    padding-right: @header-height;
+  }
+
+  &-footer {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+    > * {
+      padding: 10px;
+      position: relative;
+      color: #ccd6df;
+      background: #89949b;
+    }
+  }
+
+  &-controls {
+    width: @sidebar-width;
+    height: 35px;
+    display: table;
+    visibility: visible;
+    background: @color-visible-dimmed;
+    > .sidebar-controls {
+      display: table-row;
+      > .sidebar-control-btn {
+        border: none;
+        outline: 0;
+        font-size: 16px;
+        cursor: pointer;
+        background: 0 0;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+        //border-right: 1px solid #cf4d2e;
+        border-right: 1px solid darken(@color-visible-dimmed, 3%);
+        > a:focus, > a:hover {
+          border: none;
+        }
+        > a {
+          outline: 0;
+          color: #993f31;
+        }
+      }
+      > .sidebar-control-btn.active {
+        background: #ba4e3b !important;
+        > a {
+          color: @color-visible;
+        }
+      }
+      > .sidebar-control-btn:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+}
+
+.AppLayout--containerOpen {
+  .AppLayout {
+    &-content,
+    &-footer {
+      margin-left: @sidebar-width;
+      margin-right: -@sidebar-width;
+    }
+    &-sidebar {
+      left: 0;
+    }
+    &-header {
+      margin-left: @sidebar-width;
+      margin-right: -@sidebar-width;
+    }
+  }
+}
+
+.AppLayout--hasHeader {
+  .AppLayout {
+    &-content {
+      margin-top: @header-height;
+    }
+  }
+}
+
+@media (min-width: @sidebar-fixed-open-width) {
+  .AppLayout {
+
+    &-sidebar {
+      left: 0;
+    }
+
+    &-content, &-footer {
+      margin-left: @sidebar-width;
+    }
+
+    &-header {
+      margin-right: 0;
+      margin-left: @sidebar-width;
+    }
+  }
+}
+

@@ -1,0 +1,490 @@
+/*** uncss> filename: layout.css ***/
+
+@charset "UTF-8";
+
+/*! AppLayout - v3.0.0 - 2015-07-22 [copyright: SketchPixy LLP, email: support@sketchpixy.com] */
+
+@charset "UTF-8";
+
+/*! AppLayout - v3.0.0 - 2015-07-22 [copyright: SketchPixy LLP, email: support@sketchpixy.com] */
+
+html.default .menu-theme {
+  border-color: #E76049;
+}
+
+html.default .fg-theme {
+  color: #E76049;
+}
+
+html.default,
+html.default body {
+  background: #fff;
+  overflow-x: hidden;
+  color: #89949B;
+}
+
+html.default body #app-container {
+  overflow: hidden;
+}
+
+html.default body #navbar {
+  width: 100%;
+}
+
+html.default body #AppLayout-nav-header {
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  border: none;
+  margin-left: 0;
+  background: #273135;
+}
+
+html.default body #AppLayout-nav-header .navbar-brand {
+  width: 100%;
+  text-align: center;
+  color: #89949B;
+}
+
+html.default body #AppLayout-nav-header .navbar-brand > img {
+  top: -3px;
+  position: relative;
+}
+
+@media (max-width: 320px) {
+  html.default body #AppLayout-nav-header .navbar-brand > img {
+    width: 80px;
+    left: -10px;
+  }
+}
+
+html.default body #AppLayout-nav-header .navbar-content {
+  height: 75px;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav {
+  margin: 0;
+  display: inline-block;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav:first-child {
+  margin-left: -25px;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav:last-child {
+  margin-right: -25px;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li > a {
+  border: none;
+  padding: 25px;
+  display: block;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li > a > .AppLayout-icon {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li.divider {
+  height: 75px;
+  border: 1px solid rgba(59, 70, 72, .45);
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li > a {
+  height: 75px;
+  font-size: 26px;
+  background: 0 0;
+  text-align: center;
+  color: #89949B;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li > a:hover {
+  color: #fff;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li.logout > a,
+html.default body #AppLayout-nav-header .navbar-nav > li.sidebar-btn > a {
+  width: 80px;
+  font-size: 30px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li.logout > a {
+  color: #fff;
+  background: #E76049;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li.logout > a:hover {
+  background: #F4654D;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li.sidebar-btn > a {
+  color: #fff;
+  background: #2AA38B;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li.sidebar-btn > a:hover {
+  background: #2EB398;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li.collapse-left > a {
+  padding-left: 0;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li.small-font > a {
+  font-size: 20px;
+}
+
+html.default body #AppLayout-nav-header .navbar-nav > li .notification-badge {
+  font-size: 10px;
+  padding: 3px 5px;
+  margin-left: -5px;
+  line-height: 9px;
+  margin-top: -10px;
+  position: absolute;
+}
+
+@media (min-width: 990px) {
+  html.default body #AppLayout-nav-header {
+    margin-left: 250px;
+  }
+}
+
+html.default body #flag-menu-btn > img {
+  top: -2px;
+  position: relative;
+}
+
+html.default body #flag-menu,
+html.default body #notifications-menu,
+html.default body #rss-menu,
+html.default body #settings-menu {
+  border: none;
+  margin-top: 0;
+  overflow: visible;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2);
+  border-top: 5px solid #E76049 !important;
+}
+
+html.default body #flag-menu:after,
+html.default body #notifications-menu:after,
+html.default body #rss-menu:after,
+html.default body #settings-menu:after {
+  top: -14px;
+  right: 25px;
+  content: '';
+  position: absolute;
+  display: inline-block;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #E76049;
+}
+
+html.default body #sidebar {
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  position: fixed;
+  overflow: hidden;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  left: -250px;
+  width: 250px;
+  background: #273135;
+}
+
+html.default body #sidebar #avatar {
+  height: 75px;
+  background: #FA7252;
+}
+
+html.default body #sidebar #avatar img {
+  top: 17px;
+  position: relative;
+}
+
+html.default body #sidebar #avatar-col {
+  margin-left: -5px;
+}
+
+html.default body #sidebar #demo-progress {
+  margin: 0;
+  top: 30px;
+  height: 4px;
+  width: 115px;
+  border-radius: 0;
+  position: relative;
+  background: #DE5939;
+}
+
+html.default body #sidebar #demo-icon {
+  top: 3px;
+  float: right;
+  font-size: 18px;
+  position: relative;
+  color: #DE5939;
+}
+
+html.default body #sidebar .sidebar-controls-container {
+  width: 250px;
+  height: 35px;
+  display: table;
+  visibility: visible;
+  background: #DE5939;
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls {
+  display: table-row;
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn {
+  border: none;
+  outline: 0;
+  font-size: 16px;
+  cursor: pointer;
+  background: 0 0;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  border-right: 1px solid #cf4d2e;
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a {
+  outline: 0;
+  color: #993F31;
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:focus,
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn > a:hover {
+  border: none;
+}
+
+html.default body #sidebar .sidebar-controls-container > .sidebar-controls > .sidebar-control-btn:hover {
+  background: rgba(0, 0, 0, .04);
+}
+
+html.default body #sidebar #sidebar-container {
+  bottom: 0;
+  width: 250px;
+  overflow: hidden;
+  position: absolute;
+  top: 110px;
+}
+
+html.default body #sidebar #sidebar-container > .sidebar {
+  top: 0;
+  bottom: 0;
+  width: 250px;
+  overflow: hidden;
+  position: absolute;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+html.default body .sidebar-header {
+  line-height: 1;
+  font-size: 12px;
+  padding-top: 25px;
+  font-weight: 700;
+  padding-bottom: 12px;
+  color: rgba(137, 148, 155, .4);
+}
+
+html.default body .sidebar-nav {
+  padding: 0;
+  list-style: none;
+  margin-left: 25px;
+  border-left: 2px solid rgba(59, 70, 72, .5);
+}
+
+html.default body .sidebar-nav > li {
+  height: 45px;
+  outline: 0;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+html.default body .sidebar-nav > li > a {
+  height: 45px;
+  border: none;
+  outline: 0;
+  color: #89949B;
+  display: block;
+  font-size: 14px;
+  line-height: 14px;
+  text-decoration: none;
+  padding: 15px 0 15px 25px;
+}
+
+html.default body .sidebar-nav > li > a > .AppLayout-icon {
+  width: 16px;
+  height: 17px;
+  vertical-align: top;
+  display: inline-block;
+}
+
+html.default body .sidebar-nav > li > a > .name {
+  line-height: 16px;
+  vertical-align: top;
+}
+
+html.default body .sidebar-nav > li > a > .name > span > .label {
+  float: right;
+  margin-top: -3px;
+  padding: 5px 10px;
+  margin-right: 30px;
+}
+
+html.default body .sidebar-nav > li > a > .AppLayout-icon ~ .name {
+  margin-left: 10px;
+}
+
+html.default body .sidebar-nav > li > a:focus,
+html.default body .sidebar-nav > li > a:hover {
+  border: none;
+  background: rgba(0, 0, 0, .2);
+}
+
+html.default body .sidebar-nav > li:hover:before {
+  display: none;
+}
+
+html.default body .sidebar-nav > li:before {
+  left: 0;
+  top: 22px;
+  width: 15px;
+  content: ' ';
+  position: absolute;
+  display: inline-block;
+  border: 1px solid rgba(59, 70, 72, .5);
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav {
+  border: none;
+  margin-left: -25px;
+  margin-right: -25px;
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav > li:before {
+  display: none;
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav > li > a {
+  font-size: 16px;
+  line-height: 16px;
+  padding: 15px 25px;
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav > li > a > .name {
+  line-height: 18px;
+  margin-left: 15px;
+}
+
+html.default body .sidebar-nav-container > .sidebar-nav > li > a > .AppLayout-icon {
+  width: 18px;
+  height: 19px;
+  display: inline-block;
+}
+
+html.default body #body {
+  left: 0;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  -webkit-flex: 1 0 auto;
+  z-index: 100;
+  margin-left: 0;
+  position: relative;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  background: #E9F0F5;
+  margin-top: 25px;
+  padding-bottom: 25px;
+}
+
+html.default body #navbar ~ #body {
+  margin-top: 74px;
+  padding-top: 25px;
+}
+
+html.default body #footer {
+  padding: 10px;
+  position: relative;
+  color: #CCD6DF;
+  background: #89949B;
+}
+
+html.default body #footer-container {
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+@media (min-width: 990px) {
+  html.default body #sidebar {
+    left: 0;
+  }
+
+  html.default body #sidebar ~ #body,
+  html.default body #sidebar ~ #footer-container {
+    margin-left: 250px;
+  }
+}
+
+a {
+  color: #2EB398;
+}
+
+a:focus,
+a:hover {
+  color: #2EB398;
+  border-color: #2EB398;
+}
+
+.form-control {
+  border-color: #ddd;
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+  border-color: #2EB398;
+}
+
+.AppLayout-panel-container {
+  background: #fff;
+}
+
+.btn,
+.AppLayout-panel-controls {
+  color: #89949B;
+}
+
+.dropdown-menu {
+  border: none;
+  outline: 0;
+  margin-top: 5px;
+  min-width: 200px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.dropdown-menu.double-width {
+  min-width: 325px;
+}
+
+html {
+  letter-spacing: .5px;
+}
+
+html .sidebar-nav > li > a > .toggle-button {
+  top: 14px;
+  right: 15px;
+  position: absolute;
+  -webkit-transform-origin: 4px;
+  -ms-transform-origin: 4px;
+  transform-origin: 4px;
+  -webkit-transition: all .125s ease;
+  transition: all .125s ease;
+}
+

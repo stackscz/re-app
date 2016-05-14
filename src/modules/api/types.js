@@ -8,7 +8,8 @@ export const ApiService = t.struct({
 	getEntityDescriptors: t.Function,
 	getEntityIndex: t.Function,
 	getEntity: t.Function,
-	persistEntity: t.Function,
+	createEntity: t.Function,
+	updateEntity: t.Function,
 	deleteEntity: t.Function
 });
 

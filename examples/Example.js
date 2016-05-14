@@ -60,14 +60,12 @@ export default class Example extends React.Component {
 		const { activeCodeFileName } = this.state;
 		return (
 			<div className="Example">
-				{readme && <div className="Example-readme">
-					<Markdown content={readme}/>
-				</div>}
-
 				<div className="row">
-					{children &&
 					<div className="col-xs-12 col-lg-6">
 						<h1>Example</h1>
+						{readme && <div className="Example-readme">
+							<Markdown content={readme}/>
+						</div>}
 						<div className="Example-content">
 							<div className="panel panel-default">
 								<div className="panel-body">
@@ -75,7 +73,7 @@ export default class Example extends React.Component {
 								</div>
 							</div>
 						</div>
-					</div>}
+					</div>
 					{codeFiles.length > 0 &&
 					<div className="col-xs-12 col-lg-6">
 						<div className="clearfix">

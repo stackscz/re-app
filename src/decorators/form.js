@@ -1,20 +1,20 @@
 /* eslint-disable */
 import React from 'react';
 import {reduxForm} from 'redux-form';
-import parseFormConfig from 're-app/utils/parseFormConfig';
+import parseFormFields from 're-app/utils/parseFormFields';
 
 /**
  * Wraps component with redux-form enhanced with validation
  *
  */
-export default function form(config, mapStateToProps, mapDispatchToProps, mergeProps, options) {
-	const {fieldNames, ...reduxConfig} = parseFormConfig(config);
+export default function form(config = {}) {
+	const {fields, validate} = parseFormFields(config.fields);
 	return function wrapWithForm(WrappedComponent) {
-		@reduxForm(reduxConfig, mapStateToProps, mapDispatchToProps, mergeProps, options)
+		@reduxForm({...config, fields, validate})
 		class FormContainer extends React.Component {
 			render() {
 				return (
-					<WrappedComponent {...this.props} fieldNames={fieldNames} />
+					<WrappedComponent {...this.props} />
 				);
 			}
 		}

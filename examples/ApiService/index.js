@@ -14,8 +14,8 @@ export default class ApiServiceExamples extends React.Component {
 					{require('!!raw!re-app/src/mocks/ApiService')}
 				</CodeArea>
 
-				<CodeArea title="React.PropTypes definitions of ApiService return/resolve results">
-					{require('!!raw!re-app/src/modules/api/resultTypes')}
+				<CodeArea title="tcomb definition of ApiService">
+					{require('!!raw!re-app/src/modules/api/types')}
 				</CodeArea>
 
 			</div>

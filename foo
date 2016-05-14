@@ -1,0 +1,1682 @@
+import React from 'react';
+import './index.less';
+
+
+export default class AppLayout extends React.Component {
+	render() {
+
+		return (
+			<div id='app-container'>
+				<div id="container" className="dashboard">
+					<div id="sidebar">
+						<div id="avatar">
+							<div className="AppLayout-grid container-fluid" style="z-index:9999998;">
+								<div className="row fg-white">
+									<div className="col-xs-4 col-xs-collapse-right">
+										<img src="/imgs/avatars/avatar0.png" width="40" height="40"/>
+									</div>
+									<div id="avatar-col" className="col-xs-8 col-xs-collapse-left">
+										<div style="top:23px;font-size:16px;line-height:1;position:relative;">Anna
+											Sanchez
+										</div>
+										<div>
+											<div id="demo-progress" value="30" min="0" max="100" className="progress">
+												<div className="progress-bar" role="progressbar" aria-valuenow="30"
+													 aria-valuemin="0"
+													 aria-valuemax="100" style="width:30%;background:#ffffff;"><span
+													className="sr-only">30%
+													Complete ()</span></div>
+											</div>
+											<a className="" href="/app/lock">
+												<span id="demo-icon"
+													  className="AppLayout-icon fontello icon-fontello-lock-5"></span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div dir="ltr" className="sidebar-controls-container">
+							<div className="sidebar-controls" tabindex="-1">
+								<li tabindex="-1" className="sidebar-control-btn"><a href="#"
+																					 tabindex="-1"><span
+									className="AppLayout-icon fontello icon-fontello-docs"></span></a></li>
+								<li tabindex="-1" className="sidebar-control-btn"><a href="#"
+																					 tabindex="-1"><span
+									className="AppLayout-icon fontello icon-fontello-chat-1"></span></a>
+								</li>
+								<li tabindex="-1" className="sidebar-control-btn"><a href="#"
+																					 tabindex="-1"><span
+									className="AppLayout-icon fontello icon-fontello-chart-pie-2"></span></a></li>
+								<li tabindex="-1" className="sidebar-control-btn"><a href="#"
+																					 tabindex="-1"><span
+									className="AppLayout-icon fontello icon-fontello-th-list-2"></span></a></li>
+								<li tabindex="-1" className="sidebar-control-btn"><a href="#"
+																					 tabindex="-1"><span
+									className="AppLayout-icon fontello icon-fontello-bell-5"></span></a>
+								</li>
+							</div>
+						</div>
+						<div id="sidebar-container">
+							<div
+								style="left:0%;visibility:visible;transition:all 0.3s ease;-o-transition:all 0.3s ease;-ms-transition:all 0.3s ease;-moz-transition:all 0.3s ease;-webkit-transition:all 0.3s ease;"
+								className="sidebar">
+								<div>
+									<div>
+										<div className="AppLayout-grid container-fluid" style="z-index:9999997;">
+											<div className="row">
+												<div className="col-xs-12">
+													<div className="sidebar-header">PAGES
+													</div>
+													<div className="sidebar-nav-container">
+														<ul style="margin-bottom:0;" className="sidebar-nav">
+															<li name="Dashboard" style="height:;" tabindex="-1"
+																href="/app/dashboard" className=""><a tabindex="-1"
+																									  style="height:;"
+																									  className="active"
+																									  href="/app/dashboard"><span
+																className="AppLayout-icon icon-fontello-gauge"></span><span
+																className="name">Dashboard</span></a>
+															</li>
+															<li name="[object Object]" style="height:;" tabindex="-1"
+																className=""><a tabindex="-1"
+																				href=""
+																				style="height:;"><span
+																className="AppLayout-icon icon-feather-mail"></span><span
+																className="name"><span><span>Mailbox </span><span
+																className="label label-default bg-darkgreen45 fg-white">3</span></span></span><span
+																className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																<ul className="sidebar-nav">
+																	<li name="Inbox" style="height:;" tabindex="-1"
+																		href="/app/mailbox/inbox" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/mailbox/inbox"><span
+																		className="AppLayout-icon icon-feather-inbox"></span><span
+																		className="name">Inbox</span></a>
+																	</li>
+																	<li name="Mail" style="height:;" tabindex="-1"
+																		href="/app/mailbox/mail" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/mailbox/mail"><span
+																		className="AppLayout-icon icon-outlined-mail-open"></span><span
+																		className="name">Mail</span></a>
+																	</li>
+																	<li name="Compose" style="height:;" tabindex="-1"
+																		href="/app/mailbox/compose" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/mailbox/compose"><span
+																		className="AppLayout-icon icon-dripicons-message"></span><span
+																		className="name">Compose</span></a>
+																	</li>
+																</ul>
+															</li>
+															<li name="Gallery" style="height:;" tabindex="-1"
+																href="/app/gallery"
+																className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/gallery"><span
+																className="AppLayout-icon icon-pixelvicon-photo-gallery"></span><span
+																className="name">Gallery</span></a>
+															</li>
+															<li name="Social" style="height:;" tabindex="-1"
+																href="/app/social"
+																className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/social"><span
+																className="AppLayout-icon icon-feather-share"></span><span
+																className="name">Social</span></a>
+															</li>
+															<li name="[object Object]" style="height:;" tabindex="-1"
+																className=""><a tabindex="-1"
+																				href=""
+																				style="height:;"><span
+																className="AppLayout-icon icon-stroke-gap-icons-Blog"></span><span
+																className="name"><span><span>Blog </span><span
+																className="label label-default bg-darkcyan fg-white">2</span></span></span><span
+																className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																<ul className="sidebar-nav">
+																	<li name="Posts" style="height:;" tabindex="-1"
+																		href="/app/blog/posts" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/blog/posts"><span
+																		className="AppLayout-icon icon-feather-layout"></span><span
+																		className="name">Posts</span></a>
+																	</li>
+																	<li name="Single Post" style="height:;"
+																		tabindex="-1"
+																		href="/app/blog/post" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/blog/post"><span
+																		className="AppLayout-icon icon-feather-paper"></span><span
+																		className="name">Single
+																		Post</span></a></li>
+																</ul>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr style="border-color:#3B4648;border-width:2px;margin-top:15px;margin-bottom:0;width:200px;"/>
+										<div className="AppLayout-grid container-fluid" style="z-index:9999996;">
+											<div className="row">
+												<div className="col-xs-12">
+													<div className="sidebar-header">
+														COMPONENTS
+													</div>
+													<div className="sidebar-nav-container">
+														<ul style="margin-bottom:0;" className="sidebar-nav">
+															<li name="Panels" style="height:;" tabindex="-1"
+																href="/app/panels"
+																className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/panels"><span
+																className="AppLayout-icon icon-simple-line-icons-layers float-right-rtl"></span><span
+																className="name">Panels</span></a>
+															</li>
+															<li name="[object Object]" style="height:;" tabindex="-1"
+																className=""><a
+																tabindex="-1" href="" style="height:;"><span
+																className="AppLayout-icon icon-ikons-bar-chart-2 float-right-rtl"></span><span
+																className="name"><span><span>Charts </span><span
+																className="label label-default bg-brown50 fg-white">4</span></span></span><span
+																className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																<ul className="sidebar-nav">
+																	<li name="AppLayout Charts" style="height:;"
+																		tabindex="-1"
+																		className=""><a
+																		tabindex="-1" href="" style="height:;"><span
+																		className="AppLayout-icon icon-fontello-chart-area"></span><span
+																		className="name">AppLayout
+																		Charts</span><span
+																		className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																		<ul className="sidebar-nav">
+																			<li name="Line Series" style="height:;"
+																				tabindex="-1"
+																				href="/app/charts/AppLayout/line"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/charts/AppLayout/line"><span
+																					className="name">Line
+																					Series</span></a></li>
+																			<li name="Area Series" style="height:;"
+																				tabindex="-1"
+																				href="/app/charts/AppLayout/area"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/charts/AppLayout/area"><span
+																					className="name">Area
+																					Series</span></a></li>
+																			<li name="Bar + Column Series"
+																				style="height:;"
+																				tabindex="-1"
+																				href="/app/charts/AppLayout/barcol"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/charts/AppLayout/barcol"><span
+																					className="name">Bar
+																					+ Column Series</span></a></li>
+																			<li name="Mixed Series" style="height:;"
+																				tabindex="-1"
+																				href="/app/charts/AppLayout/mixed"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/charts/AppLayout/mixed"><span
+																					className="name">Mixed
+																					Series</span></a></li>
+																			<li name="Pie + Donut Series"
+																				style="height:;"
+																				tabindex="-1"
+																				href="/app/charts/AppLayout/piedonut"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/charts/AppLayout/piedonut"><span
+																					className="name">Pie
+																					+ Donut Series</span></a></li>
+																		</ul>
+																	</li>
+																	<li name="Chart.JS" style="height:;" tabindex="-1"
+																		href="/app/charts/chartjs" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/charts/chartjs"><span
+																		className="AppLayout-icon icon-simple-line-icons-graph"></span><span
+																		className="name">Chart.JS</span></a>
+																	</li>
+																	<li name="C3.JS" style="height:;" tabindex="-1"
+																		href="/app/charts/c3js" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/charts/c3js"><span
+																		className="AppLayout-icon icon-dripicons-graph-line"></span><span
+																		className="name">C3.JS</span></a>
+																	</li>
+																	<li name="Morris.JS" style="height:;" tabindex="-1"
+																		href="/app/charts/morrisjs" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/charts/morrisjs"><span
+																		className="AppLayout-icon icon-feather-pie-graph"></span><span
+																		className="name">Morris.JS</span></a>
+																	</li>
+																</ul>
+															</li>
+															<li name="Static Timeline" style="height:;" tabindex="-1"
+																href="/app/timeline" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/timeline"><span
+																className="AppLayout-icon icon-ikons-time"></span><span
+																className="name">Static
+																Timeline</span></a></li>
+															<li name="Interactive Timeline" style="height:;"
+																tabindex="-1"
+																href="/app/interactive-timeline" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/interactive-timeline"><span
+																className="AppLayout-icon icon-fontello-back-in-time"></span><span
+																className="name">Interactive
+																Timeline</span></a></li>
+															<li name="Codemirror" style="height:;" tabindex="-1"
+																href="/app/codemirror" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/codemirror"><span
+																className="AppLayout-icon icon-dripicons-code"></span><span
+																className="name">Codemirror</span></a>
+															</li>
+															<li name="Maps" style="height:;" tabindex="-1"
+																href="/app/maps"
+																className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/maps"><span
+																className="AppLayout-icon icon-ikons-pin-2"></span><span
+																className="name">Maps</span></a>
+															</li>
+															<li name="Editor" style="height:;" tabindex="-1"
+																href="/app/editor"
+																className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/editor"><span
+																className="AppLayout-icon icon-simple-line-icons-note"></span><span
+																className="name">Editor</span></a>
+															</li>
+															<li name="[object Object]" style="height:;" tabindex="-1"
+																className=""><a
+																tabindex="-1" href="" style="height:;"><span
+																className="AppLayout-icon icon-feather-toggle"></span><span
+																className="name"><span><span>UI
+																Elements </span><span
+																className="label label-default bg-deepred fg-white">7</span></span></span><span
+																className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																<ul className="sidebar-nav">
+																	<li name="Buttons" style="height:;" tabindex="-1"
+																		href="/app/ui-elements/buttons" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/ui-elements/buttons"><span
+																		className="AppLayout-icon icon-mfizz-oracle"></span><span
+																		className="name">Buttons</span></a>
+																	</li>
+																	<li name="Dropdowns" style="height:;" tabindex="-1"
+																		href="/app/ui-elements/dropdowns" className="">
+																		<a
+																			tabindex="-1" style="height:;" className=""
+																			href="/app/ui-elements/dropdowns"><span
+																			className="AppLayout-icon icon-outlined-arrow-down"></span><span
+																			className="name">Dropdowns</span></a>
+																	</li>
+																	<li name="Tabs &amp; Navs" style="height:;"
+																		tabindex="-1"
+																		href="/app/ui-elements/tabs-and-navs"
+																		className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/ui-elements/tabs-and-navs"><span
+																		className="AppLayout-icon icon-nargela-navigation"></span><span
+																		className="name">Tabs &amp;
+																		Navs</span></a></li>
+																	<li name="Sliders" style="height:;" tabindex="-1"
+																		href="/app/ui-elements/sliders" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/ui-elements/sliders"><span
+																		className="AppLayout-icon icon-outlined-three-stripes-horiz"></span><span
+																		className="name">Sliders</span></a>
+																	</li>
+																	<li name="Knobs" style="height:;" tabindex="-1"
+																		href="/app/ui-elements/knobs" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/ui-elements/knobs"><span
+																		className="AppLayout-icon icon-ikons-chart-3-8"></span><span
+																		className="name">Knobs</span></a>
+																	</li>
+																	<li name="Modals" style="height:;" tabindex="-1"
+																		href="/app/ui-elements/modals" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/ui-elements/modals"><span
+																		className="AppLayout-icon icon-pixelvicon-browser-1"></span><span
+																		className="name">Modals</span></a>
+																	</li>
+																	<li name="Messenger" style="height:;" tabindex="-1"
+																		href="/app/ui-elements/messenger" className="">
+																		<a
+																			tabindex="-1" style="height:;" className=""
+																			href="/app/ui-elements/messenger"><span
+																			className="AppLayout-icon icon-dripicons-message"></span><span
+																			className="name">Messenger</span></a>
+																	</li>
+																</ul>
+															</li>
+															<li name="[object Object]" style="height:;" tabindex="-1"
+																className=""><a
+																tabindex="-1" href="" style="height:;"><span
+																className="AppLayout-icon icon-stroke-gap-icons-Files float-right-rtl"></span><span
+																className="name"><span><span>Forms </span><span
+																className="label label-default bg-danger fg-white">3</span></span></span><span
+																className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																<ul className="sidebar-nav">
+																	<li name="Controls" style="height:;" tabindex="-1"
+																		href="/app/forms/controls" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/forms/controls"><span
+																		className="AppLayout-icon icon-mfizz-fire-alt"></span><span
+																		className="name">Controls</span></a>
+																	</li>
+																	<li name="X-Editable" style="height:;" tabindex="-1"
+																		href="/app/forms/x-editable" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/forms/x-editable"><span
+																		className="AppLayout-icon icon-stroke-gap-icons-Edit"></span><span
+																		className="name">X-Editable</span></a>
+																	</li>
+																	<li name="Wizard" style="height:;" tabindex="-1"
+																		href="/app/forms/wizard" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/forms/wizard"><span
+																		className="AppLayout-icon icon-simple-line-icons-magic-wand"></span><span
+																		className="name">Wizard</span></a>
+																	</li>
+																</ul>
+															</li>
+															<li name="[object Object]" style="height:;" tabindex="-1"
+																className=""><a
+																tabindex="-1" href="" style="height:;"><span
+																className="AppLayout-icon icon-fontello-table"></span><span
+																className="name"><span><span>Tables </span><span
+																className="label label-default bg-blue fg-white">3</span></span></span><span
+																className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																<ul className="sidebar-nav">
+																	<li name="Bootstrap Tables" style="height:;"
+																		tabindex="-1"
+																		href="/app/tables/bootstrap-tables"
+																		className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/tables/bootstrap-tables"><span
+																		className="AppLayout-icon icon-fontello-th-thumb"></span><span
+																		className="name">Bootstrap
+																		Tables</span></a></li>
+																	<li name="Datatables" style="height:;" tabindex="-1"
+																		href="/app/tables/datatables" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/tables/datatables"><span
+																		className="AppLayout-icon icon-fontello-th-2"></span><span
+																		className="name">Datatables</span></a>
+																	</li>
+																	<li name="Tablesaw" style="height:;" tabindex="-1"
+																		href="/app/tables/tablesaw" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/tables/tablesaw"><span
+																		className="AppLayout-icon icon-fontello-view-mode"></span><span
+																		className="name">Tablesaw</span></a>
+																	</li>
+																</ul>
+															</li>
+															<li name="Grid" style="height:;" tabindex="-1"
+																href="/app/grid"
+																className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/grid"><span
+																className="AppLayout-icon icon-ikons-grid-1 float-right-rtl"></span><span
+																className="name">Grid</span></a>
+															</li>
+															<li name="Calendar" style="height:;" tabindex="-1"
+																href="/app/calendar" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/calendar"><span
+																className="AppLayout-icon icon-fontello-calendar-alt"></span><span
+																className="name">Calendar</span></a>
+															</li>
+															<li name="Lists" style="height:;" tabindex="-1"
+																href="/app/lists"
+																className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/lists"><span
+																className="AppLayout-icon icon-fontello-flow-cascade"></span><span
+																className="name">Lists</span></a>
+															</li>
+															<li name="[object Object]" style="height:;" tabindex="-1"
+																className=""><a
+																tabindex="-1" href="" style="height:;"><span
+																className="AppLayout-icon icon-fontello-folder-open-empty"></span><span
+																className="name"><span><span>File
+																Utilities </span><span
+																className="label label-default bg-orange fg-darkbrown">2</span></span></span><span
+																className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																<ul className="sidebar-nav">
+																	<li name="Dropzone" style="height:;" tabindex="-1"
+																		href="/app/file-utilities/dropzone"
+																		className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/file-utilities/dropzone"><span
+																		className="AppLayout-icon icon-stroke-gap-icons-Download"></span><span
+																		className="name">Dropzone</span></a>
+																	</li>
+																	<li name="Image Cropping" style="height:;"
+																		tabindex="-1"
+																		href="/app/file-utilities/crop" className=""><a
+																		tabindex="-1" style="height:;" className=""
+																		href="/app/file-utilities/crop"><span
+																		className="AppLayout-icon icon-ikons-crop"></span><span
+																		className="name">Image
+																		Cropping</span></a></li>
+																</ul>
+															</li>
+															<li name="Fonts" style="height:;" tabindex="-1"
+																href="/app/fonts"
+																className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/fonts"><span
+																className="AppLayout-icon icon-fontello-fontsize"></span><span
+																className="name">Fonts</span></a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr style="border-color:#3B4648;border-width:2px;margin-top:15px;margin-bottom:0;width:200px;"/>
+										<div className="AppLayout-grid container-fluid grid-gutter-bottom"
+											 style="z-index:9999995;">
+											<div className="row">
+												<div className="col-xs-12">
+													<div className="sidebar-header">EXTRAS
+													</div>
+													<div className="sidebar-nav-container">
+														<ul style="margin-bottom:0;" className="sidebar-nav">
+															<li name="Login" style="height:;" tabindex="-1"
+																href="/app/login" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/login"><span
+																className="AppLayout-icon icon-ikons-login"></span><span
+																className="name">Login</span></a>
+															</li>
+															<li name="Signup" style="height:;" tabindex="-1"
+																href="/app/signup" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/signup"><span
+																className="AppLayout-icon icon-simple-line-icons-users"></span><span
+																className="name">Signup</span></a>
+															</li>
+															<li name="Lock Page" style="height:;" tabindex="-1"
+																href="/app/lock" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/lock"><span
+																className="AppLayout-icon icon-ikons-lock"></span><span
+																className="name">Lock
+																Page</span></a></li>
+															<li name="Invoice" style="height:;" tabindex="-1"
+																href="/app/invoice" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/invoice"><span
+																className="AppLayout-icon icon-dripicons-document"></span><span
+																className="name">Invoice</span></a>
+															</li>
+															<li name="Pricing Tables" style="height:;" tabindex="-1"
+																href="/app/pricing" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/pricing"><span
+																className="AppLayout-icon icon-feather-tag icon-rotate-135"></span><span
+																className="name">Pricing
+																Tables</span></a></li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr style="border-color:#3B4648;border-width:2px;margin-top:15px;margin-bottom:0;width:200px;"/>
+										<div className="AppLayout-grid container-fluid grid-gutter-bottom"
+											 style="z-index:9999994;">
+											<div className="row">
+												<div className="col-xs-12">
+													<div className="sidebar-header">DOCUMENTATION
+													</div>
+													<div className="sidebar-nav-container">
+														<ul style="margin-bottom:0;" className="sidebar-nav">
+															<li name="Installation" style="height:;" tabindex="-1"
+																href="/app/docs/installation" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/docs/installation"><span
+																className="AppLayout-icon icon-fontello-install"></span><span
+																className="name">Installation</span></a>
+															</li>
+															<li name="Rails Installation" style="height:;" tabindex="-1"
+																href="/app/docs/rails_installation" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/docs/rails_installation"><span
+																className="AppLayout-icon devicon-rails-plain"></span><span
+																className="name">Rails
+																Installation</span></a></li>
+															<li name="[object Object]" style="height:;" tabindex="-1"
+																className=""><a
+																tabindex="-1" href="" style="height:;"><span
+																className="AppLayout-icon devicon-gulp-plain"></span><span
+																className="name"><span><span>Gulpfile.js </span><span
+																className="label label-default bg-red fg-white">6</span></span></span><span
+																className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																<ul className="sidebar-nav">
+																	<li name="Basics" style="height:;" tabindex="-1"
+																		href="/app/docs/gulpfile/basics" className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/gulpfile/basics"><span
+																			className="name">Basics</span></a>
+																	</li>
+																	<li name="Sass to CSS" style="height:;"
+																		tabindex="-1" href="/app/docs/gulpfile/sass"
+																		className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/gulpfile/sass"><span
+																			className="name">Sass
+																			to CSS</span></a></li>
+																	<li name="WebFonts" style="height:;" tabindex="-1"
+																		href="/app/docs/gulpfile/webfonts" className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/gulpfile/webfonts"><span
+																			className="name">WebFonts</span></a>
+																	</li>
+																	<li name="Scaffolding" style="height:;"
+																		tabindex="-1"
+																		href="/app/docs/gulpfile/scaffolding"
+																		className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/gulpfile/scaffolding"><span
+																			className="name">Scaffolding</span></a>
+																	</li>
+																	<li name="External Plugins" style="height:;"
+																		tabindex="-1"
+																		href="/app/docs/gulpfile/externalplugins"
+																		className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/gulpfile/externalplugins"><span
+																			className="name">External
+																			Plugins</span></a></li>
+																</ul>
+															</li>
+															<li name="[object Object]" style="height:;" tabindex="-1"
+																className=""><a
+																tabindex="-1" href="" style="height:;"><span
+																className="AppLayout-icon icon-fontello-looped-square-interest"></span><span
+																className="name"><span><span>AppLayout </span><span
+																className="label label-default bg-darkgreen45 fg-white">2</span></span></span><span
+																className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																<ul className="sidebar-nav">
+																	<li name="AppLayout - JSX" style="height:;"
+																		tabindex="-1" href="/app/docs/AppLayout/jsx"
+																		className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/AppLayout/jsx"><span
+																			className="name">AppLayout
+																			- JSX</span></a></li>
+																	<li name="AppLayout - SASS" style="height:;"
+																		tabindex="-1" href="/app/docs/AppLayout/sass"
+																		className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/AppLayout/sass"><span
+																			className="name">AppLayout
+																			- SASS</span></a></li>
+																</ul>
+															</li>
+															<li name="[object Object]" style="height:;" tabindex="-1"
+																className=""><a
+																tabindex="-1" href="" style="height:;"><span
+																className="AppLayout-icon devicon-bootstrap-plain"></span><span
+																className="name"><span><span>Bootstrap </span><span
+																className="label label-default bg-darkblue fg-white">7</span></span></span><span
+																className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																<ul className="sidebar-nav">
+																	<li name="Grid" style="height:;" tabindex="-1"
+																		href="/app/docs/bootstrap/grid" className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/bootstrap/grid"><span
+																			className="name">Grid</span></a>
+																	</li>
+																	<li name="Typography" style="height:;" tabindex="-1"
+																		href="/app/docs/bootstrap/typography"
+																		className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/bootstrap/typography"><span
+																			className="name">Typography</span></a>
+																	</li>
+																	<li name="Code" style="height:;" tabindex="-1"
+																		href="/app/docs/bootstrap/code" className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/bootstrap/code"><span
+																			className="name">Code</span></a>
+																	</li>
+																	<li name="Tables" style="height:;" tabindex="-1"
+																		href="/app/docs/bootstrap/tables" className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/bootstrap/tables"><span
+																			className="name">Tables</span></a>
+																	</li>
+																	<li name="Forms" style="height:;" tabindex="-1"
+																		href="/app/docs/bootstrap/forms" className="">
+																		<a tabindex="-1" style="height:;" className=""
+																		   href="/app/docs/bootstrap/forms"><span
+																			className="name">Forms</span></a>
+																	</li>
+																	<li name="Form Controls" style="height:;"
+																		tabindex="-1" className="">
+																		<a tabindex="-1" href="" style="height:;"><span
+																			className="name">Form
+																			Controls</span><span
+																			className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																		<ul className="sidebar-nav">
+																			<li name="Inputs" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/form_controls/inputs"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/form_controls/inputs"><span
+																					className="name">Inputs</span></a>
+																			</li>
+																			<li name="Textarea" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/form_controls/textarea"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/form_controls/textarea"><span
+																					className="name">Textarea</span></a>
+																			</li>
+																			<li name="Checkbox &amp; Radio"
+																				style="height:;" tabindex="-1"
+																				href="/app/docs/bootstrap/form_controls/checkradio"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/form_controls/checkradio"><span
+																					className="name">Checkbox &amp;
+																					Radio</span></a></li>
+																			<li name="Select" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/form_controls/select"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/form_controls/select"><span
+																					className="name">Select</span></a>
+																			</li>
+																			<li name="Buttons" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/form_controls/buttons"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/form_controls/buttons"><span
+																					className="name">Buttons</span></a>
+																			</li>
+																		</ul>
+																	</li>
+																	<li name="Components" style="height:;" tabindex="-1"
+																		className="">
+																		<a tabindex="-1" href="" style="height:;"><span
+																			className="name">Components</span><span
+																			className="AppLayout-icon fontello icon-fontello-left-open-3 toggle-button"></span></a>
+																		<ul className="sidebar-nav">
+																			<li name="Dropdowns" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/dropdowns"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/dropdowns"><span
+																					className="name">Dropdowns</span></a>
+																			</li>
+																			<li name="Button Groups" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/button_groups"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/button_groups"><span
+																					className="name">Button
+																					Groups</span></a></li>
+																			<li name="Input Groups" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/input_groups"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/input_groups"><span
+																					className="name">Input
+																					Groups</span></a></li>
+																			<li name="Navs" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/navs"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/navs"><span
+																					className="name">Navs</span></a>
+																			</li>
+																			<li name="Navbar" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/navbar"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/navbar"><span
+																					className="name">Navbar</span></a>
+																			</li>
+																			<li name="Breadcrumbs" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/breadcrumbs"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/breadcrumbs"><span
+																					className="name">Breadcrumbs</span></a>
+																			</li>
+																			<li name="Pagination" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/pagination"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/pagination"><span
+																					className="name">Pagination</span></a>
+																			</li>
+																			<li name="Labels &amp; Badges"
+																				style="height:;" tabindex="-1"
+																				href="/app/docs/bootstrap/components/labels_and_badges"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/labels_and_badges"><span
+																					className="name">Labels &amp;
+																					Badges</span></a></li>
+																			<li name="Jumbotron" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/jumbotron"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/jumbotron"><span
+																					className="name">Jumbotron</span></a>
+																			</li>
+																			<li name="Alerts" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/alerts"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/alerts"><span
+																					className="name">Alerts</span></a>
+																			</li>
+																			<li name="Progress bars" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/progress-bars"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/progress-bars"><span
+																					className="name">Progress
+																					bars</span></a></li>
+																			<li name="Media" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/media"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/media"><span
+																					className="name">Media</span></a>
+																			</li>
+																			<li name="List Group" style="height:;"
+																				tabindex="-1"
+																				href="/app/docs/bootstrap/components/list-group"
+																				className="">
+																				<a tabindex="-1" style="height:;"
+																				   className=""
+																				   href="/app/docs/bootstrap/components/list-group"><span
+																					className="name">List
+																					Group</span></a></li>
+																		</ul>
+																	</li>
+																</ul>
+															</li>
+															<li name="Mozilla L20n.js" style="height:;" tabindex="-1"
+																href="/app/docs/l20n" className=""><a
+																tabindex="-1" style="height:;" className=""
+																href="/app/docs/l20n"><span
+																className="AppLayout-icon icon-outlined-geolocalizator"></span><span
+																className="name">Mozilla
+																L20n.js</span></a></li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div
+								style="left:100%;visibility:hidden;transition:all 0.3s ease;-o-transition:all 0.3s ease;-ms-transition:all 0.3s ease;-moz-transition:all 0.3s ease;-webkit-transition:all 0.3s ease;"
+								className="sidebar">
+								<div>
+									<div>
+										<div className="AppLayout-grid container-fluid" style="z-index:9999993;">
+											<div className="row">
+												<div className="col-xs-12">
+													<div className="sidebar-header">ONLINE
+														(4)
+													</div>
+													<div className="sidebar-nav-container">
+														<ul className="sidebar-nav" style="margin-bottom:0;">
+															<li name="Jordyn Ouellet" tabindex="-1"><a href="#"
+																									   tabindex="-1"><img
+																src="/imgs/avatars/avatar5.png" width="30" height="30"
+																className="border-green"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">Jordyn
+																Ouellet</span></a></li>
+															<li name="Ava Parry" tabindex="-1"><a href="#"
+																								  tabindex="-1"><img
+																src="/imgs/avatars/avatar9.png" width="30" height="30"
+																className="border-green"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">Ava
+																Parry</span></a></li>
+															<li name="Angelina Mills" tabindex="-1"><a href="#"
+																									   tabindex="-1"><img
+																src="/imgs/avatars/avatar10.png" width="30" height="30"
+																className="border-green"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">Angelina
+																Mills</span></a></li>
+															<li name="Crystal Ford" tabindex="-1"><a href="#"
+																									 tabindex="-1"><img
+																src="/imgs/avatars/avatar11.png" width="30" height="30"
+																className="border-green"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">Crystal
+																Ford</span></a></li>
+														</ul>
+													</div>
+													<div className="sidebar-header">IDLE
+														(3)
+													</div>
+													<div className="sidebar-nav-container">
+														<ul className="sidebar-nav" style="margin-bottom:0;">
+															<li name="Toby King" tabindex="-1"><a href="#"
+																								  tabindex="-1"><img
+																src="/imgs/avatars/avatar7.png" width="30" height="30"
+																className="border-yellow"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">Toby
+																King</span></a></li>
+															<li name="Ju Lan" tabindex="-1"><a href="#"
+																							   tabindex="-1"><img
+																src="/imgs/avatars/avatar13.png" width="30" height="30"
+																className="border-yellow"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">Ju
+																Lan</span></a></li>
+															<li name="Lana Collin" tabindex="-1"><a href="#"
+																									tabindex="-1"><img
+																src="/imgs/avatars/avatar14.png" width="30" height="30"
+																className="border-yellow"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">Lana
+																Collin</span></a></li>
+														</ul>
+													</div>
+													<div className="sidebar-header">BUSY
+														(4)
+													</div>
+													<div className="sidebar-nav-container">
+														<ul className="sidebar-nav" style="margin-bottom:0;">
+															<li name="Alexandra Mordin" tabindex="-1"><a href="#"
+																										 tabindex="-1"><img
+																src="/imgs/avatars/avatar20.png" width="30" height="30"
+																className="border-red"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">Alexandra
+																Mordin</span></a></li>
+															<li name="Jonas Schäfer" tabindex="-1"><a href="#"
+																									  tabindex="-1"><img
+																src="/imgs/avatars/avatar17.png" width="30" height="30"
+																className="border-red"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">Jonas
+																Schäfer</span></a></li>
+															<li name="Ricardo Ibarra" tabindex="-1"><a href="#"
+																									   tabindex="-1"><img
+																src="/imgs/avatars/avatar15.png" width="30" height="30"
+																className="border-red"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">Ricardo
+																Ibarra</span></a></li>
+															<li name="The Unknown" tabindex="-1"><a href="#"
+																									tabindex="-1"><img
+																src="/imgs/avatars/avatar16.png" width="30" height="30"
+																className="border-red"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:1;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:1;">The
+																Unknown</span></a></li>
+														</ul>
+													</div>
+													<div className="sidebar-header">OFFLINE
+														(3)
+													</div>
+													<div className="sidebar-nav-container">
+														<ul className="sidebar-nav" style="margin-bottom:0;">
+															<li name="Evan Poulain" tabindex="-1"><a href="#"
+																									 tabindex="-1"><img
+																src="/imgs/avatars/avatar19.png" width="30" height="30"
+																className="border-darkgray"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:0.4;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:0.4;">Evan
+																Poulain</span></a></li>
+															<li name="Canan Erdem" tabindex="-1"><a href="#"
+																									tabindex="-1"><img
+																src="/imgs/avatars/avatar18.png" width="30" height="30"
+																className="border-darkgray"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:0.4;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:0.4;">Canan
+																Erdem</span></a></li>
+															<li name="Antelope Inc." tabindex="-1"><a href="#"
+																									  tabindex="-1"><img
+																src="/imgs/avatars/avatar8.png" width="30" height="30"
+																className="border-darkgray"
+																style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:relative;top:-7px;opacity:0.4;"/><span
+																className="name"
+																style="position:relative;top:-2px;opacity:0.4;">Antelope
+																Inc.</span></a></li>
+														</ul>
+														<br/></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div
+								style="left:200%;visibility:hidden;transition:all 0.3s ease;-o-transition:all 0.3s ease;-ms-transition:all 0.3s ease;-moz-transition:all 0.3s ease;-webkit-transition:all 0.3s ease;"
+								className="sidebar">
+								<div>
+									<div>
+										<div className="AppLayout-grid container-fluid" style="z-index:9999992;">
+											<div className="row">
+												<div className="col-xs-12">
+													<div className="sidebar-header text-center">STATISTICS
+													</div>
+													<div
+														style="margin-left:-25px;margin-right:-25px;margin-top:12.5px;margin-bottom:12.5px;">
+														<canvas width="250" height="150"></canvas>
+													</div>
+													<hr style="border-color:rgba(255,255,255,0.1);border-width:2px;margin-top:12.5px;margin-bottom:12.5px;width:200px;"/>
+													<div>
+														<div></div>
+													</div>
+													<div>
+														<div className="AppLayout-grid container-fluid"
+															 style="z-index:9999991;">
+															<div className="row">
+																<div
+																	className="col-xs-6 col-xs-collapse-left col-xs-collapse-right">
+																	<div className="sidebar-header">
+																		AAPL
+																	</div>
+																	<div></div>
+																</div>
+																<div
+																	className="col-xs-6 col-xs-collapse-left col-xs-collapse-right">
+																	<div className="sidebar-header text-left"
+																		 style="margin-right:5px;margin-left:5px;">
+																		Yearly Change
+																	</div>
+																	<div>
+																		<h5 className="bg-darkgreen45 fg-white text-center"
+																			style="margin:0;height:30px;padding-top:7px;margin-left:5px;margin-right:5px;">
+																			+127.01</h5></div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<hr style="border-color:rgba(255,255,255,0.1);border-width:2px;margin-top:25px;margin-bottom:12.5px;width:200px;"/>
+													<div>
+														<div className="AppLayout-grid container-fluid"
+															 style="z-index:9999990;">
+															<div className="row">
+																<div
+																	className="col-xs-6 col-xs-collapse-left col-xs-collapse-right">
+																	<div className="sidebar-header">
+																		NASDAQ
+																	</div>
+																	<div></div>
+																</div>
+																<div
+																	className="col-xs-6 col-xs-collapse-left col-xs-collapse-right">
+																	<div className="sidebar-header">
+																		DOW
+																	</div>
+																	<div></div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div>
+														<div className="AppLayout-grid container-fluid"
+															 style="z-index:9999989;">
+															<div className="row">
+																<div
+																	className="col-xs-6 col-xs-collapse-left col-xs-collapse-right">
+																	<div>
+																		<span className="fg-yellow">USD </span><span
+																		className="fg-green"><span>0.43% </span><span
+																		className="AppLayout-icon icon-fontello-up-dir"></span></span>
+																	</div>
+																	<div className="fg-white">
+																		<h4 style="margin-top:0;">
+																			$518.47</h4></div>
+																	<p>
+																		<span className="fg-yellow">EUR </span><span
+																		className="fg-white">€391.85</span>
+																	</p></div>
+																<div
+																	className="col-xs-6 col-xs-collapse-left col-xs-collapse-right">
+																	<div>
+																		<span className="fg-yellow">CNY </span><span
+																		className="fg-red"><span>0.24% </span><span
+																		className="AppLayout-icon icon-fontello-down-dir"></span></span>
+																	</div>
+																	<div className="fg-white">
+																		<h4 style="margin-top:0;">
+																			¥3,170.65</h4></div>
+																	<p>
+																		<span className="fg-yellow">GBP </span><span
+																		className="fg-white">£312.89</span>
+																	</p></div>
+															</div>
+														</div>
+													</div>
+													<hr style="border-color:rgba(255,255,255,0.1);border-width:2px;margin-top:12.5px;margin-bottom:25px;width:200px;"/>
+													<div>
+														<div className="AppLayout-grid container-fluid"
+															 style="z-index:9999988;">
+															<div className="row">
+																<div
+																	className="col-xs-12 col-xs-collapse-left col-xs-collapse-right">
+																	<div>
+																		1:1,1:2,1:3,2:0.01,1:0.1,0.2:1,2:2,2:1.5,2:1.2,1.2:2,1:3,1:0.25,2:0.02,1:3,3:0.5,2:4,4:1,1:1,1:2,1:4,2:1,2:3,2:1.5,2:0.5,2:0.25,1:0.01,1:0.1,0.2:1,2:2,2:1.5,2:1.2,1.2:2,1:3
+																	</div>
+																	<br/>
+																</div>
+															</div>
+															<div className="row">
+																<div
+																	className="col-xs-4 col-xs-collapse-left col-xs-collapse-right">
+																	<span className="sidebar-header">MALE</span>
+																</div>
+																<div
+																	className="col-xs-8 col-xs-collapse-left col-xs-collapse-right">
+																	<span
+																		className="AppLayout-icon icon-fontello-male fg-blue"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-blue"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-blue"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-blue"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-blue"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-male fg-black75"></span>
+																</div>
+															</div>
+															<div className="row">
+																<div
+																	className="col-xs-4 col-xs-collapse-left col-xs-collapse-right">
+																	<span className="sidebar-header">FEMALE</span>
+																</div>
+																<div
+																	className="col-xs-8 col-xs-collapse-left col-xs-collapse-right">
+																	<span
+																		className="AppLayout-icon icon-fontello-female fg-red"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-red"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-red"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-red"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-red"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-red"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-red"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-black75"></span><span
+																	className="AppLayout-icon icon-fontello-female fg-black75"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<br/>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div
+								style="left:300%;visibility:hidden;transition:all 0.3s ease;-o-transition:all 0.3s ease;-ms-transition:all 0.3s ease;-moz-transition:all 0.3s ease;-webkit-transition:all 0.3s ease;"
+								className="sidebar">
+								<div>
+									<div>
+										<div className="AppLayout-grid container-fluid" style="z-index:9999987;">
+											<div className="row">
+												<div className="col-xs-12 col-xs-collapse-left col-xs-collapse-right">
+													<div
+														className="AppLayout-timeline-view AppLayout-timeline-normal border-black50 tl-blue">
+														<div className="AppLayout-timeline-item">
+															<div className="AppLayout-timeline-header"><img width="30"
+																										height="30"
+																										src="/imgs/avatars/avatar5.png"
+																										className="AppLayout-timeline-avatar border-blue"
+																										style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:absolute;top:0;"/>
+																<div className="AppLayout-timeline-title">Jordyn
+																	Ouellet
+																</div>
+															</div>
+															<div className="AppLayout-timeline-body">
+																<ul>
+																	<li>
+																		<div>
+																			<div className="fg-lightgray">
+																				<small>
+																					<strong>Aug
+																						10, 2014</strong></small>
+																			</div>
+																			<div>
+																				<small>
+																					Sent you a friend request!
+																				</small>
+																			</div>
+																		</div>
+																		<br/>
+																		<div className="text-center">
+																			<button role="button" type="button"
+																					className="btn btn-xs btn-outlined btn-darkgreen45">
+																				Accept
+																			</button>
+																			<span> </span>
+																			<button role="button" type="button"
+																					className="btn btn-xs btn-outlined btn-red">
+																				Reject
+																			</button>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+													<div
+														className="AppLayout-timeline-view AppLayout-timeline-normal border-black50 tl-green">
+														<div className="AppLayout-timeline-item">
+															<div className="AppLayout-timeline-header"><img width="30"
+																										height="30"
+																										src="/imgs/avatars/avatar7.png"
+																										className="AppLayout-timeline-avatar border-green"
+																										style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:absolute;top:0;"/>
+																<div className="AppLayout-timeline-title">Toby King
+																</div>
+															</div>
+															<div className="AppLayout-timeline-body">
+																<ul>
+																	<li>
+																		<div className="fg-lightgray">
+																			<small>
+																				<strong>Aug
+																					9, 2014</strong></small>
+																		</div>
+																		<div>
+																			<small>
+																				<span>Visiting </span><strong
+																				className="fg-darkgreen45">The
+																				Museum of Modern Art</strong><span>
+																				at </span><strong><em>11
+																				W 53rd St, New York, NY
+																				10019</em></strong></small>
+																		</div>
+																		<br/><img
+																		src="/imgs/staticmap.png"
+																		alt="Points of Interest in Lower Manhattan"/>
+																	</li>
+																	<li>
+																		<div className="fg-lightgray">
+																			<small>
+																				<strong>Aug
+																					8, 2014</strong></small>
+																		</div>
+																		<div>
+																			<small>
+																				Driving through! :)
+																			</small>
+																		</div>
+																		<br/><img
+																		width="155"
+																		src="/imgs/gallery/tumblr_n7yhe1sTa41st5lhmo1_1280-thumb.jpg"
+																		alt="the taxi"/>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+													<div
+														className="AppLayout-timeline-view AppLayout-timeline-normal border-black50 tl-yellow">
+														<div className="AppLayout-timeline-item">
+															<div className="AppLayout-timeline-header"><img width="30"
+																										height="30"
+																										src="/imgs/avatars/avatar10.png"
+																										className="AppLayout-timeline-avatar border-yellow"
+																										style="border-width:2px;border-style:solid;border-radius:100px;padding:2px;position:absolute;top:0;"/>
+																<div className="AppLayout-timeline-title">Angelina
+																	Mills
+																</div>
+															</div>
+															<div className="AppLayout-timeline-body">
+																<ul>
+																	<li>
+																		<div className="fg-lightgray">
+																			<small>
+																				<strong>Aug
+																					8, 2014</strong></small>
+																		</div>
+																		<div>
+																			<small>
+																				Hey you free tomorrow? Lets go shopping!
+																			</small>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div
+								style="left:400%;visibility:hidden;transition:all 0.3s ease;-o-transition:all 0.3s ease;-ms-transition:all 0.3s ease;-moz-transition:all 0.3s ease;-webkit-transition:all 0.3s ease;"
+								className="sidebar">
+								<div>
+									<div>
+										<div className="AppLayout-grid container-fluid" style="z-index:9999986;">
+											<div className="row">
+												<div className="col-xs-12 col-xs-collapse-left col-xs-collapse-right">
+													<div
+														className="AppLayout-timeline-view AppLayout-timeline-normal border-black50 tl-deepred">
+														<div className="AppLayout-timeline-item">
+															<div className="AppLayout-timeline-header"><span
+																className="AppLayout-icon icon-fontello-attention-3 bg-deepred fg-white AppLayout-timeline-icon"></span>
+																<div className="AppLayout-timeline-title">SYSTEM-WIDE
+																	ALERTS
+																</div>
+															</div>
+															<div className="AppLayout-timeline-body">
+																<ul>
+																	<li>
+																		<div>
+																			<div className="fg-lightgray">
+																				<small>
+																					<strong>Aug
+																						12, 2014</strong></small>
+																			</div>
+																			<div>
+																				<small>
+																					Spike in network traffic detected.
+																				</small>
+																			</div>
+																			<div>
+																				<div></div>
+																			</div>
+																		</div>
+																	</li>
+																	<li>
+																		<div>
+																			<div className="fg-lightgray">
+																				<small>
+																					<strong>Aug
+																						10, 2014</strong></small>
+																			</div>
+																			<div>
+																				<small>
+																					Node 1 down for 30 minutes! Take
+																					action!
+																				</small>
+																			</div>
+																		</div>
+																		<br/>
+																		<div className="text-center">
+																			<button role="button" type="button"
+																					className="btn btn-xs btn-outlined btn-darkgreen45">
+																				Restore
+																			</button>
+																			<span> </span>
+																			<button role="button" type="button"
+																					className="btn btn-xs btn-outlined btn-red">
+																				Destroy
+																			</button>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+													<div
+														className="AppLayout-timeline-view AppLayout-timeline-normal border-black50 tl-yellow">
+														<div className="AppLayout-timeline-item">
+															<div className="AppLayout-timeline-header"><span
+																className="AppLayout-icon icon-fontello-attention-3 bg-yellow fg-red AppLayout-timeline-icon"></span>
+																<div className="AppLayout-timeline-title">NODE ALERTS
+																</div>
+															</div>
+															<div className="AppLayout-timeline-body">
+																<ul>
+																	<li>
+																		<div>
+																			<div className="fg-lightgray">
+																				<small>
+																					<strong>Aug
+																						12, 2014</strong></small>
+																			</div>
+																			<div>
+																				<small>
+																					CPU running at 100% on Node 1.
+																				</small>
+																			</div>
+																			<div>
+																				<div></div>
+																			</div>
+																		</div>
+																	</li>
+																	<li>
+																		<div>
+																			<div className="fg-lightgray">
+																				<small>
+																					<strong>Aug
+																						10, 2014</strong></small>
+																			</div>
+																			<div>
+																				<small>
+																					<span>Running
+																						out of disk space
+																						on </span><strong
+																					className="fg-yellow">Node
+																					2</strong><span>, </span><strong
+																					className="fg-yellow">Node
+																					3</strong><span>, </span><strong
+																					className="fg-yellow">Node
+																					5</strong><span>
+																					and </span><strong
+																					className="fg-yellow">Node
+																					7</strong></small>
+																			</div>
+																		</div>
+																		<br/>
+																		<div className="text-center">
+																			<span style="margin-left:5px;"></span><span
+																			style="margin-left:5px;"></span><span
+																			style="margin-left:5px;"></span><span
+																			style="margin-left:5px;"></span>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="navbar" className="AppLayout-grid container-fluid" style="z-index:9999985;">
+						<div className="row">
+							<div className="col-xs-12">
+								<nav id="AppLayout-nav-header" className="navbar navbar-default navbar-fixed-top"
+									 role="navigation"
+									 style="z-index:9999998;">
+									<div className="container-fluid">
+										<div className="row">
+											<div className="col-xs-3 visible-xs">
+												<div className="navbar-content">
+													<ul className="nav navbar-nav">
+														<li data-id="sidebar-btn" className="sidebar-btn" href="/"><a
+															href="/"><span
+															className="AppLayout-icon fontello icon-fontello-th-list-5"></span></a>
+														</li>
+													</ul>
+												</div>
+											</div>
+											<div className="col-xs-6 col-sm-4">
+												<div className="navbar-header"><a
+													tabindex="-1" href="#" className="navbar-brand"><img
+													src="/imgs/logo.png"
+													alt="AppLayout" width="111"
+													height="28"/></a>
+												</div>
+											</div>
+											<div className="col-xs-3 col-sm-8">
+												<div className="navbar-content pull-right">
+													<ul className="nav navbar-nav hidden-xs">
+														<li className="divider"></li>
+														<li className="hidden-sm"><a
+															href="#"><span
+															className="AppLayout-icon icon-fontello-circle fg-theme"
+															style="line-height:1;font-size:24px;"></span></a></li>
+														<li className="divider"></li>
+														<li className="dropdown"><a
+															id="flag-menu-btn" className="dropdown-toggle" href="#"
+															data-toggle="dropdown"
+															data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.3.$0"><img
+															src="/imgs/flags/flags/flat/32/United-States.png" width="32"
+															height="32"
+															data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.3.$0.0"/></a>
+															<ul role="menu" aria-labelledby="flag-menu"
+																className="dropdown-menu dropdown-menu-right menu-theme double-width"
+																style="padding-bottom:0;display:none;" id="flag-menu"
+																data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.3.$1">
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.3.$1.$0"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.3.$1.$1"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.3.$1.$2"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.3.$1.$3"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.3.$1.$4"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.3.$1.$5"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.3.$1.$6"></noscript>
+															</ul>
+														</li>
+														<li className="divider"></li>
+														<li className="small-font"><a
+															className="" href="/app/social"><span
+															className="AppLayout-icon fontello icon-fontello-user-female"></span></a>
+														</li>
+														<li className="dropdown small-font collapse-left"><a
+															className="dropdown-toggle" href="#" data-toggle="dropdown"
+															data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.6.$0"><span
+															className="AppLayout-icon fontello icon-fontello-cog-7"
+															data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.6.$0.0"></span></a>
+															<ul role="menu" aria-labelledby="settings-menu"
+																style="width:375px;display:none;" id="settings-menu"
+																className="dropdown-menu dropdown-menu-right menu-theme"
+																data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.6.$1">
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.6.$1.$0"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.6.$1.$1"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.6.$1.$2"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.6.$1.$3"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.6.$1.$4"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.6.$1.$5"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.6.$1.$6"></noscript>
+															</ul>
+														</li>
+														<li className="divider"></li>
+														<li className=""><a className=""
+																			href="/app/mailbox/inbox"><span
+															className="AppLayout-icon fontello icon-fontello-mail-3"></span></a>
+														</li>
+														<li className="dropdown collapse-left"><a
+															className="dropdown-toggle" href="#" data-toggle="dropdown"
+															data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.9.$0"><span
+															className="AppLayout-icon fontello icon-fontello-bullhorn"
+															data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.9.$0.0"></span><span
+															className="badge badge-default fg-darkbrown bg-orange notification-badge"
+															data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.9.$0.1">3</span></a>
+															<ul role="menu" aria-labelledby="notifications-menu"
+																className="dropdown-menu dropdown-menu-right menu-default double-width"
+																style="display:none;" id="notifications-menu"
+																data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.9.$1">
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.9.$1.$0"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.9.$1.$1"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.9.$1.$2"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.9.$1.$3"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.9.$1.$4"></noscript>
+															</ul>
+														</li>
+														<li className="dropdown collapse-left"><a
+															className="dropdown-toggle" href="#" data-toggle="dropdown"
+															data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$0"><span
+															className="AppLayout-icon fontello icon-fontello-rss-1"
+															data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$0.0"></span><span
+															className="badge badge-default fg-darkgreen bg-darkgreen40 notification-badge"
+															data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$0.1">4</span></a>
+															<ul role="menu" aria-labelledby="rss-menu"
+																className="dropdown-menu dropdown-menu-right menu-default double-width"
+																style="display:none;" id="rss-menu"
+																data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$1">
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$1.$0"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$1.$1"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$1.$2"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$1.$3"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$1.$4"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$1.$5"></noscript>
+																<noscript
+																	data-reactid=".k7siynrklc.1.0.0.0.0.0.2.0.0.a.$1.$6"></noscript>
+															</ul>
+														</li>
+													</ul>
+													<ul className="nav navbar-nav">
+														<li className="logout" href="#">
+															<a href="#"><span
+																className="AppLayout-icon fontello icon-fontello-off-1"></span></a>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</nav>
+							</div>
+						</div>
+					</div>
+					<div id="body" className="">
+						<div className="AppLayout-grid container-fluid" style="z-index:9999984;">
+							<div className="row">
+								<div className="col-sm-12">
+									<div className="AppLayout-panel-container-with-controls">
+										<div className="AppLayout-panel-controls">
+											<button role="button" type="button" className="btn btn-default"><span
+												className="AppLayout-icon fontello icon-fontello-loop-alt-1"></span>
+											</button>
+											<button role="button" type="button" className="btn btn-default"><span
+												className="AppLayout-icon fontello icon-fontello-minus"></span></button>
+											<button role="button" type="button" className="btn btn-default"><span
+												className="AppLayout-icon fontello icon-fontello-cancel"></span></button>
+										</div>
+										<div className="AppLayout-panel-container"
+											 style="z-index:9999998;overflow:;display:block;height:auto;">
+											<div className="AppLayout-panel">
+												<div>
+													<div style="padding-top:5px;" className="AppLayout-panel-body">
+
+
+														panel body
+
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="footer-container">
+						<div id="footer" className="AppLayout-grid container-fluid text-center" style="z-index:9999978;">
+							<div className="row">
+								<div className="col-xs-12">
+									<div><span>© 2014
+										SketchPixy Creative - v</span><span>0</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+
+	}
+}
+

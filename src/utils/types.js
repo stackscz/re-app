@@ -19,7 +19,8 @@ FormField.dispatch = function (x) {
 };
 
 export const ApiErrorResult = t.struct({
-	errors: t.Array,
+	message: t.String,
+	statusCode: t.Number,
 	originalResponse: t.maybe(t.Object)
 });
 

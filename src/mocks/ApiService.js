@@ -1,9 +1,42 @@
+/* eslint-disable */
+
 import _ from 'lodash';
 import { Schema, arrayOf } from 'normalizr';
+import { normalize } from 'normalizr';
 import { denormalize } from 'denormalizr';
 import invariant from 'invariant';
+import hash from 'object-hash';
 
-const API_LATENCY = 2000;
+const API_LATENCY = 400;
+
+import entityDescriptors from './entityDescriptors';
+
+import PouchDB from 'pouchdb';
+import RelationalPouchDB from 'relational-pouch';
+PouchDB.plugin(RelationalPouchDB);
+const db = new PouchDB('re-app-examples');
+db.setSchema([
+	{
+		singular: 'post',
+		plural: 'posts',
+		relations: {
+			tags: {hasMany: 'tag'}
+		}
+	},
+	{
+		singular: 'tag',
+		plural: 'tags'
+	}
+]);
+
+const mappings = {
+	posts: new Schema('posts'),
+	tags: new Schema('tags', {idAttribute: 'name'})
+};
+mappings.posts.define({
+	tags: arrayOf(mappings.tags)
+});
+
 
 export default {
 	/**
@@ -112,13 +145,23 @@ export default {
 	 */
 	getEntityIndex: (collectionName, filter, apiContext, authContext) => {
 		logBoldMessage('ApiService.getEntityIndex called');
-		invariant(_.isUndefined(filter), 'filtering is not supported in mock implementation of ApiService');
-		return DelayedPromise((resolve) => {
-			const result = _.mapValues(entities[collectionName], (entity) => {
-				return denormalize(entity, entities, mappings[collectionName])
+		invariant(
+			_.isUndefined(filter) || _.isEqual(filter, {offset: 0, limit: -1}),
+			'filtering is not supported in mock implementation of ApiService'
+		);
+		return DelayedPromise((resolve, reject) => {
+			db.rel.find(collectionName).then((result) => {
+				const normalized = formatPouchToNormalized(result, entityDescriptors.schemas);
+				const denormalized = _.mapValues(normalized[collectionName], (entity) => {
+					return denormalize(entity, normalized, mappings[collectionName])
+				});
+				resolve({
+					data: denormalized
+				});
+			}).catch((error) => {
+				reject(error);
 			});
-			resolve(result);
-		});
+		}, apiContext);
 	},
 	/**
 	 * Resolves with single entity from given collection and with given id
@@ -131,13 +174,52 @@ export default {
 	 */
 	getEntity: (collectionName, id, apiContext, authContext) => {
 		logBoldMessage('ApiService.getEntity called');
-		return DelayedPromise((resolve) => {
-			const result = denormalize(entities[collectionName][id], entities, mappings[collectionName]);
-			resolve(result);
+		return DelayedPromise((resolve, reject) => {
+			if (!id) {
+				return reject({
+					statusCode: 404,
+					message: 'Not found'
+				});
+			}
+			findOne(collectionName, id, (entity) => {
+				resolve({
+					data: entity
+				});
+			}, (error) => {
+				reject({...error, statusCode: 404});
+			});
 		});
 	},
 	/**
-	 * Persists single entity. Decides if create or update entity based on presence of id param
+	 * Creates single entity.
+	 *
+	 * @param collectionName
+	 * @param entity
+	 * @param apiContext
+	 * @param authContext
+	 */
+	createEntity: (collectionName, entity, apiContext, authContext) => {
+		logBoldMessage('ApiService.createEntity called');
+		return DelayedPromise((resolve, reject) => {
+			const normalized = normalize(entity, mappings[collectionName]);
+			const normalizedEntity = normalized.entities[collectionName][normalized.result];
+			db.rel.save(collectionName, normalizedEntity).then((result) => {
+				const data = extractEntityFromDbResult(result, collectionName);
+				const entityId = data[entityDescriptors.schemas[collectionName].idFieldName];
+				findOne(collectionName, entityId, (entity) => {
+					resolve({
+						data: entity
+					});
+				}, (error) => {
+					reject(error);
+				});
+			}).catch((error) => {
+				reject(error);
+			});
+		});
+	},
+	/**
+	 * Updates single entity.
 	 *
 	 * @param collectionName
 	 * @param id
@@ -145,9 +227,38 @@ export default {
 	 * @param apiContext
 	 * @param authContext
 	 */
-	persistEntity: (collectionName, id, entity, apiContext, authContext) => {
-		logBoldMessage('ApiService.persistEntity called');
-		invariant(false, 'persistEntity is not supported in mock implementation of ApiService');
+	updateEntity: (collectionName, id, entity, apiContext, authContext) => {
+		logBoldMessage('ApiService.updateEntity called');
+
+		return DelayedPromise((resolve, reject) => {
+
+			db.rel.find(collectionName, id).then((result) => {
+				const rev = _.get(_.first(result[collectionName]), 'rev');
+				const normalized = normalize(entity, mappings[collectionName]);
+				const normalizedEntity = normalized.entities[collectionName][normalized.result];
+				const entityWithIdAndRev = {
+					...normalizedEntity,
+					[entityDescriptors.schemas[collectionName].idFieldName]: id,
+					rev
+				};
+				db.rel.save(collectionName, entityWithIdAndRev).then((result) => {
+					const data = extractEntityFromDbResult(result, collectionName);
+					const entityId = data[entityDescriptors.schemas[collectionName].idFieldName];
+					findOne(collectionName, entityId, (entity) => {
+						resolve({
+							data: entity
+						});
+					}, (error) => {
+						reject({...error, statusCode: 400});
+					});
+				}).catch((error) => {
+					reject({...error, statusCode: 400});
+				});
+			}).catch((error) => {
+				reject({...error, statusCode: 404})
+			});
+
+		});
 	},
 	/**
 	 * Deletes single entity.
@@ -159,95 +270,51 @@ export default {
 	 */
 	deleteEntity: (collectionName, id, apiContext, authContext) => {
 		logBoldMessage('ApiService.deleteEntity called');
-		invariant(false, 'deleteEntity is not supported in mock implementation of ApiService');
-	}
-};
-
-const entityDescriptors = {
-	schemas: {
-		posts: {
-			name: 'posts',
-			displayFieldName: 'title',
-			idFieldName: 'id',
-			isFilterable: false,
-			fields: {
-				title: {
-					name: 'title',
-					type: 'string'
-				},
-				tags: {
-					name: 'tags',
-					type: 'association',
-					isMultiple: true
+		return DelayedPromise((resolve, reject) => {
+			db.rel.find(collectionName, id).then(function (result) {
+				const entityRevisions = _.get(result, collectionName);
+				if(!entityRevisions.length) {
+					return reject({
+						message: 'Not found',
+						statusCode: 404
+					});
 				}
-			}
-		},
-		tags: {
-			name: 'tags',
-			idFieldName: 'name',
-			displayFieldName: 'name',
-			isFilterable: false,
-			fields: {
-				name: {
-					name: 'name',
-					type: 'string'
-				}
-			}
-		}
-	},
-	fieldsets: {
-		posts: {
-			detail: ['title', 'tags'],
-			grid: ['title'],
-			form: ['title', 'tags']
-		},
-		tags: {
-			detail: ['name'],
-			grid: ['name'],
-			form: ['name']
-		}
+				let promise = db.rel;
+				_.each(entityRevisions, (revision) => {
+					promise = promise.del(collectionName, revision);
+				});
+				promise.then(() => {
+					resolve();
+				}).catch((error) => {
+					reject(error);
+				});
+			}).catch((error) => {
+				reject(error);
+			});
+		});
 	}
 };
 
-const entities = {
-	posts: {
-		1: {
-			id: 1,
-			title: 'Post 1',
-			tags: [
-				{name: 'tag-1'}
-			]
-		},
-		2: {
-			title: 'Post 2',
-			tags: [
-				{name: 'tag-1'},
-				{name: 'tag-2'}
-			]
+function findOne(collectionName, entityId, success, failure) {
+	db.rel.find(collectionName, entityId).then((result) => {
+		const normalized = formatPouchToNormalized(result, entityDescriptors.schemas);
+		const entity = normalized[collectionName][entityId];
+		if(!entity) {
+			return failure({
+				message: 'Not found',
+				statusCode: 404
+			})
 		}
-	},
-	tags: {
-		'tag-1': {
-			name: 'tag-1'
-		},
-		'tag-2': {
-			name: 'tag-2'
-		}
-	}
-};
-
-const mappings = {
-	posts: new Schema('posts'),
-	tags: new Schema('tags')
-};
-mappings.posts.define({
-	tags: arrayOf(mappings.tags)
-});
+		const denormalized = denormalize(entity, normalized, mappings[collectionName]);
+		success(denormalized);
+	}).catch((error) => {
+		failure(error);
+	});
+}
 
 function isCredentialsValid(credentials) {
 	if (!credentials) return false;
-	if (credentials.username === 'username' && credentials.password === 'password') return true;
-	return false;
+	return !!(credentials.username === 'username' && credentials.password === 'password');
 }
 
 function logBoldMessage(message) {
@@ -262,4 +329,18 @@ function DelayedPromise(handler) {
 			handler(resolve, reject);
 		}, API_LATENCY);
 	});
+}
+
+function formatPouchToNormalized(dictionary, entitySchemas) {
+	return _.mapValues(dictionary, (value, collectionName) => {
+		const schema = entitySchemas[collectionName];
+		return _.keyBy(_.mapValues(value, (item) => {
+			const idFieldValue = item.id;
+			return _.set(_.omit(item, ['rev', 'id']), schema.idFieldName, idFieldValue);
+		}), schema.idFieldName);
+	});
+}
+
+function extractEntityFromDbResult(result, collectionName) {
+	return _.omit(_.first(_.get(result, collectionName)), ['rev']);
 }

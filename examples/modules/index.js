@@ -14,7 +14,7 @@ export default class ModulesExamples extends React.Component {
 				<h1>Modules</h1>
 				<Markdown content={require('!!raw!./README.md')}/>
 				<ExampleGroup
-					tabLinks={generateTabLinks('modules', ['routing', 'api', 'auth', 'entityDescriptors'])}>
+					tabLinks={generateTabLinks('modules', ['routing', 'api', 'auth', 'entityDescriptors', 'entityStorage'])}>
 					{
 						children ||
 						(

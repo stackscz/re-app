@@ -31,7 +31,7 @@ export function *entityDescriptorsFlow() {
 	if (_.isEmpty(schemas)) {
 		yield call(loadEntityDescriptorsTask);
 	}
-	yield put(generateMappings());
+	//yield put(generateMappings());
 }
 
 export function *loadEntityDescriptorsTask() {
