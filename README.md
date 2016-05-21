@@ -8,6 +8,62 @@ Make sure you are using at least `npm@3` and `node@4`.
 
     npm install --save-dev re-app
 
+## Creating project from scratch with <a href="https://github.com/stackscz/re-app-builder" target="_blank">re-app-builder <i class="fa fa-external-link"></i></a>
+
+Make sure you are using at least `npm@3` and `node@4`.
+
+`cd` into empty project directory and run these commands
+
+    npm init # initialize your project as npm package
+    npm i --save-dev re-app-builder # install re-app-builder
+    npm i --save-dev re-app # install re-app
+
+
+Create `public/index.html`
+
+    <!DOCTYPE html>
+    <html>
+        <head></head>
+        <body>
+            <div id="root"></div>
+            <script src="/index.js"></script>
+        </body>
+    </html>
+
+
+Create `src/index.js`, for example:
+
+    /* eslint-disable */
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+
+    function *generator() { // generator functions supported
+
+    }
+
+    class App extends React.Component {
+        render() {
+            return (
+                <strong>cool</strong> // jsx supported
+            );
+        }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('root'));
+
+
+Merge following into your `package.json` (add `re-app-builder` script)
+
+    {"scripts": {"ab": "node ./node_modules/re-app-builder"}}
+
+
+Run
+
+    npm run ab dev
+
+
+Look at [http://127.0.0.1:8080]()
+
 ## Development
 
 To develop `re-app` and/or examples, clone this repository.
