@@ -15,7 +15,7 @@ export default class ApiServiceExamples extends React.Component {
 				</CodeArea>
 
 				<CodeArea title="React.PropTypes definitions of ApiService return/resolve results">
-					{require('!!raw!re-app/src/modules/api/resultTypes')}
+					{require('!!raw!re-app/src/modules/api/types')}
 				</CodeArea>
 
 			</div>
