@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import createReducer from 're-app/utils/createReducer';
+import createReducer from 'utils/createReducer';
 import t from 'tcomb';
 import { validate } from 'tcomb-validation';
 import {

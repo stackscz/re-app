@@ -1,4 +1,4 @@
-import {createModule} from  're-app/utils';
+import createModule from  'utils/createModule';
 import reducer from './reducer';
 import * as sagas from './sagas';
 import mainSagas from './sagas';

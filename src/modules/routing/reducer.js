@@ -1,4 +1,4 @@
-import createReducer from 're-app/utils/createReducer';
+import createReducer from 'utils/createReducer';
 import t from 'tcomb';
 import { LOCATION_REACHED, SET_ROUTES } from './actions';
 

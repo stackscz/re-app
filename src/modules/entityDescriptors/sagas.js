@@ -3,7 +3,7 @@ import { put, select, call } from 'redux-saga/effects';
 import invariant from 'invariant';
 import {
 	apiServiceResultTypeInvariant
-} from 're-app/utils';
+} from 'utils';
 import {
 	initialize,
 	generateMappings,
@@ -19,11 +19,11 @@ import t from 'tcomb';
 
 import {
 	ApiErrorResult
-} from 're-app/utils/types';
+} from 'utils/types';
 
-import { getApiContext, getApiService } from 're-app/modules/api/selectors';
-import { getAuthContext } from 're-app/modules/auth/selectors';
-import { isInitialized } from 're-app/modules/entityDescriptors/selectors';
+import { getApiContext, getApiService } from 'modules/api/selectors';
+import { getAuthContext } from 'modules/auth/selectors';
+import { isInitialized } from 'modules/entityDescriptors/selectors';
 
 export function *entityDescriptorsFlow() {
 	yield put(initialize());

@@ -1,4 +1,4 @@
-import createReducer from 're-app/utils/createReducer';
+import createReducer from 'utils/createReducer';
 import { AuthContext } from './types';
 
 import {

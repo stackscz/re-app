@@ -1,4 +1,4 @@
-import { createReducer } from 're-app/utils';
+import createReducer from 'utils/createReducer';
 import { SET_HOST } from './actions';
 import {
 	ApiContext,

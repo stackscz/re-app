@@ -1,9 +1,10 @@
-import { createModule } from 're-app/utils';
+import createModule from 'utils/createModule';
 import reducer from './reducer';
-import actions from './actions';
-import sagas from './sagas';
+import * as actions from './actions';
+import mainSagas from './sagas';
+import * as sagas from './sagas';
 
-export default createModule('entityDescriptors', reducer, sagas);
+export default createModule('entityDescriptors', reducer, mainSagas);
 export {
 	reducer
 	,actions

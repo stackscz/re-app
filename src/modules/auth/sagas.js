@@ -1,13 +1,13 @@
 import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
 
-import { apiServiceResultTypeInvariant } from 're-app/utils';
+import { apiServiceResultTypeInvariant } from 'utils';
 import t from 'tcomb';
 import {
 	AuthContext,
 	AuthError
 } from './types';
 
-import { getApiContext, getApiService } from 're-app/modules/api/selectors';
+import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getUser, getAuthContext } from './selectors';
 import {
 	LOGIN,
