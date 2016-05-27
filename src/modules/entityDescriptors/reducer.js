@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { createReducer } from 're-app/utils';
+import createReducer from 're-app/utils/createReducer';
 import t from 'tcomb';
 import { validate } from 'tcomb-validation';
 import {
@@ -8,56 +8,39 @@ import {
 	EntityAssociationFieldSchema
 } from './types';
 import {
+	INITIALIZE,
 	RECEIVE_ENTITY_DESCRIPTORS,
 	GENERATE_MAPPINGS
 } from './actions';
-import { Schema, arrayOf } from 'normalizr';
 import update from 'immutability-helper';
 
 export default createReducer(
 	t.struct({
 		schemas: SchemasDictionary,
-		fieldsets: FieldsetsDictionary
+		fieldsets: FieldsetsDictionary,
+		initialized: t.Boolean
 	}),
 	{
 		schemas: {},
 		fieldsets: {},
-		mappings: {}
+		initialized: false
 	},
 	{
-		[GENERATE_MAPPINGS]: (state) => {
-			return update(state, {
-				mappings: {
-					'$apply': () => {
-						const mappings = {};
-						// create normalizr schemas
-						_.each(state.schemas, (schema, collectionName) => {
-							mappings[collectionName] = new Schema(collectionName, {idAttribute: schema.idFieldName});
-						});
-
-						// define normalizr schemas
-						_.each(state.schemas, (schema) => {
-							_.each(schema.fields, (field) => {
-								if (validate(field, EntityAssociationFieldSchema).isValid()) {
-									const assocMapping = mappings[field.collectionName];
-									mappings[schema.name].define({
-										[field.name]: field.isMultiple ? arrayOf(assocMapping) : assocMapping
-									});
-								}
-							});
-						});
-
-						return mappings;
-					}
-				}
-			});
-		},
-		[RECEIVE_ENTITY_DESCRIPTORS]: (state, action) => {
-			const {schemas, fieldsets} = action.payload;
-			return update(state, {
-				schemas: {'$merge': schemas},
-				fieldsets: {'$merge': fieldsets}
-			});
-		}
+		[INITIALIZE]: [
+			t.Nil,
+			(state) => {
+				return state;
+			}
+		],
+		[RECEIVE_ENTITY_DESCRIPTORS]: [
+			t.struct({
+				schemas: t.Object,
+				fieldsets: t.Object
+			}),
+			(state, action) => {
+				const {schemas, fieldsets} = action.payload;
+				return state.merge({schemas, fieldsets, initialized: true}, {deep: true});
+			}
+		]
 	}
 );

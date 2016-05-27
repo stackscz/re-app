@@ -23,15 +23,15 @@ import {
 
 import { getApiContext, getApiService } from 're-app/modules/api/selectors';
 import { getAuthContext } from 're-app/modules/auth/selectors';
-import { getEntitySchemas } from 're-app/modules/entityDescriptors/selectors';
+import { isInitialized } from 're-app/modules/entityDescriptors/selectors';
 
 export function *entityDescriptorsFlow() {
 	yield put(initialize());
-	const schemas = yield select(getEntitySchemas);
-	if (_.isEmpty(schemas)) {
+	const schemasInitialized = yield select(isInitialized);
+	if (!schemasInitialized) {
 		yield call(loadEntityDescriptorsTask);
 	}
-	yield put(generateMappings());
+	//yield put(generateMappings());
 }
 
 export function *loadEntityDescriptorsTask() {

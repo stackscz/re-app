@@ -1,5 +1,6 @@
 /* eslint-disable */
 import _ from 'lodash';
+import Immutable from 'seamless-immutable';
 import { typeInvariant } from 're-app/utils';
 import invariant from 'invariant';
 import t from 'tcomb';
@@ -18,10 +19,9 @@ export default function createReducer(stateType, initialState, handlers) {
 	invariant(_.isUndefined(handlers) || _.isObject(handlers), 'Second argument of `createReducer` should be object containing reducer functions keyed by redux action type which they handle.');
 
 	return function reducer(state = initialState, action) {
-		// ignore unknown actions
-
 		if (action.type === INIT) {
-			state = {...initialState, ...state};
+			state = Immutable.from({...initialState, ...state});
+
 			if (stateType && process.env.NODE_ENV !== 'production') {
 				typeInvariant(state, stateType, 'Invalid state after @@re-app/INIT');
 			}
@@ -29,10 +29,23 @@ export default function createReducer(stateType, initialState, handlers) {
 		}
 
 		if (handlers && handlers.hasOwnProperty(action.type)) {
-			state = handlers[action.type](state, action);
+
+			const handlerDefinition = handlers[action.type];
+			let handler = handlerDefinition;
+			let actionPayloadType = null;
+			if (_.isArray(handler)) {
+				handler = handlerDefinition[1] || (state => state);
+				actionPayloadType = handlerDefinition[0];
+			}
+			if (actionPayloadType && process.env.NODE_ENV !== 'production') {
+				actionPayloadType(action.payload);
+			}
+
+			state = handler(state, action);
 
 			if (stateType && process.env.NODE_ENV !== 'production') {
-				typeInvariant(state, stateType, 'Invalid state after reducer.');
+				invariant(_.isFunction(state.asMutable), 'Reducer returned mutable state for action %s.', action.type);
+				typeInvariant(state, stateType, 'Reducer returned invalid state for action %s.', action.type);
 			}
 		}
 		return state;

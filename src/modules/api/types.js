@@ -8,14 +8,17 @@ export const ApiService = t.struct({
 	getEntityDescriptors: t.Function,
 	getEntityIndex: t.Function,
 	getEntity: t.Function,
-	persistEntity: t.Function,
+	createEntity: t.Function,
+	updateEntity: t.Function,
 	deleteEntity: t.Function
 });
 
+export const Host = t.struct({
+	name: t.String,
+	ssl: t.Boolean
+});
+
 export const ApiContext = t.struct({
-	host: t.maybe(t.struct({
-		name: t.String,
-		ssl: t.Boolean
-	})),
+	host: t.maybe(Host),
 	service: ApiService
 });

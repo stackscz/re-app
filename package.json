@@ -54,6 +54,7 @@
     "redux-form": "^6.0.0-alpha.14",
     "redux-logger": "^2.6.1",
     "redux-saga": "^0.10.3",
+    "seamless-immutable": "^6.1.0",
     "tcomb": "^3.0.0",
     "tcomb-validation": "^3.0.0",
     "validate.js": "^0.9.0"

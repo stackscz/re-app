@@ -1,4 +1,4 @@
-import { createReducer } from 're-app/utils';
+import createReducer from 're-app/utils/createReducer';
 import { AuthContext } from './types';
 
 import {
@@ -21,26 +21,45 @@ export default createReducer(
 	},
 	{
 		[INITIALIZE]: (state, action) => {
-			return {...state, ...action.payload, initializing: true};
+			return state.merge({
+				...action.payload,
+				initializing: true
+			});
 		},
 		[INITIALIZE_FINISH]: (state, action) => {
-			return {...state, ...action.payload, initializing: false, initialized: true};
+			return state.merge({
+				...action.payload,
+				initializing: false,
+				initialized: true
+			});
 		},
 		[LOGIN]: (state) => {
 			if (state.user) {
 				return state;
 			}
-			return {...state, errors: [], authenticating: true};
+			return state.merge({
+				errors: [],
+				authenticating: true
+			});
 		},
 		[LOGIN_SUCCESS]: (state, action) => {
-			return {...state, ...action.payload, authenticating: false};
+			return state.merge({
+				...action.payload,
+				authenticating: false
+			});
 		},
 		[LOGIN_FAILURE]: (state, action) => {
 			const { errors } = action.payload;
-			return {...state, errors, authenticating: false};
+			return state.merge({
+				errors,
+				authenticating: false
+			});
 		},
 		[LOGOUT_SUCCESS]: (state, action) => {
-			return {...state, ...action.payload, user: null};
+			return state.merge({
+				...action.payload,
+				user: null
+			});
 		}
 	}
 );

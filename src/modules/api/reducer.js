@@ -1,6 +1,9 @@
 import { createReducer } from 're-app/utils';
 import { SET_HOST } from './actions';
-import { ApiContext } from './types';
+import {
+	ApiContext,
+	Host
+} from './types';
 
 export default createReducer(
 	ApiContext,
@@ -9,9 +12,14 @@ export default createReducer(
 		service: null
 	},
 	{
-		[SET_HOST]: (state, action) => {
-			const { name, ssl } = action.payload;
-			return {...state, host: {name, ssl}};
-		}
+		[SET_HOST]: [
+			Host,
+			(state, action) => {
+				const { name, ssl } = action.payload;
+				return state.merge({
+					host: {name, ssl}
+				}, {deep: true});
+			}
+		]
 	}
 );
