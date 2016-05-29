@@ -23,7 +23,7 @@ export default function createReducer(stateType, initialState, handlers) {
 			state = Immutable.from({...initialState, ...state});
 
 			if (stateType && process.env.NODE_ENV !== 'production') {
-				typeInvariant(state, stateType, 'Invalid state after @@re-app/INIT');
+				typeInvariant(state, stateType, 'Invalid state after ' + INIT);
 			}
 			return state;
 		}
