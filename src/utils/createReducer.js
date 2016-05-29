@@ -6,7 +6,7 @@ import invariant from 'invariant';
 import t from 'tcomb';
 import { INIT } from 're-app/utils/actions';
 
-export default function createReducer(stateType, initialState, handlers) {
+export default function createReducer(stateType, initialState, handlers, name) {
 	if (arguments.length < 3) {
 		handlers = initialState;
 		initialState = stateType;
@@ -45,7 +45,7 @@ export default function createReducer(stateType, initialState, handlers) {
 
 			if (stateType && process.env.NODE_ENV !== 'production') {
 				invariant(_.isFunction(state.asMutable), 'Reducer returned mutable state for action %s.', action.type);
-				typeInvariant(state, stateType, 'Reducer returned invalid state for action %s.', action.type);
+				typeInvariant(state, stateType, 'Reducer "' + (name || 'unknown') + '" returned invalid state for action ' + action.type);
 			}
 		}
 		return state;
