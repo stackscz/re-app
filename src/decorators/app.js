@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { container } from 're-app/decorators';
+import container from 'decorators/container';
 
 /**
  * Wraps component with react-redux Provider to create app component
