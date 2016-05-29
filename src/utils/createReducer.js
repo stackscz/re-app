@@ -38,7 +38,7 @@ export default function createReducer(stateType, initialState, handlers, name) {
 				actionPayloadType = handlerDefinition[0];
 			}
 			if (actionPayloadType && process.env.NODE_ENV !== 'production') {
-				actionPayloadType(action.payload);
+				typeInvariant(action.payload, actionPayloadType, 'Action ' + action.type + ' has invalid payload');
 			}
 
 			state = handler(state, action);
