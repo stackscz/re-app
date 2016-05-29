@@ -19,7 +19,7 @@ FormField.dispatch = function (x) {
 };
 
 export const ApiErrorResult = t.struct({
-	errors: t.Array,
+	message: t.String,
 	originalResponse: t.maybe(t.Object)
 });
 
