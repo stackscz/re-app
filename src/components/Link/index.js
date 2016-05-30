@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
-import {container, blissComponent} from 're-app/decorators';
-import { actions } from 're-app/modules/routing';
-import resolveLocation from 're-app/modules/routing/utils/resolveLocation';
+import { blissComponent } from 'decorators';
+import { navigate } from 'modules/routing/actions';
+import resolveLocation from 'modules/routing/utils/resolveLocation';
 import { Link as ReactLink } from 'react-router';
 
 @blissComponent
@@ -14,7 +14,7 @@ export default class Link extends React.Component {
 
 	handleLinkActivation(to, e) {
 		e.preventDefault();
-		this.context.store.dispatch(actions.navigate(to));
+		this.context.store.dispatch(navigate(to));
 	}
 
 	render() {

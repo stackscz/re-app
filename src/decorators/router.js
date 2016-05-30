@@ -1,8 +1,8 @@
 import React from 'react';
 import { Router as ReactRouter, createRoutes } from 'react-router';
-import createHistory from 're-app/utils/createHistory';
+import createHistory from 'utils/createHistory';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { actions as routingActions } from 're-app/modules/routing';
+import { setRoutes, locationReached } from 'modules/routing/actions';
 
 /**
  * Wraps component with react-router + redux-router
@@ -12,9 +12,11 @@ export default function router(store, configHistory) {
 	return function wrapWithRouter(AppComponent) {
 		const routes = AppComponent.getRoutes();
 		const internalRoutes = createRoutes(routes);
+		store.dispatch(setRoutes(internalRoutes));
 		const history = syncHistoryWithStore(configHistory || createHistory(), store, {selectLocationState: (state) => (state.reduxRouting)});
-
-		store.dispatch(routingActions.setRoutes(internalRoutes));
+		history.listen((location) => {
+			store.dispatch(locationReached(location));
+		});
 
 		class Container extends React.Component {
 
