@@ -5,7 +5,6 @@ import Modal from 'components/Modal';
 import container from 'decorators/container';
 import { closeModal } from 'modules/modals/actions';
 import ReactCSSTransitionGroup from  'react-addons-css-transition-group';
-import Portal from 'react-portal';
 
 // TODO fix renderInModal logic
 
