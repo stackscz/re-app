@@ -1,0 +1,35 @@
+@animationDuration: 100ms;
+@alternateScale: 1.1;
+.modal-enter {
+  opacity: 0;
+  transform: scale(@alternateScale);
+  //transform: translate(-50px, 0) transform(scale .8);
+  //transform: translate3d(-50px, 0, 0);
+}
+
+.modal-enter.modal-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  //transform: translate(0, 0) scale(1);
+  //transform: translate3d(0, 0, 0);
+  transition-property: transform, opacity;
+  transition-duration: @animationDuration;
+  transition-timing-function: cubic-bezier(0.175, 0.665, 0.320, 1), linear;
+}
+
+.modal-leave {
+  opacity: 1;
+  transform: scale(1);
+  //transform: translate(0, 0, 0) scale(1);
+  //transform: translate3d(0, 0, 0);
+  transition-property: transform, opacity;
+  transition-duration: @animationDuration;
+  transition-timing-function: cubic-bezier(0.175, 0.665, 0.320, 1), linear;
+}
+
+.modal-leave.modal-leave-active {
+  opacity: 0;
+  transform: scale(@alternateScale);
+  //transform: translate(50px, 0) scale(.8);
+  //transform: translate3d(50px, 0, 0);
+}
