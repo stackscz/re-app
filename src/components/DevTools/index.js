@@ -1,7 +1,6 @@
 import React from 'react';
 import { createDevTools } from 'redux-devtools';
 import LogMonitor from 'redux-devtools-log-monitor';
-import './index.less';
 
 const DevToolsComponent = createDevTools(
 	<LogMonitor className="DevTools"/>
