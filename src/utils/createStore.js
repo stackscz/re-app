@@ -43,8 +43,17 @@ export default function createStore(config = {}, initialState = {}) {
 		enhancers.push(require('re-app/components/DevTools').default.instrument());
 	}
 
+	// use batched updates?
+	let batchedSubscribeFunc = null;
+	if (process.env.UNIVERSAL_ENV !== 'server') {
+		const batchedSubscribe = require('redux-batched-subscribe').batchedSubscribe;
+		// avoid dependency on react-dom on server
+		const batchedUpdates = require('react-dom').unstable_batchedUpdates;
+		batchedSubscribeFunc = batchedSubscribe(batchedUpdates);
+	}
+
 	var rootReducer = combineReducers(reducers);
-	const store = compose(...enhancers)(reduxCreateStore)(rootReducer, initialState);
+	const store = compose(...enhancers)(reduxCreateStore)(rootReducer, initialState, batchedSubscribeFunc);
 	store.dispatch(init());
 	if (sagas.length) {
 		sagas.forEach((saga) => {
