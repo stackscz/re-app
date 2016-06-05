@@ -93,13 +93,7 @@ export default class ModalManager extends React.Component {
 				{_.map(modals, (modalElement, modalName) => {
 					return (
 						<Modal key={modalName} onClose={()=>{closeModal(modalName);}}>
-							<div className="Modal-row">
-								<div className="Modal-cell">
-									<div className="Modal-contentWraper">
-										{modalElement}
-									</div>
-								</div>
-							</div>
+							{modalElement}
 						</Modal>
 					);
 				})}

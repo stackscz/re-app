@@ -3,15 +3,39 @@ import ReactModal2 from 'react-modal2';
 
 export default class Modal extends React.Component {
 
+	constructor(props) {
+		super(props);
+		this.handleBackdropClick = this.handleBackdropClick.bind(this);
+	}
+
+	handleBackdropClick() {
+		const { onClose, closeOnBackdropClick } = this.props;
+		if(closeOnBackdropClick) {
+			onClose();
+		}
+	}
+
 	render() {
+		const {
+			onClose,
+			closeOnEsc,
+			closeOnBackdropClick,
+			children
+			} = this.props;
 		return (
 			<ReactModal2
-				onClose={this.props.onClose}
-				closeOnEsc={this.props.closeOnEsc}
-				closeOnBackdropClick={this.props.closeOnBackdropClick}
+				onClose={onClose}
+				closeOnEsc={closeOnEsc}
+				closeOnBackdropClick={closeOnBackdropClick}
 				backdropClassName='Modal'
 				modalClassName='Modal-content'>
-				{this.props.children}
+				<div className="Modal-row" onClick={this.handleBackdropClick}>
+					<div className="Modal-cell">
+						<div className="Modal-contentWraper" onClick={(e) => e.stopPropagation()}>
+							{children}
+						</div>
+					</div>
+				</div>
 			</ReactModal2>
 		);
 	}
