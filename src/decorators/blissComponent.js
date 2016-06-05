@@ -5,19 +5,22 @@ import _ from 'lodash';
 export default ComposedComponent => class extends React.Component {
 
 	getModuleName() {
-		const {moduleName} = this.props;
-		return moduleName || ComposedComponent.name;
+		const { moduleName } = this.props;
+		return moduleName || ComposedComponent.displayName || ComposedComponent.name;
 	}
 
 	getClassName(name, modifiers, className) {
-		if (className) {
-			return className;
-		}
 		var classes = {
 			[name]: true
 		};
+		if (className) {
+			classes[className] = true;
+		}
 		if (modifiers) {
-			_.each(modifiers.split(/\s/i), (mod) => {
+			if (!_.isArray(modifiers)) {
+				modifiers = modifiers.split(/\s/i);
+			}
+			_.each(modifiers, (mod) => {
 				if (mod) {
 					classes[name + '--' + mod] = true;
 				}
@@ -26,8 +29,8 @@ export default ComposedComponent => class extends React.Component {
 		return classNames(classes);
 	}
 
-	getElementClassName(elementName, modifiers) {
-		return this.getClassName(this.getModuleName() + '-' + elementName, modifiers);
+	getElementClassName(elementName, modifiers, className) {
+		return this.getClassName(this.getModuleName() + '-' + elementName, modifiers, className);
 	}
 
 	render() {
