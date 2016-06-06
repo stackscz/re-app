@@ -101,7 +101,7 @@ export function *persistEntityTask(action) {
 	} catch (e) {
 		rethrowError(e);
 		apiServiceResultTypeInvariant(e, ApiValidationErrorResult);
-		yield put(receivePersistEntityFailure(collectionName, entityId, e, e.entityValidationErrors));
+		yield put(receivePersistEntityFailure(collectionName, entityId, e, e.validationErrors));
 	}
 
 }
