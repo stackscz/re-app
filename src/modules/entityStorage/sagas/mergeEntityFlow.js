@@ -15,7 +15,7 @@ import { ApiValidationErrorResult } from 'utils/types';
 import { takeEvery } from 'redux-saga';
 import { call, select, put, fork } from 'redux-saga/effects';
 
-import { normalize } from 'normalizr';
+import normalize from 'utils/normalize';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';

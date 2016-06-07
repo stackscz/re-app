@@ -29,8 +29,7 @@ export const EntityCollectionResult = t.struct({
 });
 
 export const CollectionName = t.String;
-export const EntityId = t.union([t.String, t.Number]);
-EntityId.dispatch = (x) => _.isNumber(x) ? t.Number : t.String;
+export const EntityId = t.String;
 
 export const NormalizedEntityDictionary = t.dict(CollectionName, t.dict(EntityId, NormalizedEntity));
 

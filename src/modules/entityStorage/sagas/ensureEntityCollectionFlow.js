@@ -3,7 +3,8 @@ import { take, call, select, put } from 'redux-saga/effects';
 
 import moment from 'moment';
 import invariant from 'invariant';
-import { normalize, arrayOf } from 'normalizr';
+import { arrayOf } from 'normalizr';
+import normalize from 'utils/normalize';
 
 import { rethrowError, apiServiceResultTypeInvariant, typeInvariant } from 'utils';
 import { ApiService } from 're-app/modules/api/types';

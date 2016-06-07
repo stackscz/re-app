@@ -1,7 +1,7 @@
 import { call, select, put } from 'redux-saga/effects';
 import { takeEvery } from 'redux-saga';
 
-import { normalize } from 'normalizr';
+import normalize from 'utils/normalize';
 import moment from 'moment';
 import invariant from 'invariant';
 
