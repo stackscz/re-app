@@ -13,16 +13,21 @@ import entityDescriptorsModule from 're-app/lib/modules/entityDescriptors';
 
 import ApiService from 're-app/lib/mocks/ApiService'; // mock api service
 
-const store = createStore({
-	modules: [
-		apiModule, // with api module configured
-		entityDescriptorsModule
-	]
-}, {
-	api: {
-		service: ApiService
+const store = createStore(
+	// config
+	{
+		modules: [
+			apiModule, // with api module configured
+			entityDescriptorsModule
+		]
+	},
+	// initial state
+	{
+		api: {
+			service: ApiService
+		}
 	}
-});
+);
 
 @app(store)
 @container(

@@ -7,8 +7,8 @@ const codeFiles = [
 	{
 		name: './App.js',
 		content: require('!!raw!./App.js'),
-		description: 'App using api module'
-	}
+		description: 'App using api module',
+	},
 ];
 
 export default class ApiModuleExample extends React.Component {

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { PropTypes as T } from 'react';
 import './index.less';
 
 export default class ExampleGroup extends React.Component {
 
 	static propTypes = {
-		tabLinks: React.PropTypes.arrayOf(React.PropTypes.element).isRequired
+		children: T.node,
+		tabLinks: T.arrayOf(T.element).isRequired,
 	};
 
 	render() {
@@ -12,12 +13,12 @@ export default class ExampleGroup extends React.Component {
 		return (
 			<div className="ExampleGroup">
 				<ul className="ExampleGroup-nav nav nav-tabs">
-					{tabLinks.map((link, index) => {
-						return <li key={index}>{ link }</li>;
-					})}
+					{tabLinks.map((link, index) => (
+						<li key={index}>{link}</li>
+					))}
 				</ul>
 				<div className="ExampleGroup-body">
-					{ children }
+					{children}
 				</div>
 			</div>
 		);

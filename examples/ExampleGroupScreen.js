@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes as T } from 'react';
 import generateTabLinks from './generateTabLinks';
 
 const examplesGroupsContext = require.context(
@@ -14,16 +14,21 @@ const examplesContext = require.context(
 
 export default class ExampleGroupScreen extends React.Component {
 
+	static propTypes = {
+		children: T.node,
+		routeParams: T.any,
+	}
+
 	render() {
-		const { children, routeParams: {group} } = this.props; // Hanky
-		const ExampleLayoutComponent = examplesGroupsContext('./' + group + '/index.js').default;
+		const { children, routeParams: { group } } = this.props;
+		const ExampleLayoutComponent = examplesGroupsContext(`./${group}/index.js`).default;
 		const groupExampleNames = examplesContext.keys().map((exampleName) => {
-			const res = exampleName.match(new RegExp('\/' + group + '\/([^\/]*)\/index\.js'));
+			const res = exampleName.match(new RegExp(`\/${group}\/([^\/]*)\/index\.js`));
 			return res ? res[1] : null;
 		}).filter((item) => item);
 		return (
 			<ExampleLayoutComponent groupLinks={generateTabLinks(group, groupExampleNames)}>
-				{ children }
+				{children}
 			</ExampleLayoutComponent>
 		);
 	}

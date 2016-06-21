@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { PropTypes as T } from 'react';
 
 export default class LabeledArea extends React.Component {
 
 	static propTypes = {
-		title: React.PropTypes.string.isRequired
+		title: T.string.isRequired,
+		children: T.node,
 	};
 
 	render() {
@@ -11,10 +12,10 @@ export default class LabeledArea extends React.Component {
 		return (
 			<div className="LabeledArea panel panel-default">
 				<div className="panel-heading">
-					{ title }
+					{title}
 				</div>
 				<div className="panel-body">
-					{ children }
+					{children}
 				</div>
 			</div>
 		);

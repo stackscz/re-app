@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes as T } from 'react';
 
 import { app } from 're-app/lib/decorators';
 import { createStore } from 're-app/lib/utils';
@@ -8,28 +8,34 @@ import DevTools from 're-app/lib/components/DevTools';
 const store = createStore({
 	reducers: {
 		someDataSlice: (state = {}, action) => {
-			if (action.type == '@@INIT') {
+			if (action.type === '@@INIT') {
 				return {
-					myData: [1, 2, 3]
+					myData: [1, 2, 3],
 				};
-			} else if (action.type == 'ADD_ITEM') {
+			} else if (action.type === 'ADD_ITEM') {
 				return {
-					myData: [...state.myData, action.payload]
+					myData: [...state.myData, action.payload],
 				};
 			}
 			return state;
-		}
-	}
+		},
+	},
 });
 
 @app(store)
 export default class App extends React.Component {
+
 	static contextTypes = {
-		store: React.PropTypes.object // instruct react to look for "store" context property
+		store: T.object, // instruct react to look for "store" context property
 	};
 
+	constructor(props) {
+		super(props);
+		this.addItem = this.addItem.bind(this);
+	}
+
 	addItem() {
-		this.context.store.dispatch({type: 'ADD_ITEM', payload: Math.random() + ''});
+		this.context.store.dispatch({ type: 'ADD_ITEM', payload: `${Math.random()}` });
 		this.forceUpdate(); // Force re-render App component
 	}
 
@@ -38,15 +44,13 @@ export default class App extends React.Component {
 		return (
 			<div>
 				<div className="well">
-					<button className="btn btn-success" onClick={this.addItem.bind(this)}>
+					<button className="btn btn-success" onClick={this.addItem}>
 						Add "random" item!
 					</button>
 					<div>
-						{state.someDataSlice.myData.map((item) => {
-							return (
-								<span className="badge badge-default" key={item}>{item}</span>
-							);
-						})}
+						{state.someDataSlice.myData.map((item) => (
+							<span className="badge badge-default" key={item}>{item}</span>
+						))}
 					</div>
 				</div>
 				<div className="row">

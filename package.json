@@ -13,6 +13,7 @@
     "ab": "node ./node_modules/re-app-builder",
     "build": "node ./node_modules/babel-cli/bin/babel src/ --out-dir lib --copy-files",
     "build:watch": "node ./node_modules/babel-cli/bin/babel src/ --out-dir lib --watch --copy-files",
+    "lint": "eslint src/",
     "test": "NODE_ENV=test babel-node ./node_modules/tape/bin/tape ./tests/**/*.js | node ./node_modules/tap-spec/bin/cmd.js",
     "test:file": "NODE_ENV=test babel-node ./node_modules/tape/bin/tape",
     "prepublish": "npm run build"
@@ -22,9 +23,14 @@
   "devDependencies": {
     "babel-plugin-webpack-alias": "^1.1.1",
     "bootstrap": "^3.3.6",
+    "eslint": "^2.13.1",
+    "eslint-config-stacks": "0.0.3",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-jsx-a11y": "^1.5.3",
+    "eslint-plugin-react": "^5.2.2",
     "marked": "^0.3.5",
     "prismjs": "^1.4.1",
-    "re-app-builder": "^0.2.6",
+    "re-app-builder": "^0.5.0",
     "redux-immutable-state-invariant": "^1.2.3",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1",

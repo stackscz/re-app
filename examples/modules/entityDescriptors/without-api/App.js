@@ -11,35 +11,39 @@ import apiModule from 're-app/lib/modules/api';
 import authModule from 're-app/lib/modules/auth';
 import entityDescriptorsModule from 're-app/lib/modules/entityDescriptors';
 
-const store = createStore({
-	modules: [ // api module is not configured
-		entityDescriptorsModule
-	]
-}, {
-	entityDescriptors: { // entityDescriptors instead provided as initial store state
-		schemas: {
-			tags: {
-				name: 'tags',
-				idFieldName: 'name',
-				displayFieldName: 'name',
-				isFilterable: false,
-				fields: {
-					name: {
-						name: 'name',
-						type: 'string'
+const store = createStore(
+	{
+		modules: [ // api module is not configured
+			entityDescriptorsModule
+		]
+	},
+	{
+		entityDescriptors: { // entityDescriptors instead provided as initial store state
+			initialized: true,
+			schemas: {
+				tags: {
+					name: 'tags',
+					idFieldName: 'name',
+					displayFieldName: 'name',
+					isFilterable: false,
+					fields: {
+						name: {
+							name: 'name',
+							type: 'string'
+						}
 					}
 				}
-			}
-		},
-		fieldsets: {
-			tags: {
-				detail: ['name'],
-				grid: ['name'],
-				form: ['name']
+			},
+			fieldsets: {
+				tags: {
+					detail: ['name'],
+					grid: ['name'],
+					form: ['name']
+				}
 			}
 		}
 	}
-});
+);
 
 @app(store)
 @container(

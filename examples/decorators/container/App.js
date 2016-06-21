@@ -2,24 +2,24 @@ import React from 'react';
 
 import Dashboard from './Dashboard';
 
-import {app} from 're-app/lib/decorators';
-import {createStore} from 're-app/lib/utils';
+import { app } from 're-app/lib/decorators';
+import { createStore } from 're-app/lib/utils';
 
 const store = createStore({
 	reducers: {
 		someDataSlice: (state = {}, action) => {
-			if (action.type == '@@INIT') {
+			if (action.type === '@@INIT') {
 				return {
-					myData: [1, 2, 3]
+					myData: [1, 2, 3],
 				};
-			} else if (action.type == 'ADD_ITEM') {
+			} else if (action.type === 'ADD_ITEM') {
 				return {
-					myData: [...state.myData, 'new item']
+					myData: [...state.myData, 'new item'],
 				};
 			}
 			return state;
-		}
-	}
+		},
+	},
 });
 
 @app(store)

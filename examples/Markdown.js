@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { PropTypes as T } from 'react';
 import marked from 'marked';
 
 export default class Markdown extends React.Component {
 
 	static propTypes = {
-		content: React.PropTypes.string.isRequired
+		content: T.string.isRequired,
 	};
 
 	createMarkupFromContent() {
 		const { content } = this.props;
-		return {__html: marked(content)};
+		return { __html: marked(content) };
 	}
 
 

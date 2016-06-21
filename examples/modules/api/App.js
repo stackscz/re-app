@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { PropTypes as T } from 'react';
 
-import {app, container} from 're-app/lib/decorators';
-import {createStore} from 're-app/lib/utils';
+import { app, container } from 're-app/lib/decorators';
+import { createStore } from 're-app/lib/utils';
 import ApiService from 're-app/lib/mocks/ApiService';
 import apiModule from 're-app/lib/modules/api';
-import {setHost} from 're-app/lib/modules/api/actions';
+import { setHost } from 're-app/lib/modules/api/actions';
 
 import Select from 're-app/lib/components/Select';
 import Checkbox from 're-app/lib/components/Checkbox';
@@ -13,64 +13,82 @@ import LabeledArea from 're-app-examples/LabeledArea';
 import LabeledJsonInspector from 're-app-examples/LabeledJsonInspector';
 import DevTools from 're-app/lib/components/DevTools';
 
-const store = createStore({
-	modules: [
-		apiModule
-	]
-}, {
-	api: {
-		host: {
-			name: 'example.com',
-			ssl: true
+const store = createStore(
+	{
+		modules: [
+			apiModule,
+		],
+	},
+	{
+		api: {
+			host: {
+				name: 'example.com',
+				ssl: true,
+			},
+			service: ApiService,
 		},
-		service: ApiService
 	}
-});
+);
 
 @app(store)
 @container(
 	(state) => ({ // mapStateToProps
 		state,
-		api: state.api
+		api: state.api,
 	}),
 	(dispatch) => ({ // mapDispatchToProps
-		setHost: (ssl, name) => {
+		handleSetHost: (ssl, name) => {
 			dispatch(setHost(ssl, name));
-		}
+		},
 	})
 )
 export default class App extends React.Component {
 
+	static propTypes = {
+		handleSetHost: T.func,
+		state: T.any,
+		api: T.any,
+	}
+
+	constructor(props) {
+		super(props);
+		this.setSsl = this.setSsl.bind(this);
+		this.setHostname = this.setHostname.bind(this);
+	}
+
 	setHostname(name) {
-		const { setHost, api } = this.props;
-		setHost(api.host.ssl, name);
+		const { handleSetHost, api } = this.props;
+		handleSetHost(api.host.ssl, name);
 	}
 
 	setSsl(ssl) {
-		const { setHost, api } = this.props;
-		setHost(ssl, api.host.name);
+		const { handleSetHost, api } = this.props;
+		handleSetHost(ssl, api.host.name);
 	}
 
 	render() {
-		const { state, api: {host} } = this.props;
+		const { state, api: { host } } = this.props;
 		return (
 			<div className="App">
 				<div className="well">
 					<label>
-						<Select options={['example.com', 'example2.com']}
-								onChange={this.setHostname.bind(this)}
-								value={host.name}
+						<Select
+							options={['example.com', 'example2.com']}
+							onChange={this.setHostname}
+							value={host.name}
 						/>
 					</label>
 					<label>
-						<Checkbox onChange={this.setSsl.bind(this)}
-								  checked={host.ssl}/>
+						<Checkbox
+							onChange={this.setSsl}
+							checked={host.ssl}
+						/>
 						SSL
 					</label>
 				</div>
 				<div className="row">
 					<div className="col-xs-6">
-						<LabeledJsonInspector title="Complete app state" data={state}/>
+						<LabeledJsonInspector title="Complete app state" data={state} />
 					</div>
 					<div className="col-xs-6">
 						<LabeledArea title="Redux action log">

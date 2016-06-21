@@ -1,0 +1,11 @@
+{
+  "extends": "stacks",
+  "rules": {
+    "import/no-unresolved": [
+      0
+    ],
+    "global-require": [
+      0
+    ]
+  }
+}

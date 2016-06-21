@@ -8,13 +8,13 @@ export default class ApiServiceExamples extends React.Component {
 	render() {
 		return (
 			<div className="container-fluid">
-				<Markdown content={require('!!raw!./README.md')}/>
+				<Markdown content={require('!!raw!./README.md')} />
 
 				<CodeArea title="Mock ApiService">
 					{require('!!raw!re-app/src/mocks/ApiService')}
 				</CodeArea>
 
-				<CodeArea title="React.PropTypes definitions of ApiService return/resolve results">
+				<CodeArea title="tcomb definition of ApiService">
 					{require('!!raw!re-app/src/modules/api/types')}
 				</CodeArea>
 

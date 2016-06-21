@@ -1,13 +1,16 @@
 import React from 'react';
-import {blissComponent} from 're-app/lib/decorators';
+import { blissComponent } from 're-app/lib/decorators';
 import './BlessedComponent.less';
 
 @blissComponent
 export default class BlessedComponent extends React.Component {
 	render() {
-		const {getBlissModuleClassName: bm, getBlissElementClassName: be} = this.props;
+		const {
+			getBlissModuleClassName: bm, // eslint-disable-line
+			getBlissElementClassName: be, // eslint-disable-line
+			} = this.props;
 		// ... or use shortcuts directly
-		//const {bm, be} = this.props;
+		// const {bm, be} = this.props;
 		return (
 			<div className={bm()}>
 				<div className={be('header')}>
