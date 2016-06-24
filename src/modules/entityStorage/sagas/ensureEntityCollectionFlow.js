@@ -1,5 +1,6 @@
+import _ from 'lodash';
 import { takeEvery } from 'redux-saga';
-import { take, call, select, put } from 'redux-saga/effects';
+import { call, select, put } from 'redux-saga/effects';
 
 import moment from 'moment';
 import invariant from 'invariant';
@@ -19,13 +20,8 @@ import {
 	ENSURE_ENTITY_COLLECTION,
 	attemptFetchEntityCollection,
 	receiveFetchEntityCollectionFailure,
-	receiveEntities
+	receiveEntities,
 } from '../actions';
-
-
-export default function *entityCollectionFlow() {
-	yield takeEvery(ENSURE_ENTITY_COLLECTION, ensureEntityCollectionTask);
-}
 
 export function *ensureEntityCollectionTask(action) {
 	const { collectionName, filter } = action.payload;
@@ -38,12 +34,22 @@ export function *ensureEntityCollectionTask(action) {
 
 	yield put(attemptFetchEntityCollection(collectionName, filter));
 	try {
-		const enhancedFilter = _.merge({offset: 0, limit: -1}, filter);
-		const result = yield call(apiService.getEntityIndex, collectionName, enhancedFilter, apiContext, authContext);
+		const enhancedFilter = _.merge({ offset: 0, limit: -1 }, filter);
+		const result = yield call(
+			apiService.getEntityIndex,
+			collectionName,
+			enhancedFilter,
+			apiContext,
+			authContext
+		);
 		apiServiceResultTypeInvariant(result, EntityCollectionResult);
 
 		const entityMapping = yield select(getEntityMappingGetter(collectionName));
-		invariant(entityMapping, 'entityStorage module depends on entityDescriptors module');
+		invariant(
+			entityMapping,
+			'Could not construct entity mapping for "%s" collection',
+			collectionName
+		);
 
 		const normalized = normalize(result.data, arrayOf(entityMapping));
 		yield put(receiveEntities(normalized.entities, moment().format()));
@@ -54,3 +60,6 @@ export function *ensureEntityCollectionTask(action) {
 	}
 }
 
+export default function *entityCollectionFlow() {
+	yield takeEvery(ENSURE_ENTITY_COLLECTION, ensureEntityCollectionTask);
+}

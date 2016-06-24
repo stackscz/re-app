@@ -9,13 +9,8 @@ import { getAuthContext } from 're-app/modules/auth/selectors';
 import {
 	DELETE_ENTITY,
 	receiveDeleteEntitySuccess,
-	receiveDeleteEntityFailure
+	receiveDeleteEntityFailure,
 } from '../actions';
-
-
-export default function *deleteEntityFlow() {
-	yield takeEvery(DELETE_ENTITY, deleteEntityTask);
-}
 
 export function *deleteEntityTask(action) {
 	const { collectionName, entityId } = action.payload;
@@ -31,4 +26,8 @@ export function *deleteEntityTask(action) {
 		apiServiceResultTypeInvariant(e, ApiErrorResult);
 		yield put(receiveDeleteEntityFailure(collectionName, entityId));
 	}
+}
+
+export default function *deleteEntityFlow() {
+	yield takeEvery(DELETE_ENTITY, deleteEntityTask);
 }

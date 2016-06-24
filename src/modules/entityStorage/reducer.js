@@ -1,16 +1,16 @@
 import _ from 'lodash';
 import invariant from 'invariant';
-import { normalize } from 'normalizr';
 
 import { createReducer } from 're-app/utils';
 
 import {
-	getEntityMappingGetter
-} from 'modules/entityDescriptors/selectors'
-import {
 	getEntityGetter,
-	getEntityStatusGetter
+	getEntityStatusGetter,
 } from './selectors';
+
+import {
+	RECEIVE_ENTITY_DESCRIPTORS,
+} from 'modules/entityDescriptors/actions';
 
 import {
 	RECEIVE_ENTITY,
@@ -23,23 +23,22 @@ import {
 	RECEIVE_PERSIST_ENTITY_FAILURE,
 	DELETE_ENTITY,
 	RECEIVE_DELETE_ENTITY_SUCCESS,
-	RECEIVE_DELETE_ENTITY_FAILURE
+	RECEIVE_DELETE_ENTITY_FAILURE,
 } from './actions';
 
 import {
-	ApiErrorResult
+	ApiErrorResult,
 } from 'utils/types';
 import {
-	EntitySchema
+	EntitySchema,
 } from 'modules/entityDescriptors/types';
 import {
 	CollectionName,
 	EntityId,
 	EntityStatus,
-	NormalizedEntity,
 	NormalizedEntityDictionary,
 	ReceiveEntityActionPayload,
-	ReceiveEntitiesActionPayload
+	ReceiveEntitiesActionPayload,
 } from './types';
 
 import t from 'tcomb';
@@ -58,35 +57,42 @@ export default createReducer(
 		statuses: {},
 		errors: {},
 		collectionsStatuses: {},
-		collectionsErrors: {}
+		collectionsErrors: {},
 	},
 	{
+		[RECEIVE_ENTITY_DESCRIPTORS]: (state, action) => {
+			const { entities } = action.payload;
+			return state;
+		},
 		[RECEIVE_ENTITY]: [
 			ReceiveEntityActionPayload,
 			(state, action) => {
-				const {collectionName, entityId, normalizedEntities, validAtTime} = action.payload;
+				const {
+					normalizedEntities,
+					validAtTime,
+					} = action.payload;
 
 				let newState = state;
 				newState = newState.merge({
 					collections: normalizedEntities,
-					statuses: _.mapValues(normalizedEntities, (entityList, statusCollectionName) => {
-						return _.mapValues(entityList, (x, statusEntityId) => {
+					statuses: _.mapValues(
+						normalizedEntities,
+						(entityList, statusCollectionName) => _.mapValues(entityList, (x, statusEntityId) => {
 							let currentStatus = _.get(state, ['statuses', statusCollectionName, statusEntityId]);
 							if (!currentStatus) {
 								currentStatus = {
-									transient: false
+									transient: false,
 								};
 							}
 							return _.merge({}, currentStatus, {
-								validAtTime
+								validAtTime,
 							});
-						});
-					})
-				}, {deep: true});
+						})
+					),
+				}, { deep: true });
 
 				return newState;
-
-			}
+			},
 		],
 		[RECEIVE_ENTITIES]: [
 			ReceiveEntitiesActionPayload,
@@ -96,76 +102,80 @@ export default createReducer(
 				let newState = state;
 				newState = newState.merge({
 					collections: normalizedEntities,
-					statuses: _.mapValues(normalizedEntities, (entityList, statusCollectionName) => {
-						return _.mapValues(entityList, (x, statusEntityId) => {
+					statuses: _.mapValues(
+						normalizedEntities,
+						(entityList, statusCollectionName) => _.mapValues(entityList, (x, statusEntityId) => {
 							let currentStatus = _.get(state, ['statuses', statusCollectionName, statusEntityId]);
 							if (!currentStatus) {
 								currentStatus = {
-									transient: false
+									transient: false,
 								};
 							}
 							return _.merge({}, currentStatus, {
-								validAtTime
+								validAtTime,
 							});
-						});
-					})
-				}, {deep: true});
+						})
+					),
+				}, { deep: true });
 
 				return newState;
-			}
+			},
 		],
 		[RECEIVE_FETCH_ENTITY_FAILURE]: [
 			t.struct({
 				collectionName: t.String,
 				entityId: EntityId,
-				error: ApiErrorResult
+				error: ApiErrorResult,
 			}),
 			(state, action) => {
 				const { collectionName, entityId, error } = action.payload;
 				return state.merge({
 					errors: {
 						[collectionName]: {
-							[entityId]: error
-						}
-					}
-				}, {deep: true});
-			}
+							[entityId]: error,
+						},
+					},
+				}, { deep: true });
+			},
 		],
 		[RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE]: [
 			t.struct({
 				collectionName: t.String,
-				error: ApiErrorResult
+				error: ApiErrorResult,
 			}),
 			(state, action) => {
 				const { collectionName, error } = action.payload;
 				return state.merge({
 					collectionsErrors: {
-						[collectionName]: error
-					}
-				}, {deep: true});
-			}
+						[collectionName]: error,
+					},
+				}, { deep: true });
+			},
 		],
 		[MERGE_ENTITY]: [
 			t.struct({
 				collectionName: t.String,
 				data: t.Object,
-				noInteraction: t.Boolean
-			})
+				noInteraction: t.Boolean,
+			}),
 		],
 		[PERSIST_ENTITY]: [
 			t.struct({
 				entitySchema: EntitySchema,
 				entityId: EntityId,
 				entity: t.Object,
-				noInteraction: t.Boolean
+				noInteraction: t.Boolean,
 			}),
 			(state, action) => {
 				const { entitySchema, entity } = action.payload;
 				const collectionName = entitySchema.name;
 				const entityId = entity[entitySchema.idFieldName];
 				invariant(entityId, 'entityId must be set for "%s" action.', MERGE_ENTITY);
-				const existingEntity = getEntityGetter(collectionName, entityId)({entityStorage: state});
-				const entityStatus = getEntityStatusGetter(collectionName, entityId)({entityStorage: state});
+				const existingEntity = getEntityGetter(collectionName, entityId)({ entityStorage: state });
+				const entityStatus = getEntityStatusGetter(
+					collectionName,
+					entityId
+				)({ entityStorage: state });
 				const isTransient = !existingEntity || !entityStatus || entityStatus.transient;
 
 				return state.merge({
@@ -173,90 +183,103 @@ export default createReducer(
 						[collectionName]: {
 							[entityId]: {
 								...entity,
-								[entitySchema.idFieldName]: entityId
-							}
-						}
+								[entitySchema.idFieldName]: entityId,
+							},
+						},
 					},
 					statuses: {
 						[collectionName]: {
 							[entityId]: {
 								...entityStatus,
-								transient: isTransient
-							}
-						}
+								transient: isTransient,
+							},
+						},
 					},
 					errors: {
 						[collectionName]: {
-							[entityId]: {}
-						}
+							[entityId]: {},
+						},
 					},
-				}, {deep: true});
-			}
+				}, { deep: true });
+			},
 		],
 		[RECEIVE_PERSIST_ENTITY_SUCCESS]: [
 			t.struct({
 				collectionName: t.String,
 				normalizedEntities: NormalizedEntityDictionary,
-				transientEntityId: t.maybe(EntityId)
+				transientEntityId: t.maybe(EntityId),
 			}),
 			(state, action) => {
-				const { collectionName, entityId, normalizedEntities, transientEntityId, validAtTime }  = action.payload;
+				const {
+					collectionName,
+					normalizedEntities,
+					transientEntityId,
+					validAtTime,
+					} = action.payload;
 
-				const statuses = _.mapValues(normalizedEntities, (entityList) => {
-					return _.mapValues(entityList, () => {
-						return {
-							transient: false
-						};
-					});
-				});
+				const statuses = _.mapValues(
+					normalizedEntities,
+					(entityList) => _.mapValues(entityList, () => ({
+						validAtTime,
+						transient: false,
+					}))
+				);
 
 				let newState = state;
 				newState = newState.merge({
+					statuses,
 					collections: normalizedEntities,
-					statuses
-				}, {deep: true});
+				}, { deep: true });
 				if (transientEntityId) {
-					newState = newState.setIn(['collections', collectionName], newState.collections[collectionName].without(transientEntityId))
-					newState = newState.setIn(['statuses', collectionName], newState.statuses[collectionName].without(transientEntityId))
+					newState = newState.setIn(
+						['collections', collectionName],
+						newState.collections[collectionName].without(transientEntityId)
+					);
+					newState = newState.setIn(
+						['statuses', collectionName],
+						newState.statuses[collectionName].without(transientEntityId)
+					);
 				}
-				return newState
-			}
+				return newState;
+			},
 		],
 		[RECEIVE_PERSIST_ENTITY_FAILURE]: [
 			t.struct({
 				collectionName: t.String,
 				entityId: EntityId,
 				error: t.Object,
-				validationErrors: t.Object
+				validationErrors: t.Object,
 			}),
 			(state, action) => {
 				const { collectionName, entityId, error, validationErrors } = action.payload;
 				return state.merge({
 					statuses: {
 						[collectionName]: {
-							entityId: {
-								error
-							}
-						}
-					}
-				}, {deep: true});
-
-				return newState;
-			}
+							[entityId]: {
+								error,
+								validationErrors,
+							},
+						},
+					},
+				}, { deep: true });
+			},
 		],
 		[DELETE_ENTITY]: (state, action) => {
 			const { collectionName, entityId } = action.payload;
-			invariant(_.get(state, ['collections', collectionName, entityId]), 'unknown entity to delete');
+			invariant(
+				_.get(state, ['collections', collectionName, entityId]),
+				'unknown entity to delete'
+			);
 			return state.merge({
 				statuses: {
 					[collectionName]: {
 						[entityId]: {
 							transient: true,
-							deleting: true
-						}
-					}
-				}
-			}, {deep: true});
+							deleting: true,
+						},
+					},
+				},
+			}, { deep: true });
 		},
 		[RECEIVE_DELETE_ENTITY_SUCCESS]: (state, action) => {
 			const { collectionName, entityId } = action.payload;
@@ -271,13 +294,14 @@ export default createReducer(
 				statuses: {
 					[collectionName]: {
 						[entityId]: {
+							error,
 							transient: false,
-							deleting: false
-						}
-					}
-				}
-			}, {deep: true});
-		}
+							deleting: false,
+						},
+					},
+				},
+			}, { deep: true });
+		},
 	},
 	'entityStorage'
 );

@@ -7,5 +7,5 @@ export default createModule('entityStorage', reducer, sagas);
 export {
 	reducer,
 	actions,
-	sagas
+	sagas,
 };

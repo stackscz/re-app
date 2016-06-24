@@ -14,17 +14,12 @@ import { ApiErrorResult } from 'utils/types';
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
 import { getEntityMappingGetter } from 'modules/entityDescriptors/selectors';
-import { getEntityGetter } from '../selectors';
 import {
 	ENSURE_ENTITY,
 	attemptFetchEntity,
 	receiveFetchEntityFailure,
-	receiveEntities
+	receiveEntities,
 } from '../actions';
-
-export default function *entityFlow() {
-	yield takeEvery(ENSURE_ENTITY, ensureEntityTask);
-}
 
 export function *ensureEntityTask(action) {
 	const { collectionName, entityId } = action.payload;
@@ -41,12 +36,22 @@ export function *ensureEntityTask(action) {
 
 	yield put(attemptFetchEntity(collectionName, entityId));
 	try {
-		const result = yield call(apiService.getEntity, collectionName, entityId, apiContext, authContext);
+		const result = yield call(
+			apiService.getEntity,
+			collectionName,
+			entityId,
+			apiContext,
+			authContext
+		);
 		apiServiceResultTypeInvariant(result, EntityResult);
 
 		// EntityMapping is needed to normalize entity
 		const entityMapping = yield select(getEntityMappingGetter(collectionName));
-		invariant(entityMapping, 'entityStorage module depends on entityDescriptors module');
+		invariant(
+			entityMapping,
+			'Could not construct entity mapping for "%s" collection',
+			collectionName
+		);
 
 		const normalized = normalize(result.data, entityMapping);
 		yield put(receiveEntities(normalized.entities, moment().format()));
@@ -55,5 +60,8 @@ export function *ensureEntityTask(action) {
 		apiServiceResultTypeInvariant(error, ApiErrorResult);
 		yield put(receiveFetchEntityFailure(collectionName, entityId, error));
 	}
+}
 
+export default function *entityFlow() {
+	yield takeEvery(ENSURE_ENTITY, ensureEntityTask);
 }

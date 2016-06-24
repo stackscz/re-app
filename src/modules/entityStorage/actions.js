@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * Load entity into storage from remote when needed.
  *
@@ -6,7 +7,7 @@
  */
 export const ENSURE_ENTITY = 're-app/entityStorage/ENSURE_ENTITY';
 export function ensureEntity(collectionName, entityId) {
-	return {type: ENSURE_ENTITY, payload: {collectionName, entityId}};
+	return { type: ENSURE_ENTITY, payload: { collectionName, entityId } };
 }
 
 /**
@@ -14,7 +15,7 @@ export function ensureEntity(collectionName, entityId) {
  */
 export const ATTEMPT_FETCH_ENTITY = 're-app/entityStorage/ATTEMPT_FETCH_ENTITY';
 export function attemptFetchEntity(collectionName, entityId) {
-	return {type: ATTEMPT_FETCH_ENTITY, payload: {collectionName, entityId}};
+	return { type: ATTEMPT_FETCH_ENTITY, payload: { collectionName, entityId } };
 }
 
 /**
@@ -23,7 +24,7 @@ export function attemptFetchEntity(collectionName, entityId) {
  */
 export const RECEIVE_FETCH_ENTITY_FAILURE = 're-app/entityStorage/RECEIVE_FETCH_ENTITY_FAILURE';
 export function receiveFetchEntityFailure(collectionName, entityId, error) {
-	return {type: RECEIVE_FETCH_ENTITY_FAILURE, payload: {collectionName, entityId, error}};
+	return { type: RECEIVE_FETCH_ENTITY_FAILURE, payload: { collectionName, entityId, error } };
 }
 
 /**
@@ -34,7 +35,7 @@ export function receiveFetchEntityFailure(collectionName, entityId, error) {
  */
 export const ENSURE_ENTITY_COLLECTION = 're-app/entityStorage/ENSURE_ENTITY_COLLECTION';
 export function ensureEntityCollection(collectionName, filter) {
-	return {type: ENSURE_ENTITY_COLLECTION, payload: {collectionName, filter}};
+	return { type: ENSURE_ENTITY_COLLECTION, payload: { collectionName, filter } };
 }
 
 /**
@@ -42,7 +43,7 @@ export function ensureEntityCollection(collectionName, filter) {
  */
 export const ATTEMPT_FETCH_ENTITY_COLLECTION = 're-app/entityStorage/ATTEMPT_FETCH_ENTITY_COLLECTION';
 export function attemptFetchEntityCollection(collectionName, filter) {
-	return {type: ATTEMPT_FETCH_ENTITY_COLLECTION, payload: {collectionName, filter}};
+	return { type: ATTEMPT_FETCH_ENTITY_COLLECTION, payload: { collectionName, filter } };
 }
 
 /**
@@ -51,12 +52,12 @@ export function attemptFetchEntityCollection(collectionName, filter) {
  */
 export const RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE = 're-app/entityStorage/RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE';
 export function receiveFetchEntityCollectionFailure(collectionName, error) {
-	return {type: RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE, payload: {collectionName, error}};
+	return { type: RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE, payload: { collectionName, error } };
 }
 
 export const RECEIVE_ENTITY = 're-app/entityStorage/RECEIVE_ENTITY';
 export function receiveEntity(collectionName, entityId, normalizedEntities, validAtTime) {
-	return {type: RECEIVE_ENTITY, payload: {collectionName, entityId, normalizedEntities, validAtTime}};
+	return { type: RECEIVE_ENTITY, payload: { collectionName, entityId, normalizedEntities, validAtTime } };
 }
 
 /**
@@ -90,7 +91,7 @@ export function receiveEntity(collectionName, entityId, normalizedEntities, vali
  */
 export const RECEIVE_ENTITIES = 're-app/entityStorage/RECEIVE_ENTITIES';
 export function receiveEntities(normalizedEntities, validAtTime) {
-	return {type: RECEIVE_ENTITIES, payload: {normalizedEntities, validAtTime}};
+	return { type: RECEIVE_ENTITIES, payload: { normalizedEntities, validAtTime } };
 }
 
 /**
@@ -101,7 +102,7 @@ export function receiveEntities(normalizedEntities, validAtTime) {
  */
 export const MERGE_ENTITY = 're-app/entityStorage/MERGE_ENTITY';
 export function mergeEntity(collectionName, data, noInteraction = false) {
-	return {type: MERGE_ENTITY, payload: {collectionName, data, noInteraction}};
+	return { type: MERGE_ENTITY, payload: { collectionName, data, noInteraction } };
 }
 
 /**
@@ -109,7 +110,7 @@ export function mergeEntity(collectionName, data, noInteraction = false) {
  */
 export const PERSIST_ENTITY = 're-app/entityStorage/PERSIST_ENTITY';
 export function persistEntity(entitySchema, entityId, entity, noInteraction = false) {
-	return {type: PERSIST_ENTITY, payload: {entitySchema, entityId, entity, noInteraction}};
+	return { type: PERSIST_ENTITY, payload: { entitySchema, entityId, entity, noInteraction } };
 }
 
 /**
@@ -122,7 +123,7 @@ export const RECEIVE_PERSIST_ENTITY_SUCCESS = 're-app/entityStorage/RECEIVE_PERS
 export function receivePersistEntitySuccess(collectionName, entityId, normalizedEntities, transientEntityId, validAtTime) {
 	return {
 		type: RECEIVE_PERSIST_ENTITY_SUCCESS,
-		payload: {collectionName, entityId, normalizedEntities, transientEntityId, validAtTime}
+		payload: { collectionName, entityId, normalizedEntities, transientEntityId, validAtTime },
 	};
 }
 
@@ -133,7 +134,10 @@ export function receivePersistEntitySuccess(collectionName, entityId, normalized
  */
 export const RECEIVE_PERSIST_ENTITY_FAILURE = 're-app/entityStorage/RECEIVE_PERSIST_ENTITY_FAILURE';
 export function receivePersistEntityFailure(collectionName, entityId, error, validationErrors) {
-	return {type: RECEIVE_PERSIST_ENTITY_FAILURE, payload: {collectionName, entityId, error, validationErrors}};
+	return {
+		type: RECEIVE_PERSIST_ENTITY_FAILURE,
+		payload: { collectionName, entityId, error, validationErrors },
+	};
 }
 
 /**
@@ -143,7 +147,7 @@ export function receivePersistEntityFailure(collectionName, entityId, error, val
  */
 export const DELETE_ENTITY = 're-app/entityStorage/DELETE_ENTITY';
 export function deleteEntity(collectionName, entityId) {
-	return {type: DELETE_ENTITY, payload: {collectionName, entityId}};
+	return { type: DELETE_ENTITY, payload: { collectionName, entityId } };
 }
 
 /**
@@ -153,7 +157,7 @@ export function deleteEntity(collectionName, entityId) {
  */
 export const RECEIVE_DELETE_ENTITY_SUCCESS = 're-app/entityStorage/RECEIVE_DELETE_ENTITY_SUCCESS';
 export function receiveDeleteEntitySuccess(collectionName, entityId) {
-	return {type: RECEIVE_DELETE_ENTITY_SUCCESS, payload: {collectionName, entityId}};
+	return { type: RECEIVE_DELETE_ENTITY_SUCCESS, payload: { collectionName, entityId } };
 }
 
 /**
@@ -163,5 +167,5 @@ export function receiveDeleteEntitySuccess(collectionName, entityId) {
  */
 export const RECEIVE_DELETE_ENTITY_FAILURE = 're-app/entityStorage/RECEIVE_DELETE_ENTITY_FAILURE';
 export function receiveDeleteEntityFailure(collectionName, entityId) {
-	return {type: RECEIVE_DELETE_ENTITY_FAILURE, payload: {collectionName, entityId}};
+	return { type: RECEIVE_DELETE_ENTITY_FAILURE, payload: { collectionName, entityId } };
 }
