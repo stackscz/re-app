@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { PropTypes as T } from 'react';
 import classNames from 'classnames';
 import _ from 'lodash';
 
 export default ComposedComponent => class extends React.Component {
+
+	static propTypes = {
+		children: T.node,
+		moduleName: T.string,
+		modifiers: T.string,
+	}
+
+	constructor(props) {
+		super(props);
+		this.getElementClassName = this.getElementClassName.bind(this);
+	}
 
 	getModuleName() {
 		const { moduleName } = this.props;
@@ -10,19 +21,20 @@ export default ComposedComponent => class extends React.Component {
 	}
 
 	getClassName(name, modifiers, className) {
-		var classes = {
-			[name]: true
+		const classes = {
+			[name]: true,
 		};
 		if (className) {
 			classes[className] = true;
 		}
+		let resultingModifiers;
 		if (modifiers) {
 			if (!_.isArray(modifiers)) {
-				modifiers = modifiers.split(/\s/i);
+				resultingModifiers = modifiers.split(/\s/i);
 			}
-			_.each(modifiers, (mod) => {
+			_.each(resultingModifiers, (mod) => {
 				if (mod) {
-					classes[name + '--' + mod] = true;
+					classes[`${name}--${mod}`] = true;
 				}
 			});
 		}
@@ -30,21 +42,25 @@ export default ComposedComponent => class extends React.Component {
 	}
 
 	getElementClassName(elementName, modifiers, className) {
-		return this.getClassName(this.getModuleName() + '-' + elementName, modifiers, className);
+		return this.getClassName(`${this.getModuleName()}-${elementName}`, modifiers, className);
 	}
 
 	render() {
-		const {children, modifiers, ...otherProps} = this.props;
-		const getBlissModuleClassName = () => {
-			return this.getClassName(this.getModuleName(), modifiers);
-		};
-		const getBlissElementClassName = this.getElementClassName.bind(this);
+		const {
+			children,
+			modifiers,
+			...otherProps,
+			} = this.props;
+		const getBlissModuleClassName = () => this.getClassName(this.getModuleName(), modifiers);
+		const getBlissElementClassName = this.getElementClassName;
 		return (
-			<ComposedComponent {...otherProps}
+			<ComposedComponent
+				{...otherProps}
 				getBlissModuleClassName={getBlissModuleClassName}
 				bm={getBlissModuleClassName}
 				getBlissElementClassName={getBlissElementClassName}
-				be={getBlissElementClassName}>
+				be={getBlissElementClassName}
+			>
 				{children}
 			</ComposedComponent>
 		);

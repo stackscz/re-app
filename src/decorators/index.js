@@ -5,9 +5,9 @@ import router from './router';
 import form from './form';
 
 export {
-	blissComponent
-	,app
-	,container
-	,router
-	,form
+	blissComponent,
+	app,
+	container,
+	router,
+	form,
 };
