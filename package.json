@@ -67,7 +67,7 @@
     "redux-devtools": "^3.2.0",
     "redux-devtools-dock-monitor": "^1.1.0",
     "redux-devtools-log-monitor": "^1.0.5",
-    "redux-form": "^6.0.0-alpha.14",
+    "redux-form": "^6.0.0-alpha.15",
     "redux-saga": "^0.10.3",
     "seamless-immutable": "^6.1.0",
     "tcomb": "^3.0.0",
