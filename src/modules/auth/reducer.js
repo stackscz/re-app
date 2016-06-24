@@ -1,3 +1,5 @@
+/* eslint-disable arrow-body-style */
+
 import createReducer from 'utils/createReducer';
 import { AuthContext } from './types';
 
@@ -7,7 +9,7 @@ import {
 	LOGIN,
 	LOGIN_SUCCESS,
 	LOGIN_FAILURE,
-	LOGOUT_SUCCESS
+	LOGOUT_SUCCESS,
 } from './actions';
 
 export default createReducer(
@@ -17,20 +19,20 @@ export default createReducer(
 		errors: [],
 		initializing: false,
 		initialized: false,
-		authenticating: false
+		authenticating: false,
 	},
 	{
 		[INITIALIZE]: (state, action) => {
 			return state.merge({
 				...action.payload,
-				initializing: true
+				initializing: true,
 			});
 		},
 		[INITIALIZE_FINISH]: (state, action) => {
 			return state.merge({
 				...action.payload,
 				initializing: false,
-				initialized: true
+				initialized: true,
 			});
 		},
 		[LOGIN]: (state) => {
@@ -39,27 +41,27 @@ export default createReducer(
 			}
 			return state.merge({
 				errors: [],
-				authenticating: true
+				authenticating: true,
 			});
 		},
 		[LOGIN_SUCCESS]: (state, action) => {
 			return state.merge({
 				...action.payload,
-				authenticating: false
+				authenticating: false,
 			});
 		},
 		[LOGIN_FAILURE]: (state, action) => {
 			const { errors } = action.payload;
 			return state.merge({
 				errors,
-				authenticating: false
+				authenticating: false,
 			});
 		},
 		[LOGOUT_SUCCESS]: (state, action) => {
 			return state.merge({
 				...action.payload,
-				user: null
+				user: null,
 			});
-		}
+		},
 	}
 );

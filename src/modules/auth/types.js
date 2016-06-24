@@ -5,15 +5,19 @@ export const AuthContext = t.struct({
 	errors: t.list(t.Object),
 	initializing: t.Boolean,
 	initialized: t.Boolean,
-	authenticating: t.Boolean
+	authenticating: t.Boolean,
 }, 'AuthContext');
 
-export const AuthenticatedAuthContext = t.refinement(AuthContext, (context) => {
-	return t.Object.is(context.user);
-}, 'AuthenticatedAuthContext');
+export const AuthenticatedAuthContext = t.refinement(
+	AuthContext,
+	(context) => t.Object.is(context.user),
+	'AuthenticatedAuthContext'
+);
 
-export const UnauthenticatedAuthContext = t.refinement(AuthContext, (context) => {
-	return t.Nil.is(context.user);
-}, 'UnauthenticatedAuthContext');
+export const UnauthenticatedAuthContext = t.refinement(
+	AuthContext,
+	(context) => t.Nil.is(context.user),
+	'UnauthenticatedAuthContext'
+);
 
 export const AuthError = t.Object;

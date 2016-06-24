@@ -4,7 +4,7 @@ import { apiServiceResultTypeInvariant } from 'utils';
 import t from 'tcomb';
 import {
 	AuthContext,
-	AuthError
+	AuthError,
 } from './types';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
@@ -18,8 +18,33 @@ import {
 	loginSuccess,
 	loginFailure,
 	logoutSuccess,
-	logoutFailure
+	logoutFailure,
 } from './actions';
+
+export function* authorize(credentials, apiContext, authContext) {
+	const apiService = yield select(getApiService);
+	try {
+		const result = yield call(apiService.login, credentials, apiContext, authContext);
+		apiServiceResultTypeInvariant(result, t.struct({ user: t.Object }));
+		yield put(loginSuccess(result));
+	} catch (e) {
+		apiServiceResultTypeInvariant(e, AuthError);
+		yield put(loginFailure(e));
+	}
+}
+
+export function* logout() {
+	const apiService = yield select(getApiService);
+	const authContext = yield select(getAuthContext);
+	const apiContext = yield select(getApiContext);
+	try {
+		yield call(apiService.logout, apiContext, authContext);
+		yield put(logoutSuccess());
+	} catch (e) {
+		apiServiceResultTypeInvariant(e, AuthError);
+		yield put(logoutFailure());
+	}
+}
 
 export function* authFlow() {
 	const ApiService = yield select(getApiService);
@@ -27,7 +52,11 @@ export function* authFlow() {
 	const initializedAuthContext = yield call(ApiService.getInitialAuthContext, initialAuthContext);
 	yield put(initialize(initializedAuthContext));
 	const apiContext = yield select(getApiContext);
-	const serviceAuthContext = yield call(ApiService.initializeAuth, apiContext, initializedAuthContext);
+	const serviceAuthContext = yield call(
+		ApiService.initializeAuth,
+		apiContext,
+		initializedAuthContext
+	);
 	apiServiceResultTypeInvariant(serviceAuthContext, AuthContext);
 	yield put(initializeFinish(serviceAuthContext));
 	while (true) { // eslint-disable-line no-constant-condition
@@ -50,31 +79,6 @@ export function* authFlow() {
 			}
 			yield call(logout);
 		}
-	}
-}
-
-export function* authorize(credentials, apiContext, authContext) {
-	const apiService = yield select(getApiService);
-	try {
-		const result = yield call(apiService.login, credentials, apiContext, authContext);
-		apiServiceResultTypeInvariant(result, t.struct({user: t.Object}));
-		yield put(loginSuccess(result));
-	} catch (e) {
-		apiServiceResultTypeInvariant(e, AuthError);
-		yield put(loginFailure(e.errors));
-	}
-}
-
-export function* logout() {
-	const apiService = yield select(getApiService);
-	const authContext = yield select(getAuthContext);
-	const apiContext = yield select(getApiContext);
-	try {
-		yield call(apiService.logout, apiContext, authContext);
-		yield put(logoutSuccess());
-	} catch (e) {
-		apiServiceResultTypeInvariant(e, AuthError);
-		yield put(logoutFailure());
 	}
 }
 
