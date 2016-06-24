@@ -1,8 +1,8 @@
-export default function(moduleName, reducer = {}, sagas = []) {
+export default function (moduleName, reducer = {}, sagas = []) {
 	return {
 		reducers: {
-			[moduleName]: reducer
+			[moduleName]: reducer,
 		},
-		sagas
+		sagas,
 	};
 }

@@ -1,28 +1,34 @@
 import t from 'tcomb';
+import _ from 'lodash';
 
 export const FormField = t.union([
 	t.String,
 	t.struct({
 		name: t.String,
-		validations: t.maybe(t.Any)
-	})
+		validations: t.maybe(t.Any),
+	}),
 ]);
-FormField.dispatch = function (x) {
-	for (var type in this.meta.types) {
+FormField.dispatch = function dispatch(x) {
+	let resultType;
+	_.each(this.meta.types, (type) => {
 		try {
-			this.meta.types[type](x);
-			return this.meta.types[type];
+			type(x);
+			resultType = type;
+			return false;
 		} catch (e) {
 			// incompatible constructor, continue
+			return true;
 		}
-	}
+	});
+	return resultType;
 };
 
 export const ApiErrorResult = t.struct({
+	code: t.Number,
 	message: t.String,
-	originalResponse: t.maybe(t.Object)
+	data: t.maybe(t.Object),
 });
 
 export const ApiValidationErrorResult = ApiErrorResult.extend({
-	validationErrors: t.Object
+	validationErrors: t.Object,
 });

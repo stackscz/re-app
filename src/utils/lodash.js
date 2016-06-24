@@ -6,11 +6,11 @@ function isNormalInteger(str) {
 
 _.mixin({
 	revealNumber: (val) => {
-		if(isNormalInteger(val)) {
+		if (isNormalInteger(val)) {
 			return parseInt(val, 10);
 		}
 		return val;
-	}
+	},
 });
 
 export default _;

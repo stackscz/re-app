@@ -13,5 +13,5 @@ export {
 	createModule,
 	trimSchema,
 	typeInvariant,
-	apiServiceResultTypeInvariant
+	apiServiceResultTypeInvariant,
 };

@@ -11,6 +11,6 @@ export default function typeInvariant(value, type, message) {
 		validationResult.isValid(),
 		'Type validation failed:\n\n%s\n\n%s',
 		tcombMessage,
-		message ? 'INFO: ' + message : ''
+		message ? `INFO: ${message}` : ''
 	);
 }
