@@ -2,14 +2,14 @@ import createReducer from 'utils/createReducer';
 import { SET_HOST } from './actions';
 import {
 	ApiContext,
-	Host
+	Host,
 } from './types';
 
 export default createReducer(
 	ApiContext,
 	{
 		host: null,
-		service: null
+		service: null,
 	},
 	{
 		[SET_HOST]: [
@@ -17,9 +17,9 @@ export default createReducer(
 			(state, action) => {
 				const { name, ssl } = action.payload;
 				return state.merge({
-					host: {name, ssl}
-				}, {deep: true});
-			}
-		]
+					host: { name, ssl },
+				}, { deep: true });
+			},
+		],
 	}
 );

@@ -10,15 +10,15 @@ export const ApiService = t.struct({
 	getEntity: t.Function,
 	createEntity: t.Function,
 	updateEntity: t.Function,
-	deleteEntity: t.Function
+	deleteEntity: t.Function,
 });
 
 export const Host = t.struct({
 	name: t.String,
-	ssl: t.Boolean
+	ssl: t.Boolean,
 });
 
 export const ApiContext = t.struct({
 	host: t.maybe(Host),
-	service: ApiService
+	service: ApiService,
 });
