@@ -4,50 +4,47 @@ import _ from 'lodash';
 import Modal from 'components/Modal';
 import container from 'decorators/container';
 import { closeModal } from 'modules/modals/actions';
-import ReactCSSTransitionGroup from  'react-addons-css-transition-group';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 // TODO fix renderInModal logic
 
 @container(
-	(state) => {
-		return {
-			modals: state.modals
-		};
-	},
-	(dispatch) => {
-		return {
-			closeModal: (modalId) => {
-				dispatch(closeModal(modalId));
-			}
-		}
-	}
+	(state) => ({
+		modals: state.modals,
+	}),
+	(dispatch) => ({
+		handleCloseModal: (modalId) => {
+			dispatch(closeModal(modalId));
+		},
+	})
 )
 export default class ModalManager extends React.Component {
 
 	static propTypes = {
 		modals: T.object,
+		handleCloseModal: T.func,
 		renderInBody: T.bool,
 		transitionEnterTimeout: T.number,
-		transitionLeaveTimeout: T.number
+		transitionLeaveTimeout: T.number,
 	};
 
 	static defaultProps = {
 		renderInBody: false,
 		transitionEnterTimeout: 1,
-		transitionLeaveTimeout: 1
+		transitionLeaveTimeout: 1,
 	};
 
 	constructor(props) {
 		super(props);
-		this.destroyLayer.bind(this);
-		this.renderLayer.bind(this);
-		this.renderModals.bind(this);
+		this.destroyLayer = this.destroyLayer.bind(this);
+		this.renderLayer = this.renderLayer.bind(this);
+		this.renderModals = this.renderModals.bind(this);
 	}
 
 	componentDidMount() {
 		const { renderInBody } = this.props;
 		if (renderInBody) {
-			this.modalManagerElement = document.createElement("div");
+			this.modalManagerElement = document.createElement('div');
 			this.modalManagerElement.className = 'ModalManager';
 			document.body.appendChild(this.modalManagerElement);
 			this.renderLayer();
@@ -70,7 +67,7 @@ export default class ModalManager extends React.Component {
 
 	destroyLayer() {
 		ReactDOM.unmountComponentAtNode(this.modalManagerElement);
-		document.body.removeChild(this.modalManagerElement)
+		document.body.removeChild(this.modalManagerElement);
 	}
 
 	renderLayer() {
@@ -80,23 +77,23 @@ export default class ModalManager extends React.Component {
 	renderModals() {
 		const {
 			modals,
-			closeModal,
+			handleCloseModal,
 			transitionEnterTimeout,
-			transitionLeaveTimeout
+			transitionLeaveTimeout,
 			} = this.props;
 		return (
-			<ReactCSSTransitionGroup transitionName="modal"
-									 component="div"
-									 className="ModalAnimationGroup"
-									 transitionEnterTimeout={transitionEnterTimeout}
-									 transitionLeaveTimeout={transitionLeaveTimeout}>
-				{_.map(modals, (modalElement, modalName) => {
-					return (
-						<Modal key={modalName} onClose={()=>{closeModal(modalName);}}>
-							{modalElement}
-						</Modal>
-					);
-				})}
+			<ReactCSSTransitionGroup
+				transitionName="modal"
+				component="div"
+				className="ModalAnimationGroup"
+				transitionEnterTimeout={transitionEnterTimeout}
+				transitionLeaveTimeout={transitionLeaveTimeout}
+			>
+				{_.map(modals, (modalElement, modalName) => (
+					<Modal key={modalName} onClose={() => { handleCloseModal(modalName); }}>
+						{modalElement}
+					</Modal>
+				))}
 			</ReactCSSTransitionGroup>
 		);
 	}
@@ -105,17 +102,15 @@ export default class ModalManager extends React.Component {
 		const { renderInBody, modals } = this.props;
 		if (_.isEmpty(modals)) {
 			return null;
-		} else {
-			if (renderInBody) {
-				return <div {...this.props}/>;
-			} else {
-				return (
-					<div className="ModalManager">
-						{this.renderModals()}
-					</div>
-				);
-			}
 		}
+		if (renderInBody) {
+			return <div {...this.props} />;
+		}
+		return (
+			<div className="ModalManager">
+				{this.renderModals()}
+			</div>
+		);
 	}
 
 }
