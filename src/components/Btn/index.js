@@ -1,35 +1,68 @@
+import React, { PropTypes as T } from 'react';
 import _ from 'lodash';
-import React from 'react';
 import { Link } from 'react-router';
-import {blissComponent} from 're-app/decorators';
+import { blissComponent } from 're-app/decorators';
 
 @blissComponent
 export default class Btn extends React.Component {
 
+	static propTypes = {
+		children: T.node,
+		icon: T.string,
+		to: T.any,
+		href: T.any,
+		bm: T.func,
+		be: T.func,
+	};
+
 	render() {
 		const {
-			getBlissModuleClassName: bm,
-			getBlissElementClassName: be,
+			bm,
+			be,
 			children,
 			href,
-			...other
+			to,
+			icon,
+			...other,
 			} = this.props;
 		let BtnTag = 'button';
 		if (href) {
 			BtnTag = 'a';
 		}
 
-		var newChildren = children;
+		let newChildren = children;
 		if (!_.isArray(newChildren)) {
 			newChildren = [children];
 		}
 		if (this.props.icon) {
-			newChildren.unshift(<i key="icon-before" className={be('icon', '', 'fa fa-fw fa-' + this.props.icon)}/>);
+			newChildren.unshift(
+				<i
+					key="icon-before"
+					className={be('icon', '', `fa fa-fw fa-${icon}`)}
+				/>
+			);
 		}
 
-		return this.props.to ?
-			(<Link className={bm()} {...other} onlyActiveOnIndex={true} activeClassName="isActive">{newChildren}</Link>)
-			:
-			(<BtnTag name={bm()} {...other} href={href}>{newChildren}</BtnTag>);
+		if (to) {
+			return (
+				<Link
+					className={bm()} {...other}
+					onlyActiveOnIndex
+					activeClassName="isActive"
+				>
+					{newChildren}
+				</Link>
+			);
+		}
+
+		return (
+			<BtnTag
+				name={bm()}
+				{...other}
+				href={href}
+			>
+				{newChildren}
+			</BtnTag>
+		);
 	}
 }

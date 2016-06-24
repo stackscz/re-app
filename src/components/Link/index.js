@@ -1,5 +1,4 @@
-import React from 'react';
-import _ from 'lodash';
+import React, { PropTypes as T } from 'react';
 import { blissComponent } from 'decorators';
 import { navigate } from 'modules/routing/actions';
 import resolveLocation from 'modules/routing/utils/resolveLocation';
@@ -7,10 +6,22 @@ import { Link as ReactLink } from 'react-router';
 
 @blissComponent
 export default class Link extends React.Component {
-	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
-		routes: React.PropTypes.array
+
+	static propTypes = {
+		bm: T.func,
+		to: T.any,
+		children: T.node,
 	};
+
+	static contextTypes = {
+		store: T.object,
+		routes: T.array,
+	};
+
+	constructor(props) {
+		super(props);
+		this.handleLinkActivation = this.handleLinkActivation.bind(this);
+	}
 
 	handleLinkActivation(to, e) {
 		e.preventDefault();
@@ -21,20 +32,20 @@ export default class Link extends React.Component {
 		const {
 			to,
 			children,
-			getBlissModuleClassName: bm,
-			getBlissElementClassName: be,
-			...otherProps
+			bm,
+			...otherProps,
 			} = this.props;
-		const {routes} = this.context;
+		const { routes } = this.context;
 		let location = resolveLocation(to, routes);
 		return (
 			<ReactLink
 				className={bm()}
 				to={location}
-				onClick={this.handleLinkActivation.bind(this, location)}
+				onClick={(e) => { this.handleLinkActivation(location, e); }}
 				activeClassName="isActive"
-				onlyActiveOnIndex={true}
-				{...otherProps}>
+				onlyActiveOnIndex
+				{...otherProps}
+			>
 				{children}
 			</ReactLink>
 		);

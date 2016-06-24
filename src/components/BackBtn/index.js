@@ -1,14 +1,19 @@
-import React from 'react';
-import {Btn} from 're-app/components';
+import React, { PropTypes as T } from 'react';
+import Btn from 'components/Btn';
 
 export default class BackBtn extends React.Component {
 
+	static propTypes = {
+		children: T.node,
+	};
+
 	static contextTypes = {
-		router: React.PropTypes.object
+		router: T.object,
 	};
 
 	constructor(props) {
 		super(props);
+		this.goBack = this.goBack.bind(this);
 	}
 
 	goBack() {
@@ -16,9 +21,9 @@ export default class BackBtn extends React.Component {
 	}
 
 	render() {
-		const {children, ...others} = this.props;
+		const { children, ...others } = this.props;
 		return (
-			<Btn {...others} onClick={this.goBack.bind(this)}>{children}</Btn>
+			<Btn {...others} onClick={this.goBack}>{children}</Btn>
 		);
 	}
 

@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { PropTypes as T } from 'react';
 import Component from 'react-pure-render/component';
-import { PropTypes } from 'react';
-import _ from 're-app/utils/lodash';
 
 export default class Checkbox extends Component {
 
-	_parseValue(event) {
+	static propTypes = {
+		onChange: T.func.isRequired,
+		onBlur: T.func,
+		checked: T.bool,
+		children: T.node,
+	};
+
+	static defaultProps = {
+		checked: false,
+	};
+
+	parseValue(event) {
 		return event.target.checked;
 	}
 
 	render() {
-		const { onChange, onBlur, value, ...otherProps } = this.props;
+		const {
+			onChange,
+			onBlur,
+			...otherProps,
+			} = this.props;
 		return (
-			<input type="checkbox"
-				   onBlur={event => onBlur && onBlur(this._parseValue.apply(this, [event]))}
-				   onChange={event => onChange(this._parseValue.apply(this, [event]))}
-				{...otherProps}/>
+			<input
+				type="checkbox"
+				onBlur={event => onBlur && onBlur(this.parseValue.apply(this, [event]))}
+				onChange={event => onChange(this.parseValue.apply(this, [event]))}
+				{...otherProps}
+			/>
 		);
 	}
 }

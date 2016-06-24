@@ -3,7 +3,7 @@ import { createDevTools } from 'redux-devtools';
 import LogMonitor from 'redux-devtools-log-monitor';
 
 const DevToolsComponent = createDevTools(
-	<LogMonitor className="DevTools"/>
+	<LogMonitor className="DevTools" />
 );
 
 export default class DevTools extends React.Component {
@@ -14,6 +14,6 @@ export default class DevTools extends React.Component {
 			<div className="DevTools">
 				<DevToolsComponent />
 			</div>
-		)
+		);
 	}
 }
