@@ -1,11 +1,14 @@
 import _ from 'lodash';
+import invariant from 'invariant';
 
 export const isInitialized = (state) => state.entityDescriptors.initialized;
-export const getEntitySchemas = (state) => state.entityDescriptors ? state.entityDescriptors.schemas : undefined;
-export const getEntityFieldsets = (state) => state.entityDescriptors ? state.entityDescriptors.fieldsets : undefined;
-export const getEntitySchemaGetter = (collectionName) => (state) => {
-	return _.get(state, ['entityDescriptors', 'schemas', collectionName]);
-};
+export const getEntitySchemas = (state) =>
+	(state.entityDescriptors ? state.entityDescriptors.schemas : undefined);
+export const getEntityFieldsets = (state) =>
+	(state.entityDescriptors ? state.entityDescriptors.fieldsets : undefined);
+export const getEntitySchemaGetter = (collectionName) =>
+	(state) =>
+		_.get(state, ['entityDescriptors', 'schemas', collectionName]);
 
 import { EntityAssociationFieldSchema } from './types';
 import { validate } from 'tcomb-validation';
@@ -17,23 +20,24 @@ export const getEntityMappingGetter = (collectionName) => (state) => {
 		return undefined;
 	}
 
-	const mapping = new Schema(collectionName, {idAttribute: schema.idFieldName});
+	const mapping = new Schema(collectionName, { idAttribute: schema.idFieldName });
 	try {
 		_.each(schema.fields, (field) => {
 			if (validate(field, EntityAssociationFieldSchema).isValid()) {
-				//const assocMapping = mappings[field.collectionName];
+				// const assocMapping = mappings[field.collectionName];
 				const fieldSchema = schemas[field.collectionName];
-				if (!fieldSchema) {
-					throw "unknownSchema";
-				}
-				const assocMapping = new Schema(field.collectionName, {idAttribute: fieldSchema.idFieldName});
+				invariant(fieldSchema, 'Unknown schema');
+				const assocMapping = new Schema(
+					field.collectionName,
+					{ idAttribute: fieldSchema.idFieldName }
+				);
 				mapping.define({
-					[field.name]: field.isMultiple ? arrayOf(assocMapping) : assocMapping
+					[field.name]: field.isMultiple ? arrayOf(assocMapping) : assocMapping,
 				});
 			}
 		});
 	} catch (e) {
-		if (e === "unknownSchema") {
+		if (e === 'unknownSchema') {
 			return undefined;
 		}
 		throw e;

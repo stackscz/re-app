@@ -3,18 +3,19 @@ import t from 'tcomb';
 
 export const EntityValueFieldSchema = t.struct({
 	name: t.String,
-	type: t.String
+	type: t.String,
 });
 
 export const EntityAssociationFieldSchema = t.struct({
 	name: t.String,
 	type: t.refinement(t.String, (x) => x === 'association', 'Association type value'),
-	collectionName: t.String
+	isMultiple: t.Boolean,
+	collectionName: t.String,
 });
 
 export const EntityFieldSchema = t.union([EntityValueFieldSchema, EntityAssociationFieldSchema]);
 EntityFieldSchema.dispatch = (x) => {
-	if(x.type === 'association') {
+	if (x.type === 'association') {
 		return EntityAssociationFieldSchema;
 	}
 	return EntityValueFieldSchema;
@@ -30,11 +31,9 @@ export const EntitySchema = t.struct({
 			t.String,
 			EntityFieldSchema
 		),
-		(dictionary) => {
-			return _.every(dictionary, (item, key) => item.name === key);
-		},
+		(dictionary) => _.every(dictionary, (item, key) => item.name === key),
 		'Schema fields dictionary'
-	)
+	),
 });
 
 export const SchemasDictionary = t.refinement(
@@ -42,9 +41,7 @@ export const SchemasDictionary = t.refinement(
 		t.String,
 		EntitySchema
 	),
-	(dictionary) => {
-		return _.every(dictionary, (item, key) => item.name === key);
-	},
+	(dictionary) => _.every(dictionary, (item, key) => item.name === key),
 	'Schemas dictionary'
 );
 
