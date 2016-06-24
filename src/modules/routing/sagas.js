@@ -5,14 +5,14 @@ import resolveLocation from './utils/resolveLocation';
 import { push } from 'react-router-redux';
 import { getRoutes } from './selectors';
 
-export function* watchNavigate() {
-	yield* takeLatest(NAVIGATE, navigateTask);
-}
-
 export function* navigateTask(action) {
 	const { to } = action.payload;
 	const routes = yield select(getRoutes);
 	yield put(push(resolveLocation(to, routes)));
+}
+
+export function* watchNavigate() {
+	yield* takeLatest(NAVIGATE, navigateTask);
 }
 
 export default [watchNavigate];

@@ -1,21 +1,18 @@
-import {formatPattern} from 'react-router/lib/PatternUtils';
+import { formatPattern } from 'react-router/lib/PatternUtils';
 
-function normalize(str) {
-
+function normalize(origStr) {
+	let str = origStr;
 	// make sure protocol is followed by two slashes
 	str = str.replace(/:\//g, '://');
-
 	// remove consecutive slashes
 	str = str.replace(/([^:\s])\/+/g, '$1/');
-
 	// remove trailing slash before parameters or hash
 	str = str.replace(/\/(\?|#)/g, '$1');
-
 	return str;
 }
 
-function urlJoin() {
-	var joined = [].slice.call(arguments, 0).join('/');
+function urlJoin(...params) {
+	const joined = [].slice.call(params, 0).join('/');
 	return normalize(joined);
 }
 
@@ -38,7 +35,7 @@ export default function reverse(routes, name, params, parentPath = '') {
 			currentPath = route.path ? urlJoin(parentPath, route.path) : parentPath;
 		}
 
-		if (route.name && name == route.name) {
+		if (route.name && name === route.name) {
 			return formatPattern(currentPath, params);
 		}
 
@@ -59,4 +56,6 @@ export default function reverse(routes, name, params, parentPath = '') {
 	if (!parentPath) {
 		console.error(`No reverse match for name '${name}'`);
 	}
+
+	return undefined;
 }
