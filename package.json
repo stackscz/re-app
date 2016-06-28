@@ -14,8 +14,10 @@
     "build": "node ./node_modules/babel-cli/bin/babel src/ --out-dir lib --copy-files",
     "build:watch": "node ./node_modules/babel-cli/bin/babel src/ --out-dir lib --watch --copy-files",
     "lint": "eslint src/",
-    "test": "NODE_ENV=test babel-node ./node_modules/tape/bin/tape ./tests/**/*.js | node ./node_modules/tap-spec/bin/cmd.js",
-    "test:file": "NODE_ENV=test babel-node ./node_modules/tape/bin/tape",
+    "test": "NODE_ENV=test mocha --compilers js:babel-register --recursive",
+    "test:watch": "npm test -- --watch",
+    "test:file": "npm test -- --grep",
+    "test:file:watch": "npm test -- --watch --grep",
     "prepublish": "npm run build"
   },
   "author": "@stackscz",
@@ -32,8 +34,6 @@
     "prismjs": "^1.4.1",
     "re-app-builder": "^0.5.0",
     "redux-immutable-state-invariant": "^1.2.3",
-    "tap-spec": "^4.1.1",
-    "tape": "^4.5.1",
     "webpack-node-externals": "^1.0.0"
   },
   "dependencies": {
