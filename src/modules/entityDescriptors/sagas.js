@@ -2,9 +2,9 @@ import { put, select, call } from 'redux-saga/effects';
 import invariant from 'invariant';
 import {
 	apiServiceResultTypeInvariant,
+	rethrowError,
 } from 'utils';
 import {
-	initialize,
 	receiveEntityDescriptors,
 	receiveEntityDescriptorsFailure,
 } from './actions';
@@ -41,18 +41,17 @@ export function *loadEntityDescriptorsTask() {
 		}));
 		yield put(receiveEntityDescriptors(entityDescriptors));
 	} catch (e) {
+		rethrowError(e);
 		apiServiceResultTypeInvariant(e, ApiErrorResult);
 		yield put(receiveEntityDescriptorsFailure(e));
 	}
 }
 
 export function *entityDescriptorsFlow() {
-	yield put(initialize());
 	const schemasInitialized = yield select(isInitialized);
 	if (!schemasInitialized) {
 		yield call(loadEntityDescriptorsTask);
 	}
-	// yield put(generateMappings());
 }
 
 export default [entityDescriptorsFlow];

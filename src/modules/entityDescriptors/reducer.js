@@ -1,11 +1,11 @@
 import createReducer from 'utils/createReducer';
 import t from 'tcomb';
+import Immutable from 'seamless-immutable';
 import {
 	SchemasDictionary,
 	FieldsetsDictionary,
 } from './types';
 import {
-	INITIALIZE,
 	RECEIVE_ENTITY_DESCRIPTORS,
 } from './actions';
 
@@ -15,16 +15,12 @@ export default createReducer(
 		fieldsets: FieldsetsDictionary,
 		initialized: t.Boolean,
 	}),
-	{
+	Immutable.from({
 		schemas: {},
 		fieldsets: {},
 		initialized: false,
-	},
+	}),
 	{
-		[INITIALIZE]: [
-			t.Nil,
-			(state) => state,
-		],
 		[RECEIVE_ENTITY_DESCRIPTORS]: [
 			t.struct({
 				schemas: t.Object,

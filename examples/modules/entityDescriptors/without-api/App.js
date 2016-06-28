@@ -19,7 +19,7 @@ const store = createStore(
 	},
 	{
 		entityDescriptors: { // entityDescriptors instead provided as initial store state
-			initialized: true,
+			initialized: true, // note the 'initialized' flag
 			schemas: {
 				tags: {
 					name: 'tags',
@@ -58,7 +58,7 @@ export default class App extends React.Component {
 		return (
 			<div className="App">
 				<p>
-					When api module is not configured, entityDescriptors expects its data set as initial state
+					When api module is not configured, entityDescriptors expects its data set as initial state, with initialized flag also set.
 				</p>
 				<div className="row">
 					<div className="col-xs-6">

@@ -44,7 +44,6 @@ export default class App extends React.Component {
 				<p>
 					On app bootstrap, entityDescriptors saga first checks if <code>schemas</code> is empty.
 					When empty, it tries to fetch descriptors object from ApiService.
-					Then GENERATE_MAPPINGS action is dispatched and normalizr mappings are computed from schemas.
 				</p>
 				<div className="row">
 					<div className="col-xs-6">
