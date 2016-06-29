@@ -19,8 +19,8 @@ export function loginSuccess(user) {
 }
 
 export const LOGIN_FAILURE = 're-app/auth/LOGIN_FAILURE';
-export function loginFailure(errors) {
-	return { type: LOGIN_FAILURE, payload: { errors } };
+export function loginFailure(error) {
+	return { type: LOGIN_FAILURE, payload: { error } };
 }
 
 export const LOGOUT = 're-app/auth/LOGOUT';

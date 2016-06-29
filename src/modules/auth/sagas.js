@@ -1,11 +1,15 @@
 import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
 
-import { apiServiceResultTypeInvariant } from 'utils';
 import t from 'tcomb';
 import {
 	AuthContext,
 	AuthError,
 } from './types';
+
+import {
+	rethrowError,
+	apiServiceResultTypeInvariant,
+} from 'utils';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getUser, getAuthContext } from './selectors';
@@ -27,9 +31,10 @@ export function* authorize(credentials, apiContext, authContext) {
 		const result = yield call(apiService.login, credentials, apiContext, authContext);
 		apiServiceResultTypeInvariant(result, t.struct({ user: t.Object }));
 		yield put(loginSuccess(result));
-	} catch (e) {
-		apiServiceResultTypeInvariant(e, AuthError);
-		yield put(loginFailure(e));
+	} catch (error) {
+		rethrowError(error);
+		apiServiceResultTypeInvariant(error, AuthError);
+		yield put(loginFailure(error));
 	}
 }
 
@@ -40,8 +45,9 @@ export function* logout() {
 	try {
 		yield call(apiService.logout, apiContext, authContext);
 		yield put(logoutSuccess());
-	} catch (e) {
-		apiServiceResultTypeInvariant(e, AuthError);
+	} catch (error) {
+		rethrowError(error);
+		apiServiceResultTypeInvariant(error, AuthError);
 		yield put(logoutFailure());
 	}
 }

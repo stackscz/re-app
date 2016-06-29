@@ -1,4 +1,7 @@
 import t from 'tcomb';
+import {
+	ApiErrorResult,
+} from 'utils/types';
 
 export const AuthContext = t.struct({
 	user: t.maybe(t.Object),
@@ -20,4 +23,4 @@ export const UnauthenticatedAuthContext = t.refinement(
 	'UnauthenticatedAuthContext'
 );
 
-export const AuthError = t.Object;
+export const AuthError = ApiErrorResult;
