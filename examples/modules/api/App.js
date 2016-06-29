@@ -11,12 +11,15 @@ import Checkbox from 're-app/lib/components/Checkbox';
 
 import LabeledArea from 're-app-examples/LabeledArea';
 import LabeledJsonInspector from 're-app-examples/LabeledJsonInspector';
-import DevTools from 're-app/lib/components/DevTools';
+import DevTools from 're-app-examples/DevTools';
 
 const store = createStore(
 	{
 		modules: [
 			apiModule,
+		],
+		enhancers: [
+			DevTools.instrument(),
 		],
 	},
 	{

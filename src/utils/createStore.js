@@ -18,6 +18,7 @@ function createRouter(routerConfig = {}) {
 export default function createStore(config = {}, initialState = {}) {
 	let reducers = config && config.reducers ? { ...config.reducers } : {};
 	let sagas = config && config.sagas ? [...config.sagas] : [];
+	const enhancers = config && config.enhancers ? [...config.enhancers] : [];
 
 	const router = createRouter(config.router);
 	reducers.reduxRouting = router.routing;
@@ -45,10 +46,7 @@ export default function createStore(config = {}, initialState = {}) {
 		}
 	}
 
-	const enhancers = [applyMiddleware(...middleware)];
-	if (process.env.NODE_ENV !== 'production') {
-		enhancers.push(require('re-app/components/DevTools').default.instrument());
-	}
+	enhancers.unshift(applyMiddleware(...middleware));
 
 	// use batched updates?
 	let batchedSubscribeFunc = null;

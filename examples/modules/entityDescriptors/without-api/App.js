@@ -3,7 +3,7 @@ import React from 'react';
 
 import LabeledArea from 're-app-examples/LabeledArea';
 import LabeledJsonInspector from 're-app-examples/LabeledJsonInspector';
-import DevTools from 're-app/lib/components/DevTools';
+import DevTools from 're-app-examples/DevTools';
 
 import {app, container} from 're-app/lib/decorators';
 import {createStore} from 're-app/lib/utils';
@@ -15,7 +15,10 @@ const store = createStore(
 	{
 		modules: [ // api module is not configured
 			entityDescriptorsModule
-		]
+		],
+		enhancers: [
+			DevTools.instrument(),
+		],
 	},
 	{
 		entityDescriptors: { // entityDescriptors instead provided as initial store state
@@ -58,7 +61,8 @@ export default class App extends React.Component {
 		return (
 			<div className="App">
 				<p>
-					When api module is not configured, entityDescriptors expects its data set as initial state, with initialized flag also set.
+					When api module is not configured, entityDescriptors expects its data set as initial state, with
+					initialized flag also set.
 				</p>
 				<div className="row">
 					<div className="col-xs-6">

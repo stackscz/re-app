@@ -3,7 +3,7 @@ import React from 'react';
 
 import LabeledArea from 're-app-examples/LabeledArea';
 import LabeledJsonInspector from 're-app-examples/LabeledJsonInspector';
-import DevTools from 're-app/lib/components/DevTools';
+import DevTools from 're-app-examples/DevTools';
 
 import {app, container} from 're-app/lib/decorators';
 import {createStore} from 're-app/lib/utils';
@@ -19,7 +19,10 @@ const store = createStore(
 		modules: [
 			apiModule, // with api module configured
 			entityDescriptorsModule
-		]
+		],
+		enhancers: [
+			DevTools.instrument(),
+		],
 	},
 	// initial state
 	{

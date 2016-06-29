@@ -1,6 +1,6 @@
 {
   "name": "re-app",
-  "version": "0.16.3",
+  "version": "0.16.4",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": "https://github.com/stackscz/re-app",
@@ -35,6 +35,9 @@
     "mocha": "^2.5.3",
     "prismjs": "^1.4.1",
     "re-app-builder": "^0.5.0",
+    "redux-devtools": "^3.2.0",
+    "redux-devtools-dock-monitor": "^1.1.0",
+    "redux-devtools-log-monitor": "^1.0.5",
     "redux-immutable-state-invariant": "^1.2.3",
     "webpack-node-externals": "^1.0.0"
   },
@@ -66,9 +69,6 @@
     "react-router": "^2.0.0",
     "react-router-redux": "^4.0.0",
     "redux": "^3.5.1",
-    "redux-devtools": "^3.2.0",
-    "redux-devtools-dock-monitor": "^1.1.0",
-    "redux-devtools-log-monitor": "^1.0.5",
     "redux-form": "^6.0.0-alpha.15",
     "redux-saga": "^0.10.3",
     "seamless-immutable": "^6.1.0",

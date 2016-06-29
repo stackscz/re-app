@@ -2,7 +2,7 @@ import React, { PropTypes as T } from 'react';
 import { container } from 're-app/lib/decorators';
 
 import LabeledArea from 're-app-examples/LabeledArea';
-import DevTools from 're-app/lib/components/DevTools';
+import DevTools from 're-app-examples/DevTools';
 
 @container(
 	state => ({ data: state.someDataSlice }), // mapStateToProps

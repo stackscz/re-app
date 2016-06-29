@@ -3,24 +3,29 @@ import React, { PropTypes as T } from 'react';
 import { app } from 're-app/lib/decorators';
 import { createStore } from 're-app/lib/utils';
 import LabeledArea from 're-app-examples/LabeledArea';
-import DevTools from 're-app/lib/components/DevTools';
+import DevTools from 're-app-examples/DevTools';
 
-const store = createStore({
-	reducers: {
-		someDataSlice: (state = {}, action) => {
-			if (action.type === '@@INIT') {
-				return {
-					myData: [1, 2, 3],
-				};
-			} else if (action.type === 'ADD_ITEM') {
-				return {
-					myData: [...state.myData, action.payload],
-				};
-			}
-			return state;
+const store = createStore(
+	{
+		reducers: {
+			someDataSlice: (state = {}, action) => {
+				if (action.type === '@@INIT') {
+					return {
+						myData: [1, 2, 3],
+					};
+				} else if (action.type === 'ADD_ITEM') {
+					return {
+						myData: [...state.myData, action.payload],
+					};
+				}
+				return state;
+			},
 		},
-	},
-});
+		enhancers: [
+			DevTools.instrument(),
+		],
+	}
+);
 
 @app(store)
 export default class App extends React.Component {

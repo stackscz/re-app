@@ -3,7 +3,7 @@ import BackBtn from 're-app/lib/components/BackBtn';
 import Link from 're-app/lib/components/Link';
 
 import LabeledArea from 're-app-examples/LabeledArea';
-import DevTools from 're-app/lib/components/DevTools';
+import DevTools from 're-app-examples/DevTools';
 
 const menuItems = [
 	{
