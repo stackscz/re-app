@@ -1,4 +1,5 @@
 import createReducer from 'utils/createReducer';
+import Immutable from 'seamless-immutable';
 import t from 'tcomb';
 import { LOCATION_REACHED, SET_ROUTES } from './actions';
 import { match } from 'react-router';
@@ -10,12 +11,12 @@ export default createReducer(
 		locationRoutes: t.maybe(t.Array),
 		routes: t.Array,
 	}),
-	{
+	Immutable.from({
 		location: null,
 		locationRoute: null,
 		locationRoutes: null,
 		routes: [],
-	},
+	}),
 	{
 		[LOCATION_REACHED]: [
 			t.struct({
