@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import invariant from 'invariant';
+import Immutable from 'seamless-immutable';
 
 import { createReducer } from 're-app/utils';
 
@@ -52,13 +53,13 @@ export default createReducer(
 		collectionsErrors: t.Object,
 
 	}),
-	{
+	Immutable.from({
 		collections: {},
 		statuses: {},
 		errors: {},
 		collectionsStatuses: {},
 		collectionsErrors: {},
-	},
+	}),
 	{
 		[RECEIVE_ENTITY_DESCRIPTORS]: (state, action) => {
 			const { entities } = action.payload;

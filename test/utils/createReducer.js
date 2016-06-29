@@ -10,69 +10,111 @@ import t from 'tcomb';
 
 describe('utils/createReducer', () => {
 
-	it('should throw when initial state not supplied.', () => {
-		expect(() => {
-			createReducer();
-		}).toThrow(/initial state of reducer/);
+	describe('should accept proper params', () => {
+
+		it('should throw when initial state not supplied.', () => {
+			expect(() => {
+				createReducer();
+			}).toThrow(/initial state/);
+			expect(() => {
+				createReducer(t.struct({}));
+			}).toThrow(/initial state/);
+		});
+
+		it('should not throw when only initial state supplied.', () => {
+			expect(() => {
+				createReducer({});
+			}).toNotThrow();
+			expect(() => {
+				createReducer(t.struct({}), {});
+			}).toNotThrow();
+		});
+
 	});
 
-	it('should not throw when only initial state supplied.', () => {
-		expect(() => {
-			createReducer({});
-		}).toNotThrow();
+	describe('should return proper value', () => {
+		it('should return function', () => {
+			expect(createReducer({})).toBeA('function');
+		});
 	});
 
-	it('should not throw when only state type and initial state are supplied.', () => {
-		expect(() => {
-			createReducer(t.Object, {});
-		}).toNotThrow();
-	});
+	describe('should support different values as initial state', () => {
+		const ACTION = 'ACTION';
 
-	it('should throw when only state type is invalid.', () => {
-		expect(() => {
-			createReducer('some nonsense as state type', { initial: 'state' }, {});
-		}).toThrow(/should be a tcomb type/);
-	});
+		describe('should support vanilla js values as initial state', () => {
+			const reducer = createReducer(
+				{ a: 'initial state of reducer' },
+				{
+					[ACTION]: (state) => {
+						return { ...state, updated: true };
+					},
+				}
+			);
+			let state;
 
-	it('should throw when expected handlers object is not correct.', () => {
-		expect(() => {
-			createReducer({}, 'foo');
-		}).toThrow();
-		expect(() => {
-			createReducer({}, 3);
-		}).toThrow();
-	});
+			it(`should merge state with initial state on ${INIT} action.`, () => {
+				state = reducer(
+					{ b: 'initial state from environment' },
+					{ type: INIT }
+				);
+				expect(state).toEqual({
+					a: 'initial state of reducer',
+					b: 'initial state from environment',
+				})
+			});
 
-	const testInitialState = {
-		someData: 'someDataValue'
-	};
-	const testReducerFunctions = {
-		'TEST_ACTION_1': (state) => {
-			return { ...state, someData: 'someOtherDataValue' }
-		},
-		'TEST_ACTION_2': (state) => {
-			return state;
-		},
-	};
-	const reducer = createReducer(testInitialState, testReducerFunctions);
+			it('should handle actions.', () => {
+				state = reducer(
+					state,
+					{ type: ACTION }
+				);
 
-	it('should produce function', () => {
-		expect(reducer).toBeA('function');
-	});
+				expect(state).toEqual({
+					a: 'initial state of reducer',
+					b: 'initial state from environment',
+					updated: true,
+				})
+			});
 
-	let state = reducer(undefined, {});
+		});
 
-	it('should return seamless-immutable state for @@re-app/INIT', () => {
-		state = reducer(state, { type: INIT });
-		expect(state.asMutable).toBeA('function');
-	});
+		describe('should support seamless-immutable values as initial state', () => {
+			const reducer = createReducer(
+				Immutable.from({ a: 'initial state of reducer' }),
+				{
+					[ACTION]: (state) => {
+						return state.set('updated', true);
+					},
+				}
+			);
+			let state;
 
-	it('reducer function wroks properly', () => {
-		const testResult1 = reducer(testInitialState, { type: 'TEST_ACTION_1' });
-		expect(testResult1).toEqual({ someData: 'someOtherDataValue' });
+			it(`should merge state with initial state on ${INIT} action.`, () => {
+				state = reducer(
+					{ b: 'initial state from environment' },
+					{ type: INIT }
+				);
+				expect(state).toEqual({
+					a: 'initial state of reducer',
+					b: 'initial state from environment',
+				});
+				expect(state.asMutable).toBeA('function');
+			});
 
-		const testResult2 = reducer(testInitialState, { type: 'TEST_ACTION_2' });
-		expect(testResult2).toEqual({ someData: 'someDataValue' });
+			it('should handle actions.', () => {
+				state = reducer(
+					state,
+					{ type: ACTION }
+				);
+
+				expect(state).toEqual({
+					a: 'initial state of reducer',
+					b: 'initial state from environment',
+					updated: true,
+				})
+			});
+
+		});
 	});
 
 	describe('supports type checking', () => {

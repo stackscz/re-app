@@ -1,4 +1,5 @@
 import createReducer from 'utils/createReducer';
+import Immutable from 'seamless-immutable';
 import { SET_HOST } from './actions';
 import {
 	ApiContext,
@@ -7,10 +8,10 @@ import {
 
 export default createReducer(
 	ApiContext,
-	{
+	Immutable.from({
 		host: null,
 		service: null,
-	},
+	}),
 	{
 		[SET_HOST]: [
 			Host,

@@ -1,6 +1,7 @@
 /* eslint-disable arrow-body-style */
 
 import createReducer from 'utils/createReducer';
+import Immutable from 'seamless-immutable';
 import { AuthContext } from './types';
 
 import {
@@ -14,13 +15,13 @@ import {
 
 export default createReducer(
 	AuthContext,
-	{
+	Immutable.from({
 		user: null,
 		errors: [],
 		initializing: false,
 		initialized: false,
 		authenticating: false,
-	},
+	}),
 	{
 		[INITIALIZE]: (state, action) => {
 			return state.merge({
