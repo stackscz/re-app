@@ -55,7 +55,7 @@ export default createReducer(
 					...action.payload,
 					authenticating: false,
 				});
-			}
+			},
 		],
 		[LOGIN_FAILURE]: [
 			t.struct({
@@ -66,7 +66,7 @@ export default createReducer(
 				return state
 					.update('errors', (errors, newError) => errors.concat([newError]), error)
 					.merge({ authenticating: false });
-			}
+			},
 		],
 		[LOGOUT_SUCCESS]: (state, action) => {
 			return state.merge({
