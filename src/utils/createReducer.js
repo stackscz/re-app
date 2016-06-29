@@ -43,7 +43,7 @@ export default function createReducer(...params) {
 			}
 
 			if (stateType && process.env.NODE_ENV !== 'production') {
-				typeInvariant(state, stateType, `Invalid state after ${INIT}`);
+				typeInvariant(resultState, stateType, `Invalid state after ${INIT}`);
 			}
 			return resultState;
 		}
