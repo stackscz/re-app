@@ -19,6 +19,8 @@
     "test:file": "npm test -- --grep",
     "test:file:watch": "npm test -- --watch --grep",
     "prepublish": "npm run build"
+    "docs": "esdoc -c ./esdoc.json",
+    "docs:watch": "esdoc --watch -c ./esdoc.json",
   },
   "author": "@stackscz",
   "license": "MIT",
@@ -32,6 +34,8 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.9.0",
     "bootstrap": "^3.3.6",
+    "esdoc": "^0.4.7",
+    "esdoc-es7-plugin": "0.0.3",
     "eslint": "^2.13.1",
     "eslint-config-stacks": "0.0.3",
     "eslint-plugin-babel": "^3.3.0",

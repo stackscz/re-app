@@ -1,0 +1,13 @@
+{
+  "source": "./src",
+  "destination": "./docs",
+  "test": {
+    "type": "mocha",
+    "source": "./test"
+  },
+  "plugins": [
+    {
+      "name": "esdoc-es7-plugin"
+    }
+  ]
+}
