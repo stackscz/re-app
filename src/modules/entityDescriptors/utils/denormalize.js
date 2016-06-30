@@ -5,12 +5,6 @@ import createNormalizrSchema from './createNormalizrSchema';
 import trimSchema from './trimSchema';
 import t from 'tcomb';
 
-const EntitiesSpec = t.union([
-	t.String,
-	t.list(t.String),
-	t.list(t.object()),
-]);
-
 /**
  * Construct nested object or array of nested objects from entities dictionary
  *
@@ -21,13 +15,6 @@ const EntitiesSpec = t.union([
  * @param {?number} maxLevel - max level of nesting when denormalizing
  */
 export default function denormalize(ids, collectionName, entityDictionary, schemas, maxLevel = 1) {
-	typeInvariant(
-		ids,
-		EntitiesSpec,
-		'Invalid entity specification for denormalize, should be %s',
-		EntitiesSpec.toString()
-	);
-
 	// TODO check params
 	const normalizrCollectionSchema = createNormalizrSchema(collectionName, schemas);
 	const entitySchema = schemas[collectionName];
