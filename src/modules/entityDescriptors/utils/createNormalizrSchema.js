@@ -21,8 +21,8 @@ let mappings = {};
 export default function createNormalizrSchema(collectionName, schemas) {
 	// TODO memoize
 	invariant(_.isString(collectionName), '%s is not valid collection name', JSON.stringify(collectionName));
-	invariant(schemas[collectionName], 'Unknown collection %s', JSON.stringify(collectionName));
 	typeInvariant(schemas, SchemasDictionary, 'Invalid schemas dictionary supplied to createNormalizrSchema');
+	invariant(schemas[collectionName], 'Unknown collection %s', JSON.stringify(collectionName));
 
 	if (!_.get(schemas, collectionName)) {
 		return undefined;
