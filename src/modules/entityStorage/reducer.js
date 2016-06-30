@@ -5,15 +5,8 @@ import Immutable from 'seamless-immutable';
 import { createReducer } from 're-app/utils';
 
 import {
-	getEntityGetter,
-	getEntityStatusGetter,
-} from './selectors';
-
-import {
-	RECEIVE_ENTITY_DESCRIPTORS,
-} from 'modules/entityDescriptors/actions';
-
-import {
+	ENSURE_ENTITY,
+	ATTEMPT_FETCH_ENTITY,
 	RECEIVE_ENTITY,
 	RECEIVE_ENTITIES,
 	RECEIVE_FETCH_ENTITY_FAILURE,
@@ -44,27 +37,69 @@ import {
 
 import t from 'tcomb';
 
+const defaultStatus = {
+	transient: false,
+	fetching: false,
+	persisting: false,
+	deleting: false,
+};
+
+function setEntitiesToState(state, normalizedEntities) {
+	return state.update('collections', (currentValue, collections) => {
+		let newValue = currentValue;
+		_.each(collections, (entities, collectionName) => {
+			_.each(entities, (entity, entityId) => {
+				newValue = newValue.setIn([collectionName, entityId], entity);
+			});
+		});
+		return newValue;
+	}, normalizedEntities);
+}
+
+function setStatusWithDefaults(state, collectionName, entityId, getNewStatus) {
+	return state.updateIn(
+		['statuses', collectionName, entityId],
+		(currentStatus) => _.merge({}, defaultStatus, currentStatus, getNewStatus(currentStatus))
+	);
+}
+
 export default createReducer(
 	t.struct({
 		collections: NormalizedEntityDictionary,
 		statuses: t.dict(CollectionName, t.dict(EntityId, t.maybe(EntityStatus))),
 		errors: t.dict(CollectionName, t.dict(EntityId, t.maybe(t.Object))),
-		collectionsStatuses: t.Object,
-		collectionsErrors: t.Object,
-
 	}),
 	Immutable.from({
 		collections: {},
 		statuses: {},
 		errors: {},
-		collectionsStatuses: {},
-		collectionsErrors: {},
 	}),
 	{
-		[RECEIVE_ENTITY_DESCRIPTORS]: (state, action) => {
-			const { entities } = action.payload;
-			return state;
-		},
+		[ENSURE_ENTITY]: [
+			t.struct({
+				collectionName: t.String,
+				entityId: EntityId,
+			}),
+			(state, action) => {
+				const { collectionName, entityId } = action.payload;
+				return setStatusWithDefaults(state, collectionName, entityId, (currentStatus) => ({
+					transient: currentStatus ? currentStatus.transient : true,
+				}));
+			},
+		],
+		[ATTEMPT_FETCH_ENTITY]: [
+			t.struct({
+				collectionName: t.String,
+				entityId: EntityId,
+			}),
+			(state, action) => {
+				const { collectionName, entityId } = action.payload;
+				return setStatusWithDefaults(state, collectionName, entityId, (currentStatus) => ({
+					transient: currentStatus ? currentStatus.transient : true,
+					fetching: true,
+				}));
+			},
+		],
 		[RECEIVE_ENTITY]: [
 			ReceiveEntityActionPayload,
 			(state, action) => {
@@ -79,14 +114,14 @@ export default createReducer(
 					statuses: _.mapValues(
 						normalizedEntities,
 						(entityList, statusCollectionName) => _.mapValues(entityList, (x, statusEntityId) => {
-							let currentStatus = _.get(state, ['statuses', statusCollectionName, statusEntityId]);
-							if (!currentStatus) {
-								currentStatus = {
-									transient: false,
-								};
-							}
-							return _.merge({}, currentStatus, {
+							const currentStatus = _.get(
+								state,
+								['statuses', statusCollectionName, statusEntityId],
+								{}
+							);
+							return _.merge({}, defaultStatus, currentStatus, {
 								validAtTime,
+								transient: false,
 							});
 						})
 					),
@@ -101,19 +136,19 @@ export default createReducer(
 				const { normalizedEntities, validAtTime } = action.payload;
 
 				let newState = state;
+				newState = setEntitiesToState(state, normalizedEntities);
 				newState = newState.merge({
-					collections: normalizedEntities,
 					statuses: _.mapValues(
 						normalizedEntities,
 						(entityList, statusCollectionName) => _.mapValues(entityList, (x, statusEntityId) => {
-							let currentStatus = _.get(state, ['statuses', statusCollectionName, statusEntityId]);
-							if (!currentStatus) {
-								currentStatus = {
-									transient: false,
-								};
-							}
-							return _.merge({}, currentStatus, {
+							const currentStatus = _.get(
+								state,
+								['statuses', statusCollectionName, statusEntityId]
+							);
+							return _.merge({}, defaultStatus, currentStatus, {
 								validAtTime,
+								transient: false,
+								fetching: false,
 							});
 						})
 					),
@@ -130,13 +165,13 @@ export default createReducer(
 			}),
 			(state, action) => {
 				const { collectionName, entityId, error } = action.payload;
-				return state.merge({
-					errors: {
-						[collectionName]: {
-							[entityId]: error,
-						},
-					},
-				}, { deep: true });
+				let newState = state;
+				newState = setStatusWithDefaults(newState, collectionName, entityId, () => ({
+					transient: true,
+					fetching: false,
+				}));
+				newState = newState.setIn(['errors', collectionName, entityId], error);
+				return newState;
 			},
 		],
 		[RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE]: [
@@ -172,42 +207,37 @@ export default createReducer(
 				const collectionName = entitySchema.name;
 				const entityId = entity[entitySchema.idFieldName];
 				invariant(entityId, 'entityId must be set for "%s" action.', MERGE_ENTITY);
-				const existingEntity = getEntityGetter(collectionName, entityId)({ entityStorage: state });
-				const entityStatus = getEntityStatusGetter(
-					collectionName,
-					entityId
-				)({ entityStorage: state });
-				const isTransient = !existingEntity || !entityStatus || entityStatus.transient;
 
-				return state.merge({
-					collections: {
-						[collectionName]: {
-							[entityId]: {
-								...entity,
-								[entitySchema.idFieldName]: entityId,
-							},
-						},
-					},
-					statuses: {
-						[collectionName]: {
-							[entityId]: {
-								...entityStatus,
-								transient: isTransient,
-							},
-						},
-					},
+				let newState = state;
+
+				newState = newState.setIn(
+					['collections', collectionName, entityId],
+					{
+						...entity,
+						[entitySchema.idFieldName]: entityId,
+					}
+				);
+				newState = setStatusWithDefaults(newState, collectionName, entityId, (currentStatus) => ({
+					persisting: true,
+					transient: currentStatus ? currentStatus.transient : true,
+				}));
+
+				newState = newState.merge({
 					errors: {
 						[collectionName]: {
 							[entityId]: {},
 						},
 					},
 				}, { deep: true });
+
+				return newState;
 			},
 		],
 		[RECEIVE_PERSIST_ENTITY_SUCCESS]: [
 			t.struct({
 				collectionName: t.String,
 				normalizedEntities: NormalizedEntityDictionary,
+				validAtTime: t.String,
 				transientEntityId: t.maybe(EntityId),
 			}),
 			(state, action) => {
@@ -218,19 +248,21 @@ export default createReducer(
 					validAtTime,
 					} = action.payload;
 
+				let newState = setEntitiesToState(state, normalizedEntities);
+
 				const statuses = _.mapValues(
 					normalizedEntities,
 					(entityList) => _.mapValues(entityList, () => ({
 						validAtTime,
+						persisting: false,
 						transient: false,
 					}))
 				);
 
-				let newState = state;
 				newState = newState.merge({
 					statuses,
-					collections: normalizedEntities,
 				}, { deep: true });
+
 				if (transientEntityId) {
 					newState = newState.setIn(
 						['collections', collectionName],
@@ -249,20 +281,42 @@ export default createReducer(
 				collectionName: t.String,
 				entityId: EntityId,
 				error: t.Object,
-				validationErrors: t.Object,
 			}),
 			(state, action) => {
-				const { collectionName, entityId, error, validationErrors } = action.payload;
-				return state.merge({
+				const { collectionName, entityId, error } = action.payload;
+
+				const isTransient = _.get(
+					state,
+					['statuses', collectionName, entityId, 'transient'],
+					false
+				);
+
+				let newState = state.merge({
 					statuses: {
 						[collectionName]: {
 							[entityId]: {
-								error,
-								validationErrors,
+								transient: isTransient,
+								persisting: false,
 							},
 						},
 					},
+					errors: {
+						[collectionName]: {
+							[entityId]: error,
+						},
+					},
 				}, { deep: true });
+
+				if (error.validationErrors) {
+					newState = newState.merge({
+						validationErrors: {
+							[collectionName]: {
+								[entityId]: error.validationErrors,
+							},
+						},
+					}, { deep: true });
+				}
+				return newState;
 			},
 		],
 		[DELETE_ENTITY]: (state, action) => {
