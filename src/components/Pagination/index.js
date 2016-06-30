@@ -55,7 +55,7 @@ export default class Pagination extends React.Component {
 			<li key={index} className={index === this.getPageNumber() ? 'active' : ''}>
 				<a
 					key={index}
-					onClick={() => { this.handlePageSelect((index - 1) * limit, limit); }}
+					onClick={(e) => { this.handlePageSelect((index - 1) * limit, limit, e); }}
 					data-disabled={index === this.getPageNumber()}
 				>{index}</a>
 			</li>
@@ -85,7 +85,7 @@ export default class Pagination extends React.Component {
 				<ul>
 					<li className={prevOffset === false ? 'disabled' : ''}>
 						<a
-							onClick={() => { this.handlePageSelect(firstOffset, limit); }}
+							onClick={(e) => { this.handlePageSelect(firstOffset, limit, e); }}
 							data-disabled={prevOffset === false}
 						>
 							<i className="fa fa-angle-double-left"></i>
@@ -93,7 +93,7 @@ export default class Pagination extends React.Component {
 					</li>
 					<li className={prevOffset === false ? 'disabled' : ''}>
 						<a
-							onClick={() => { this.handlePageSelect(prevOffset, limit); }}
+							onClick={(e) => { this.handlePageSelect(prevOffset, limit, e); }}
 							data-disabled={prevOffset === false}
 						>
 							<i className="fa fa-angle-left"></i>
@@ -102,7 +102,7 @@ export default class Pagination extends React.Component {
 					{this.getPages().map(this.renderPageLink)}
 					<li className={nextOffset === false ? 'disabled' : ''}>
 						<a
-							onClick={() => { this.handlePageSelect(nextOffset, limit); }}
+							onClick={(e) => { this.handlePageSelect(nextOffset, limit, e); }}
 							data-disabled={nextOffset === false}
 						>
 							<i className="fa fa-angle-right"></i>
@@ -110,7 +110,7 @@ export default class Pagination extends React.Component {
 					</li>
 					<li className={nextOffset === false ? 'disabled' : ''}>
 						<a
-							onClick={() => { this.handlePageSelect(lastOffset, limit); }}
+							onClick={(e) => { this.handlePageSelect(lastOffset, limit, e); }}
 							data-disabled={nextOffset === false}
 						>
 							<i className="fa fa-angle-double-right"></i>
