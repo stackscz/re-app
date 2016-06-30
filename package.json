@@ -18,9 +18,9 @@
     "test:watch": "npm test -- --watch",
     "test:file": "npm test -- --grep",
     "test:file:watch": "npm test -- --watch --grep",
-    "prepublish": "npm run build"
     "docs": "esdoc -c ./esdoc.json",
     "docs:watch": "esdoc --watch -c ./esdoc.json",
+    "prepublish": "npm run test && npm run build"
   },
   "author": "@stackscz",
   "license": "MIT",
