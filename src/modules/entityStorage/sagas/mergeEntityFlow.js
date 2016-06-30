@@ -1,7 +1,6 @@
 import moment from 'moment';
 import hash from 'object-hash';
 
-import invariant from 'invariant';
 import { rethrowError, typeInvariant, apiServiceResultTypeInvariant } from 're-app/utils';
 import {
 	ApiService,
@@ -14,11 +13,14 @@ import { ApiValidationErrorResult } from 'utils/types';
 import { takeEvery } from 'redux-saga';
 import { call, select, put, fork } from 'redux-saga/effects';
 
-import normalize from 'utils/normalize';
+import normalize from 'modules/entityDescriptors/utils/normalize';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
-import { getEntityMappingGetter, getEntitySchemaGetter } from 'modules/entityDescriptors/selectors';
+import {
+	getEntitySchemaGetter,
+	getEntitySchemas,
+} from 'modules/entityDescriptors/selectors';
 import {
 	getEntityStatusGetter,
 	getDenormalizedEntityGetter,
@@ -40,10 +42,11 @@ export function *mergeEntityTask(action) {
 		entityId = hash({ data, r: Math.random() });
 	}
 
-	const entityMapping = yield select(getEntityMappingGetter(collectionName));
+	const entitySchemas = yield select(getEntitySchemas);
 	const normalizedData = normalize(
 		{ ...data, [entitySchema.idFieldName]: entityId },
-		entityMapping
+		entitySchema.collectionName,
+		entitySchemas
 	);
 	const normalizedEntity = normalizedData.entities[collectionName][normalizedData.result];
 
@@ -63,8 +66,7 @@ export function *persistEntityTask(action) {
 	typeInvariant(apiService, ApiService, 'entityStorage module depends on api module');
 
 	// EntityMapping is needed to normalize entity
-	const entityMapping = yield select(getEntityMappingGetter(collectionName));
-	invariant(entityMapping, 'entityStorage module depends on entityDescriptors module');
+	const entitySchemas = yield select(getEntitySchemas);
 
 	const apiContext = yield select(getApiContext);
 	const authContext = yield select(getAuthContext);
@@ -104,21 +106,25 @@ export function *persistEntityTask(action) {
 		}
 		apiServiceResultTypeInvariant(persistResult, EntityResult);
 
-		const normalizedEntity = normalize(persistResult.data, entityMapping);
-		remoteEntityId = normalizedEntity.result;
+		const normalizationResult = normalize(
+			persistResult.data,
+			entitySchema.collectionName,
+			entitySchemas
+		);
+		remoteEntityId = normalizationResult.result;
 		yield put(
 			receivePersistEntitySuccess(
 				collectionName,
 				remoteEntityId,
-				normalizedEntity.entities,
+				normalizationResult.entities,
 				transientEntityId,
 				moment().format()
 			)
 		);
-	} catch (e) {
-		rethrowError(e);
-		apiServiceResultTypeInvariant(e, ApiValidationErrorResult);
-		yield put(receivePersistEntityFailure(collectionName, entityId, e, e.validationErrors));
+	} catch (error) {
+		rethrowError(error);
+		apiServiceResultTypeInvariant(error, ApiValidationErrorResult);
+		yield put(receivePersistEntityFailure(collectionName, entityId, error));
 	}
 }
 

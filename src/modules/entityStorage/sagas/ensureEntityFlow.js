@@ -1,9 +1,9 @@
 import { call, select, put } from 'redux-saga/effects';
 import { takeEvery } from 'redux-saga';
 
-import normalize from 'utils/normalize';
+import normalize from 'modules/entityDescriptors/utils/normalize';
 import moment from 'moment';
-import invariant from 'invariant';
+// import invariant from 'invariant';
 
 import { rethrowError, apiServiceResultTypeInvariant, typeInvariant } from 'utils';
 
@@ -13,7 +13,7 @@ import { ApiErrorResult } from 'utils/types';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
-import { getEntityMappingGetter } from 'modules/entityDescriptors/selectors';
+import { getEntitySchemas } from 'modules/entityDescriptors/selectors';
 import {
 	ENSURE_ENTITY,
 	attemptFetchEntity,
@@ -45,16 +45,9 @@ export function *ensureEntityTask(action) {
 		);
 		apiServiceResultTypeInvariant(result, EntityResult);
 
-		// EntityMapping is needed to normalize entity
-		const entityMapping = yield select(getEntityMappingGetter(collectionName));
-		invariant(
-			entityMapping,
-			'Could not construct entity mapping for "%s" collection',
-			collectionName
-		);
-
-		const normalized = normalize(result.data, entityMapping);
-		yield put(receiveEntities(normalized.entities, moment().format()));
+		const entitySchemas = yield select(getEntitySchemas);
+		const normalizationResult = normalize(result.data, collectionName, entitySchemas);
+		yield put(receiveEntities(normalizationResult.entities, moment().format()));
 	} catch (error) {
 		rethrowError(error);
 		apiServiceResultTypeInvariant(error, ApiErrorResult);

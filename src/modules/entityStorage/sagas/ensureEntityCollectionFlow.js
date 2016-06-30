@@ -1,11 +1,13 @@
+/* eslint-disable */
+
 import _ from 'lodash';
 import { takeEvery } from 'redux-saga';
 import { call, select, put } from 'redux-saga/effects';
 
 import moment from 'moment';
-import invariant from 'invariant';
-import { arrayOf } from 'normalizr';
-import normalize from 'utils/normalize';
+//import invariant from 'invariant';
+//import { arrayOf } from 'normalizr';
+import normalize from 'modules/entityDescriptors/utils/normalize';
 
 import { rethrowError, apiServiceResultTypeInvariant, typeInvariant } from 'utils';
 import { ApiService } from 're-app/modules/api/types';
@@ -14,7 +16,9 @@ import { EntityCollectionResult } from '../types';
 
 import { getApiContext, getApiService } from 're-app/modules/api/selectors';
 import { getAuthContext } from 're-app/modules/auth/selectors';
-import { getEntityMappingGetter } from 're-app/modules/entityDescriptors/selectors';
+import {
+	getEntitySchemas,
+} from 'modules/entityDescriptors/selectors';
 
 import {
 	ENSURE_ENTITY_COLLECTION,
@@ -44,14 +48,8 @@ export function *ensureEntityCollectionTask(action) {
 		);
 		apiServiceResultTypeInvariant(result, EntityCollectionResult);
 
-		const entityMapping = yield select(getEntityMappingGetter(collectionName));
-		invariant(
-			entityMapping,
-			'Could not construct entity mapping for "%s" collection',
-			collectionName
-		);
-
-		const normalized = normalize(result.data, arrayOf(entityMapping));
+		const entitySchemas = yield select(getEntitySchemas);
+		const normalized = normalize(result.data, collectionName, entitySchemas);
 		yield put(receiveEntities(normalized.entities, moment().format()));
 	} catch (error) {
 		rethrowError(error);

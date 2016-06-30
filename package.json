@@ -1,6 +1,6 @@
 {
   "name": "re-app",
-  "version": "0.16.4",
+  "version": "0.17.0",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": "https://github.com/stackscz/re-app",
@@ -52,13 +52,13 @@
   },
   "peerDependencies": {
     "classnames": "^2.2.3",
-    "denormalizr": "0.0.8",
+    "denormalizr": "0.2.0",
     "dot-object": "^1.4.1",
     "fbjs": "^0.8.2",
     "invariant": "^2.2.1",
     "lodash": "^4.5.0",
     "moment": "^2.12.0",
-    "normalizr": "^2.0.1",
+    "normalizr": "^2.1.0",
     "object-hash": "^1.1.2",
     "qs": "^6.1.0",
     "react": "^15.1.0",

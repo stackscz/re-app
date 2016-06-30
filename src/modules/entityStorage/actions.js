@@ -30,6 +30,8 @@ export function receiveFetchEntityFailure(collectionName, entityId, error) {
 /**
  * Load all entities from collection into storage from remote when needed.
  *
+ * @deprecated
+ *
  * @param collectionName
  * @param entityId
  */
@@ -40,6 +42,9 @@ export function ensureEntityCollection(collectionName, filter) {
 
 /**
  * Request entity collection from remote
+ *
+ * @deprecated
+ *
  */
 export const ATTEMPT_FETCH_ENTITY_COLLECTION = 're-app/entityStorage/ATTEMPT_FETCH_ENTITY_COLLECTION';
 export function attemptFetchEntityCollection(collectionName, filter) {
@@ -49,12 +54,20 @@ export function attemptFetchEntityCollection(collectionName, filter) {
 /**
  * Error occurred when ensuring entity collection
  *
+ * @deprecated
+ *
  */
 export const RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE = 're-app/entityStorage/RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE';
 export function receiveFetchEntityCollectionFailure(collectionName, error) {
 	return { type: RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE, payload: { collectionName, error } };
 }
 
+/**
+ *
+ * @deprecated
+ *
+ * @type {string}
+ */
 export const RECEIVE_ENTITY = 're-app/entityStorage/RECEIVE_ENTITY';
 export function receiveEntity(collectionName, entityId, normalizedEntities, validAtTime) {
 	return { type: RECEIVE_ENTITY, payload: { collectionName, entityId, normalizedEntities, validAtTime } };
@@ -133,10 +146,10 @@ export function receivePersistEntitySuccess(collectionName, entityId, normalized
  * - set entity status, errors
  */
 export const RECEIVE_PERSIST_ENTITY_FAILURE = 're-app/entityStorage/RECEIVE_PERSIST_ENTITY_FAILURE';
-export function receivePersistEntityFailure(collectionName, entityId, error, validationErrors) {
+export function receivePersistEntityFailure(collectionName, entityId, error) {
 	return {
 		type: RECEIVE_PERSIST_ENTITY_FAILURE,
-		payload: { collectionName, entityId, error, validationErrors },
+		payload: { collectionName, entityId, error },
 	};
 }
 
