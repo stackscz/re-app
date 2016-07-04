@@ -1,8 +1,6 @@
 // @flow
-/* eslint-disable */
 import _ from 'utils/lodash';
 import invariant from 'invariant';
-import typeInvariant from 'utils/typeInvariant';
 import type SchemasDictionary from 'types/SchemasDictionary';
 import { Schema, arrayOf } from 'normalizr';
 
@@ -28,8 +26,11 @@ export default function createNormalizrSchema(collectionName:string, schemas:Sch
 		mappings = {};
 
 		// create normalizr schemas
-		_.each(cachedSchemas, (schema, collectionName) => {
-			mappings[collectionName] = new Schema(collectionName, { idAttribute: schema.idFieldName });
+		_.each(cachedSchemas, (schema, cachedCollectionName) => {
+			mappings[cachedCollectionName] = new Schema(
+				cachedCollectionName,
+				{ idAttribute: schema.idFieldName }
+			);
 		});
 
 		// define normalizr schemas
@@ -38,7 +39,7 @@ export default function createNormalizrSchema(collectionName:string, schemas:Sch
 				if (field.type === 'association') {
 					const assocMapping = mappings[field.collectionName];
 					mappings[schema.name].define({
-						[field.name]: field.isMultiple ? arrayOf(assocMapping) : assocMapping
+						[field.name]: field.isMultiple ? arrayOf(assocMapping) : assocMapping,
 					});
 				}
 			});

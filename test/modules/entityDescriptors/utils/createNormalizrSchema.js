@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import expect from 'expect';
 import isEqualWith from 'lodash/isEqualWith';
 import isFunction from 'lodash/isFunction';
