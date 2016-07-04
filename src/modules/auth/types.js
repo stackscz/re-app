@@ -1,7 +1,7 @@
+// @flow
 import t from 'tcomb';
-import {
-	ApiErrorResult,
-} from 'utils/types';
+import type { Error } from 'types/Error';
+export const AuthError = Error;
 
 export const AuthContext = t.struct({
 	user: t.maybe(t.Object),
@@ -22,5 +22,3 @@ export const UnauthenticatedAuthContext = t.refinement(
 	(context) => t.Nil.is(context.user),
 	'UnauthenticatedAuthContext'
 );
-
-export const AuthError = ApiErrorResult;

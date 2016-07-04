@@ -1,10 +1,10 @@
+// @flow
 import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
 
 import t from 'tcomb';
-import {
-	AuthContext,
-	AuthError,
-} from './types';
+import type ApiContext from 'types/ApiContext';
+import type AuthContext from 'types/AuthContext';
+import type Error from 'types/Error';
 
 import {
 	rethrowError,
@@ -25,7 +25,7 @@ import {
 	logoutFailure,
 } from './actions';
 
-export function* authorize(credentials, apiContext, authContext) {
+export function* authorize(credentials, apiContext:ApiContext, authContext:AuthContext) {
 	const apiService = yield select(getApiService);
 	try {
 		const result = yield call(apiService.login, credentials, apiContext, authContext);
@@ -33,7 +33,7 @@ export function* authorize(credentials, apiContext, authContext) {
 		yield put(loginSuccess(result));
 	} catch (error) {
 		rethrowError(error);
-		apiServiceResultTypeInvariant(error, AuthError);
+		apiServiceResultTypeInvariant(error, Error);
 		yield put(loginFailure(error));
 	}
 }
@@ -47,7 +47,7 @@ export function* logout() {
 		yield put(logoutSuccess());
 	} catch (error) {
 		rethrowError(error);
-		apiServiceResultTypeInvariant(error, AuthError);
+		apiServiceResultTypeInvariant(error, Error);
 		yield put(logoutFailure());
 	}
 }
