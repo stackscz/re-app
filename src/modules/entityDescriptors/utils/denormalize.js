@@ -22,7 +22,7 @@ export default function denormalize(ids:EntityId | Array<EntityId> | Entity | Ar
 									collectionName:CollectionName,
 									entityDictionary:NormalizedEntityDictionary,
 									schemas:SchemasDictionary,
-									maxLevel:number = 1) {
+									maxLevel:number = 1):Entity|Array<Entity> {
 	// TODO check params
 	const normalizrCollectionSchema = createNormalizrSchema(collectionName, schemas);
 	const entitySchema = schemas[collectionName];
