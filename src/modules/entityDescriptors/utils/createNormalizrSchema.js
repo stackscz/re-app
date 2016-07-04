@@ -1,11 +1,9 @@
+// @flow
 /* eslint-disable */
 import _ from 'utils/lodash';
 import invariant from 'invariant';
 import typeInvariant from 'utils/typeInvariant';
-import {
-	SchemasDictionary,
-	EntityAssociationFieldSchema,
-} from '../types';
+import type SchemasDictionary from 'types/SchemasDictionary';
 import { Schema, arrayOf } from 'normalizr';
 
 let cachedSchemas;
@@ -18,10 +16,7 @@ let mappings = {};
  * @param {SchemasDictionary} schemas
  * @returns {Schema} normalizr schema for collection
  */
-export default function createNormalizrSchema(collectionName, schemas) {
-	// TODO memoize
-	invariant(_.isString(collectionName), '%s is not valid collection name', JSON.stringify(collectionName));
-	typeInvariant(schemas, SchemasDictionary, 'Invalid schemas dictionary supplied to createNormalizrSchema');
+export default function createNormalizrSchema(collectionName:string, schemas:SchemasDictionary) {
 	invariant(schemas[collectionName], 'Unknown collection %s', JSON.stringify(collectionName));
 
 	if (!_.get(schemas, collectionName)) {

@@ -23,16 +23,16 @@ describe('modules/entityDescriptors/utils/createNormalizrSchema', () => {
 	it('should check params', () => {
 		expect(() => {
 			createNormalizrSchema({ some: 'nonsense' });
-		}).toThrow(/is not valid collection name/);
+		}).toThrow(/collectionName/);
 		expect(() => {
 			createNormalizrSchema('items');
-		}).toThrow(/Invalid schemas dictionary supplied/);
+		}).toThrow(/SchemasDictionary/);
 	});
 
 	it('should check type of schemas', () => {
 		expect(() => {
 			createNormalizrSchema('posts', { some: 'invalidSchemasDictionary' });
-		}).toThrow(/Invalid schemas dictionary supplied/);
+		}).toThrow(/SchemasDictionary/);
 	});
 
 	const expectedNormalizrSchemas = {
