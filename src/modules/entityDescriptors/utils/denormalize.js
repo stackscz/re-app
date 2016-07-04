@@ -1,20 +1,28 @@
+// @flow
 import _ from 'lodash';
-import typeInvariant from 'utils/typeInvariant';
 import { denormalize as denormalizrDenormalize } from 'denormalizr';
 import createNormalizrSchema from './createNormalizrSchema';
 import trimSchema from './trimSchema';
-import t from 'tcomb';
+import type Entity from 'types/Entity';
+import type EntityId from 'types/EntityId';
+import type CollectionName from 'types/CollectionName';
+import type NormalizedEntityDictionary from 'types/NormalizedEntityDictionary';
+import type SchemasDictionary from 'types/SchemasDictionary';
 
 /**
  * Construct nested object or array of nested objects from entities dictionary
  *
- * @param {string|array} ids - single id or array of ids to denormalize
- * @param {string} collectionName
- * @param {EntityDictionary} entityDictionary
+ * @param {EntityId | Array<EntityId> | Entity | Array<Entity>} ids - entities spec
+ * @param {CollectionName} collectionName
+ * @param {NormalizedEntityDictionary} entityDictionary
  * @param {SchemasDictionary} schemas
  * @param {?number} maxLevel - max level of nesting when denormalizing
  */
-export default function denormalize(ids, collectionName, entityDictionary, schemas, maxLevel = 1) {
+export default function denormalize(ids:EntityId | Array<EntityId> | Entity | Array<Entity>,
+									collectionName:CollectionName,
+									entityDictionary:NormalizedEntityDictionary,
+									schemas:SchemasDictionary,
+									maxLevel:number = 1) {
 	// TODO check params
 	const normalizrCollectionSchema = createNormalizrSchema(collectionName, schemas);
 	const entitySchema = schemas[collectionName];

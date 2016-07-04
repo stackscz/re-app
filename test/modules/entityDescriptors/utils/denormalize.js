@@ -64,10 +64,31 @@ const entityDictionary = {
 
 describe('modules/entityDescriptors/utils/denormalize', () => {
 
-	describe('should throw when called with bad params', () => {
-		// TODO
-		// it('', () => {
-		// });
+	it('should throw when called with bad params', () => {
+		expect(() => {
+			denormalize();
+		}).toThrow(/Invalid value/);
+		expect(() => {
+			denormalize([1, 2]);
+		}).toThrow(/Invalid value/);
+		expect(() => {
+			denormalize(['1', '2']);
+		}).toThrow(/Invalid value/);
+		expect(() => {
+			denormalize(['1', '2'], 'posts');
+		}).toThrow(/Invalid value/);
+		expect(() => {
+			denormalize(['1', '2'], 'posts');
+		}).toThrow(/Invalid value/);
+		expect(() => {
+			denormalize(['1', '2'], 'posts', {}, {});
+		}).toThrow(/Unknown collection/);
+		expect(() => {
+			denormalize(['1', '2'], 'foo', entityDictionary, schemas);
+		}).toThrow(/Unknown collection/);
+		expect(() => {
+			denormalize(['1', '2'], 'foo', entityDictionary, {foo: {name:'foo'}});
+		}).toThrow(/SchemasDictionary/);
 	});
 
 	describe('should denormalize single entity properly', () => {
