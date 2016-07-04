@@ -56,7 +56,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 		it('should throw when called without params', () => {
 			expect(() => {
 				normalize();
-			}).toThrow(/Data object not supplied/)
+			}).toThrow(/Invalid value/)
 		});
 
 		it('should throw when unknown collection', () => {
@@ -68,7 +68,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 		it('should throw when invalid schemas dictionary', () => {
 			expect(() => {
 				normalize({}, 'posts', invalidSchemas);
-			}).toThrow(/Invalid schemas/);
+			}).toThrow(/Invalid value/);
 		});
 
 	});
