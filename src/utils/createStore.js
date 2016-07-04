@@ -1,12 +1,16 @@
+// @flow
 import _ from 'lodash';
 import { createStore as reduxCreateStore, applyMiddleware, compose, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
-import createHistory from 're-app/utils/createHistory';
+import createHistory from 'utils/createHistory';
 import { reducer as formReducer } from 'redux-form';
-import { init } from 're-app/utils/actions';
+import { init } from 'utils/actions';
 
-function createRouter(routerConfig = {}) {
+import type StoreConfig from 'types/StoreConfig';
+import type RouterConfig from 'types/RouterConfig';
+
+function createRouter(routerConfig:RouterConfig = {}) {
 	const finalHistory = routerConfig.history || createHistory();
 
 	return {
@@ -15,7 +19,16 @@ function createRouter(routerConfig = {}) {
 	};
 }
 
-export default function createStore(config = {}, initialState = {}) {
+function runSaga(sagaMiddleware:Function, saga:Function):void {
+	sagaMiddleware.run(saga);
+	// TODO logging
+	//	.done.catch((error) => {
+	//		console.log(error);
+	//		runSaga(sagaMiddleware, saga);
+	//	});
+}
+
+export default function createStore(config:StoreConfig = {}, initialState = {}):Object {
 	let reducers = config && config.reducers ? { ...config.reducers } : {};
 	let sagas = config && config.sagas ? [...config.sagas] : [];
 	const enhancers = config && config.enhancers ? [...config.enhancers] : [];
@@ -65,9 +78,7 @@ export default function createStore(config = {}, initialState = {}) {
 	);
 	store.dispatch(init());
 	if (sagas.length) {
-		sagas.forEach((saga) => {
-			sagaMiddleware.run(saga);
-		});
+		sagas.forEach((saga) => runSaga(sagaMiddleware, saga));
 	}
 	return store;
 }
