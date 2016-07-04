@@ -1,9 +1,10 @@
+// @flow
 /* eslint-disable arrow-body-style */
 
 import createReducer from 'utils/createReducer';
 import Immutable from 'seamless-immutable';
 import t from 'tcomb';
-import { AuthContext } from './types';
+import type AuthContext from 'types/AuthContext';
 
 import {
 	INITIALIZE,
