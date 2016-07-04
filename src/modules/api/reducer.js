@@ -1,10 +1,9 @@
+// @flow
 import createReducer from 'utils/createReducer';
 import Immutable from 'seamless-immutable';
 import { SET_HOST } from './actions';
-import {
-	ApiContext,
-	Host,
-} from './types';
+import type Host from 'types/Host';
+import type ApiContext from 'types/ApiContext';
 
 export default createReducer(
 	ApiContext,
