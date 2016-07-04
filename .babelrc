@@ -5,13 +5,17 @@
     "stage-0"
   ],
   "plugins": [
+    "eslint",
+    "syntax-flow",
     "transform-decorators-legacy",
     "transform-runtime",
+    "tcomb",
     [
       "webpack-alias",
       {
         "config": "./babel-alias.js"
       }
-    ]
+    ],
+    "transform-flow-strip-types"
   ]
 }

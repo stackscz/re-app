@@ -1,5 +1,9 @@
 {
   "extends": "stacks",
+  "plugins": [
+    "flowtype",
+    "flow-vars"
+  ],
   "rules": {
     "import/no-unresolved": [
       0

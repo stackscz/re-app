@@ -10,7 +10,8 @@ module.exports = {
 			'effects': path.join(__dirname, 'src', 'effects'),
 			'mocks': path.join(__dirname, 'src', 'mocks'),
 			'modules': path.join(__dirname, 'src', 'modules'),
-			'utils': path.join(__dirname, 'src', 'utils')
+			'types': path.join(__dirname, 'src', 'types'),
+			'utils': path.join(__dirname, 'src', 'utils'),
 		}
 	}
 };
