@@ -1,6 +1,9 @@
 // @flow
+import type CollectionName from 'types/CollectionName';
 import type EntityId from 'types/EntityId';
 import type NormalizedEntity from 'types/NormalizedEntity';
 export type NormalizedEntityDictionary = {
-	[key: EntityId]: NormalizedEntity,
+	[key: CollectionName]:{
+		[key: EntityId]: NormalizedEntity
+	},
 };
