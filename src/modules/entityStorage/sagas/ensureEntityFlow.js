@@ -3,13 +3,12 @@ import { takeEvery } from 'redux-saga';
 
 import normalize from 'modules/entityDescriptors/utils/normalize';
 import moment from 'moment';
-// import invariant from 'invariant';
 
 import { rethrowError, apiServiceResultTypeInvariant, typeInvariant } from 'utils';
 
-import { EntityResult } from '../types';
-import { ApiService } from 'modules/api/types';
-import { ApiErrorResult } from 'utils/types';
+import type ApiService from 'types/ApiService';
+import type EntityResult from 'types/EntityResult';
+import type Error from 'types/Error';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
@@ -50,7 +49,7 @@ export function *ensureEntityTask(action) {
 		yield put(receiveEntities(normalizationResult.entities, moment().format()));
 	} catch (error) {
 		rethrowError(error);
-		apiServiceResultTypeInvariant(error, ApiErrorResult);
+		apiServiceResultTypeInvariant(error, Error);
 		yield put(receiveFetchEntityFailure(collectionName, entityId, error));
 	}
 }
