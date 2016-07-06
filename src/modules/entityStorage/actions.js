@@ -28,41 +28,6 @@ export function receiveFetchEntityFailure(collectionName, entityId, error) {
 }
 
 /**
- * Load all entities from collection into storage from remote when needed.
- *
- * @deprecated
- *
- * @param collectionName
- * @param entityId
- */
-export const ENSURE_ENTITY_COLLECTION = 're-app/entityStorage/ENSURE_ENTITY_COLLECTION';
-export function ensureEntityCollection(collectionName, filter) {
-	return { type: ENSURE_ENTITY_COLLECTION, payload: { collectionName, filter } };
-}
-
-/**
- * Request entity collection from remote
- *
- * @deprecated
- *
- */
-export const ATTEMPT_FETCH_ENTITY_COLLECTION = 're-app/entityStorage/ATTEMPT_FETCH_ENTITY_COLLECTION';
-export function attemptFetchEntityCollection(collectionName, filter) {
-	return { type: ATTEMPT_FETCH_ENTITY_COLLECTION, payload: { collectionName, filter } };
-}
-
-/**
- * Error occurred when ensuring entity collection
- *
- * @deprecated
- *
- */
-export const RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE = 're-app/entityStorage/RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE';
-export function receiveFetchEntityCollectionFailure(collectionName, error) {
-	return { type: RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE, payload: { collectionName, error } };
-}
-
-/**
  *
  * @deprecated
  *

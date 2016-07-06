@@ -10,7 +10,6 @@ import {
 	RECEIVE_ENTITY,
 	RECEIVE_ENTITIES,
 	RECEIVE_FETCH_ENTITY_FAILURE,
-	RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE,
 	MERGE_ENTITY,
 	PERSIST_ENTITY,
 	RECEIVE_PERSIST_ENTITY_SUCCESS,
@@ -172,20 +171,6 @@ export default createReducer(
 				}));
 				newState = newState.setIn(['errors', collectionName, entityId], error);
 				return newState;
-			},
-		],
-		[RECEIVE_FETCH_ENTITY_COLLECTION_FAILURE]: [
-			t.struct({
-				collectionName: t.String,
-				error: ApiErrorResult,
-			}),
-			(state, action) => {
-				const { collectionName, error } = action.payload;
-				return state.merge({
-					collectionsErrors: {
-						[collectionName]: error,
-					},
-				}, { deep: true });
 			},
 		],
 		[MERGE_ENTITY]: [
