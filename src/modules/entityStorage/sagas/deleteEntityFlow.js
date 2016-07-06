@@ -1,5 +1,5 @@
 import { rethrowError, apiServiceResultTypeInvariant } from 're-app/utils';
-import { ApiErrorResult } from 're-app/utils/types';
+import type Error from 'types/Error';
 
 import { call, select, put } from 'redux-saga/effects';
 import { takeEvery } from 'redux-saga';
@@ -23,7 +23,7 @@ export function *deleteEntityTask(action) {
 		yield put(receiveDeleteEntitySuccess(collectionName, entityId));
 	} catch (e) {
 		rethrowError(e);
-		apiServiceResultTypeInvariant(e, ApiErrorResult);
+		apiServiceResultTypeInvariant(e, Error);
 		yield put(receiveDeleteEntityFailure(collectionName, entityId));
 	}
 }

@@ -1,14 +1,11 @@
+// @flow
 import moment from 'moment';
 import hash from 'object-hash';
 
 import { rethrowError, typeInvariant, apiServiceResultTypeInvariant } from 're-app/utils';
-import {
-	ApiService,
-} from 're-app/modules/api/types';
-import {
-	EntityResult,
-} from '../types';
-import { ApiValidationErrorResult } from 'utils/types';
+import type ApiService from 'types/ApiService';
+import type EntityResult from 'types/EntityResult';
+import type EntityValidationError from 'types/EntityValidationError';
 
 import { takeEvery } from 'redux-saga';
 import { call, select, put, fork } from 'redux-saga/effects';
@@ -123,7 +120,7 @@ export function *persistEntityTask(action) {
 		);
 	} catch (error) {
 		rethrowError(error);
-		apiServiceResultTypeInvariant(error, ApiValidationErrorResult);
+		apiServiceResultTypeInvariant(error, EntityValidationError);
 		yield put(receivePersistEntityFailure(collectionName, entityId, error));
 	}
 }

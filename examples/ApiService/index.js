@@ -15,7 +15,7 @@ export default class ApiServiceExamples extends React.Component {
 				</CodeArea>
 
 				<CodeArea title="tcomb definition of ApiService">
-					{require('!!raw!re-app/src/modules/api/types')}
+					{require('!!raw!re-app/src/types/ApiService')}
 				</CodeArea>
 
 			</div>

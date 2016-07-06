@@ -10,9 +10,10 @@ export const getEntitySchemaGetter = (collectionName) =>
 	(state) =>
 		_.get(state, ['entityDescriptors', 'schemas', collectionName]);
 
-import { EntityAssociationFieldSchema } from './types';
 import { validate } from 'tcomb-validation';
 import { Schema, arrayOf } from 'normalizr';
+import type EntityAssociationFieldSchema from 'types/EntityAssociationFieldSchema';
+
 export const getEntityMappingGetter = (collectionName) => (state) => {
 	const schemas = _.get(state, ['entityDescriptors', 'schemas']);
 	const schema = _.get(schemas, collectionName);

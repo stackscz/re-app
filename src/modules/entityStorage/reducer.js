@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import invariant from 'invariant';
 import Immutable from 'seamless-immutable';
+import t from 'tcomb';
 
 import { createReducer } from 're-app/utils';
 
@@ -19,22 +20,33 @@ import {
 	RECEIVE_DELETE_ENTITY_FAILURE,
 } from './actions';
 
-import {
-	ApiErrorResult,
-} from 'utils/types';
-import {
-	EntitySchema,
-} from 'modules/entityDescriptors/types';
-import {
-	CollectionName,
-	EntityId,
-	EntityStatus,
-	NormalizedEntityDictionary,
-	ReceiveEntityActionPayload,
-	ReceiveEntitiesActionPayload,
-} from './types';
-
-import t from 'tcomb';
+import type Error from 'types/Error';
+import type EntitySchema from 'types/EntitySchema';
+import type CollectionName from 'types/CollectionName';
+import type EntityId from 'types/EntityId';
+import type EntityStatus from 'types/EntityStatus';
+import type NormalizedEntityDictionary from 'types/NormalizedEntityDictionary';
+const ReceiveEntityActionPayload = t.refinement(
+	t.struct({
+		collectionName: CollectionName,
+		entityId: EntityId,
+		normalizedEntities: NormalizedEntityDictionary,
+		validAtTime: t.String,
+	}),
+	(x) => {
+		const requestedEntityPresent = _.get(
+				x.normalizedEntities,
+				[x.collectionName, x.entityId]
+			) === x.entityId;
+		// TODO const entitiesProperlyNormalized =
+		return requestedEntityPresent;
+	},
+	'ReceiveEntityActionPayload'
+);
+const ReceiveEntitiesActionPayload = t.struct({
+	normalizedEntities: NormalizedEntityDictionary,
+	validAtTime: t.String,
+});
 
 const defaultStatus = {
 	transient: false,
@@ -160,7 +172,7 @@ export default createReducer(
 			t.struct({
 				collectionName: t.String,
 				entityId: EntityId,
-				error: ApiErrorResult,
+				error: Error,
 			}),
 			(state, action) => {
 				const { collectionName, entityId, error } = action.payload;

@@ -1,10 +1,8 @@
 import createReducer from 'utils/createReducer';
 import t from 'tcomb';
 import Immutable from 'seamless-immutable';
-import {
-	SchemasDictionary,
-	FieldsetsDictionary,
-} from './types';
+import type SchemasDictionary from 'types/SchemasDictionary';
+import type FieldsetsDictionary from 'types/FieldsetsDictionary';
 import {
 	RECEIVE_ENTITY_DESCRIPTORS,
 } from './actions';

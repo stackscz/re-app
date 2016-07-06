@@ -9,15 +9,10 @@ import {
 	receiveEntityDescriptorsFailure,
 } from './actions';
 
-import {
-	SchemasDictionary,
-	FieldsetsDictionary,
-} from './types';
+import type SchemasDictionary from 'types/SchemasDictionary';
+import type FieldsetsDictionary from 'types/FieldsetsDictionary';
+import type Error from 'types/Error';
 import t from 'tcomb';
-
-import {
-	ApiErrorResult,
-} from 'utils/types';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
@@ -42,7 +37,7 @@ export function *loadEntityDescriptorsTask() {
 		yield put(receiveEntityDescriptors(entityDescriptors));
 	} catch (e) {
 		rethrowError(e);
-		apiServiceResultTypeInvariant(e, ApiErrorResult);
+		apiServiceResultTypeInvariant(e, Error);
 		yield put(receiveEntityDescriptorsFailure(e));
 	}
 }
