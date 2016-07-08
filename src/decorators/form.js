@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import {reduxForm} from 'redux-form';
-import parseFormFields from 're-app/utils/parseFormFields';
+import parseFormFields from 'utils/parseFormFields';
 
 /**
  * Wraps component with redux-form enhanced with validation
