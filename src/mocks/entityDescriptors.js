@@ -6,6 +6,10 @@ export default {
 			idFieldName: 'id',
 			isFilterable: false,
 			fields: {
+				id: {
+					name: 'id',
+					type: 'integer',
+				},
 				title: {
 					name: 'title',
 					type: 'string',

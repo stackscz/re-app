@@ -93,7 +93,7 @@ export default class App extends React.Component {
 	static propTypes = {
 		state: T.object,
 		postsStatuses: T.object,
-		posts: T.object,
+		posts: T.array,
 		postsSchema: T.object,
 		loadPosts: T.func,
 		loadPost: T.func,
@@ -233,7 +233,7 @@ export default class App extends React.Component {
 							<h1>Posts</h1>
 							<ul className="list-group">
 								{Object.keys(posts).length ?
-									_.map(_.values(posts), (post) => {
+									_.map(posts, (post) => {
 										const transient = _.get(postsStatuses, [post.id, 'transient'], false);
 										return (
 											<li
