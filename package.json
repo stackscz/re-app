@@ -79,7 +79,7 @@
     "normalizr": "^2.1.0",
     "object-hash": "^1.1.2",
     "qs": "^6.1.0",
-    "react": "^15.1.0",
+    "react": "~15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
     "react-dom": "^15.0.1",
     "react-pure-render": "^1.0.2",
