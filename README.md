@@ -87,8 +87,8 @@ Website featuring `re-app` examples will then be served on http://127.0.0.1:8080
 
 ## Testing
 
-Tests are stored in `tests` folder. Run them by executing `npm run test` (you have to have `babel-node` installed globally, `npm install -g babel-cli`).
-You can also run only one test file by running `npm run test:file path/to/test`.
+Tests are stored in `test` folder. Run them by executing `npm run test`.
+You can also run only subset of tests by running `npm run test:file -- --grep "test description"`.
 
 ## Proposed library structure
 
