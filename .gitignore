@@ -4,3 +4,4 @@ lib
 npm-debug.log
 docs
 db_re-app-examples
+coverage
