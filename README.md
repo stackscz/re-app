@@ -1,4 +1,4 @@
-# `re-app`
+# `re-app` [![Build Status](https://travis-ci.org/stackscz/re-app.svg?branch=master)](https://travis-ci.org/stackscz/re-app)
 
 Common `react` components, `redux`, `react-router`, `redux-router`, `redux-saga` boilerplate and helper codebase
 
