@@ -75,5 +75,3 @@ export default function itHandlesAction(reducer:Function,
 		});
 	});
 }
-
-//${JSON.stringify(initialState, null, '\t')}
