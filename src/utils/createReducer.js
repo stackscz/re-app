@@ -7,11 +7,11 @@ import { INIT } from 're-app/utils/actions';
 /**
  * Creates reducer function in an unobtrusive way
  *
- * @param {?function} params.stateType tcomb type to test state against after action
- * @param {any} params.initialState state to start with, can be seamless-immutable structure
- * @param {object} params.handlers
- * @param {string} params.name
- * @returns {reducer} reducer function
+ * @param {?Function} stateType tcomb type to test state against after action
+ * @param {any} initialState state to start with, can be seamless-immutable structure
+ * @param {Object} handlers
+ * @param {?string} name
+ * @returns {Function} reducer function
  */
 export default function createReducer(...params) {
 	let stateType;
