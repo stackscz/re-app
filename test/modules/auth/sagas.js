@@ -9,7 +9,7 @@ import {getUser, getAuthContext} from 'modules/auth/selectors';
 import { sagas, actions } from 'modules/auth';
 
 import ApiServiceImpl from 'mocks/ApiService';
-import type ApiService from 'types/ApiService';
+import type { ApiService } from 'types/ApiService';
 
 const apiContext = {
 	service: ApiServiceImpl,
