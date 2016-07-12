@@ -3,11 +3,11 @@ import _ from 'lodash';
 import { denormalize as denormalizrDenormalize } from 'denormalizr';
 import createNormalizrSchema from './createNormalizrSchema';
 import trimSchema from './trimSchema';
-import type Entity from 'types/Entity';
-import type EntityId from 'types/EntityId';
-import type CollectionName from 'types/CollectionName';
-import type NormalizedEntityDictionary from 'types/NormalizedEntityDictionary';
-import type SchemasDictionary from 'types/SchemasDictionary';
+import type { Entity } from 'types/Entity';
+import type { EntityId } from 'types/EntityId';
+import type { CollectionName } from 'types/CollectionName';
+import type { NormalizedEntityDictionary } from 'types/NormalizedEntityDictionary';
+import type { SchemasDictionary } from 'types/SchemasDictionary';
 
 /**
  * Construct nested object or array of nested objects from entities dictionary

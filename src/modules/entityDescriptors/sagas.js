@@ -9,9 +9,9 @@ import {
 	receiveEntityDescriptorsFailure,
 } from './actions';
 
-import type SchemasDictionary from 'types/SchemasDictionary';
-import type FieldsetsDictionary from 'types/FieldsetsDictionary';
-import type Error from 'types/Error';
+import type { SchemasDictionary } from 'types/SchemasDictionary';
+import type { FieldsetsDictionary } from 'types/FieldsetsDictionary';
+import type { Error } from 'types/Error';
 import t from 'tcomb';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';

@@ -3,9 +3,9 @@ import moment from 'moment';
 import hash from 'object-hash';
 
 import { rethrowError, typeInvariant, apiServiceResultTypeInvariant } from 're-app/utils';
-import type ApiService from 'types/ApiService';
-import type EntityResult from 'types/EntityResult';
-import type EntityValidationError from 'types/EntityValidationError';
+import type { ApiService } from 'types/ApiService';
+import type { EntityResult } from 'types/EntityResult';
+import type { EntityValidationError } from 'types/EntityValidationError';
 
 import { takeEvery } from 'redux-saga';
 import { call, select, put, fork } from 'redux-saga/effects';

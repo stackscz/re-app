@@ -1,5 +1,5 @@
 import { rethrowError, apiServiceResultTypeInvariant } from 're-app/utils';
-import type Error from 'types/Error';
+import type { Error } from 'types/Error';
 
 import { call, select, put } from 'redux-saga/effects';
 import { takeEvery } from 'redux-saga';

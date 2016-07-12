@@ -6,9 +6,9 @@ import moment from 'moment';
 
 import { rethrowError, apiServiceResultTypeInvariant, typeInvariant } from 'utils';
 
-import type ApiService from 'types/ApiService';
-import type EntityResult from 'types/EntityResult';
-import type Error from 'types/Error';
+import type { ApiService } from 'types/ApiService';
+import type { EntityResult } from 'types/EntityResult';
+import type { Error } from 'types/Error';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';

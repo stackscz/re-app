@@ -4,7 +4,7 @@
 import createReducer from 'utils/createReducer';
 import Immutable from 'seamless-immutable';
 import t from 'tcomb';
-import type AuthContext from 'types/AuthContext';
+import type { AuthContext } from 'types/AuthContext';
 
 import {
 	INITIALIZE,

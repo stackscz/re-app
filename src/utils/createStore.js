@@ -7,8 +7,8 @@ import createHistory from 'utils/createHistory';
 import { reducer as formReducer } from 'redux-form';
 import { init } from 'utils/actions';
 
-import type StoreConfig from 'types/StoreConfig';
-import type RouterConfig from 'types/RouterConfig';
+import type { StoreConfig } from 'types/StoreConfig';
+import type { RouterConfig } from 'types/RouterConfig';
 
 function createRouter(routerConfig:RouterConfig = {}) {
 	const finalHistory = routerConfig.history || createHistory();
