@@ -320,9 +320,11 @@ function isCredentialsValid(credentials) {
 }
 
 function logBoldMessage(message) {
-	console.log('XXX XXX XXX XXX XXX XXX XXX');
-	console.log(['XXX', message].join(' '));
-	console.log('XXX XXX XXX XXX XXX XXX XXX');
+	if (process.env.NODE_ENV !== 'test') {
+		console.log('XXX XXX XXX XXX XXX XXX XXX');
+		console.log(['XXX', message].join(' '));
+		console.log('XXX XXX XXX XXX XXX XXX XXX');
+	}
 }
 
 function DelayedPromise(handler) {
