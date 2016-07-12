@@ -3,7 +3,7 @@ import validatejs from 'validate.js';
 import dot from 'dot-object';
 import { typeInvariant } from 're-app/utils';
 import t from 'tcomb';
-import type FormField from 'types/FormField';
+import type { FormField } from 'types/FormField';
 
 export default function parseFormFields(fields) {
 	typeInvariant(fields, t.list(FormField));

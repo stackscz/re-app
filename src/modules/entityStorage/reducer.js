@@ -20,12 +20,12 @@ import {
 	RECEIVE_DELETE_ENTITY_FAILURE,
 } from './actions';
 
-import type Error from 'types/Error';
-import type EntitySchema from 'types/EntitySchema';
-import type CollectionName from 'types/CollectionName';
-import type EntityId from 'types/EntityId';
-import type EntityStatus from 'types/EntityStatus';
-import type NormalizedEntityDictionary from 'types/NormalizedEntityDictionary';
+import type { Error } from 'types/Error';
+import type { EntitySchema } from 'types/EntitySchema';
+import type { CollectionName } from 'types/CollectionName';
+import type { EntityId } from 'types/EntityId';
+import type { EntityStatus } from 'types/EntityStatus';
+import type { NormalizedEntityDictionary } from 'types/NormalizedEntityDictionary';
 const ReceiveEntityActionPayload = t.refinement(
 	t.struct({
 		collectionName: CollectionName,

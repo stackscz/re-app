@@ -2,9 +2,9 @@
 import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
 
 import t from 'tcomb';
-import type ApiContext from 'types/ApiContext';
-import type AuthContext from 'types/AuthContext';
-import type Error from 'types/Error';
+import type { ApiContext } from 'types/ApiContext';
+import type { AuthContext } from 'types/AuthContext';
+import type { Error } from 'types/Error';
 
 import {
 	rethrowError,

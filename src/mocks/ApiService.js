@@ -38,7 +38,7 @@ mappings.posts.define({
 	tags: arrayOf(mappings.tags)
 });
 
-import type ApiService from 'types/ApiService';
+import type { ApiService } from 'types/ApiService';
 
 export default ({
 	/**

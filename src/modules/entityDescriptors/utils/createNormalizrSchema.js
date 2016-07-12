@@ -1,7 +1,7 @@
 // @flow
 import _ from 'utils/lodash';
 import invariant from 'invariant';
-import type SchemasDictionary from 'types/SchemasDictionary';
+import type { SchemasDictionary } from 'types/SchemasDictionary';
 import { Schema, arrayOf } from 'normalizr';
 
 let cachedSchemas;

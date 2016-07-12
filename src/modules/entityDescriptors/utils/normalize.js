@@ -6,11 +6,11 @@ import {
 	normalize as normalizrNormalize,
 	arrayOf,
 } from 'normalizr';
-import type Entity from 'types/Entity';
-import type EntityId from 'types/EntityId';
-import type CollectionName from 'types/CollectionName';
-import type SchemasDictionary from 'types/SchemasDictionary';
-import type NormalizedEntityDictionary from 'types/NormalizedEntityDictionary';
+import type { Entity } from 'types/Entity';
+import type { EntityId } from 'types/EntityId';
+import type { CollectionName } from 'types/CollectionName';
+import type { SchemasDictionary } from 'types/SchemasDictionary';
+import type { NormalizedEntityDictionary } from 'types/NormalizedEntityDictionary';
 type NormalizationResult = {
 	entities:NormalizedEntityDictionary,
 	result:EntityId|Array<EntityId>,
