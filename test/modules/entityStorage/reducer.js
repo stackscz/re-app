@@ -1,5 +1,5 @@
 /* eslint-disable */
-import itha from '../../itHandlesAction';
+import itha from 'utils/itHandlesAction';
 import expect from 'expect';
 import reducer from 'modules/entityStorage/reducer';
 import {
