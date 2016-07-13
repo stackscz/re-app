@@ -1,11 +1,7 @@
 /* eslint-disable */
+import itha from '../../itHandlesAction';
 import expect from 'expect';
-import _ from 'lodash';
-import Immutable from 'seamless-immutable';
 import reducer from 'modules/entityStorage/reducer';
-import {
-	INIT
-} from 'utils/actions';
 import {
 	ENSURE_ENTITY,
 	ATTEMPT_FETCH_ENTITY,
@@ -18,8 +14,7 @@ import {
 } from 'modules/entityStorage/actions';
 
 describe('modules/entityStorage/reducer', () => {
-
-	const expectedInitialState = {
+	const realInitialState = {
 		collections: {},
 		statuses: {},
 		errors: {},
@@ -47,7 +42,7 @@ describe('modules/entityStorage/reducer', () => {
 	it('should return the initial state', () => {
 		expect(
 			reducer(undefined, {})
-		).toEqual(expectedInitialState)
+		).toEqual(realInitialState);
 	});
 
 	it(`should not handle ${MERGE_ENTITY}`, () => {
@@ -59,135 +54,124 @@ describe('modules/entityStorage/reducer', () => {
 				noInteraction: false,
 			},
 		});
-		expect(state).toEqual(expectedInitialState);
+		expect(state).toEqual(realInitialState);
 	});
 
 	const notFoundError = {
 		code: 404,
 		message: 'Not found',
 	};
-	const validAtTime = "2016-06-10T10:00:00+00:00";
+	const validAtTime = '2016-06-10T10:00:00+00:00';
 
-	describe(`should handle ${ENSURE_ENTITY}`, () => {
-
-		it(`should set proper statuses for unknown entity`, () => {
-			let state = reducer(
+	itha(
+		reducer,
+		ENSURE_ENTITY,
+		[
+			[
+				'should set proper statuses for unknown entity',
 				undefined,
 				{
-					type: ENSURE_ENTITY,
-					payload: {
-						collectionName: 'posts',
-						entityId: 'unknownid',
-					},
-				}
-			);
-
-			expect(state).toInclude({
-				statuses: {
-					posts: {
-						unknownid: {
-							transient: true,
-							fetching: false,
-							persisting: false,
-							deleting: false,
-						},
-					},
+					collectionName: 'posts',
+					entityId: '100',
 				},
-			});
-		});
-
-		it(`should set proper statuses for known entity`, () => {
-			_.each([true, false], (initiallyTransient) => {
-				const expectedStatus = {
-					transient: initiallyTransient,
-					fetching: true,
-					persisting: false,
-					deleting: true,
-				};
-
-				let state = reducer(
-					Immutable.from({
-						collections: {
+				{
+					toInclude: {
+						statuses: {
 							posts: {
-								knownid: {
-									id: 'knownid',
+								100: {
+									transient: true,
+									fetching: false,
+									persisting: false,
+									deleting: false,
 								},
 							},
 						},
-						statuses: {
-							posts: {
-								knownid: expectedStatus,
-							},
-						},
-						errors: {},
-					}),
-					{
-						type: ENSURE_ENTITY,
-						payload: {
-							collectionName: 'posts',
-							entityId: 'knownid',
-						},
-					}
-				);
-
-				expect(state).toInclude({
-					statuses: {
-						posts: {
-							knownid: expectedStatus,
-						},
-					},
-				});
-			});
-		});
-
-	});
-
-	describe(`should handle ${ATTEMPT_FETCH_ENTITY}`, () => {
-
-		it(`should set proper statuses for unknown entity`, () => {
-			let state = reducer(undefined, {
-				type: ATTEMPT_FETCH_ENTITY,
-				payload: {
-					collectionName: 'posts',
-					entityId: 'unknownid',
-				},
-			});
-
-			expect(state).toInclude({
-				statuses: {
-					posts: {
-						unknownid: {
-							transient: true,
-							fetching: true,
-							persisting: false,
-							deleting: false,
-						}
 					},
 				},
-			});
-		});
-
-		it(`should set proper statuses for known entity`, () => {
-
-			const expectedStatus = {
-				transient: false,
-				fetching: false,
-				persisting: false,
-				deleting: false,
-			};
-
-			let state = reducer(
-				Immutable.from({
+			],
+			[
+				'should set proper statuses for known entity',
+				{
 					collections: {
 						posts: {
-							knownid: {
-								id: 'knownid',
+							100: {
+								id: '100',
 							},
 						},
 					},
 					statuses: {
 						posts: {
-							knownid: {
+							100: {
+								transient: true,
+								fetching: true,
+								persisting: false,
+								deleting: true,
+							},
+						},
+					},
+					errors: {},
+				},
+				{
+					collectionName: 'posts',
+					entityId: '100',
+				},
+				{
+					toInclude: {
+						statuses: {
+							posts: {
+								100: {
+									transient: true,
+									fetching: true,
+									persisting: false,
+									deleting: true,
+								},
+							},
+						},
+					},
+				},
+			],
+		]
+	);
+
+	itha(
+		reducer,
+		ATTEMPT_FETCH_ENTITY,
+		[
+			[
+				'set proper statuses for unknown entity',
+				undefined,
+				{
+					collectionName: 'posts',
+					entityId: '100',
+				},
+				{
+					toInclude: {
+						statuses: {
+							posts: {
+								100: {
+									transient: true,
+									fetching: true,
+									persisting: false,
+									deleting: false,
+								},
+							},
+						},
+					},
+				},
+			],
+			[
+				'set proper statuses for known entity',
+				{
+					collections: {
+						posts: {
+							100: {
+								id: '100',
+							},
+						},
+					},
+					statuses: {
+						posts: {
+							100: {
 								transient: false,
 								fetching: false,
 								persisting: false,
@@ -196,43 +180,42 @@ describe('modules/entityStorage/reducer', () => {
 						},
 					},
 					errors: {},
-				}),
+				},
 				{
-					type: ATTEMPT_FETCH_ENTITY,
-					payload: {
-						collectionName: 'posts',
-						entityId: 'knownid',
-					},
-				}
-			);
-
-			expect(state).toInclude({
-				statuses: {
-					posts: {
-						knownid: {
-							transient: false,
-							fetching: true,
-							persisting: false,
-							deleting: false,
+					collectionName: 'posts',
+					entityId: '100',
+				},
+				{
+					toInclude: {
+						statuses: {
+							posts: {
+								100: {
+									transient: false,
+									fetching: true,
+									persisting: false,
+									deleting: false,
+								},
+							},
 						},
 					},
 				},
-			});
-		});
+			],
+		]
+	);
 
-	});
-
-	describe(`should handle ${RECEIVE_FETCH_ENTITY_FAILURE}`, () => {
-
-		it(`should set errors and statuses`, () => {
-			let state = reducer(
-				Immutable.from({
+	itha(
+		reducer,
+		RECEIVE_FETCH_ENTITY_FAILURE,
+		[
+			[
+				'set errors and statuses',
+				{
 					collections: {
 						posts: {
 							1: {
-								id: '1'
-							}
-						}
+								id: '1',
+							},
+						},
 					},
 					statuses: {
 						posts: {
@@ -241,84 +224,80 @@ describe('modules/entityStorage/reducer', () => {
 								fetching: false,
 								persisting: false,
 								deleting: false,
-							}
-						}
+							},
+						},
 					},
-				}),
+				},
 				{
+					collectionName: 'posts',
+					entityId: '1',
+					error: notFoundError,
+				},
+				{
+					toInclude: {
+						statuses: {
+							posts: {
+								1: {
+									transient: true,
+									fetching: false,
+									persisting: false,
+									deleting: false,
+								},
+							},
+						},
+					},
+				},
+			],
+			[
+				'replace (not merge) errors',
+				reducer(undefined, {
 					type: RECEIVE_FETCH_ENTITY_FAILURE,
 					payload: {
 						collectionName: 'posts',
 						entityId: '1',
-						error: notFoundError,
+						error: {
+							code: 100,
+							message: 'Some weird error',
+							additionalData: 'data',
+						},
 					},
-				}
-			);
-			state = reducer(state, {
-				type: RECEIVE_FETCH_ENTITY_FAILURE,
-				payload: {
-					collectionName: 'posts',
-					entityId: '2',
-					error: notFoundError,
-				},
-			});
-
-			expect(state.statuses).toInclude({
-				posts: {
-					1: {
-						transient: true,
-						fetching: false,
-						persisting: false,
-						deleting: false,
-					},
-					2: {
-						transient: true,
-						fetching: false,
-						persisting: false,
-						deleting: false,
-					},
-				},
-			});
-			expect(state.errors).toEqual({
-				posts: {
-					1: notFoundError,
-					2: notFoundError,
-				},
-			});
-		});
-
-		it(`should replace (not merge) errors`, () => {
-
-			let state = reducer(undefined, {
-				type: RECEIVE_FETCH_ENTITY_FAILURE,
-				payload: {
-					collectionName: 'posts',
-					entityId: '1',
-					error: {
-						code: 100,
-						message: 'Some weird error',
-						additionalData: 'data',
-					},
-				},
-			});
-			state = reducer(state, {
-				type: RECEIVE_FETCH_ENTITY_FAILURE,
-				payload: {
+				}),
+				{
 					collectionName: 'posts',
 					entityId: '1',
 					error: notFoundError,
 				},
-			});
-			expect(state.errors.posts['1']).toEqual(notFoundError);
-		});
+				{
+					toEqual: {
+						collections: {},
+						statuses: {
+							posts: {
+								1: {
+									transient: true,
+									fetching: false,
+									persisting: false,
+									deleting: false,
+								},
+							},
+						},
+						errors: {
+							posts: {
+								1: notFoundError,
+							},
+						},
+					},
+				},
+			],
+		]
+	);
 
-	});
 
-	describe(`should handle ${RECEIVE_ENTITIES}`, () => {
-
-		it(`should store entities`, () => {
-
-			let state = reducer(
+	itha(
+		reducer,
+		RECEIVE_ENTITIES,
+		[
+			[
+				'new entities',
 				{
 					collections: {
 						posts: {
@@ -338,22 +317,17 @@ describe('modules/entityStorage/reducer', () => {
 						posts: {
 							1: {
 								transient: false,
-							}
+							},
 						},
 						tags: {
 							1: {
 								transient: true,
-							}
+							},
 						},
 					},
+					errors: {},
 				},
 				{
-					type: INIT,
-				}
-			);
-			state = reducer(state, {
-				type: RECEIVE_ENTITIES,
-				payload: {
 					normalizedEntities: {
 						posts: {
 							1: {
@@ -370,304 +344,320 @@ describe('modules/entityStorage/reducer', () => {
 					},
 					validAtTime,
 				},
-			});
-
-			expect(state).toInclude({
-				collections: {
-					posts: {
-						1: {
-							id: 1,
-							title: 'Post title',
-						},
-					},
-					tags: {
-						1: {
-							id: 1,
-							name: 'Tag name',
-						},
-					},
-				},
-				statuses: {
-					posts: {
-						1: {
-							validAtTime,
-							transient: false,
-						}
-					},
-					tags: {
-						1: {
-							validAtTime,
-							transient: false,
-						}
-					},
-				}
-			}).toExcludeKey(
 				{
-					errors: {
-						posts: {
-							1: true
+					toInclude: {
+						collections: {
+							posts: {
+								1: {
+									id: 1,
+									title: 'Post title',
+								},
+							},
+							tags: {
+								1: {
+									id: 1,
+									name: 'Tag name',
+								},
+							},
 						},
-						tags: {
-							1: true
+						statuses: {
+							posts: {
+								1: {
+									validAtTime,
+									transient: false,
+								},
+							},
+							tags: {
+								1: {
+									validAtTime,
+									transient: false,
+								},
+							},
+						},
+					},
+					toExcludeKey: {
+						errors: {
+							posts: {
+								1: true,
+							},
+							tags: {
+								1: true,
+							},
 						},
 					}
 				}
-			)
-		});
-
-		it(`should replace (not merge) entities`, () => {
-
-			let state = reducer(undefined, {
-				type: RECEIVE_ENTITIES,
-				payload: {
-					normalizedEntities: {
-						posts: {
-							1: {
-								id: 1,
-								title: 'Post title',
-							},
-						},
-						tags: {
-							1: {
-								id: 1,
-								name: 'Tag name',
-							},
-						},
-					},
-					validAtTime,
-				},
-			});
-			state = reducer(state, {
-				type: RECEIVE_ENTITIES,
-				payload: {
-					normalizedEntities: {
-						posts: {
-							1: {
-								id: 1,
-							},
-						},
-						tags: {
-							1: {
-								id: 1,
-							},
-						},
-					},
-					validAtTime,
-				},
-			});
-			expect(state.collections.posts['1']).toEqual({
-				id: 1,
-			});
-			expect(state.collections.tags['1']).toEqual({
-				id: 1,
-			});
-		});
-
-	});
-
-	describe(`should handle ${PERSIST_ENTITY}`, () => {
-
-		it(`should store entity with proper status`, () => {
-			const newEntityId = '5b34h5j432j';
-			let state = reducer(undefined, {
-				type: PERSIST_ENTITY,
-				payload: {
-					entitySchema,
-					entityId: newEntityId,
-					entity: {
-						id: newEntityId,
-						title: 'Some Post',
-					},
-					noInteraction: false,
-				},
-			});
-			expect(state).toInclude({
-				collections: {
-					posts: {
-						[newEntityId]: {
-							id: newEntityId,
-							title: 'Some Post',
-						},
-					},
-				},
-				statuses: {
-					posts: {
-						[newEntityId]: {
-							transient: true,
-							persisting: true,
-						},
-					},
-				},
-			});
-		});
-
-		it(`should replace (not merge) entity`, () => {
-			const newEntityId = '5b34h5j432j';
-			let state = reducer(undefined, {
-				type: PERSIST_ENTITY,
-				payload: {
-					entitySchema,
-					entityId: newEntityId,
-					entity: {
-						id: newEntityId,
-						title: 'Some Post',
-						some: 'Additional prop',
-					},
-					noInteraction: false,
-				},
-			});
-			state = reducer(state, {
-				type: PERSIST_ENTITY,
-				payload: {
-					entitySchema,
-					entityId: newEntityId,
-					entity: {
-						id: newEntityId,
-						title: 'Some Post',
-					},
-					noInteraction: false,
-				},
-			});
-			expect(state.collections.posts[newEntityId]).toEqual({
-				id: newEntityId,
-				title: 'Some Post',
-			});
-			expect(state).toInclude({
-				statuses: {
-					posts: {
-						[newEntityId]: {
-							transient: true,
-							persisting: true,
-						},
-					},
-				}
-			});
-
-		});
-
-	});
-
-	describe(`should handle ${RECEIVE_PERSIST_ENTITY_SUCCESS}`, () => {
-
-		it('should set resulting entities and statuses', () => {
-			let state = reducer(undefined, {
-				type: RECEIVE_PERSIST_ENTITY_SUCCESS,
-				payload: {
-					validAtTime,
-					collectionName: 'posts',
-					normalizedEntities: {
-						posts: {
-							1: {
-								id: 1
-							}
-						}
-					}
-				},
-			});
-
-			expect(state).toInclude({
-				collections: {
-					posts: {
-						1: {
-							id: 1
-						}
-					}
-				},
-				statuses: {
-					posts: {
-						1: {
-							validAtTime,
-							transient: false,
-							persisting: false,
-						}
-					}
-				},
-			})
-		});
-
-		it('should replace transient entity', () => {
-
-			const transientId = 'n4bh3j2';
-			let state = reducer(
-				Immutable.from({
+			],
+			[
+				'replace (not merge) entities',
+				{
 					collections: {
 						posts: {
-							[transientId]: {
-								id: transientId
-							}
-						}
+							1: {
+								id: 1,
+								title: 'Post title',
+							},
+						},
+						tags: {
+							1: {
+								id: 1,
+								name: 'Tag name',
+							},
+						},
 					},
 					statuses: {
 						posts: {
-							[transientId]: {
+							1: {
+								transient: false,
+							},
+						},
+						tags: {
+							1: {
+								transient: true,
+							},
+						},
+					},
+					errors: {},
+				},
+				{
+					normalizedEntities: {
+						posts: {
+							1: {
+								id: 1,
+							},
+						},
+						tags: {
+							1: {
+								id: 1,
+							},
+						},
+					},
+					validAtTime,
+				},
+				{
+					expect: (state) => {
+						expect(state.collections.posts['1']).toEqual({
+							id: 1,
+						});
+						expect(state.collections.tags['1']).toEqual({
+							id: 1,
+						});
+					}
+				}
+			]
+		]
+	);
+
+	const newEntityId = '5b34h5j432j';
+	itha(
+		reducer,
+		PERSIST_ENTITY,
+		[
+			[
+				'store entity with proper status',
+				undefined,
+				{
+					entitySchema,
+					entityId: newEntityId,
+					entity: {
+						id: newEntityId,
+						title: 'Some Post',
+					},
+					noInteraction: false,
+				},
+				{
+					toInclude: {
+						collections: {
+							posts: {
+								[newEntityId]: {
+									id: newEntityId,
+									title: 'Some Post',
+								},
+							},
+						},
+						statuses: {
+							posts: {
+								[newEntityId]: {
+									transient: true,
+									persisting: true,
+								},
+							},
+						},
+					}
+				}
+			],
+			[
+				'replace (not merge) entity',
+				{
+					collections: {
+						posts: {
+							[newEntityId]: {
+								id: newEntityId,
+								title: 'Some Post',
+								some: 'Additional prop',
+							},
+						},
+					},
+					statuses: {
+						posts: {
+							[newEntityId]: {
 								transient: true,
 								persisting: true,
 							}
 						}
 					},
 					errors: {},
-				}),
+				},
 				{
-					type: RECEIVE_PERSIST_ENTITY_SUCCESS,
-					payload: {
-						validAtTime,
-						collectionName: 'posts',
-						normalizedEntities: {
+					entitySchema,
+					entityId: newEntityId,
+					entity: {
+						id: newEntityId,
+						title: 'Some Post',
+					},
+					noInteraction: false,
+				},
+				{
+					expect: (state) => {
+						expect(state.collections.posts[newEntityId]).toEqual({
+							id: newEntityId,
+							title: 'Some Post',
+						});
+					},
+					toInclude: {
+						statuses: {
+							posts: {
+								[newEntityId]: {
+									transient: true,
+									persisting: true,
+								},
+							},
+						},
+					},
+				},
+			],
+		]
+	);
+
+	const transientId = 'n4bh3j2';
+	itha(
+		reducer,
+		RECEIVE_PERSIST_ENTITY_SUCCESS,
+		[
+			[
+				'set resulting entities and statuses',
+				undefined,
+				{
+					validAtTime,
+					collectionName: 'posts',
+					normalizedEntities: {
+						posts: {
+							1: {
+								id: 1,
+							},
+						},
+					},
+				},
+				{
+					toInclude: {
+						collections: {
 							posts: {
 								1: {
-									id: 1
-								}
-							}
+									id: 1,
+								},
+							},
 						},
-						transientEntityId: transientId
+						statuses: {
+							posts: {
+								1: {
+									validAtTime,
+									transient: false,
+									persisting: false,
+								},
+							},
+						},
+					}
+				}
+			],
+			[
+				'replace transient entity',
+				{
+					collections: {
+						posts: {
+							[transientId]: {
+								id: transientId,
+							},
+						},
 					},
-				}
-			);
-
-			expect(state).toInclude({
-				statuses: {
-					posts: {
-						1: {
-							validAtTime,
-							transient: false,
-							persisting: false,
-						}
-					}
+					statuses: {
+						posts: {
+							[transientId]: {
+								transient: true,
+								persisting: true,
+							},
+						},
+					},
+					errors: {},
 				},
-			});
-		});
-
-	});
-
-	describe(`should handle ${RECEIVE_PERSIST_ENTITY_FAILURE}`, () => {
-
-		let state = reducer(undefined, {
-			type: RECEIVE_PERSIST_ENTITY_FAILURE,
-			payload: {
-				collectionName: 'posts',
-				entityId: '1',
-				error: notFoundError,
-			},
-		});
-
-		it('should set proper statuses and error', () => {
-			expect(state).toInclude({
-				statuses: {
-					posts: {
-						1: {
-							transient: false,
-							persisting: false,
-						}
-					}
+				{
+					validAtTime,
+					collectionName: 'posts',
+					normalizedEntities: {
+						posts: {
+							1: {
+								id: 1,
+							},
+						},
+					},
+					transientEntityId: transientId,
 				},
-				errors: {
-					posts: {
-						1: notFoundError
+				{
+					toInclude: {
+						statuses: {
+							posts: {
+								1: {
+									validAtTime,
+									transient: false,
+									persisting: false,
+								},
+							},
+						},
 					}
 				}
-			});
-		});
+			]
+		]
+	);
 
-	});
+	itha(
+		reducer,
+		RECEIVE_PERSIST_ENTITY_FAILURE,
+		[
+			[
+				'set proper statuses and error',
+				undefined,
+				{
+					collectionName: 'posts',
+					entityId: '1',
+					error: notFoundError,
+				},
+				{
+					toInclude: {
+						statuses: {
+							posts: {
+								1: {
+									transient: false,
+									persisting: false,
+								},
+							},
+						},
+						errors: {
+							posts: {
+								1: notFoundError,
+							},
+						},
+					}
+				}
+			]
+		]
+	);
 
 });
