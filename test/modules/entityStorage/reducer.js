@@ -549,10 +549,11 @@ describe('modules/entityStorage/reducer', () => {
 				{
 					validAtTime,
 					collectionName: 'posts',
+					entityId: '1',
 					normalizedEntities: {
 						posts: {
 							1: {
-								id: 1,
+								id: '1',
 							},
 						},
 					},
@@ -562,7 +563,7 @@ describe('modules/entityStorage/reducer', () => {
 						collections: {
 							posts: {
 								1: {
-									id: 1,
+									id: '1',
 								},
 							},
 						},
@@ -600,6 +601,7 @@ describe('modules/entityStorage/reducer', () => {
 				},
 				{
 					validAtTime,
+					entityId: '1',
 					collectionName: 'posts',
 					normalizedEntities: {
 						posts: {

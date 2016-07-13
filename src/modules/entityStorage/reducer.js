@@ -233,6 +233,7 @@ export default createReducer(
 		[RECEIVE_PERSIST_ENTITY_SUCCESS]: [
 			t.struct({
 				collectionName: t.String,
+				entityId: EntityId,
 				normalizedEntities: NormalizedEntityDictionary,
 				validAtTime: t.String,
 				transientEntityId: t.maybe(EntityId),
