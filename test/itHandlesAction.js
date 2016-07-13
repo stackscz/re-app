@@ -2,6 +2,7 @@
 /* eslint-disable */
 import _ from 'lodash';
 import expect from 'expect';
+import invariant from 'invariant';
 import Immutable from 'seamless-immutable';
 
 /**
@@ -67,9 +68,15 @@ export default function itHandlesAction(reducer:Function,
 			const actionPayload = testCase[2];
 			const expectations = testCase[3];
 			const result = reducer(initialState, { type: actionType, payload: actionPayload });
-			_.each(expectations, (expectedState, expectation) => {
-				it(`${message}`, () => {
-					expect(result)[expectation](expectedState);
+			it(`${message}`, () => {
+				_.each(expectations, (expectedState, expectation) => {
+					const manualExpect = expectation === 'expect'; // _.isFunction(expectedState);
+					if (manualExpect) {
+						invariant(_.isFunction(expectedState), '"expect" expectation key value must be a function');
+						expectedState(result);
+					} else {
+						expect(result)[expectation](expectedState);
+					}
 				});
 			});
 		});
