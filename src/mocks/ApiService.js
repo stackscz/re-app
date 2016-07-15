@@ -1,45 +1,104 @@
 // @flow
 /* eslint-disable */
-
 import _ from 'lodash';
-import { Schema, arrayOf } from 'normalizr';
-import { normalize } from 'normalizr';
-import { denormalize } from 'denormalizr';
 import invariant from 'invariant';
 import hash from 'object-hash';
 
-const API_LATENCY = process.env.NODE_ENV === 'test' ? 0 : 400;
-
 import entityDescriptors from './entityDescriptors';
-
-import PouchDB from 'pouchdb';
-import RelationalPouchDB from 'relational-pouch';
-PouchDB.plugin(RelationalPouchDB);
-const db = new PouchDB('db_re-app-examples');
-db.setSchema([
-	{
-		singular: 'post',
-		plural: 'posts',
-		relations: {
-			tags: { hasMany: 'tag' }
-		}
-	},
-	{
-		singular: 'tag',
-		plural: 'tags'
-	}
-]);
-
-const mappings = {
-	posts: new Schema('posts'),
-	tags: new Schema('tags', { idAttribute: 'name' })
-};
-mappings.posts.define({
-	tags: arrayOf(mappings.tags)
-});
-
 import type { ApiService } from 'types/ApiService';
 
+// setup db
+const schemas = entityDescriptors.schemas;
+const models = {};
+import { DataSource } from 'loopback-datasource-juggler';
+const db = new DataSource('memory');
+_.each(entityDescriptors.schemas, (schema, collectionName) => {
+	models[collectionName] = db.createModel(
+		collectionName,
+		_.pickBy(
+			_.mapValues(schema.fields, (field, fieldName) => {
+				if (field.type === 'association') {
+					return undefined;
+				}
+				if (fieldName === schema.idFieldName) {
+					return {
+						type: field.type,
+						id: true,
+						generated: schema.idFieldName === 'id',
+					}
+				}
+				return {
+					type: String,
+				}
+			}),
+			(x) => x
+		),
+		{
+			idInjection: false,
+			relations: _.pickBy(
+				_.mapValues(schema.fields, (field, fieldName) => {
+					if (field.type === 'association') {
+						return {
+							model: field.collectionName,
+							type: field.isMultiple ? 'hasMany' : 'belongsTo',
+						};
+					}
+				}),
+				(x) => x
+			),
+		}
+	);
+});
+
+// utilities
+
+function logBoldMessage(message) {
+	if (process.env.NODE_ENV !== 'test') {
+		console.log('XXX XXX XXX XXX XXX XXX XXX');
+		console.log(['XXX', message].join(' '));
+		console.log('XXX XXX XXX XXX XXX XXX XXX');
+	}
+}
+
+function isCredentialsValid(credentials) {
+	if (!credentials) return false;
+	return !!(credentials.username === 'username' && credentials.password === 'password');
+}
+
+function getInclude(collectionName) {
+	return _.keys(_.pickBy(schemas[collectionName].fields, (field) => {
+		return field.type === 'association';
+	}));
+}
+
+const API_LATENCY = process.env.NODE_ENV === 'test' ? 0 : 400;
+function DelayedPromise(handler) {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			handler(resolve, reject);
+		}, API_LATENCY);
+	});
+}
+
+function createNotFoundError(details) {
+	return {
+		code: 404,
+		statusText: 'Not found.',
+		details,
+	};
+}
+
+function createUnknownCollectionError(collectionName) {
+	return {
+		code: 400,
+		message: `Unknown collection name "${collectionName}"`,
+		details: {
+			collectionName,
+		},
+	};
+}
+
+// mock service
 export default ({
 	/**
 	 * Called on auth module bootstrap.
@@ -132,7 +191,6 @@ export default ({
 	getEntityDescriptors: (apiContext, authContext) => {
 		logBoldMessage('ApiService.getEntityDescriptors called');
 		return DelayedPromise((resolve, reject) => {
-			//return reject({errors:[]});
 			resolve(entityDescriptors);
 		});
 	},
@@ -147,22 +205,28 @@ export default ({
 	 */
 	getEntityIndex: (collectionName, filter, apiContext, authContext) => {
 		logBoldMessage('ApiService.getEntityIndex called');
-		invariant(
-			_.isUndefined(filter) || _.isEqual(filter, { offset: 0, limit: -1 }),
-			'filtering is not supported in mock implementation of ApiService'
-		);
 		return DelayedPromise((resolve, reject) => {
-			db.rel.find(collectionName).then((result) => {
-				const normalized = formatPouchToNormalized(result, entityDescriptors.schemas);
-				const denormalized = _.mapValues(normalized[collectionName], (entity) => {
-					return denormalize(entity, normalized, mappings[collectionName])
-				});
-				resolve({
-					data: _.values(denormalized)
-				});
-			}).catch((error) => {
-				reject(error);
-			});
+			const model = models[collectionName];
+			if (!model) {
+				return reject(createUnknownCollectionError(collectionName));
+			}
+			model.find(
+				_.merge({ include: getInclude(collectionName) }, filter),
+				(err, entities) => {
+					if (err) {
+						return reject(err);
+					}
+					model.count((err, result) => {
+						if (err) {
+							return reject(err);
+						}
+						resolve({
+							data: _.map(entities, (entity) => (entity.toJSON())),
+							existingCount: result,
+						});
+					});
+				}
+			);
 		}, apiContext);
 	},
 	/**
@@ -183,13 +247,28 @@ export default ({
 					message: 'Not found'
 				});
 			}
-			findOne(collectionName, id, (entity) => {
-				resolve({
-					data: entity
-				});
-			}, (error) => {
-				reject({ ...error, statusCode: 404 });
-			});
+			const model = models[collectionName];
+			if (!model) {
+				return reject(createUnknownCollectionError(collectionName));
+			}
+			const pkName = schemas[collectionName].idFieldName;
+			model.findOne(
+				{
+					where: { [pkName]: id },
+					include: getInclude(collectionName)
+				},
+				(err, entity) => {
+					if (err) {
+						return reject(err);
+					}
+					if (!entity) {
+						return reject(createNotFoundError({ collectionName, [pkName]: id }))
+					}
+					resolve({
+						data: entity,
+					});
+				}
+			);
 		});
 	},
 	/**
@@ -203,20 +282,35 @@ export default ({
 	createEntity: (collectionName, entity, apiContext, authContext) => {
 		logBoldMessage('ApiService.createEntity called');
 		return DelayedPromise((resolve, reject) => {
-			const normalized = normalize(entity, mappings[collectionName]);
-			const normalizedEntity = normalized.entities[collectionName][normalized.result];
-			db.rel.save(collectionName, normalizedEntity).then((result) => {
-				const data = extractEntityFromDbResult(result, collectionName);
-				const entityId = data[entityDescriptors.schemas[collectionName].idFieldName];
-				findOne(collectionName, entityId, (entity) => {
-					resolve({
-						data: entity
-					});
-				}, (error) => {
-					reject(error);
-				});
-			}).catch((error) => {
-				reject(error);
+			const model = models[collectionName];
+			if (!model) {
+				return reject(createUnknownCollectionError(collectionName));
+			}
+			model.create(entity, (err, modelInstance) => {
+				if (err) {
+					return reject(err);
+				}
+				modelInstance.save((err, savedModelInstance) => {
+					if (err) {
+						return reject(err);
+					}
+					const pkName = schemas[collectionName].idFieldName;
+					const pkVal = savedModelInstance[pkName];
+					models[collectionName].findOne(
+						{
+							[pkName]: pkVal,
+							include: getInclude(collectionName)
+						},
+						(err, entity) => {
+							if (err) {
+								return reject(err);
+							}
+							resolve({
+								data: entity.toJSON(),
+							});
+						}
+					);
+				})
 			});
 		});
 	},
@@ -231,35 +325,37 @@ export default ({
 	 */
 	updateEntity: (collectionName, id, entity, apiContext, authContext) => {
 		logBoldMessage('ApiService.updateEntity called');
-
 		return DelayedPromise((resolve, reject) => {
-
-			db.rel.find(collectionName, id).then((result) => {
-				const rev = _.get(_.first(result[collectionName]), 'rev');
-				const normalized = normalize(entity, mappings[collectionName]);
-				const normalizedEntity = normalized.entities[collectionName][normalized.result];
-				const entityWithIdAndRev = {
-					...normalizedEntity,
-					[entityDescriptors.schemas[collectionName].idFieldName]: id,
-					rev
-				};
-				db.rel.save(collectionName, entityWithIdAndRev).then((result) => {
-					const data = extractEntityFromDbResult(result, collectionName);
-					const entityId = data[entityDescriptors.schemas[collectionName].idFieldName];
-					findOne(collectionName, entityId, (entity) => {
-						resolve({
-							data: entity
-						});
-					}, (error) => {
-						reject({ ...error, statusCode: 400 });
-					});
-				}).catch((error) => {
-					reject({ ...error, statusCode: 400 });
-				});
-			}).catch((error) => {
-				reject({ ...error, statusCode: 404 })
-			});
-
+			const model = models[collectionName];
+			if (!model) {
+				return reject(createUnknownCollectionError(collectionName));
+			}
+			const pkName = schemas[collectionName].idFieldName;
+			model.findOne(
+				{ where: { [pkName]: id } },
+				(err, persistedEntity) => {
+					if (err) {
+						return reject(err);
+					}
+					if (!persistedEntity) {
+						return reject(createNotFoundError({ collectionName, [pkName]: id }));
+					}
+					persistedEntity.updateAttributes(entity, (err, entity) => {
+						if (err) {
+							return reject(err);
+						}
+						model.findOne(
+							{ where: { [pkName]: entity[pkName] }, include: getInclude(collectionName) },
+							(err, entity) => {
+								if (err) {
+									return reject(err);
+								}
+								resolve({ data: entity.toJSON() });
+							}
+						);
+					})
+				}
+			);
 		});
 	},
 	/**
@@ -273,78 +369,28 @@ export default ({
 	deleteEntity: (collectionName, id, apiContext, authContext) => {
 		logBoldMessage('ApiService.deleteEntity called');
 		return DelayedPromise((resolve, reject) => {
-			db.rel.find(collectionName, id).then(function (result) {
-				const entityRevisions = _.get(result, collectionName);
-				if (!entityRevisions.length) {
-					return reject({
-						message: 'Not found',
-						statusCode: 404
-					});
+			const model = models[collectionName];
+			if (!model) {
+				return reject(createUnknownCollectionError(collectionName));
+			}
+			const pkName = schemas[collectionName].idFieldName;
+			model.findOne(
+				{ where: { [pkName]: id } },
+				(err, persistedEntity) => {
+					if (err) {
+						return reject(err);
+					}
+					if (!persistedEntity) {
+						return reject(createNotFoundError({ collectionName, [pkName]: id }));
+					}
+					persistedEntity.destroy((err, entity) => {
+						if (err) {
+							return reject(err);
+						}
+						resolve();
+					})
 				}
-				let promise = db.rel;
-				_.each(entityRevisions, (revision) => {
-					promise = promise.del(collectionName, revision);
-				});
-				promise.then(() => {
-					resolve();
-				}).catch((error) => {
-					reject(error);
-				});
-			}).catch((error) => {
-				reject(error);
-			});
+			);
 		});
 	}
 }: ApiService);
-
-function findOne(collectionName, entityId, success, failure) {
-	db.rel.find(collectionName, entityId).then((result) => {
-		const normalized = formatPouchToNormalized(result, entityDescriptors.schemas);
-		const entity = normalized[collectionName][entityId];
-		if (!entity) {
-			return failure({
-				message: 'Not found',
-				statusCode: 404
-			})
-		}
-		const denormalized = denormalize(entity, normalized, mappings[collectionName]);
-		success(denormalized);
-	}).catch((error) => {
-		failure(error);
-	});
-}
-
-function isCredentialsValid(credentials) {
-	if (!credentials) return false;
-	return !!(credentials.username === 'username' && credentials.password === 'password');
-}
-
-function logBoldMessage(message) {
-	if (process.env.NODE_ENV !== 'test') {
-		console.log('XXX XXX XXX XXX XXX XXX XXX');
-		console.log(['XXX', message].join(' '));
-		console.log('XXX XXX XXX XXX XXX XXX XXX');
-	}
-}
-
-function DelayedPromise(handler) {
-	return new Promise((resolve, reject) => {
-		setTimeout(() => {
-			handler(resolve, reject);
-		}, API_LATENCY);
-	});
-}
-
-function formatPouchToNormalized(dictionary, entitySchemas) {
-	return _.mapValues(dictionary, (value, collectionName) => {
-		const schema = entitySchemas[collectionName];
-		return _.keyBy(_.mapValues(value, (item) => {
-			const idFieldValue = item.id;
-			return _.set(_.omit(item, ['rev', 'id']), schema.idFieldName, idFieldValue);
-		}), schema.idFieldName);
-	});
-}
-
-function extractEntityFromDbResult(result, collectionName) {
-	return _.omit(_.first(_.get(result, collectionName)), ['rev']);
-}

@@ -8,11 +8,11 @@ export default {
 			fields: {
 				id: {
 					name: 'id',
-					type: 'integer',
+					type: 'Integer',
 				},
 				title: {
 					name: 'title',
-					type: 'string',
+					type: 'String',
 				},
 				tags: {
 					name: 'tags',
@@ -30,7 +30,7 @@ export default {
 			fields: {
 				name: {
 					name: 'name',
-					type: 'string',
+					type: 'String',
 				},
 			},
 		},
