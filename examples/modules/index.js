@@ -19,6 +19,7 @@ export default class ModulesExamples extends React.Component {
 			'auth',
 			'entityDescriptors',
 			'entityStorage',
+			'entityIndexes',
 		]);
 		return (
 			<div className="container-fluid">
