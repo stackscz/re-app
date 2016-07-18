@@ -18,15 +18,20 @@ export const getDenormalizedEntityGetter = (collectionName, id, maxLevel) =>
 			maxLevel
 		);
 
-export const getDenormalizedEntitiesGetter = (collectionName, entities, maxLevel) =>
-	(state) =>
-		denormalize(
+export const getDenormalizedEntitiesSelector = (collectionName, entities, maxLevel = 1) =>
+	(state) => {
+		if (typeof entities === 'undefined') {
+			return undefined;
+		}
+		return denormalize(
 			entities,
 			collectionName,
 			state.entityStorage.collections,
 			getEntitySchemas(state),
 			maxLevel
 		);
+	};
+
 
 export const getEntityStatusGetter = (collectionName, id) => (state) => {
 	const statusesCollection = state.entityStorage.statuses[collectionName];
