@@ -34,18 +34,22 @@ export default function denormalize(ids:EntityId | Array<EntityId> | Entity | Ar
 
 	let result;
 	if (_.isArray(ids)) {
-		result = _.map(ids, id => {
+		result = _.filter(_.map(ids, id => {
 			const entityId = _.isObject(id) ? id[entitySchema.idFieldName] : id;
+			const entity = _.get(entityDictionary, [collectionName, entityId]);
+			if (!entity) {
+				return undefined;
+			}
 			return denormalizrDenormalize(
-				entityDictionary[collectionName][entityId],
+				entity,
 				entityDictionary,
 				finalNormalizrCollectionSchema
 			);
-		});
+		}), (item) => item);
 	} else {
 		const entityId = _.isObject(ids) ? ids[entitySchema.idFieldName] : ids;
 		result = denormalizrDenormalize(
-			entityDictionary[collectionName][entityId],
+			_.get(entityDictionary, [collectionName, entityId]),
 			entityDictionary,
 			finalNormalizrCollectionSchema
 		);
