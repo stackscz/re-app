@@ -298,7 +298,7 @@ export default ({
 					const pkVal = savedModelInstance[pkName];
 					models[collectionName].findOne(
 						{
-							[pkName]: pkVal,
+							where: { [pkName]: pkVal },
 							include: getInclude(collectionName)
 						},
 						(err, entity) => {
