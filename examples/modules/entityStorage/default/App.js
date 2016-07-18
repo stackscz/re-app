@@ -13,13 +13,12 @@ import entityDescriptorsModule from 're-app/lib/modules/entityDescriptors';
 import entityStorageModule from 're-app/lib/modules/entityStorage';
 import ApiService from 're-app/lib/mocks/ApiService';
 import {
-	ensureEntityCollection,
 	ensureEntity,
 	mergeEntity,
 	deleteEntity,
 } from 're-app/lib/modules/entityStorage/actions';
 import {
-	getDenormalizedEntitiesGetter,
+	getDenormalizedEntitiesSelector,
 } from 're-app/lib/modules/entityStorage/selectors';
 
 import hash from 'object-hash';
@@ -53,17 +52,12 @@ const store = createStore(
 		state,
 		postsSchema: state.entityDescriptors.schemas.posts,
 		postsStatuses: _.get(state.entityStorage.statuses, ['posts'], {}),
-		posts: getDenormalizedEntitiesGetter(
+		posts: getDenormalizedEntitiesSelector(
 			'posts',
-			_.get(state.entityStorage.collections, 'posts', []),
-			1
+			_.values(_.get(state.entityStorage.collections, ['posts'], {}))
 		)(state),
 	}),
 	(dispatch) => ({
-		loadPosts: (e) => {
-			e.preventDefault();
-			dispatch(ensureEntityCollection('posts'));
-		},
 		loadPost: (postId, e) => {
 			e.preventDefault();
 			dispatch(ensureEntity('posts', postId));
@@ -95,7 +89,6 @@ export default class App extends React.Component {
 		postsStatuses: T.object,
 		posts: T.array,
 		postsSchema: T.object,
-		loadPosts: T.func,
 		loadPost: T.func,
 		createPost: T.func,
 		updatePost: T.func,
@@ -136,7 +129,6 @@ export default class App extends React.Component {
 			postsSchema,
 			posts,
 			postsStatuses,
-			loadPosts,
 			loadPost,
 			createPost,
 			updatePost,
@@ -192,14 +184,6 @@ export default class App extends React.Component {
 								<li>
 									<button
 										className="btn btn-primary"
-										onClick={loadPosts}
-									>
-										Load all existing posts
-									</button>
-								</li>
-								<li>
-									<button
-										className="btn btn-primary"
 										onClick={(e) => { loadPost(this.state.postData.id, e); }}
 									>
 										Load post
@@ -232,7 +216,7 @@ export default class App extends React.Component {
 							</ul>
 							<h1>Posts</h1>
 							<ul className="list-group">
-								{Object.keys(posts).length ?
+								{posts.length ?
 									_.map(posts, (post) => {
 										const transient = _.get(postsStatuses, [post.id, 'transient'], false);
 										return (
