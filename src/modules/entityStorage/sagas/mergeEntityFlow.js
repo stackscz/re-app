@@ -42,7 +42,7 @@ export function *mergeEntityTask(action) {
 	const entitySchemas = yield select(getEntitySchemas);
 	const normalizedData = normalize(
 		{ ...data, [entitySchema.idFieldName]: entityId },
-		entitySchema.collectionName,
+		entitySchema.name,
 		entitySchemas
 	);
 	const normalizedEntity = normalizedData.entities[collectionName][normalizedData.result];
@@ -105,7 +105,7 @@ export function *persistEntityTask(action) {
 
 		const normalizationResult = normalize(
 			persistResult.data,
-			entitySchema.collectionName,
+			entitySchema.name,
 			entitySchemas
 		);
 		remoteEntityId = normalizationResult.result;
