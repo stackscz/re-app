@@ -1,6 +1,6 @@
 // @flow
-export type EntityIndexFilter = {
-	offset: number,
-	limit: number,
+export type EntityIndexFilter = void | {
+	offset?: number,
+	limit?: number,
 	page: void,
 };
