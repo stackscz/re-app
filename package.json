@@ -1,6 +1,6 @@
 {
   "name": "re-app",
-  "version": "0.21.6",
+  "version": "0.21.7",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": "https://github.com/stackscz/re-app",
@@ -11,8 +11,9 @@
   "engineStrict": true,
   "scripts": {
     "ab": "node ./node_modules/re-app-builder",
-    "build": "node ./node_modules/babel-cli/bin/babel src/ --out-dir lib --copy-files",
-    "build:watch": "node ./node_modules/babel-cli/bin/babel src/ --out-dir lib --watch --copy-files",
+    "clean": "rimraf lib/",
+    "build": "npm run clean && node ./node_modules/babel-cli/bin/babel src/ --out-dir lib --copy-files",
+    "build:watch": "npm run clean && node ./node_modules/babel-cli/bin/babel src/ --out-dir lib --watch --copy-files",
     "lint": "eslint src/",
     "test": "cross-env NODE_ENV=test mocha --compilers js:babel-register --recursive",
     "test:watch": "npm test -- --watch",
@@ -64,6 +65,7 @@
     "redux-devtools-log-monitor": "^1.0.5",
     "redux-immutable-state-invariant": "^1.2.3",
     "relational-pouch": "^1.4.2",
+    "rimraf": "^2.5.3",
     "webpack-node-externals": "^1.0.0"
   },
   "dependencies": {
