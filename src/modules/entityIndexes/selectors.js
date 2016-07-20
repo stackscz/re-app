@@ -1,19 +1,26 @@
 import _ from 'lodash';
+import hash from 'object-hash';
 
 import normalizeFilter from './utils/normalizeFilter';
+
+import type EntityIndexFilter from 'types/EntityIndexFilter';
 
 export const getEntityIndexSelector = (indexHash) =>
 	(state) =>
 		state.entityIndexes.indexes[indexHash];
 
 /**
- * Selects index with transient entities matching `where` key value of filter
+ * Selects index.content with transient entities matching `where` key value of filter, sorted
  *
  * @param {string} indexHash
  */
-export const getDynamicEntityIndexContentSelector = (indexHash:string) =>
+export const getDynamicEntityIndexContentSelector = (indexHash:string|{collectionName:string, filter: EntityIndexFilter}) =>
 	(state) => {
-		const index = _.get(state, ['entityIndexes', 'indexes', indexHash]);
+		let finalIndexHash = indexHash;
+		if (!_.isString(finalIndexHash)) {
+			finalIndexHash = hash(indexHash);
+		}
+		const index = _.get(state, ['entityIndexes', 'indexes', finalIndexHash]);
 		if (!index || !index.content) {
 			return undefined;
 		}
@@ -46,4 +53,20 @@ export const getDynamicEntityIndexContentSelector = (indexHash:string) =>
 					(_.startsWith(sortSpec, '-') ? 'desc' : 'asc')
 			)
 		);
+	};
+
+export const getDynamicEntityIndexSelector = (indexHash:string|{collectionName:string, filter: EntityIndexFilter}) =>
+	(state) => {
+		let finalIndexHash = indexHash;
+		if (!_.isString(finalIndexHash)) {
+			finalIndexHash = hash(indexHash);
+		}
+		const index = _.get(state, ['entityIndexes', 'indexes', finalIndexHash]);
+		if (!index || !index.content) {
+			return undefined;
+		}
+		return {
+			...index,
+			content: getDynamicEntityIndexContentSelector(finalIndexHash)(state),
+		};
 	};
