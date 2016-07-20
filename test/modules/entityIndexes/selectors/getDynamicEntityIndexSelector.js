@@ -90,7 +90,9 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 		],
 		[
 			{
-				order: '-id',
+				order: [
+					'-id'
+				],
 				where: {
 					parent: '10'
 				}
@@ -100,7 +102,9 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 		],
 		[
 			{
-				order: '-id',
+				order: [
+					'-id'
+				],
 				where: {
 					parent: '20'
 				}

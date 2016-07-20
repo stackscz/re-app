@@ -54,7 +54,9 @@ describe('modules/entityIndexes/utils/normalizeFilter', () => {
 		],
 		[
 			{
-				order: 'name',
+				order: [
+					'name'
+				],
 			},
 			{
 				order: [
