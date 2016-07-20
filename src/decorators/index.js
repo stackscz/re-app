@@ -3,6 +3,7 @@ import app from './app';
 import container from './container';
 import router from './router';
 import form from './form';
+import fieldWithErrors from './fieldWithErrors';
 
 export {
 	blissComponent,
@@ -10,4 +11,5 @@ export {
 	container,
 	router,
 	form,
+	fieldWithErrors,
 };
