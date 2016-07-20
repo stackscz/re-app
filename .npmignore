@@ -1,2 +1,8 @@
+coverage
+db_re-app-examples
+definitions
 examples
-/.*/
+docs
+public
+src
+test

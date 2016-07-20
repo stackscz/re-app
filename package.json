@@ -1,9 +1,11 @@
 {
   "name": "re-app",
-  "version": "0.21.7",
+  "version": "0.21.8",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
-  "repository": "https://github.com/stackscz/re-app",
+  "repository": {
+    "url": "https://github.com/stackscz/re-app"
+  },
   "engines": {
     "node": "^4.0.0",
     "npm": "^3.0.0"
