@@ -17,6 +17,7 @@ export default class DecoratorsExamples extends React.Component {
 			'container',
 			'router',
 			'blissComponent',
+			'form',
 		]);
 		return (
 			<div className="container-fluid">
