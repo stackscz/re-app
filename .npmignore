@@ -6,3 +6,7 @@ docs
 public
 src
 test
+babel-alias.js
+esdoc.json
+webpack.config.js
+.*
