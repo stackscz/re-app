@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars, react/prop-types */
 import React, { PropTypes as T } from 'react';
 import { blissComponent } from 'decorators';
 import { navigate } from 'modules/routing/actions';
@@ -33,6 +34,9 @@ export default class Link extends React.Component {
 			to,
 			children,
 			bm,
+			be,
+			getBlissModuleClassName,
+			getBlissElementClassName,
 			...otherProps,
 			} = this.props;
 		const { routes } = this.context;
