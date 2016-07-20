@@ -20,7 +20,7 @@ import {
 } from 'modules/entityDescriptors/selectors';
 import {
 	getEntityStatusGetter,
-	getDenormalizedEntityGetter,
+	getDenormalizedEntitySelector,
 } from '../selectors';
 import {
 	MERGE_ENTITY,
@@ -77,7 +77,7 @@ export function *persistEntityTask(action) {
 	}
 
 	try {
-		const denormalizedEntity = yield select(getDenormalizedEntityGetter(collectionName, entityId));
+		const denormalizedEntity = yield select(getDenormalizedEntitySelector(collectionName, entityId));
 		let persistResult;
 		if (remoteEntityId) {
 			persistResult = yield call(

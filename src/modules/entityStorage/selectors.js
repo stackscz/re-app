@@ -8,19 +8,25 @@ export const getEntityGetter = (collectionName, id) => (state) => {
 	}
 	return collection[id];
 };
-export const getDenormalizedEntityGetter = (collectionName, id, maxLevel) =>
-	(state) =>
-		denormalize(
+export const getDenormalizedEntitySelector = (collectionName, id, maxLevel = 1) =>
+	(state) => {
+		const entityDictionary = state.entityStorage.collections;
+		const entity = _.get(entityDictionary, [collectionName, id]);
+		if (!collectionName || !id || !entity) {
+			return undefined;
+		}
+		return denormalize(
 			id,
 			collectionName,
-			state.entityStorage.collections,
+			entityDictionary,
 			getEntitySchemas(state),
 			maxLevel
 		);
+	}
 
 export const getDenormalizedEntitiesSelector = (collectionName, entities, maxLevel = 1) =>
 	(state) => {
-		if (typeof entities === 'undefined') {
+		if (!entities) {
 			return undefined;
 		}
 		return denormalize(
