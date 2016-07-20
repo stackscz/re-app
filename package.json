@@ -1,6 +1,6 @@
 {
   "name": "re-app",
-  "version": "0.21.5",
+  "version": "0.21.6",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": "https://github.com/stackscz/re-app",
@@ -22,7 +22,7 @@
     "docs:watch": "esdoc --watch -c ./esdoc.json",
     "coverage": "istanbul cover ./node_modules/.bin/_mocha -- --compilers js:babel-register --recursive",
     "cover": "npm run coverage",
-    "prepublish": "npm run test && npm run build"
+    "prepublish": "npm run lint && npm run test && npm run build"
   },
   "author": "@stackscz",
   "license": "MIT",
@@ -47,6 +47,7 @@
     "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-flow-vars": "^0.4.0",
     "eslint-plugin-flowtype": "^2.3.0",
+    "eslint-plugin-import": "^1.11.1",
     "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-react": "^5.2.2",
     "expect": "^1.20.1",

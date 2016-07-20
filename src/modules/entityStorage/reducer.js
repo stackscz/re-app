@@ -213,14 +213,14 @@ export default createReducer(
 				let newState = state;
 				newState = newState.updateIn(
 					['collections', collectionName, entityId],
-					(value, entity) => {
+					(value, newEntity) => {
 						let newValue = value;
-						if(!newValue) {
+						if (!newValue) {
 							newValue = Immutable.from({});
 						}
 						return newValue.merge(
 							{
-								...entity,
+								...newEntity,
 								[entitySchema.idFieldName]: entityId,
 							}
 						);

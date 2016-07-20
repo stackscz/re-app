@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { getEntitySchemas } from 'modules/entityDescriptors/selectors';
 import denormalize from 'modules/entityDescriptors/utils/denormalize';
 
@@ -22,7 +23,7 @@ export const getDenormalizedEntitySelector = (collectionName, id, maxLevel = 1) 
 			getEntitySchemas(state),
 			maxLevel
 		);
-	}
+	};
 
 export const getDenormalizedEntitiesSelector = (collectionName, entities, maxLevel = 1) =>
 	(state) => {

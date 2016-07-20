@@ -77,7 +77,9 @@ export function *persistEntityTask(action) {
 	}
 
 	try {
-		const denormalizedEntity = yield select(getDenormalizedEntitySelector(collectionName, entityId));
+		const denormalizedEntity = yield select(
+			getDenormalizedEntitySelector(collectionName, entityId)
+		);
 		let persistResult;
 		if (remoteEntityId) {
 			persistResult = yield call(
@@ -92,7 +94,7 @@ export function *persistEntityTask(action) {
 			const {
 				[entitySchema.idFieldName]: idFieldValue, // eslint-disable-line no-unused-vars
 				...strippedIdEntity,
-				} = denormalizedEntity;
+			} = denormalizedEntity;
 			persistResult = yield call(
 				apiService.createEntity,
 				collectionName,
