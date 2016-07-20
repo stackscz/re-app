@@ -1,6 +1,6 @@
 {
   "name": "re-app",
-  "version": "0.20.0",
+  "version": "0.21.5",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": "https://github.com/stackscz/re-app",
