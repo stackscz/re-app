@@ -388,19 +388,23 @@ describe('modules/entityStorage/reducer', () => {
 				}
 			],
 			[
-				'replace (not merge) entities',
+				'merge entities shallowly',
 				{
 					collections: {
 						posts: {
 							1: {
 								id: 1,
 								title: 'Post title',
+								someAssoc: ['1', '2', '3'],
 							},
 						},
 						tags: {
 							1: {
 								id: 1,
 								name: 'Tag name',
+								someEmbed: {
+									foo: 'val1',
+								},
 							},
 						},
 					},
@@ -423,11 +427,15 @@ describe('modules/entityStorage/reducer', () => {
 						posts: {
 							1: {
 								id: 1,
+								someAssoc: ['4'],
 							},
 						},
 						tags: {
 							1: {
 								id: 1,
+								someEmbed: {
+									bar: 'val2',
+								},
 							},
 						},
 					},
@@ -437,9 +445,15 @@ describe('modules/entityStorage/reducer', () => {
 					expect: (state) => {
 						expect(state.collections.posts['1']).toEqual({
 							id: 1,
+							title: 'Post title',
+							someAssoc: ['4'],
 						});
 						expect(state.collections.tags['1']).toEqual({
 							id: 1,
+							name: 'Tag name',
+							someEmbed: {
+								bar: 'val2',
+							},
 						});
 					}
 				}
@@ -486,7 +500,7 @@ describe('modules/entityStorage/reducer', () => {
 				}
 			],
 			[
-				'replace (not merge) entity',
+				'merges entity shallowly',
 				{
 					collections: {
 						posts: {
@@ -494,6 +508,11 @@ describe('modules/entityStorage/reducer', () => {
 								id: newEntityId,
 								title: 'Some Post',
 								some: 'Additional prop',
+								someAssoc: ['1', '2', '3'],
+								someEmbedded: {
+									foo: 'val1',
+									bar: 'val2',
+								},
 							},
 						},
 					},
@@ -513,17 +532,30 @@ describe('modules/entityStorage/reducer', () => {
 					entity: {
 						id: newEntityId,
 						title: 'Some Post',
+						someAssoc: ['4'],
+						someOtherAssoc: ['1', '2', '3'],
+						someEmbedded: {
+							qux: 'other',
+						},
 					},
 					noInteraction: false,
 				},
 				{
 					expect: (state) => {
-						expect(state.collections.posts[newEntityId]).toEqual({
-							id: newEntityId,
-							title: 'Some Post',
-						});
+						expect(state.collections.posts[newEntityId].someAssoc).toEqual(['4']);
+						expect(state.collections.posts[newEntityId].someOtherAssoc).toEqual(['1', '2', '3']);
+						expect(state.collections.posts[newEntityId].someEmbedded).toEqual({ qux: 'other' });
 					},
 					toInclude: {
+						collections: {
+							posts: {
+								[newEntityId]: {
+									id: newEntityId,
+									title: 'Some Post',
+									some: 'Additional prop',
+								}
+							},
+						},
 						statuses: {
 							posts: {
 								[newEntityId]: {

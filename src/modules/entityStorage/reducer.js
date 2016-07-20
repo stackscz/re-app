@@ -60,7 +60,14 @@ function setEntitiesToState(state, normalizedEntities) {
 		let newValue = currentValue;
 		_.each(collections, (entities, collectionName) => {
 			_.each(entities, (entity, entityId) => {
-				newValue = newValue.setIn([collectionName, entityId], entity);
+				newValue = newValue.setIn(
+					[collectionName, entityId],
+					_.assign(
+						{},
+						_.get(newValue, [collectionName, entityId], {}),
+						entity
+					)
+				);
 			});
 		});
 		return newValue;
@@ -117,7 +124,7 @@ export default createReducer(
 				const {
 					normalizedEntities,
 					validAtTime,
-					} = action.payload;
+				} = action.payload;
 
 				let newState = state;
 				newState = newState.merge({
@@ -200,32 +207,35 @@ export default createReducer(
 				noInteraction: t.Boolean,
 			}),
 			(state, action) => {
-				const { entitySchema, entity } = action.payload;
+				const { entitySchema, entityId, entity } = action.payload;
 				const collectionName = entitySchema.name;
-				const entityId = entity[entitySchema.idFieldName];
-				invariant(entityId, 'entityId must be set for "%s" action.', MERGE_ENTITY);
 
 				let newState = state;
-
-				newState = newState.setIn(
+				newState = newState.updateIn(
 					['collections', collectionName, entityId],
-					{
-						...entity,
-						[entitySchema.idFieldName]: entityId,
-					}
+					(value, entity) => {
+						let newValue = value;
+						if(!newValue) {
+							newValue = Immutable.from({});
+						}
+						return newValue.merge(
+							{
+								...entity,
+								[entitySchema.idFieldName]: entityId,
+							}
+						);
+					},
+					entity
 				);
 				newState = setStatusWithDefaults(newState, collectionName, entityId, (currentStatus) => ({
 					persisting: true,
 					transient: currentStatus ? currentStatus.transient : true,
 				}));
 
-				newState = newState.merge({
-					errors: {
-						[collectionName]: {
-							[entityId]: {},
-						},
-					},
-				}, { deep: true });
+				newState = newState.setIn(
+					['errors', collectionName, entityId],
+					{}
+				);
 
 				return newState;
 			},
@@ -244,7 +254,7 @@ export default createReducer(
 					normalizedEntities,
 					transientEntityId,
 					validAtTime,
-					} = action.payload;
+				} = action.payload;
 
 				let newState = setEntitiesToState(state, normalizedEntities);
 
