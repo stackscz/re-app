@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types, no-unused-vars */
 import React, { PropTypes as T } from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
@@ -19,6 +20,8 @@ export default class Btn extends React.Component {
 		const {
 			bm,
 			be,
+			getBlissModuleClassName,
+			getBlissElementClassName,
 			children,
 			href,
 			to,
@@ -57,7 +60,7 @@ export default class Btn extends React.Component {
 
 		return (
 			<BtnTag
-				name={bm()}
+				className={bm()}
 				{...other}
 				href={href}
 			>
