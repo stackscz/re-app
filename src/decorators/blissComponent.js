@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { PropTypes as T } from 'react';
 import classNames from 'classnames';
 import _ from 'lodash';
@@ -27,12 +28,8 @@ export default ComposedComponent => class extends React.Component {
 		if (className) {
 			classes[className] = true;
 		}
-		let resultingModifiers;
-		if (modifiers) {
-			if (!_.isArray(modifiers)) {
-				resultingModifiers = modifiers.split(/\s/i);
-			}
-			_.each(resultingModifiers, (mod) => {
+		if (modifiers.length) {
+			_.each(modifiers, (mod) => {
 				if (mod) {
 					classes[`${name}--${mod}`] = true;
 				}
@@ -41,8 +38,21 @@ export default ComposedComponent => class extends React.Component {
 		return classNames(classes);
 	}
 
+	normalizeModifiers(modifiers) {
+		if (!modifiers) return [];
+		return _.isArray(modifiers) ? modifiers : modifiers.split(/\s+/i);
+	}
+
 	getElementClassName(elementName, modifiers, className) {
-		return this.getClassName(`${this.getModuleName()}-${elementName}`, modifiers, className);
+		const normalizedModifiers = this.normalizeModifiers(modifiers);
+		return this.getClassName(`${this.getModuleName()}-${elementName}`, normalizedModifiers, className);
+	}
+
+	getModuleClassName(modifiers, userModifiers, className) {
+		const normalizedModifiers = this.normalizeModifiers(modifiers);
+		const normalizedUserModifiers = this.normalizeModifiers(userModifiers);
+		const allModifiers = normalizedModifiers.concat(normalizedUserModifiers);
+		return this.getClassName(this.getModuleName(), allModifiers, className);
 	}
 
 	render() {
@@ -51,7 +61,7 @@ export default ComposedComponent => class extends React.Component {
 			modifiers,
 			...otherProps,
 			} = this.props;
-		const getBlissModuleClassName = () => this.getClassName(this.getModuleName(), modifiers);
+		const getBlissModuleClassName = (userModifiers, className) => this.getModuleClassName(modifiers, userModifiers, className);
 		const getBlissElementClassName = this.getElementClassName;
 		return (
 			<ComposedComponent
