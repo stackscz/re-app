@@ -30,7 +30,10 @@ export default function (
 					{},
 					allErrs,
 					{
-						[errorPath]: [errorMessage],
+						[errorPath]: [errorPath].errorMessage ?
+							`${[errorPath].errorMessage} ${errorMessage}`
+							:
+							errorMessage,
 					}
 				);
 			}, {})
