@@ -82,7 +82,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 				entities: {
 					posts: {
 						1: {
-							id: '1',
+							id: 1,
 							title: 'Some post',
 							tags: [
 								'tag-1',
@@ -109,7 +109,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 				entities: {
 					posts: {
 						1: {
-							id: '1',
+							id: 1,
 							title: 'Some post',
 							tags: [
 								'tag-1',
@@ -117,7 +117,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 							],
 						},
 						2: {
-							id: '2',
+							id: 2,
 							title: 'Some post 2',
 							tags: [
 								'tag-3',
@@ -162,7 +162,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 				entities: {
 					posts: {
 						1: {
-							id: '1',
+							id: 1,
 							title: 'Some post',
 							tags: [
 								'tag-1',
