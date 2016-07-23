@@ -348,7 +348,7 @@ export default createReducer(
 						},
 					},
 				}, { deep: true });
-			}
+			},
 		],
 		[RECEIVE_DELETE_ENTITY_SUCCESS]: [
 			t.struct({
@@ -358,9 +358,15 @@ export default createReducer(
 			(state, action) => {
 				const { collectionName, entityId } = action.payload;
 				return state
-					.setIn(['collections', collectionName], state.collections[collectionName].without(`${entityId}`))
-					.setIn(['statuses', collectionName], state.statuses[collectionName].without(`${entityId}`));
-			}
+					.setIn(
+						['collections', collectionName],
+						state.collections[collectionName].without(`${entityId}`)
+					)
+					.setIn(
+						['statuses', collectionName],
+						state.statuses[collectionName].without(`${entityId}`)
+					);
+			},
 		],
 		[RECEIVE_DELETE_ENTITY_FAILURE]: [
 			t.struct({
@@ -381,7 +387,7 @@ export default createReducer(
 						},
 					},
 				}, { deep: true });
-			}
+			},
 		],
 	},
 	'entityStorage'
