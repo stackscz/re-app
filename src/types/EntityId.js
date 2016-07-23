@@ -1,2 +1,2 @@
 // @flow
-export type EntityId = string;
+export type EntityId = number | string;

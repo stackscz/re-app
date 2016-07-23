@@ -38,9 +38,6 @@ export default function normalize(obj:Entity | Array<Entity>,
 				const field = _.get(schemas, [entityMapping.getKey(), 'fields', propertyName]);
 				if (field) { // assign only if it is known field
 					result[propertyName] = propertyValue;
-					if (propertyName === entityMapping.getIdAttribute()) {
-						result[propertyName] = `${result[propertyName]}`;
-					}
 				}
 			},
 			// TODO rethink leaving of warnings

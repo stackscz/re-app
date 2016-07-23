@@ -327,44 +327,62 @@ export default createReducer(
 				return newState;
 			},
 		],
-		[DELETE_ENTITY]: (state, action) => {
-			const { collectionName, entityId } = action.payload;
-			invariant(
-				_.get(state, ['collections', collectionName, entityId]),
-				'unknown entity to delete'
-			);
-			return state.merge({
-				statuses: {
-					[collectionName]: {
-						[entityId]: {
-							transient: true,
-							deleting: true,
+		[DELETE_ENTITY]: [
+			t.struct({
+				collectionName: t.String,
+				entityId: EntityId,
+			}),
+			(state, action) => {
+				const { collectionName, entityId } = action.payload;
+				invariant(
+					_.get(state, ['collections', collectionName, entityId]),
+					'unknown entity to delete'
+				);
+				return state.merge({
+					statuses: {
+						[collectionName]: {
+							[entityId]: {
+								transient: true,
+								deleting: true,
+							},
 						},
 					},
-				},
-			}, { deep: true });
-		},
-		[RECEIVE_DELETE_ENTITY_SUCCESS]: (state, action) => {
-			const { collectionName, entityId } = action.payload;
-
-			return state
-				.setIn(['collections', collectionName], state.collections[collectionName].without(entityId))
-				.setIn(['statuses', collectionName], state.statuses[collectionName].without(entityId));
-		},
-		[RECEIVE_DELETE_ENTITY_FAILURE]: (state, action) => {
-			const { collectionName, entityId, error } = action.payload;
-			return state.merge({
-				statuses: {
-					[collectionName]: {
-						[entityId]: {
-							error,
-							transient: false,
-							deleting: false,
+				}, { deep: true });
+			}
+		],
+		[RECEIVE_DELETE_ENTITY_SUCCESS]: [
+			t.struct({
+				collectionName: t.String,
+				entityId: EntityId,
+			}),
+			(state, action) => {
+				const { collectionName, entityId } = action.payload;
+				return state
+					.setIn(['collections', collectionName], state.collections[collectionName].without(`${entityId}`))
+					.setIn(['statuses', collectionName], state.statuses[collectionName].without(`${entityId}`));
+			}
+		],
+		[RECEIVE_DELETE_ENTITY_FAILURE]: [
+			t.struct({
+				collectionName: t.String,
+				entityId: EntityId,
+				error: Error,
+			}),
+			(state, action) => {
+				const { collectionName, entityId, error } = action.payload;
+				return state.merge({
+					statuses: {
+						[collectionName]: {
+							[entityId]: {
+								error,
+								transient: false,
+								deleting: false,
+							},
 						},
 					},
-				},
-			}, { deep: true });
-		},
+				}, { deep: true });
+			}
+		],
 	},
 	'entityStorage'
 );
