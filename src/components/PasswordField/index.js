@@ -30,11 +30,11 @@ export default class PasswordField extends Component {
 	}
 
 	render() {
-		const { icon, input, bm, be } = this.props;
+		const { icon, bm, be, getBlissElementClassName, getBlissModuleClassName, input } = this.props; // eslint-disable-line
 		const { show } = this.state;
 		return (
 			<div className={bm(null, show ? 'isShown' : '')}>
-				<input className={be('input')} type={show ? 'text' : 'password'} {...input} />
+				<input {...input} type={show ? 'text' : 'password'} className={be('input')} />
 				<span className={be('button')}>
 					<Btn
 						type="button"
