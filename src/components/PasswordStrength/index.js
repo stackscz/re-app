@@ -29,23 +29,24 @@ export default class PasswordStrength extends Component {
 		return find(this.sortedMessages, message => message.minScore >= strength);
 	}
 
-	passwordStrengthCheck(password: string, rules : Array<Object> = defaultPasswordStrengthRules) {
+	passwordStrengthCheck(password, rules : Array<Object> = defaultPasswordStrengthRules) {
+		if (!password) return 0;
 		return rules.reduce((score, rule) => (
 			rule.pattern.test(password) ? score + rule.score : score
 		), 0);
 	}
 
 	render() {
-		const { password, rules, bm, be } = this.props;
+		const { password, rules, bm, be, getBlissElementClassName, getBlissModuleClassName } = this.props; // eslint-disable-line
 		const passwordStrength = this.passwordStrengthCheck(password, rules);
 		const message = this.passwordStrengthMessage(passwordStrength);
 
 		return (
-			<div className={bm()}>
-				<div className={be('text', message.blissModifiers)}>
+			<span className={bm()}>
+				<span className={be('text', message.blissModifiers)}>
 					{message.text}
-				</div>
-			</div>
+				</span>
+			</span>
 		);
 	}
 }
