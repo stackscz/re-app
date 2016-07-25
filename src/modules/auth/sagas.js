@@ -12,9 +12,10 @@ import {
 } from 'utils';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
-import { getUser, getAuthContext } from './selectors';
+import { getAuthContext } from './selectors';
 import {
 	LOGIN,
+	LOGIN_SUCCESS,
 	LOGIN_FAILURE,
 	LOGOUT,
 	initialize,
@@ -66,24 +67,25 @@ export function* authFlow() {
 	apiServiceResultTypeInvariant(serviceAuthContext, AuthContext);
 	yield put(initializeFinish(serviceAuthContext));
 	while (true) { // eslint-disable-line no-constant-condition
-		const user = yield select(getUser);
 		let authorizeTask = null;
 		let logoutTask;
-		if (!user) {
-			const loginAction = yield take(LOGIN);
-			const authContext = yield select(getAuthContext);
-			authorizeTask = yield fork(authorize, loginAction.payload, apiContext, authContext);
-			if (logoutTask) {
-				yield cancel(logoutTask);
-			}
-		}
-
-		const action = yield take([LOGOUT, LOGIN_FAILURE]);
-		if (action.type === LOGOUT) {
-			if (authorizeTask) {
-				yield cancel(authorizeTask);
-			}
-			yield call(logout);
+		const authContext = yield select(getAuthContext);
+		const action = yield take([LOGIN, LOGOUT, LOGIN_FAILURE, LOGIN_SUCCESS]);
+		switch (action.type) {
+			case LOGIN:
+				authorizeTask = yield fork(authorize, action.payload, apiContext, authContext);
+				if (logoutTask) {
+					yield cancel(logoutTask);
+				}
+				break;
+			case LOGOUT:
+				if (authorizeTask) {
+					yield cancel(authorizeTask);
+				}
+				yield call(logout);
+				break;
+			default:
+				break;
 		}
 	}
 }
