@@ -27,21 +27,23 @@ const RichField = ({
 	bm,
 }) =>
 	<div className={bm()}>
-		{label}
-		<Component
-			input={{
-				name,
-				type,
-				value,
-				placeholder,
-				onBlur,
-				onChange,
-				onFocus,
-				onDrop,
-				onDragStart,
-			}}
-			{...otherInputProps}
-		/>
+		<label>
+			{label}
+			<Component
+				input={{
+					name,
+					type,
+					value,
+					placeholder,
+					onBlur,
+					onChange,
+					onFocus,
+					onDrop,
+					onDragStart,
+				}}
+				{...otherInputProps}
+			/>
+		</label>
 		{touched && error && <ErrorMessages error={error} />}
 	</div>;
 
