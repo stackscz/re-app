@@ -24,7 +24,7 @@ describe('modules/auth/reducer', () => {
 		).toEqual(
 			{
 				authenticating: false,
-				errors: [],
+				error: null,
 				initialized: false,
 				initializing: false,
 				user: null,
@@ -47,7 +47,7 @@ describe('modules/auth/reducer', () => {
 			).toEqual(
 				{
 					authenticating: false,
-					errors: [],
+					error: null,
 					initialized: false,
 					initializing: true,
 					user: null,
@@ -72,7 +72,7 @@ describe('modules/auth/reducer', () => {
 			).toEqual(
 				{
 					authenticating: false,
-					errors: [],
+					error: null,
 					initialized: true,
 					initializing: false,
 					user: null,
@@ -94,7 +94,7 @@ describe('modules/auth/reducer', () => {
 			).toEqual(
 				{
 					authenticating: true,
-					errors: [],
+					error: null,
 					initialized: false,
 					initializing: false,
 					user: null,
@@ -114,7 +114,7 @@ describe('modules/auth/reducer', () => {
 				);
 			}).toThrow(/invalid payload/);
 		});
-		it('should set errors.', () => {
+		it('should set error.', () => {
 			expect(
 				reducer(
 					undefined,
@@ -123,6 +123,7 @@ describe('modules/auth/reducer', () => {
 						payload: {
 							error: {
 								code: 100,
+								message: 'Unknown error.',
 							}
 						},
 					}
@@ -130,11 +131,10 @@ describe('modules/auth/reducer', () => {
 			).toEqual(
 				{
 					authenticating: false,
-					errors: [
-						{
-							code: 100,
-						}
-					],
+					error: {
+						code: 100,
+						message: 'Unknown error.',
+					},
 					initialized: false,
 					initializing: false,
 					user: null,
@@ -170,7 +170,7 @@ describe('modules/auth/reducer', () => {
 			).toEqual(
 				{
 					authenticating: false,
-					errors: [],
+					error: null,
 					initialized: false,
 					initializing: false,
 					user: {
@@ -207,7 +207,7 @@ describe('modules/auth/reducer', () => {
 			).toEqual(
 				{
 					authenticating: false,
-					errors: [],
+					error: null,
 					initialized: false,
 					initializing: false,
 					user: null,

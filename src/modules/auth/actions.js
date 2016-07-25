@@ -15,7 +15,7 @@ export function login(credentials) {
 
 export const LOGIN_SUCCESS = 're-app/auth/LOGIN_SUCCESS';
 export function loginSuccess(user) {
-	return { type: LOGIN_SUCCESS, payload: user };
+	return { type: LOGIN_SUCCESS, payload: { user } };
 }
 
 export const LOGIN_FAILURE = 're-app/auth/LOGIN_FAILURE';

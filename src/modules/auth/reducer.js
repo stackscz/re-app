@@ -4,6 +4,7 @@
 import createReducer from 'utils/createReducer';
 import Immutable from 'seamless-immutable';
 import t from 'tcomb';
+import type { Error } from 'types/Error';
 import type { AuthContext } from 'types/AuthContext';
 
 import {
@@ -19,7 +20,7 @@ export default createReducer(
 	AuthContext,
 	Immutable.from({
 		user: null,
-		errors: [],
+		error: null,
 		initializing: false,
 		initialized: false,
 		authenticating: false,
@@ -43,7 +44,7 @@ export default createReducer(
 				return state;
 			}
 			return state.merge({
-				errors: [],
+				error: null,
 				authenticating: true,
 			});
 		},
@@ -52,21 +53,20 @@ export default createReducer(
 				user: t.Object,
 			}),
 			(state, action) => {
+				const { user } = action.payload;
 				return state.merge({
-					...action.payload,
+					user,
 					authenticating: false,
 				});
 			},
 		],
 		[LOGIN_FAILURE]: [
 			t.struct({
-				error: t.Object,
+				error: Error,
 			}),
 			(state, action) => {
 				const { error } = action.payload;
-				return state
-					.update('errors', (errors, newError) => errors.concat([newError]), error)
-					.merge({ authenticating: false });
+				return state.merge({ authenticating: false, error });
 			},
 		],
 		[LOGOUT_SUCCESS]: (state, action) => {

@@ -1,7 +1,8 @@
 // @flow
+import type { Error } from 'types/Error';
 export type AuthContext = {
 	user?: Object,
-	errors: Array<Object>,
+	error?: Error,
 	initializing: boolean,
 	initialized: boolean,
 	authenticating: boolean,
