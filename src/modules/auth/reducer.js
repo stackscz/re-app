@@ -40,9 +40,6 @@ export default createReducer(
 			});
 		},
 		[LOGIN]: (state) => {
-			if (state.user) {
-				return state;
-			}
 			return state.merge({
 				error: null,
 				authenticating: true,
