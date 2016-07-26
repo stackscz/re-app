@@ -36,6 +36,7 @@ export default class Modal extends React.Component {
 			closeOnBackdropClick,
 			children,
 			} = this.props;
+
 		return (
 			<ReactModal2
 				onClose={onClose}
@@ -44,12 +45,8 @@ export default class Modal extends React.Component {
 				backdropClassName="Modal"
 				modalClassName="Modal-content"
 			>
-				<div className="Modal-row" onClick={this.handleBackdropClick}>
-					<div className="Modal-cell">
-						<div className="Modal-contentWraper" onClick={(e) => e.stopPropagation()}>
-							{children}
-						</div>
-					</div>
+				<div className="Modal-close" onClick={this.handleBackdropClick}>
+					{children}
 				</div>
 			</ReactModal2>
 		);
