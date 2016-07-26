@@ -25,7 +25,8 @@
     "docs:watch": "esdoc --watch -c ./esdoc.json",
     "coverage": "istanbul cover ./node_modules/.bin/_mocha -- --compilers js:babel-register --recursive",
     "cover": "npm run coverage",
-    "prepublish": "npm run lint && npm run test && npm run build"
+    "prepublish": "npm run lint && npm run test && npm run build",
+    "precommit": "npm run lint"
   },
   "author": "@stackscz",
   "license": "MIT",
@@ -54,6 +55,7 @@
     "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-react": "^5.2.2",
     "expect": "^1.20.1",
+    "husky": "^0.11.6",
     "istanbul": "^1.1.0-alpha.1",
     "json-loader": "^0.5.4",
     "loopback-datasource-juggler": "^2.47.0",
