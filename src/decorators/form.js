@@ -9,8 +9,8 @@ import mergeWithArrays from 'utils/mergeWithArrays';
  *
  */
 export default function form({
-	schema,
-	errorMessages,
+	schema = {},
+	errorMessages = {},
 	validate: userValidate,
 	initialValues: userInitialValues,
 	...config,
