@@ -61,7 +61,7 @@ export function* authorize(credentials, apiContext:ApiContext, authContext:AuthC
 		return;
 	}
 
-	yield put(loginSuccess(apiCallResult));
+	yield put(loginSuccess(apiCallResult.user));
 }
 
 export function* logout() {
