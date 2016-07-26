@@ -34,6 +34,6 @@ export function logoutSuccess() {
 }
 
 export const LOGOUT_FAILURE = 're-app/auth/LOGOUT_FAILURE';
-export function logoutFailure() {
-	return { type: LOGOUT_FAILURE };
+export function logoutFailure(error) {
+	return { type: LOGOUT_FAILURE, payload: { error } };
 }

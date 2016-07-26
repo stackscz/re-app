@@ -6,10 +6,9 @@ import type { ApiContext } from 'types/ApiContext';
 import type { AuthContext } from 'types/AuthContext';
 import type { Error } from 'types/Error';
 
-import {
-	rethrowError,
-	apiServiceResultTypeInvariant,
-} from 'utils';
+import rethrowError from 'utils/rethrowError';
+import apiServiceResultTypeInvariant from 'utils/apiServiceResultTypeInvariant';
+import isOfType from 'utils/isOfType';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from './selectors';
@@ -28,15 +27,41 @@ import {
 
 export function* authorize(credentials, apiContext:ApiContext, authContext:AuthContext) {
 	const apiService = yield select(getApiService);
+	let apiCallResult;
 	try {
-		const result = yield call(apiService.login, credentials, apiContext, authContext);
-		apiServiceResultTypeInvariant(result, t.struct({ user: t.Object }));
-		yield put(loginSuccess(result));
-	} catch (error) {
-		rethrowError(error);
-		apiServiceResultTypeInvariant(error, Error);
-		yield put(loginFailure(error));
+		apiCallResult = yield call(apiService.login, credentials, apiContext, authContext);
+	} catch (apiCallError) {
+		rethrowError(apiCallError);
+		if (!isOfType(apiCallError, Error)) {
+			yield put(
+				loginFailure(
+					{
+						code: 5000,
+						message: 'Invalid error response',
+						originalResponse: apiCallError,
+					}
+				)
+			);
+			return;
+		}
+		yield put(loginFailure(apiCallError));
+		return;
 	}
+
+	if (!isOfType(apiCallResult, t.struct({ user: t.Object }))) {
+		yield put(
+			loginFailure(
+				{
+					code: 4000,
+					message: 'Api did not return user',
+					originalResponse: apiCallResult,
+				}
+			)
+		);
+		return;
+	}
+
+	yield put(loginSuccess(apiCallResult));
 }
 
 export function* logout() {
@@ -46,10 +71,21 @@ export function* logout() {
 	try {
 		yield call(apiService.logout, apiContext, authContext);
 		yield put(logoutSuccess());
-	} catch (error) {
-		rethrowError(error);
-		apiServiceResultTypeInvariant(error, Error);
-		yield put(logoutFailure());
+	} catch (apiCallError) {
+		rethrowError(apiCallError);
+		if (!isOfType(apiCallError, Error)) {
+			yield put(
+				logoutFailure(
+					{
+						code: 5000,
+						message: 'Unknown error on logout',
+						originalResponse: apiCallError,
+					}
+				)
+			);
+			return;
+		}
+		yield put(logoutFailure(apiCallError));
 	}
 }
 

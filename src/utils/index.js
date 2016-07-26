@@ -4,6 +4,7 @@ import createStore from './createStore';
 import createModule from './createModule';
 import typeInvariant from './typeInvariant';
 import apiServiceResultTypeInvariant from './apiServiceResultTypeInvariant';
+import isOfType from './isOfType';
 
 export {
 	rethrowError,
@@ -12,4 +13,5 @@ export {
 	createModule,
 	typeInvariant,
 	apiServiceResultTypeInvariant,
+	isOfType,
 };

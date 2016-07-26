@@ -14,6 +14,7 @@ import {
 	LOGIN_SUCCESS,
 	LOGIN_FAILURE,
 	LOGOUT_SUCCESS,
+	LOGOUT_FAILURE,
 } from './actions';
 
 export default createReducer(
@@ -72,6 +73,17 @@ export default createReducer(
 				user: null,
 			});
 		},
+		[LOGOUT_FAILURE]: [
+			t.struct({
+				error: Error,
+			}),
+			(state, action) => {
+				const { error } = action.payload;
+				return state.merge({
+					error,
+				});
+			},
+		],
 	},
 	'auth'
 );
