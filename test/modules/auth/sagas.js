@@ -36,7 +36,7 @@ describe('modules/auth/sagas:authorize test - login success', (t) => {
 
 	it('should put LOGIN_SUCCESS action after successful login', () => {
 		var loginResult = { user: {} };
-		expect(saga.next(loginResult).value).toEqual(put(actions.loginSuccess(loginResult)));
+		expect(saga.next(loginResult).value).toEqual(put(actions.loginSuccess({})));
 	});
 
 });

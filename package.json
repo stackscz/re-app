@@ -1,6 +1,6 @@
 {
   "name": "re-app",
-  "version": "0.21.15",
+  "version": "0.21.16",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": {
