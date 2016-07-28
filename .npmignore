@@ -4,7 +4,6 @@ definitions
 examples
 docs
 public
-src
 test
 babel-alias.js
 esdoc.json
