@@ -2,13 +2,14 @@
 import { useRouterHistory, browserHistory } from 'react-router';
 import createHistoryLib from 'history/lib/createBrowserHistory';
 import useQueries from 'history/lib/useQueries';
+import withScroll from 'scroll-behavior';
 import qs from 'qs';
 
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 
 var history = undefined;
 if (canUseDOM) {
-	history = useRouterHistory(createHistoryLib)({
+	history = withScroll(useRouterHistory(createHistoryLib)({
 		parseQueryString: function (queryString) {
 			const parsedQueryObject = qs.parse(queryString);
 			return parseValues(parsedQueryObject);
@@ -16,7 +17,7 @@ if (canUseDOM) {
 		stringifyQuery: function (query) {
 			return qs.stringify(query, {encode: false});
 		}
-	});
+	}));
 }
 
 export default function createHistory() {
