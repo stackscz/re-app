@@ -15,26 +15,26 @@ import hash from 'object-hash';
 const exampleState = {
 	indexes: _.keyBy([
 		{
-			collectionName: 'posts',
+			modelName: 'posts',
 			filter: {},
 			fetching: false,
 			content: [],
 		},
 		{
-			collectionName: 'posts',
+			modelName: 'posts',
 			filter: {
 				limit: 10,
 			},
 			fetching: false,
 			content: [],
 		},
-	], ({ collectionName, filter }) => hash({ collectionName, filter })),
+	], ({ modelName, filter }) => hash({ modelName, filter })),
 };
 
 describe('modules/entityIndexes/reducer', () => {
 
 	const eeiPayload = {
-		collectionName: 'posts',
+		modelName: 'posts',
 		filter: { where: { parentId: '10' } },
 	};
 
@@ -50,7 +50,7 @@ describe('modules/entityIndexes/reducer', () => {
 					toEqual: {
 						indexes: {
 							[hash(eeiPayload)]: {
-								collectionName: eeiPayload.collectionName,
+								modelName: eeiPayload.modelName,
 								filter: eeiPayload.filter,
 								fetching: false,
 								error: undefined,
@@ -66,7 +66,7 @@ describe('modules/entityIndexes/reducer', () => {
 				{
 					indexes: {
 						[hash(eeiPayload)]: {
-							collectionName: eeiPayload.collectionName,
+							modelName: eeiPayload.modelName,
 							filter: eeiPayload.filter,
 							fetching: true,
 							content: ['1', '2', '3'],
@@ -81,7 +81,7 @@ describe('modules/entityIndexes/reducer', () => {
 					toEqual: {
 						indexes: {
 							[hash(eeiPayload)]: {
-								collectionName: eeiPayload.collectionName,
+								modelName: eeiPayload.modelName,
 								filter: eeiPayload.filter,
 								fetching: true,
 								content: ['1', '2', '3'],
@@ -104,7 +104,7 @@ describe('modules/entityIndexes/reducer', () => {
 				'nonexisting index',
 				exampleState,
 				{
-					indexHash: hash({ collectionName: 'unknowns', filter: {} }),
+					indexHash: hash({ modelName: 'unknowns', filter: {} }),
 				},
 				{
 					toEqual: exampleState,
@@ -114,12 +114,12 @@ describe('modules/entityIndexes/reducer', () => {
 				'existing index',
 				exampleState,
 				{
-					indexHash: hash({ collectionName: 'posts', filter: {} }),
+					indexHash: hash({ modelName: 'posts', filter: {} }),
 				},
 				{
 					toInclude: {
 						indexes: {
-							[hash({ collectionName: 'posts', filter: {} })]: {
+							[hash({ modelName: 'posts', filter: {} })]: {
 								fetching: true,
 							},
 						},
@@ -138,7 +138,7 @@ describe('modules/entityIndexes/reducer', () => {
 				'nonexisting index',
 				exampleState,
 				{
-					indexHash: hash({ collectionName: 'unknowns', filter: {} }),
+					indexHash: hash({ modelName: 'unknowns', filter: {} }),
 					content: ['1', '2', '3'],
 					existingCount: 10,
 					validAtTime: 'hbjjnkbhv',
@@ -146,7 +146,7 @@ describe('modules/entityIndexes/reducer', () => {
 				{
 					toNotInclude: {
 						indexes: {
-							[hash({ collectionName: 'unknowns', filter: {} })]: {}
+							[hash({ modelName: 'unknowns', filter: {} })]: {}
 						}
 					}
 				}
@@ -155,7 +155,7 @@ describe('modules/entityIndexes/reducer', () => {
 				'existing index',
 				exampleState,
 				{
-					indexHash: hash({ collectionName: 'posts', filter: {} }),
+					indexHash: hash({ modelName: 'posts', filter: {} }),
 					content: ['1', '2', '3'],
 					existingCount: 10,
 					validAtTime: actionTime,
@@ -163,7 +163,7 @@ describe('modules/entityIndexes/reducer', () => {
 				{
 					toInclude: {
 						indexes: {
-							[hash({ collectionName: 'posts', filter: {} })]: {
+							[hash({ modelName: 'posts', filter: {} })]: {
 								content: ['1', '2', '3'],
 								validAtTime: actionTime,
 							}
@@ -187,13 +187,13 @@ describe('modules/entityIndexes/reducer', () => {
 				'unknown index',
 				undefined,
 				{
-					indexHash: hash({ collectionName: 'posts', filter: {} }),
+					indexHash: hash({ modelName: 'posts', filter: {} }),
 					error: notFoundError
 				},
 				{
 					toNotInclude: {
 						indexes: {
-							[hash({ collectionName: 'posts', filter: {} })]: {}
+							[hash({ modelName: 'posts', filter: {} })]: {}
 						}
 					}
 				}
@@ -202,13 +202,13 @@ describe('modules/entityIndexes/reducer', () => {
 				'known index',
 				exampleState,
 				{
-					indexHash: hash({ collectionName: 'posts', filter: {} }),
+					indexHash: hash({ modelName: 'posts', filter: {} }),
 					error: notFoundError
 				},
 				{
 					toInclude: {
 						indexes: {
-							[hash({ collectionName: 'posts', filter: {} })]: {
+							[hash({ modelName: 'posts', filter: {} })]: {
 								error: notFoundError
 							}
 						}

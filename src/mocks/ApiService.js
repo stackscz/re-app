@@ -12,9 +12,9 @@ const schemas = entityDescriptors.schemas;
 const models = {};
 import { DataSource } from 'loopback-datasource-juggler';
 const db = new DataSource('memory');
-_.each(entityDescriptors.schemas, (schema, collectionName) => {
-	models[collectionName] = db.createModel(
-		collectionName,
+_.each(entityDescriptors.schemas, (schema, modelName) => {
+	models[modelName] = db.createModel(
+		modelName,
 		_.pickBy(
 			_.mapValues(schema.fields, (field, fieldName) => {
 				if (field.type === 'association') {
@@ -39,7 +39,7 @@ _.each(entityDescriptors.schemas, (schema, collectionName) => {
 				_.mapValues(schema.fields, (field, fieldName) => {
 					if (field.type === 'association') {
 						return {
-							model: field.collectionName,
+							model: field.modelName,
 							type: field.isMultiple ? 'hasMany' : 'belongsTo',
 						};
 					}
@@ -62,11 +62,11 @@ function logBoldMessage(message) {
 
 function isCredentialsValid(credentials) {
 	if (!credentials) return false;
-	return !!(credentials.username === 'username' && credentials.password === 'password');
+	return (credentials.username === 'username' && credentials.password === 'password');
 }
 
-function getInclude(collectionName) {
-	return _.keys(_.pickBy(schemas[collectionName].fields, (field) => {
+function getInclude(modelName) {
+	return _.keys(_.pickBy(schemas[modelName].fields, (field) => {
 		return field.type === 'association';
 	}));
 }
@@ -88,12 +88,12 @@ function createNotFoundError(details) {
 	};
 }
 
-function createUnknownCollectionError(collectionName) {
+function createUnknownCollectionError(modelName) {
 	return {
 		code: 400,
-		message: `Unknown collection name "${collectionName}"`,
+		message: `Unknown collection name "${modelName}"`,
 		details: {
-			collectionName,
+			modelName,
 		},
 	};
 }
@@ -123,12 +123,12 @@ export default ({
 	 * @param authContext auth module state slice
 	 * @returns {Promise}
 	 */
-	initializeAuth: (apiContext, authContext) => {
+	refreshAuth: (apiContext, authContext) => {
 		logBoldMessage('ApiService.initializeAuth called');
 		return DelayedPromise((resolve) => {
 			// possibly set user and possibly modify authContext
 			const updatedAuthContext = {
-				...authContext,
+				authContext,
 				user: { username: 'username' }
 			};
 			resolve(updatedAuthContext);
@@ -150,7 +150,7 @@ export default ({
 			if (isCredentialsValid(credentials)) {
 				// set user and possibly modify authContext
 				resolve({
-					...authContext,
+					authContext: authContext,
 					user: {
 						username: credentials.username
 					}
@@ -158,12 +158,9 @@ export default ({
 			} else {
 				// TODO rethink error result format
 				reject({
-					errors: [
-						{
-							message: 'Invalid credentials'
-						}
-					],
-					originalHttpResponse: {}
+					code: 401,
+					message: 'Invalid credentials',
+					originalResponse: {},
 				});
 			}
 		});
@@ -197,21 +194,25 @@ export default ({
 	/**
 	 * Resolves with result of api call for entity collection index possibly filtered by filter param
 	 *
-	 * @param collectionName
+	 * @param modelName
 	 * @param filter
 	 * @param apiContext
 	 * @param authContext
 	 * @returns {Promise}
 	 */
-	getEntityIndex: (collectionName, filter, apiContext, authContext) => {
+	getEntityIndex: (modelName, modelResource, originalFilter, apiContext, authContext) => {
 		logBoldMessage('ApiService.getEntityIndex called');
+		let filter = originalFilter || {};
+		if (filter.limit === -1) {
+			filter = _.assign({}, filter, { limit: 9999999 });
+		}
 		return DelayedPromise((resolve, reject) => {
-			const model = models[collectionName];
+			const model = models[modelName];
 			if (!model) {
-				return reject(createUnknownCollectionError(collectionName));
+				return reject(createUnknownCollectionError(modelName));
 			}
 			model.find(
-				_.merge({ include: getInclude(collectionName) }, filter),
+				_.merge({ include: getInclude(modelName) }, filter),
 				(err, entities) => {
 					if (err) {
 						return reject(err);
@@ -232,13 +233,13 @@ export default ({
 	/**
 	 * Resolves with single entity from given collection and with given id
 	 *
-	 * @param collectionName
+	 * @param modelName
 	 * @param id
 	 * @param apiContext
 	 * @param authContext
 	 * @returns {Promise}
 	 */
-	getEntity: (collectionName, id, apiContext, authContext) => {
+	getEntity: (modelName, id, apiContext, authContext) => {
 		logBoldMessage('ApiService.getEntity called');
 		return DelayedPromise((resolve, reject) => {
 			if (!id) {
@@ -247,22 +248,22 @@ export default ({
 					message: 'Not found'
 				});
 			}
-			const model = models[collectionName];
+			const model = models[modelName];
 			if (!model) {
-				return reject(createUnknownCollectionError(collectionName));
+				return reject(createUnknownCollectionError(modelName));
 			}
-			const pkName = schemas[collectionName].idFieldName;
+			const pkName = schemas[modelName].idFieldName;
 			model.findOne(
 				{
 					where: { [pkName]: id },
-					include: getInclude(collectionName)
+					include: getInclude(modelName)
 				},
 				(err, entity) => {
 					if (err) {
 						return reject(err);
 					}
 					if (!entity) {
-						return reject(createNotFoundError({ collectionName, [pkName]: id }))
+						return reject(createNotFoundError({ modelName, [pkName]: id }))
 					}
 					resolve({
 						data: entity,
@@ -274,17 +275,17 @@ export default ({
 	/**
 	 * Creates single entity.
 	 *
-	 * @param collectionName
+	 * @param modelName
 	 * @param entity
 	 * @param apiContext
 	 * @param authContext
 	 */
-	createEntity: (collectionName, entity, apiContext, authContext) => {
+	createEntity: (modelName, entity, apiContext, authContext) => {
 		logBoldMessage('ApiService.createEntity called');
 		return DelayedPromise((resolve, reject) => {
-			const model = models[collectionName];
+			const model = models[modelName];
 			if (!model) {
-				return reject(createUnknownCollectionError(collectionName));
+				return reject(createUnknownCollectionError(modelName));
 			}
 			model.create(entity, (err, modelInstance) => {
 				if (err) {
@@ -294,12 +295,12 @@ export default ({
 					if (err) {
 						return reject(err);
 					}
-					const pkName = schemas[collectionName].idFieldName;
+					const pkName = schemas[modelName].idFieldName;
 					const pkVal = savedModelInstance[pkName];
-					models[collectionName].findOne(
+					models[modelName].findOne(
 						{
 							where: { [pkName]: pkVal },
-							include: getInclude(collectionName)
+							include: getInclude(modelName)
 						},
 						(err, entity) => {
 							if (err) {
@@ -317,20 +318,20 @@ export default ({
 	/**
 	 * Updates single entity.
 	 *
-	 * @param collectionName
+	 * @param modelName
 	 * @param id
 	 * @param entity
 	 * @param apiContext
 	 * @param authContext
 	 */
-	updateEntity: (collectionName, id, entity, apiContext, authContext) => {
+	updateEntity: (modelName, id, entity, apiContext, authContext) => {
 		logBoldMessage('ApiService.updateEntity called');
 		return DelayedPromise((resolve, reject) => {
-			const model = models[collectionName];
+			const model = models[modelName];
 			if (!model) {
-				return reject(createUnknownCollectionError(collectionName));
+				return reject(createUnknownCollectionError(modelName));
 			}
-			const pkName = schemas[collectionName].idFieldName;
+			const pkName = schemas[modelName].idFieldName;
 			model.findOne(
 				{ where: { [pkName]: id } },
 				(err, persistedEntity) => {
@@ -338,14 +339,14 @@ export default ({
 						return reject(err);
 					}
 					if (!persistedEntity) {
-						return reject(createNotFoundError({ collectionName, [pkName]: id }));
+						return reject(createNotFoundError({ modelName, [pkName]: id }));
 					}
 					persistedEntity.updateAttributes(entity, (err, entity) => {
 						if (err) {
 							return reject(err);
 						}
 						model.findOne(
-							{ where: { [pkName]: entity[pkName] }, include: getInclude(collectionName) },
+							{ where: { [pkName]: entity[pkName] }, include: getInclude(modelName) },
 							(err, entity) => {
 								if (err) {
 									return reject(err);
@@ -361,19 +362,19 @@ export default ({
 	/**
 	 * Deletes single entity.
 	 *
-	 * @param collectionName
+	 * @param modelName
 	 * @param id
 	 * @param apiContext
 	 * @param authContext
 	 */
-	deleteEntity: (collectionName, id, apiContext, authContext) => {
+	deleteEntity: (modelName, id, apiContext, authContext) => {
 		logBoldMessage('ApiService.deleteEntity called');
 		return DelayedPromise((resolve, reject) => {
-			const model = models[collectionName];
+			const model = models[modelName];
 			if (!model) {
-				return reject(createUnknownCollectionError(collectionName));
+				return reject(createUnknownCollectionError(modelName));
 			}
-			const pkName = schemas[collectionName].idFieldName;
+			const pkName = schemas[modelName].idFieldName;
 			model.findOne(
 				{ where: { [pkName]: id } },
 				(err, persistedEntity) => {
@@ -381,7 +382,7 @@ export default ({
 						return reject(err);
 					}
 					if (!persistedEntity) {
-						return reject(createNotFoundError({ collectionName, [pkName]: id }));
+						return reject(createNotFoundError({ modelName, [pkName]: id }));
 					}
 					persistedEntity.destroy((err, entity) => {
 						if (err) {

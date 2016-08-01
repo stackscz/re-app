@@ -23,11 +23,13 @@ describe('modules/auth/reducer', () => {
 			reducer(undefined, {})
 		).toEqual(
 			{
+				context: {},
 				authenticating: false,
+				userId: null,
+				userModelName: 'users',
 				error: null,
 				initialized: false,
 				initializing: false,
-				user: null,
 			}
 		)
 	});
@@ -40,18 +42,23 @@ describe('modules/auth/reducer', () => {
 					{
 						type: INITIALIZE,
 						payload: {
-							some: 'context',
+							context: {
+								some: 'context',
+							}
 						},
 					}
 				)
 			).toEqual(
 				{
+					context: {
+						some: 'context',
+					},
 					authenticating: false,
+					userId: null,
+					userModelName: 'users',
 					error: null,
 					initialized: false,
 					initializing: true,
-					user: null,
-					some: 'context',
 				}
 			)
 		});
@@ -65,18 +72,23 @@ describe('modules/auth/reducer', () => {
 					{
 						type: INITIALIZE_FINISH,
 						payload: {
-							someMore: 'context',
+							context: {
+								someMore: 'context',
+							},
 						},
 					}
 				)
 			).toEqual(
 				{
+					context: {
+						someMore: 'context',
+					},
 					authenticating: false,
+					userId: undefined,
+					userModelName: 'users',
 					error: null,
 					initialized: true,
 					initializing: false,
-					user: null,
-					someMore: 'context',
 				}
 			)
 		});
@@ -93,18 +105,20 @@ describe('modules/auth/reducer', () => {
 				)
 			).toEqual(
 				{
+					context: {},
 					authenticating: true,
+					userId: null,
+					userModelName: 'users',
 					error: null,
 					initialized: false,
 					initializing: false,
-					user: null,
 				}
 			)
 		});
 	});
 
 	describe(`should handle ${LOGIN_FAILURE}`, () => {
-		it('should throw invalid payload.', () => {
+		it('should throw on invalid payload.', () => {
 			expect(() => {
 				reducer(
 					undefined,
@@ -130,14 +144,16 @@ describe('modules/auth/reducer', () => {
 				)
 			).toEqual(
 				{
+					context: {},
 					authenticating: false,
+					userId: null,
+					userModelName: 'users',
 					error: {
 						code: 100,
 						message: 'Unknown error.',
 					},
 					initialized: false,
 					initializing: false,
-					user: null,
 				}
 			)
 		});
@@ -161,21 +177,20 @@ describe('modules/auth/reducer', () => {
 					{
 						type: LOGIN_SUCCESS,
 						payload: {
-							user: {
-								name: 'john',
-							}
+							userId: 'john',
+							context: {},
 						},
 					}
 				)
 			).toEqual(
 				{
+					context: {},
 					authenticating: false,
+					userId: 'john',
+					userModelName: 'users',
 					error: null,
 					initialized: false,
 					initializing: false,
-					user: {
-						name: 'john',
-					},
 				}
 			)
 		});
@@ -185,32 +200,37 @@ describe('modules/auth/reducer', () => {
 		it('should unset user.', () => {
 			let state = reducer(
 				Immutable.from({
-					user: { name: 'john' },
+					userId: 'john',
 				}),
 				{
 					type: INIT,
 				}
 			);
-			state = reducer(
-				state,
-				{
-					type: LOGOUT_SUCCESS,
-				}
-			);
+			// state = reducer(
+			// 	state,
+			// 	{
+			// 		type: LOGOUT_SUCCESS,
+			// 	}
+			// );
 			expect(
 				reducer(
 					state,
 					{
 						type: LOGOUT_SUCCESS,
+						payload: {
+							context: {}
+						}
 					}
 				)
 			).toEqual(
 				{
+					context: {},
 					authenticating: false,
+					userId: null,
+					userModelName: 'users',
 					error: null,
 					initialized: false,
 					initializing: false,
-					user: null,
 				}
 			)
 		});

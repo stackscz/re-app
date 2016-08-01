@@ -2,37 +2,37 @@ import _ from 'lodash';
 import { getEntitySchemas } from 'modules/entityDescriptors/selectors';
 import denormalize from 'modules/entityDescriptors/utils/denormalize';
 
-export const getEntityGetter = (collectionName, id) => (state) => {
-	const collection = state.entityStorage.collections[collectionName];
+export const getEntityGetter = (modelName, id) => (state) => {
+	const collection = state.entityStorage.collections[modelName];
 	if (!collection) {
 		return undefined;
 	}
 	return collection[id];
 };
-export const getDenormalizedEntitySelector = (collectionName, id, maxLevel = 1) =>
+export const getDenormalizedEntitySelector = (modelName, id, maxLevel = 1) =>
 	(state) => {
 		const entityDictionary = state.entityStorage.collections;
-		const entity = _.get(entityDictionary, [collectionName, id]);
-		if (!collectionName || !id || !entity) {
+		const entity = _.get(entityDictionary, [modelName, id]);
+		if (!modelName || !id || !entity) {
 			return undefined;
 		}
 		return denormalize(
 			id,
-			collectionName,
+			modelName,
 			entityDictionary,
 			getEntitySchemas(state),
 			maxLevel
 		);
 	};
 
-export const getDenormalizedEntitiesSelector = (collectionName, entities, maxLevel = 1) =>
+export const getDenormalizedEntitiesSelector = (modelName, entities, maxLevel = 1) =>
 	(state) => {
 		if (!entities) {
 			return undefined;
 		}
 		return denormalize(
 			entities,
-			collectionName,
+			modelName,
 			state.entityStorage.collections,
 			getEntitySchemas(state),
 			maxLevel
@@ -40,8 +40,8 @@ export const getDenormalizedEntitiesSelector = (collectionName, entities, maxLev
 	};
 
 
-export const getEntityStatusGetter = (collectionName, id) => (state) => {
-	const statusesCollection = state.entityStorage.statuses[collectionName];
+export const getEntityStatusGetter = (modelName, id) => (state) => {
+	const statusesCollection = state.entityStorage.statuses[modelName];
 	if (!statusesCollection) {
 		return undefined;
 	}

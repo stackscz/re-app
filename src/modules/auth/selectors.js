@@ -1,2 +1,10 @@
-export const getAuthContext = state => state.auth;
-export const getUser = state => state.auth.user;
+import _ from 'lodash';
+
+export const getAuthState = state => state.auth;
+export const getAuthContext = state => _.get(state, 'auth.context', {});
+
+import {
+	getDenormalizedEntitySelector,
+} from 'modules/entityStorage/selectors';
+export const getUser = state =>
+	getDenormalizedEntitySelector(state.auth.userModelName, state.auth.userId)(state);

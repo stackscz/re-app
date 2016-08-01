@@ -19,6 +19,7 @@ import {
 } from 'modules/auth/selectors';
 import {
 	getEntitySchemas,
+	getEntityResourceSelector,
 } from 'modules/entityDescriptors/selectors';
 import {
 	ENSURE_ENTITY_INDEX,
@@ -32,25 +33,27 @@ import {
 } from 'modules/entityStorage/actions';
 
 export function *ensureEntityIndexTask(action) {
-	const { collectionName, filter } = action.payload;
-	const indexHash = hash({ collectionName, filter });
+	const { modelName, filter } = action.payload;
+	const indexHash = hash({ modelName, filter });
 	const apiContext = yield select(getApiContext);
 	const ApiService = yield select(getApiService);
 	const authContext = yield select(getAuthContext);
-	// const { collectionName, filter } = yield select(getEntityIndexSelector(indexHash));
+	// const { modelName, filter } = yield select(getEntityIndexSelector(indexHash));
 	yield put(attemptFetchEntityIndex(indexHash));
 	try {
 		const normalizedFilter = normalizeFilter(filter);
+		const entityIndexResource = yield select(getEntityResourceSelector(modelName, 'INDEX'));
 		const result = yield call(
 			ApiService.getEntityIndex,
-			collectionName,
+			modelName,
+			entityIndexResource,
 			normalizedFilter,
 			apiContext,
 			authContext
 		);
 		apiServiceResultTypeInvariant(result, EntityIndexResult);
 		const entitySchemas = yield select(getEntitySchemas);
-		const normalized = normalize(result.data, collectionName, entitySchemas);
+		const normalized = normalize(result.data, modelName, entitySchemas);
 		const nowTime = moment().format();
 		yield put(receiveEntities(normalized.entities, nowTime));
 		yield put(receiveEntityIndex(indexHash, normalized.result, result.existingCount, nowTime));
@@ -67,8 +70,8 @@ function *takeLatestEnsure(saga) {
 		const action = yield take((testedAction) =>
 			testedAction.type === ENSURE_ENTITY_INDEX && testedAction.payload
 		);
-		const { collectionName, filter } = action.payload;
-		const indexHash = hash({ collectionName, filter });
+		const { modelName, filter } = action.payload;
+		const indexHash = hash({ modelName, filter });
 		if (!ensureEntityIndexTasks[indexHash] || !ensureEntityIndexTasks[indexHash].isRunning()) {
 			ensureEntityIndexTasks[indexHash] = yield fork(saga, action);
 		}

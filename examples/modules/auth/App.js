@@ -7,6 +7,8 @@ import DevTools from 're-app-examples/DevTools';
 import { app, container } from 're-app/lib/decorators';
 import { createStore } from 're-app/lib/utils';
 import apiModule from 're-app/lib/modules/api';
+import entityDescriptorsModule from 're-app/lib/modules/entityDescriptors';
+import entityStorageModule from 're-app/lib/modules/entityStorage';
 import authModule from 're-app/lib/modules/auth';
 import { login, logout } from 're-app/lib/modules/auth/actions';
 import LoginForm from './LoginForm';
@@ -17,6 +19,8 @@ const store = createStore(
 	{
 		modules: [
 			apiModule, // api module must be configured
+			entityDescriptorsModule, // api module must be configured
+			entityStorageModule, // api module must be configured
 			authModule,
 		],
 		enhancers: [
@@ -27,6 +31,29 @@ const store = createStore(
 		api: {
 			service: ApiService,
 		},
+		auth: {
+			userModelName: 'users',
+		},
+		entityDescriptors: {
+			schemas: {
+				users: {
+					name: 'users',
+					idFieldName: 'username',
+					displayFieldName: 'username',
+					isFilterable: false,
+					fields: {
+						id: {
+							name: 'id',
+							type: 'Number',
+						},
+						username: {
+							name: 'username',
+							type: 'String',
+						},
+					},
+				},
+			},
+		},
 	}
 );
 
@@ -34,7 +61,7 @@ const store = createStore(
 @container(
 	(state) => ({
 		state,
-		authErrors: state.auth.errors,
+		error: state.auth.error,
 	}),
 	(dispatch) => ({
 		handleLogin: (credentials) => {
@@ -50,19 +77,19 @@ export default class App extends React.Component {
 	static propTypes = {
 		handleLogin: T.func,
 		handleLogout: T.func,
-		authErrors: T.array,
+		error: T.object,
 		state: T.any,
 	};
 
 	render() {
-		const { handleLogin, handleLogout, authErrors, state } = this.props;
+		const { handleLogin, handleLogout, error, state } = this.props;
 		return (
 			<div className="App">
 				{
 					state.auth.initialized && !state.auth.initializing ? (
 						<div className="well">
 							{
-								state.auth.user ? (
+								state.auth.userId ? (
 									<div>
 										<p>Cool, now you can logout ...</p>
 										<button className="btn btn-danger" onClick={handleLogout}>logout</button>
@@ -73,7 +100,9 @@ export default class App extends React.Component {
 											<small>pssss... correct credentials are <code>username/password</code>
 											</small>
 										</p>
-										{authErrors.length > 0 && <pre>{JSON.stringify(authErrors, null, 2)}</pre>}
+										{error && (
+											<pre>{JSON.stringify(error, null, 2)}</pre>
+										)}
 										<LoginForm onLogin={handleLogin} />
 										{
 											state.auth.authenticating && (

@@ -49,7 +49,7 @@ describe('modules/entityStorage/reducer', () => {
 		const state = reducer(undefined, {
 			type: MERGE_ENTITY,
 			payload: {
-				collectionName: 'posts',
+				modelName: 'posts',
 				data: {},
 				noInteraction: false,
 			},
@@ -71,7 +71,7 @@ describe('modules/entityStorage/reducer', () => {
 				'should set proper statuses for unknown entity',
 				undefined,
 				{
-					collectionName: 'posts',
+					modelName: 'posts',
 					entityId: '100',
 				},
 				{
@@ -112,7 +112,7 @@ describe('modules/entityStorage/reducer', () => {
 					errors: {},
 				},
 				{
-					collectionName: 'posts',
+					modelName: 'posts',
 					entityId: '100',
 				},
 				{
@@ -141,7 +141,7 @@ describe('modules/entityStorage/reducer', () => {
 				'set proper statuses for unknown entity',
 				undefined,
 				{
-					collectionName: 'posts',
+					modelName: 'posts',
 					entityId: '100',
 				},
 				{
@@ -182,7 +182,7 @@ describe('modules/entityStorage/reducer', () => {
 					errors: {},
 				},
 				{
-					collectionName: 'posts',
+					modelName: 'posts',
 					entityId: '100',
 				},
 				{
@@ -229,7 +229,7 @@ describe('modules/entityStorage/reducer', () => {
 					},
 				},
 				{
-					collectionName: 'posts',
+					modelName: 'posts',
 					entityId: '1',
 					error: notFoundError,
 				},
@@ -253,7 +253,7 @@ describe('modules/entityStorage/reducer', () => {
 				reducer(undefined, {
 					type: RECEIVE_FETCH_ENTITY_FAILURE,
 					payload: {
-						collectionName: 'posts',
+						modelName: 'posts',
 						entityId: '1',
 						error: {
 							code: 100,
@@ -263,7 +263,7 @@ describe('modules/entityStorage/reducer', () => {
 					},
 				}),
 				{
-					collectionName: 'posts',
+					modelName: 'posts',
 					entityId: '1',
 					error: notFoundError,
 				},
@@ -388,7 +388,7 @@ describe('modules/entityStorage/reducer', () => {
 				}
 			],
 			[
-				'merge entities shallowly',
+				'replace entities',
 				{
 					collections: {
 						posts: {
@@ -445,12 +445,10 @@ describe('modules/entityStorage/reducer', () => {
 					expect: (state) => {
 						expect(state.collections.posts['1']).toEqual({
 							id: 1,
-							title: 'Post title',
 							someAssoc: ['4'],
 						});
 						expect(state.collections.tags['1']).toEqual({
 							id: 1,
-							name: 'Tag name',
 							someEmbed: {
 								bar: 'val2',
 							},
@@ -580,7 +578,7 @@ describe('modules/entityStorage/reducer', () => {
 				undefined,
 				{
 					validAtTime,
-					collectionName: 'posts',
+					modelName: 'posts',
 					entityId: '1',
 					normalizedEntities: {
 						posts: {
@@ -634,7 +632,7 @@ describe('modules/entityStorage/reducer', () => {
 				{
 					validAtTime,
 					entityId: '1',
-					collectionName: 'posts',
+					modelName: 'posts',
 					normalizedEntities: {
 						posts: {
 							1: {
@@ -669,7 +667,7 @@ describe('modules/entityStorage/reducer', () => {
 				'set proper statuses and error',
 				undefined,
 				{
-					collectionName: 'posts',
+					modelName: 'posts',
 					entityId: '1',
 					error: notFoundError,
 				},

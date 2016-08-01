@@ -6,7 +6,7 @@ export default function *reloadInvalidIndexesTask() {
 	for (const indexHash of Object.keys(indexes)) {
 		const index = indexes[indexHash];
 		if (!index.valid) {
-			yield put(ensureEntityIndex(index.collectionName, index.filter));
+			yield put(ensureEntityIndex(index.modelName, index.filter));
 		}
 	}
 }

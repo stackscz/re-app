@@ -1,6 +1,6 @@
 {
   "name": "re-app",
-  "version": "0.22.0-dev.2",
+  "version": "0.22.0-dev.3",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": {
@@ -27,7 +27,7 @@
     "cover": "npm run coverage",
     "dev-publish": "npm publish --tag=dev",
     "prepublish": "npm run lint && npm run test && npm run build",
-    "precommit": "npm run lint"
+    "prepush": "npm run lint"
   },
   "author": "@stackscz",
   "license": "MIT",

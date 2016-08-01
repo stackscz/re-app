@@ -2,21 +2,37 @@
 /* eslint-disable */
 
 import expect from 'expect';
+import moment from 'moment';
 
 import { call, put, select } from 'redux-saga/effects';
-import {getApiContext, getApiService} from 'modules/api/selectors';
-import {getUser, getAuthContext} from 'modules/auth/selectors';
+import { getApiContext, getApiService } from 'modules/api/selectors';
+import {
+	getUser,
+	getAuthContext,
+	getAuthState,
+} from 'modules/auth/selectors';
+import { getEntitySchemas } from 'modules/entityDescriptors/selectors';
 import { sagas, actions } from 'modules/auth';
+import {
+	loginSuccess,
+} from 'modules/auth/actions';
+import {
+	forgetEntity,
+	receiveEntities,
+} from 'modules/entityStorage/actions';
 
 import ApiServiceImpl from 'mocks/ApiService';
-import type { ApiService } from 'types/ApiService';
+
+import entityDescriptors from 'mocks/entityDescriptors';
 
 const apiContext = {
 	service: ApiServiceImpl,
 };
 
-const authContext = {
-	errors: [],
+const authState = {
+	context: {},
+	userModelName: 'users',
+	error: null,
 	initializing: true,
 	initialized: false,
 	authenticating: false,
@@ -24,32 +40,49 @@ const authContext = {
 
 describe('modules/auth/sagas:authorize test - login success', (t) => {
 
-	const saga = sagas.authorize({}, apiContext, authContext);
 
-	it('should select ApiService', () => {
-		expect(saga.next().value).toEqual(select(getApiService));
-	});
+	it('should work', () => {
+		const saga = sagas.loginTask({}, apiContext, authState.context);
+		let next = saga.next();
 
-	it('should call ApiService.login', () => {
-		expect(saga.next(ApiServiceImpl).value).toEqual(call(ApiServiceImpl.login, {}, apiContext, authContext));
-	});
+		expect(next.value).toEqual(select(getApiService));
+		next = saga.next(ApiServiceImpl);
 
-	it('should put LOGIN_SUCCESS action after successful login', () => {
-		var loginResult = { user: {} };
-		expect(saga.next(loginResult).value).toEqual(put(actions.loginSuccess({})));
+		expect(next.value).toEqual(call(ApiServiceImpl.login, {}, apiContext, authState.context));
+		next = saga.next({ user: { username: 'username' }, authContext: {} });
+
+		expect(next.value).toEqual(select(getAuthState));
+		next = saga.next(authState);
+
+		expect(next.value).toEqual(select(getEntitySchemas));
+		next = saga.next(entityDescriptors.schemas);
+
+		const normalizedEntities = {
+			users: {
+				username: {
+					username: 'username'
+				}
+			}
+		};
+		expect(next.value).toEqual(put(receiveEntities(normalizedEntities, moment().format())));
+		next = saga.next();
+
+		expect(next.value).toEqual(put(loginSuccess('username', authState.context)));
+		next = saga.next();
+
 	});
 
 });
 
-describe('modules/auth/sagas:authorize test - login failure', () => {
+describe('modules/auth/sagas:loginTask test - login failure', () => {
 
-	const saga = sagas.authorize({}, apiContext, authContext);
+	const saga = sagas.loginTask({}, apiContext, authState);
 
 	it('authorize Saga must select ApiService', () => {
 		expect(saga.next().value).toEqual(select(getApiService));
 	});
 	it('authorize Saga must call ApiService.login', () => {
-		expect(saga.next(ApiServiceImpl).value).toEqual(call(ApiServiceImpl.login, {}, apiContext, authContext));
+		expect(saga.next(ApiServiceImpl).value).toEqual(call(ApiServiceImpl.login, {}, apiContext, authState));
 	});
 
 	var loginResult = {
@@ -63,22 +96,35 @@ describe('modules/auth/sagas:authorize test - login failure', () => {
 
 });
 
-describe('modules/auth/sagas:authorize test - logout success', () => {
-	const saga = sagas.logout();
+describe('modules/auth/sagas:logoutTask test - logout success', () => {
+	const saga = sagas.logoutTask();
 
+	let next = saga.next();
 	it('authorize Saga must select ApiService', () => {
-		expect(saga.next().value).toEqual(select(getApiService));
+		expect(next.value).toEqual(select(getApiService));
+		next = saga.next(ApiServiceImpl);
 	});
-	it('authorize Saga must select authContext', () => {
-		expect(saga.next(ApiServiceImpl).value).toEqual(select(getAuthContext));
+	it('authorize Saga must select authState', () => {
+		expect(next.value).toEqual(select(getAuthContext));
+		next = saga.next({});
+	});
+	it('authorize Saga must select authState', () => {
+		expect(next.value).toEqual(select(getAuthState));
+		next = saga.next(authState.context);
 	});
 	it('authorize Saga must select apiContext', () => {
-		expect(saga.next({}).value).toEqual(select(getApiContext));
+		expect(next.value).toEqual(select(getApiContext));
+		next = saga.next(apiContext);
 	});
 	it('authorize Saga must call ApiService.logout', () => {
-		expect(saga.next({}).value).toEqual(call(ApiServiceImpl.logout, {}, {}));
+		expect(next.value).toEqual(call(ApiServiceImpl.logout, apiContext, authState.context));
+		next = saga.next(authState.context);
+	});
+	it('authorize Saga must put FORGET_ENTITY action after successful logout', () => {
+		expect(next.value).toEqual(put(forgetEntity()));
+		next = saga.next();
 	});
 	it('authorize Saga must put LOGOUT_SUCCESS action after successful logout', () => {
-		expect(saga.next({}).value).toEqual(put(actions.logoutSuccess()));
+		expect(next.value).toEqual(put(actions.logoutSuccess(authState.context)));
 	});
 });

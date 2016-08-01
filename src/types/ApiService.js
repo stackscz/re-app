@@ -1,7 +1,7 @@
 // @flow
 export type ApiService = {
 	getInitialAuthContext(): void;
-	initializeAuth(): void;
+	refreshAuth(): void;
 	login(): void;
 	logout(): void;
 	getEntityDescriptors(): void;

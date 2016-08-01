@@ -10,14 +10,14 @@ let mappings = {};
 /**
  * Generates `normalizr` schemas from internal schemas
  *
- * @param {string} collectionName
+ * @param {string} modelName
  * @param {SchemasDictionary} schemas
  * @returns {Schema} normalizr schema for collection
  */
-export default function createNormalizrSchema(collectionName:string, schemas:SchemasDictionary) {
-	invariant(schemas[collectionName], 'Unknown collection %s', JSON.stringify(collectionName));
+export default function createNormalizrSchema(modelName:string, schemas:SchemasDictionary) {
+	invariant(schemas[modelName], 'Unknown collection %s', JSON.stringify(modelName));
 
-	if (!_.get(schemas, collectionName)) {
+	if (!_.get(schemas, modelName)) {
 		return undefined;
 	}
 
@@ -37,7 +37,7 @@ export default function createNormalizrSchema(collectionName:string, schemas:Sch
 		_.each(cachedSchemas, (schema) => {
 			_.each(schema.fields, (field) => {
 				if (field.type === 'association') {
-					const assocMapping = mappings[field.collectionName];
+					const assocMapping = mappings[field.modelName];
 					mappings[schema.name].define({
 						[field.name]: field.isMultiple ? arrayOf(assocMapping) : assocMapping,
 					});
@@ -47,5 +47,5 @@ export default function createNormalizrSchema(collectionName:string, schemas:Sch
 	}
 
 
-	return mappings[collectionName];
+	return mappings[modelName];
 }

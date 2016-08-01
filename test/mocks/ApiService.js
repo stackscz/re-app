@@ -9,15 +9,15 @@ const badCredetials = { username: 'johndoe', password: 'password' };
 
 describe('mocks/ApiService', () => {
 
-	it('#initializeAuth resolves with authContext', () => {
+	it('#refreshAuth resolves with authContext', () => {
 
 		const authContext = {};
-		return ApiService.initializeAuth(authContext)
+		return ApiService.refreshAuth(authContext)
 			.then(() => {
-				expect(true).toBe(true, 'initializeAuth() should always resolve');
+				expect(true).toBe(true, 'refreshAuth() should always resolve');
 			})
 			.catch(() => {
-				expect(true).toBe(false, 'initializeAuth() should always resolve');
+				expect(true).toBe(false, 'refreshAuth() should always resolve');
 			});
 
 	});

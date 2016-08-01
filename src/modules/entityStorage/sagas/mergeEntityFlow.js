@@ -17,7 +17,9 @@ import { getAuthContext } from 'modules/auth/selectors';
 import {
 	getEntitySchemaGetter,
 	getEntitySchemas,
+	getEntityResourceSelector,
 } from 'modules/entityDescriptors/selectors';
+import stripReadOnlyProperties from 'modules/entityDescriptors/utils/stripReadOnlyProperties';
 import {
 	getEntityStatusGetter,
 	getDenormalizedEntitySelector,
@@ -31,8 +33,8 @@ import {
 } from '../actions';
 
 export function *mergeEntityTask(action) {
-	const { collectionName, data, noInteraction } = action.payload;
-	const entitySchema = yield select(getEntitySchemaGetter(collectionName));
+	const { modelName, data, noInteraction } = action.payload;
+	const entitySchema = yield select(getEntitySchemaGetter(modelName));
 
 	let entityId = data[entitySchema.idFieldName];
 	if (!entityId) {
@@ -45,7 +47,7 @@ export function *mergeEntityTask(action) {
 		entitySchema.name,
 		entitySchemas
 	);
-	const normalizedEntity = normalizedData.entities[collectionName][normalizedData.result];
+	const normalizedEntity = normalizedData.entities[modelName][normalizedData.result];
 
 	yield put(persistEntity(entitySchema, entityId, normalizedEntity, noInteraction));
 }
@@ -56,7 +58,7 @@ export function *persistEntityTask(action) {
 		// do not call api
 		return;
 	}
-	const collectionName = entitySchema.name;
+	const modelName = entitySchema.name;
 
 	// ApiService is needed to merge entity
 	const apiService = yield select(getApiService);
@@ -67,7 +69,7 @@ export function *persistEntityTask(action) {
 
 	const apiContext = yield select(getApiContext);
 	const authContext = yield select(getAuthContext);
-	const entityStatus = yield select(getEntityStatusGetter(collectionName, entityId));
+	const entityStatus = yield select(getEntityStatusGetter(modelName, entityId));
 
 	let remoteEntityId = entityId;
 	let transientEntityId;
@@ -78,27 +80,28 @@ export function *persistEntityTask(action) {
 
 	try {
 		const denormalizedEntity = yield select(
-			getDenormalizedEntitySelector(collectionName, entityId)
+			getDenormalizedEntitySelector(modelName, entityId)
 		);
+		const strippedEntity = stripReadOnlyProperties(denormalizedEntity, entitySchema);
 		let persistResult;
 		if (remoteEntityId) {
+			const updateEntityResource = yield select(getEntityResourceSelector(modelName, 'UPDATE'));
 			persistResult = yield call(
 				apiService.updateEntity,
-				collectionName,
+				modelName,
 				remoteEntityId,
-				denormalizedEntity,
+				strippedEntity,
+				updateEntityResource,
 				apiContext,
 				authContext
 			);
 		} else {
-			const {
-				[entitySchema.idFieldName]: idFieldValue, // eslint-disable-line no-unused-vars
-				...strippedIdEntity,
-			} = denormalizedEntity;
+			const createEntityResource = yield select(getEntityResourceSelector(modelName, 'CREATE'));
 			persistResult = yield call(
 				apiService.createEntity,
-				collectionName,
-				strippedIdEntity,
+				modelName,
+				strippedEntity,
+				createEntityResource,
 				apiContext,
 				authContext
 			);
@@ -106,14 +109,17 @@ export function *persistEntityTask(action) {
 		apiServiceResultTypeInvariant(persistResult, EntityResult);
 
 		const normalizationResult = normalize(
-			persistResult.data,
+			{
+				...denormalizedEntity,
+				...persistResult.data,
+			},
 			entitySchema.name,
 			entitySchemas
 		);
 		remoteEntityId = normalizationResult.result;
 		yield put(
 			receivePersistEntitySuccess(
-				collectionName,
+				modelName,
 				remoteEntityId,
 				normalizationResult.entities,
 				transientEntityId,
@@ -123,7 +129,7 @@ export function *persistEntityTask(action) {
 	} catch (error) {
 		rethrowError(error);
 		apiServiceResultTypeInvariant(error, EntityValidationError);
-		yield put(receivePersistEntityFailure(collectionName, entityId, error));
+		yield put(receivePersistEntityFailure(modelName, entityId, error));
 	}
 }
 

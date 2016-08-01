@@ -20,15 +20,15 @@ type NormalizationResult = {
  * Normalizes object or array of objects using `normalizr` according to schemas
  *
  * @param {Entity | Array<Entity>} obj value to normalize
- * @param {CollectionName} collectionName name of collection of object(s)
+ * @param {CollectionName} modelName name of collection of object(s)
  * @param {SchemasDictionary} schemas
  * @returns {{entities:NormalizedEntityDictionary, result:EntityId|Array<EntityId>}|*}
  */
 export default function normalize(obj:Entity | Array<Entity>,
-								  collectionName:CollectionName,
+								  modelName:CollectionName,
 								  schemas:SchemasDictionary):NormalizationResult {
-	const normalizrSchema = createNormalizrSchema(collectionName, schemas);
-	// TODO throw if unknown schema for collectionName
+	const normalizrSchema = createNormalizrSchema(modelName, schemas);
+	// TODO throw if unknown schema for modelName
 	const normalizeMultiple = _.isArray(obj);
 	const normalizationResult = normalizrNormalize(
 		obj,

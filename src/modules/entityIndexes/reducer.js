@@ -25,7 +25,7 @@ export default createReducer(
 		indexes: t.dict(
 			t.String,
 			t.struct({
-				collectionName: CollectionName,
+				modelName: CollectionName,
 				filter: EntityIndexFilter,
 				fetching: t.Boolean,
 				content: t.maybe(t.list(EntityId)),
@@ -41,18 +41,18 @@ export default createReducer(
 	{
 		[ENSURE_ENTITY_INDEX]: [
 			t.struct({
-				collectionName: CollectionName,
+				modelName: CollectionName,
 				filter: EntityIndexFilter,
 			}),
 			(state, action) => {
-				const { collectionName, filter } = action.payload;
-				const indexHash = hash({ collectionName, filter });
+				const { modelName, filter } = action.payload;
+				const indexHash = hash({ modelName, filter });
 				const index = state.indexes[indexHash];
 				if (!index) {
 					return state.setIn(
 						['indexes', indexHash],
 						{
-							collectionName,
+							modelName,
 							filter,
 							fetching: false,
 							error: undefined,
@@ -88,7 +88,7 @@ export default createReducer(
 				const { indexHash, content, existingCount, validAtTime } = action.payload;
 				const index = state.indexes[indexHash];
 				if (index) {
-					const collectionName = index.collectionName;
+					const modelName = index.modelName;
 					return state.merge({
 						indexes: {
 							[indexHash]: {
@@ -99,7 +99,7 @@ export default createReducer(
 							},
 						},
 						existingCounts: {
-							[collectionName]: existingCount,
+							[modelName]: existingCount,
 						},
 					}, { deep: true });
 				}
@@ -129,10 +129,10 @@ export default createReducer(
 		],
 		[RECEIVE_PERSIST_ENTITY_SUCCESS]: (state, action) => {
 			// invalidate all indexes of collection
-			const { collectionName } = action.payload;
+			const { modelName } = action.payload;
 			let newState = state;
 			_.each(state.indexes, (index, indexId) => {
-				if (index.collectionName === collectionName) {
+				if (index.modelName === modelName) {
 					newState = newState.merge({
 						indexes: {
 							[indexId]: {
@@ -146,10 +146,10 @@ export default createReducer(
 		},
 		[RECEIVE_DELETE_ENTITY_SUCCESS]: (state, action) => {
 			// remove entity id from all indexes of collection and invalidate them
-			const { collectionName, entityId } = action.payload;
+			const { modelName, entityId } = action.payload;
 			let newState = state;
 			_.each(newState.indexes, (index, indexId) => {
-				if (index.collectionName === collectionName) {
+				if (index.modelName === modelName) {
 					const entityIdIndex = _.indexOf(index.content, entityId);
 					if (entityIdIndex > -1) {
 						newState = newState.setIn(

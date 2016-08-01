@@ -16,13 +16,13 @@ export default {
 			author: {
 				name: 'author',
 				type: 'association',
-				collectionName: 'users',
+				modelName: 'users',
 				isMultiple: false,
 			},
 			tags: {
 				name: 'tags',
 				type: 'association',
-				collectionName: 'tags',
+				modelName: 'tags',
 				isMultiple: true,
 			},
 		},
@@ -40,7 +40,7 @@ export default {
 			posts: {
 				name: 'posts',
 				type: 'association',
-				collectionName: 'posts',
+				modelName: 'posts',
 				isMultiple: true,
 			},
 		},
@@ -62,7 +62,7 @@ export default {
 			articles: {
 				name: 'articles',
 				type: 'association',
-				collectionName: 'posts',
+				modelName: 'posts',
 				isMultiple: true,
 			},
 		},

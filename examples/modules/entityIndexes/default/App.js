@@ -62,7 +62,7 @@ const store = createStore(
 		posts: getDenormalizedEntitiesSelector(
 			'posts',
 			getDynamicEntityIndexContentSelector(
-				hash({ collectionName: 'posts', filter: { order: ['title'] } })
+				hash({ modelName: 'posts', filter: { order: ['title'] } })
 			)(state)
 		)(state),
 	}),

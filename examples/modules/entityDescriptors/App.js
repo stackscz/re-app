@@ -26,6 +26,9 @@ const store = createStore(
 	},
 	// initial state
 	{
+		entityDescriptors: {
+			initialized: true,
+		},
 		api: {
 			service: ApiService
 		}

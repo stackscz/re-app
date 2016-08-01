@@ -12,7 +12,10 @@ import type { Error } from 'types/Error';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
-import { getEntitySchemas } from 'modules/entityDescriptors/selectors';
+import {
+	getEntitySchemas,
+	getEntityResourceSelector,
+} from 'modules/entityDescriptors/selectors';
 import {
 	ENSURE_ENTITY,
 	attemptFetchEntity,
@@ -21,7 +24,7 @@ import {
 } from '../actions';
 
 export function *ensureEntityTask(action) {
-	const { collectionName, entityId } = action.payload;
+	const { modelName, entityId } = action.payload;
 
 	// ApiService is needed to ensure entity
 	const apiService = yield select(getApiService);
@@ -33,24 +36,26 @@ export function *ensureEntityTask(action) {
 
 	// TODO split lazy and accurate modes of fetching
 
-	yield put(attemptFetchEntity(collectionName, entityId));
+	yield put(attemptFetchEntity(modelName, entityId));
 	try {
+		const ensureEntityResource = yield select(getEntityResourceSelector(modelName, 'DETAIL'));
 		const result = yield call(
 			apiService.getEntity,
-			collectionName,
+			modelName,
 			entityId,
+			ensureEntityResource,
 			apiContext,
 			authContext
 		);
 		apiServiceResultTypeInvariant(result, EntityResult);
 
 		const entitySchemas = yield select(getEntitySchemas);
-		const normalizationResult = normalize(result.data, collectionName, entitySchemas);
+		const normalizationResult = normalize(result.data, modelName, entitySchemas);
 		yield put(receiveEntities(normalizationResult.entities, moment().format()));
 	} catch (error) {
 		rethrowError(error);
 		apiServiceResultTypeInvariant(error, Error);
-		yield put(receiveFetchEntityFailure(collectionName, entityId, error));
+		yield put(receiveFetchEntityFailure(modelName, entityId, error));
 	}
 }
 

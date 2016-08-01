@@ -88,6 +88,7 @@ describe('modules/entityDescriptors/utils/denormalize', () => {
 		}).toThrow(/Unknown collection/);
 		expect(() => {
 			denormalize(['1', '2'], 'foo', entityDictionary, {foo: {name:'foo'}});
+		// }).toNotThrow();
 		}).toThrow(/SchemasDictionary/);
 	});
 

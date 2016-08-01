@@ -4,8 +4,8 @@ export function initialize(context) {
 }
 
 export const INITIALIZE_FINISH = 're-app/auth/INITIALIZE_FINISH';
-export function initializeFinish(context) {
-	return { type: INITIALIZE_FINISH, payload: context };
+export function initializeFinish(context, userId) {
+	return { type: INITIALIZE_FINISH, payload: { context, userId } };
 }
 
 export const LOGIN = 're-app/auth/LOGIN';
@@ -14,8 +14,8 @@ export function login(credentials) {
 }
 
 export const LOGIN_SUCCESS = 're-app/auth/LOGIN_SUCCESS';
-export function loginSuccess(user) {
-	return { type: LOGIN_SUCCESS, payload: { user } };
+export function loginSuccess(userId, context) {
+	return { type: LOGIN_SUCCESS, payload: { userId, context } };
 }
 
 export const LOGIN_FAILURE = 're-app/auth/LOGIN_FAILURE';
@@ -29,8 +29,8 @@ export function logout() {
 }
 
 export const LOGOUT_SUCCESS = 're-app/auth/LOGOUT_SUCCESS';
-export function logoutSuccess() {
-	return { type: LOGOUT_SUCCESS };
+export function logoutSuccess(context) {
+	return { type: LOGOUT_SUCCESS, payload: { context } };
 }
 
 export const LOGOUT_FAILURE = 're-app/auth/LOGOUT_FAILURE';

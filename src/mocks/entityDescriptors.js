@@ -1,4 +1,12 @@
 export default {
+	resources: {
+		posts: {
+			INDEX: {
+				path: '/postsx',
+				method: 'get',
+			},
+		},
+	},
 	schemas: {
 		posts: {
 			name: 'posts',
@@ -18,7 +26,7 @@ export default {
 					name: 'tags',
 					type: 'association',
 					isMultiple: true,
-					collectionName: 'tags',
+					modelName: 'tags',
 				},
 			},
 		},
@@ -34,6 +42,40 @@ export default {
 				},
 			},
 		},
+		users: {
+			name: 'users',
+			idFieldName: 'username',
+			displayFieldName: 'username',
+			isFilterable: false,
+			fields: {
+				username: {
+					name: 'username',
+					type: 'String',
+				},
+			},
+		},
+		// Post: {
+		// 	type: "object",
+		// 	required: [
+		// 		"id",
+		// 	],
+		// 	properties: {
+		// 		id: {
+		// 			type: "integer"
+		// 		},
+		// 		title: {
+		// 			type: "string"
+		// 		},
+		// 		tags: {
+		// 			type: "array",
+		// 			items: { $ref: "#/schemas/Tag" },
+		// 		},
+		// 	},
+		// 	'x-displayPropertyName': 'title',
+		// 	'x-idPropertyName': 'id',
+		// 	'x-isFilterable': false,
+		//
+		// },
 	},
 	fieldsets: {
 		posts: {

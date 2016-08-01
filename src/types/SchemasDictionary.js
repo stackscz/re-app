@@ -5,5 +5,5 @@ import type { EntitySchema } from 'types/EntitySchema';
 
 const isDictionary = (dictionary) => _.every(dictionary, (item, key) => item.name === key);
 export type SchemasDictionary = Object & {
-	[key: string]: EntitySchema,
+	[key: string]: EntitySchema
 } & $Refinement<typeof isDictionary>;

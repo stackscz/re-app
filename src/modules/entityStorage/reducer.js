@@ -18,6 +18,7 @@ import {
 	DELETE_ENTITY,
 	RECEIVE_DELETE_ENTITY_SUCCESS,
 	RECEIVE_DELETE_ENTITY_FAILURE,
+	FORGET_ENTITY,
 } from './actions';
 
 import type { Error } from 'types/Error';
@@ -28,7 +29,7 @@ import type { EntityStatus } from 'types/EntityStatus';
 import type { NormalizedEntityDictionary } from 'types/NormalizedEntityDictionary';
 const ReceiveEntityActionPayload = t.refinement(
 	t.struct({
-		collectionName: CollectionName,
+		modelName: CollectionName,
 		entityId: EntityId,
 		normalizedEntities: NormalizedEntityDictionary,
 		validAtTime: t.String,
@@ -36,7 +37,7 @@ const ReceiveEntityActionPayload = t.refinement(
 	(x) => {
 		const requestedEntityPresent = _.get(
 				x.normalizedEntities,
-				[x.collectionName, x.entityId]
+				[x.modelName, x.entityId]
 			) === x.entityId;
 		// TODO const entitiesProperlyNormalized =
 		return requestedEntityPresent;
@@ -58,13 +59,13 @@ const defaultStatus = {
 function setEntitiesToState(state, normalizedEntities) {
 	return state.update('collections', (currentValue, collections) => {
 		let newValue = currentValue;
-		_.each(collections, (entities, collectionName) => {
+		_.each(collections, (entities, modelName) => {
 			_.each(entities, (entity, entityId) => {
 				newValue = newValue.setIn(
-					[collectionName, entityId],
+					[modelName, entityId],
 					_.assign(
 						{},
-						_.get(newValue, [collectionName, entityId], {}),
+						// _.get(newValue, [modelName, entityId], {}),
 						entity
 					)
 				);
@@ -74,9 +75,9 @@ function setEntitiesToState(state, normalizedEntities) {
 	}, normalizedEntities);
 }
 
-function setStatusWithDefaults(state, collectionName, entityId, getNewStatus) {
+function setStatusWithDefaults(state, modelName, entityId, getNewStatus) {
 	return state.updateIn(
-		['statuses', collectionName, entityId],
+		['statuses', modelName, entityId],
 		(currentStatus) => _.merge({}, defaultStatus, currentStatus, getNewStatus(currentStatus))
 	);
 }
@@ -95,24 +96,24 @@ export default createReducer(
 	{
 		[ENSURE_ENTITY]: [
 			t.struct({
-				collectionName: t.String,
+				modelName: t.String,
 				entityId: EntityId,
 			}),
 			(state, action) => {
-				const { collectionName, entityId } = action.payload;
-				return setStatusWithDefaults(state, collectionName, entityId, (currentStatus) => ({
+				const { modelName, entityId } = action.payload;
+				return setStatusWithDefaults(state, modelName, entityId, (currentStatus) => ({
 					transient: currentStatus ? currentStatus.transient : true,
 				}));
 			},
 		],
 		[ATTEMPT_FETCH_ENTITY]: [
 			t.struct({
-				collectionName: t.String,
+				modelName: t.String,
 				entityId: EntityId,
 			}),
 			(state, action) => {
-				const { collectionName, entityId } = action.payload;
-				return setStatusWithDefaults(state, collectionName, entityId, (currentStatus) => ({
+				const { modelName, entityId } = action.payload;
+				return setStatusWithDefaults(state, modelName, entityId, (currentStatus) => ({
 					transient: currentStatus ? currentStatus.transient : true,
 					fetching: true,
 				}));
@@ -158,10 +159,10 @@ export default createReducer(
 				newState = newState.merge({
 					statuses: _.mapValues(
 						normalizedEntities,
-						(entityList, statusCollectionName) => _.mapValues(entityList, (x, statusEntityId) => {
+						(entityList, statusModelName) => _.mapValues(entityList, (x, statusEntityId) => {
 							const currentStatus = _.get(
 								state,
-								['statuses', statusCollectionName, statusEntityId]
+								['statuses', statusModelName, statusEntityId]
 							);
 							return _.merge({}, defaultStatus, currentStatus, {
 								validAtTime,
@@ -171,30 +172,44 @@ export default createReducer(
 						})
 					),
 				}, { deep: true });
+				_.each(
+					normalizedEntities,
+					(entityDictionary, modelName) => {
+						newState = newState.updateIn(
+							['errors', modelName],
+							(entitiesErrors) => {
+								if (entitiesErrors) {
+									return entitiesErrors.without(_.keys(entityDictionary));
+								}
+								return {};
+							}
+						);
+					}
+				);
 
 				return newState;
 			},
 		],
 		[RECEIVE_FETCH_ENTITY_FAILURE]: [
 			t.struct({
-				collectionName: t.String,
+				modelName: t.String,
 				entityId: EntityId,
 				error: Error,
 			}),
 			(state, action) => {
-				const { collectionName, entityId, error } = action.payload;
+				const { modelName, entityId, error } = action.payload;
 				let newState = state;
-				newState = setStatusWithDefaults(newState, collectionName, entityId, () => ({
+				newState = setStatusWithDefaults(newState, modelName, entityId, () => ({
 					transient: true,
 					fetching: false,
 				}));
-				newState = newState.setIn(['errors', collectionName, entityId], error);
+				newState = newState.setIn(['errors', modelName, entityId], error);
 				return newState;
 			},
 		],
 		[MERGE_ENTITY]: [
 			t.struct({
-				collectionName: t.String,
+				modelName: t.String,
 				data: t.Object,
 				noInteraction: t.Boolean,
 			}),
@@ -208,11 +223,11 @@ export default createReducer(
 			}),
 			(state, action) => {
 				const { entitySchema, entityId, entity } = action.payload;
-				const collectionName = entitySchema.name;
+				const modelName = entitySchema.name;
 
 				let newState = state;
 				newState = newState.updateIn(
-					['collections', collectionName, entityId],
+					['collections', modelName, entityId],
 					(value, newEntity) => {
 						let newValue = value;
 						if (!newValue) {
@@ -227,22 +242,22 @@ export default createReducer(
 					},
 					entity
 				);
-				newState = setStatusWithDefaults(newState, collectionName, entityId, (currentStatus) => ({
+				newState = setStatusWithDefaults(newState, modelName, entityId, (currentStatus) => ({
 					persisting: true,
 					transient: currentStatus ? currentStatus.transient : true,
 				}));
 
-				newState = newState.setIn(
-					['errors', collectionName, entityId],
-					{}
-				);
+				// newState = newState.setIn(
+				// 	['errors', modelName, entityId],
+				// 	{}
+				// );
 
 				return newState;
 			},
 		],
 		[RECEIVE_PERSIST_ENTITY_SUCCESS]: [
 			t.struct({
-				collectionName: t.String,
+				modelName: t.String,
 				entityId: EntityId,
 				normalizedEntities: NormalizedEntityDictionary,
 				validAtTime: t.String,
@@ -250,7 +265,8 @@ export default createReducer(
 			}),
 			(state, action) => {
 				const {
-					collectionName,
+					modelName,
+					entityId,
 					normalizedEntities,
 					transientEntityId,
 					validAtTime,
@@ -270,15 +286,19 @@ export default createReducer(
 				newState = newState.merge({
 					statuses,
 				}, { deep: true });
+				newState = newState.setIn(
+					['errors', modelName, entityId],
+					{}
+				);
 
 				if (transientEntityId) {
 					newState = newState.setIn(
-						['collections', collectionName],
-						newState.collections[collectionName].without(transientEntityId)
+						['collections', modelName],
+						newState.collections[modelName].without(transientEntityId)
 					);
 					newState = newState.setIn(
-						['statuses', collectionName],
-						newState.statuses[collectionName].without(transientEntityId)
+						['statuses', modelName],
+						newState.statuses[modelName].without(transientEntityId)
 					);
 				}
 				return newState;
@@ -286,22 +306,22 @@ export default createReducer(
 		],
 		[RECEIVE_PERSIST_ENTITY_FAILURE]: [
 			t.struct({
-				collectionName: t.String,
+				modelName: t.String,
 				entityId: EntityId,
 				error: t.Object,
 			}),
 			(state, action) => {
-				const { collectionName, entityId, error } = action.payload;
+				const { modelName, entityId, error } = action.payload;
 
 				const isTransient = _.get(
 					state,
-					['statuses', collectionName, entityId, 'transient'],
+					['statuses', modelName, entityId, 'transient'],
 					false
 				);
 
 				let newState = state.merge({
 					statuses: {
-						[collectionName]: {
+						[modelName]: {
 							[entityId]: {
 								transient: isTransient,
 								persisting: false,
@@ -309,7 +329,7 @@ export default createReducer(
 						},
 					},
 					errors: {
-						[collectionName]: {
+						[modelName]: {
 							[entityId]: error,
 						},
 					},
@@ -318,7 +338,7 @@ export default createReducer(
 				if (error.validationErrors) {
 					newState = newState.merge({
 						validationErrors: {
-							[collectionName]: {
+							[modelName]: {
 								[entityId]: error.validationErrors,
 							},
 						},
@@ -329,18 +349,18 @@ export default createReducer(
 		],
 		[DELETE_ENTITY]: [
 			t.struct({
-				collectionName: t.String,
+				modelName: t.String,
 				entityId: EntityId,
 			}),
 			(state, action) => {
-				const { collectionName, entityId } = action.payload;
+				const { modelName, entityId } = action.payload;
 				invariant(
-					_.get(state, ['collections', collectionName, entityId]),
+					_.get(state, ['collections', modelName, entityId]),
 					'unknown entity to delete'
 				);
 				return state.merge({
 					statuses: {
-						[collectionName]: {
+						[modelName]: {
 							[entityId]: {
 								transient: true,
 								deleting: true,
@@ -352,33 +372,33 @@ export default createReducer(
 		],
 		[RECEIVE_DELETE_ENTITY_SUCCESS]: [
 			t.struct({
-				collectionName: t.String,
+				modelName: t.String,
 				entityId: EntityId,
 			}),
 			(state, action) => {
-				const { collectionName, entityId } = action.payload;
+				const { modelName, entityId } = action.payload;
 				return state
 					.setIn(
-						['collections', collectionName],
-						state.collections[collectionName].without(`${entityId}`)
+						['collections', modelName],
+						state.collections[modelName].without(`${entityId}`)
 					)
 					.setIn(
-						['statuses', collectionName],
-						state.statuses[collectionName].without(`${entityId}`)
+						['statuses', modelName],
+						state.statuses[modelName].without(`${entityId}`)
 					);
 			},
 		],
 		[RECEIVE_DELETE_ENTITY_FAILURE]: [
 			t.struct({
-				collectionName: t.String,
+				modelName: t.String,
 				entityId: EntityId,
 				error: Error,
 			}),
 			(state, action) => {
-				const { collectionName, entityId, error } = action.payload;
+				const { modelName, entityId, error } = action.payload;
 				return state.merge({
 					statuses: {
-						[collectionName]: {
+						[modelName]: {
 							[entityId]: {
 								error,
 								transient: false,
@@ -387,6 +407,31 @@ export default createReducer(
 						},
 					},
 				}, { deep: true });
+			},
+		],
+		[FORGET_ENTITY]: [
+			t.struct({
+				modelName: t.String,
+				entityId: EntityId,
+			}),
+			(state, action) => {
+				const { modelName, entityId } = action.payload;
+				let newState = state;
+				_.each(['collections', 'statuses', 'errors'], (sliceName) => {
+					if (_.get(newState, [sliceName, modelName])) {
+						newState = newState.updateIn(
+							[sliceName, modelName],
+							(selectedCollectionName, entityIdToForget) => {
+								if (selectedCollectionName) {
+									return selectedCollectionName.without(`${entityIdToForget}`);
+								}
+								return selectedCollectionName;
+							},
+							entityId
+						);
+					}
+				});
+				return newState;
 			},
 		],
 	},

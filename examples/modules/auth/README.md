@@ -19,3 +19,5 @@ Therefore `ApiService` can store access tokens or other data in app state.
 ### Depends on modules
 
 - `api`
+- `entityDescriptors`
+- `entityStorage`

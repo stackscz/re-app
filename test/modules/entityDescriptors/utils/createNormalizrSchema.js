@@ -22,7 +22,7 @@ describe('modules/entityDescriptors/utils/createNormalizrSchema', () => {
 	it('should check params', () => {
 		expect(() => {
 			createNormalizrSchema({ some: 'nonsense' });
-		}).toThrow(/collectionName/);
+		}).toThrow(/modelName/);
 		expect(() => {
 			createNormalizrSchema('items');
 		}).toThrow(/SchemasDictionary/);
@@ -82,7 +82,7 @@ describe('modules/entityDescriptors/utils/createNormalizrSchema', () => {
 					author: {
 						name: 'author',
 						type: 'association',
-						collectionName: 'users',
+						modelName: 'users',
 						isMultiple: false,
 					}
 				}

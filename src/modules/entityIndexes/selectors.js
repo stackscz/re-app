@@ -15,7 +15,7 @@ export const getEntityIndexSelector = (indexHash) =>
  * @param {string} indexHash
  */
 export const getDynamicEntityIndexContentSelector =
-	(indexHash:string|{collectionName:string, filter: EntityIndexFilter}) =>
+	(indexHash:string|{modelName:string, filter: EntityIndexFilter}) =>
 		(state) => {
 			let finalIndexHash = indexHash;
 			if (!_.isString(finalIndexHash)) {
@@ -25,7 +25,7 @@ export const getDynamicEntityIndexContentSelector =
 			if (!index || !index.content) {
 				return undefined;
 			}
-			const collection = _.get(state, ['entityStorage', 'collections', index.collectionName]);
+			const collection = _.get(state, ['entityStorage', 'collections', index.modelName]);
 			if (!collection) {
 				return index.content;
 			}
@@ -57,7 +57,7 @@ export const getDynamicEntityIndexContentSelector =
 		};
 
 export const getDynamicEntityIndexSelector =
-	(indexHash:string|{collectionName:string, filter: EntityIndexFilter}) =>
+	(indexHash:string|{modelName:string, filter: EntityIndexFilter}) =>
 		(state) => {
 			let finalIndexHash = indexHash;
 			if (!_.isString(finalIndexHash)) {

@@ -19,7 +19,7 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 			entityIndexes: {
 				indexes: {
 					idxid: {
-						collectionName: 'posts',
+						modelName: 'posts',
 						content: expectedContent,
 					}
 				}
@@ -34,7 +34,7 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 		entityIndexes: {
 			indexes: {
 				[indexHash]: {
-					collectionName: 'posts',
+					modelName: 'posts',
 					filter: undefined,
 					content: ['1', '2', '4'],
 				}

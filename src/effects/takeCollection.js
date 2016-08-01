@@ -5,7 +5,7 @@ export default function takeCollection(actionType, name) {
 		if (!action.payload) {
 			return false;
 		}
-		const { collectionName } = action.payload;
-		return collectionName === name && action.type === actionType;
+		const { modelName } = action.payload;
+		return modelName === name && action.type === actionType;
 	});
 }

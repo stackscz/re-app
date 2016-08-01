@@ -16,10 +16,10 @@ export default class ModulesExamples extends React.Component {
 		const tabLinks = generateTabLinks('modules', [
 			'routing',
 			'api',
-			'auth',
 			'entityDescriptors',
 			'entityStorage',
 			'entityIndexes',
+			'auth',
 		]);
 		return (
 			<div className="container-fluid">
