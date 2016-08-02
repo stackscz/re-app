@@ -3,7 +3,7 @@ import hash from 'object-hash';
 
 import normalizeFilter from './utils/normalizeFilter';
 
-import type EntityIndexFilter from 'types/EntityIndexFilter';
+import type { EntityIndexFilter } from 'types/EntityIndexFilter';
 
 export const getEntityIndexSelector = (indexHash) =>
 	(state) =>

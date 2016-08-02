@@ -95,6 +95,7 @@ export default createReducer(
 								content,
 								validAtTime,
 								fetching: false,
+								error: undefined,
 							},
 						},
 						existingCounts: {
