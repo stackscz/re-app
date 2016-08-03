@@ -78,7 +78,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 		it('should normalize single object', () => {
 			const normalizationResult = normalize(objToNormalize, 'posts', schemas);
 			expect(normalizationResult).toEqual({
-				result: '1',
+				result: 1,
 				entities: {
 					posts: {
 						1: {
@@ -105,7 +105,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 		it('should normalize array of objects', () => {
 			const normalizationResult = normalize(arrayToNormalize, 'posts', schemas);
 			expect(normalizationResult).toEqual({
-				result: ['1', '2'],
+				result: [1, 2],
 				entities: {
 					posts: {
 						1: {
@@ -158,7 +158,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 
 			const normalizationResult = normalize(objectWithAdditionalProps, 'posts', schemas);
 			expect(normalizationResult).toEqual({
-				result: '1',
+				result: 1,
 				entities: {
 					posts: {
 						1: {

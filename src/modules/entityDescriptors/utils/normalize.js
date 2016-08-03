@@ -40,41 +40,8 @@ export default function normalize(obj:Entity | Array<Entity>,
 					result[propertyName] = propertyValue;
 				}
 			},
-			// TODO rethink leaving of warnings
-			//	,
-			//	mergeIntoEntity: (entityA, entityB, entityKey) => {
-			//		debugger;
-			//
-			//		for (let key in entityB) {
-			//			if (!entityB.hasOwnProperty(key)) {
-			//				continue;
-			//			}
-			//
-			//			if (!entityA.hasOwnProperty(key) || isEqual(entityA[key], entityB[key])) {
-			//				entityA[key] = entityB[key];
-			//				continue;
-			//			}
-			//
-			//			if(schema[key] && schema[key].type === 'association' && )
-			//
-			//			console.warn(
-			//				'When merging two ' +
-			// 				entityKey +
-			// 				', found unequal data in their "' +
-			// 				key +
-			// 				'" values. Using the earlier value.',
-			//				entityA[key], entityB[key]
-			//			);
-			//		}
-			//	}
 		}
 	);
-
-	if (normalizeMultiple) {
-		normalizationResult.result = _.map(normalizationResult.result, (id) => `${id}`);
-	} else {
-		normalizationResult.result = `${normalizationResult.result}`;
-	}
 
 	return normalizationResult;
 }
