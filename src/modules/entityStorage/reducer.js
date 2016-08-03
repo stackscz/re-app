@@ -288,7 +288,7 @@ export default createReducer(
 				}, { deep: true });
 				newState = newState.setIn(
 					['errors', modelName, entityId],
-					{}
+					null
 				);
 
 				if (transientEntityId) {
