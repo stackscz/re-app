@@ -8,7 +8,6 @@ import type { AuthContext } from 'types/AuthContext';
 import type { Error } from 'types/Error';
 
 import rethrowError from 'utils/rethrowError';
-// import apiServiceResultTypeInvariant from 'utils/apiServiceResultTypeInvariant';
 import isOfType from 'utils/isOfType';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
@@ -141,19 +140,22 @@ export function* authFlow() {
 		return;
 	}
 	if (user) {
+		if (!isOfType(user, t.Object)) {
+			// TODO put error action
+			console.error('refreshAuth returned invalid user');
+			return;
+		}
 		const { userModelName } = yield select(getAuthState);
 		const entitySchemas = yield select(getEntitySchemas);
-		try {
-			const {
-				result: userId,
-				entities,
-			} = normalize(user, userModelName, entitySchemas);
+		const {
+			result: userId,
+			entities,
+		} = normalize(user, userModelName, entitySchemas);
+		if (userId) {
 			yield put(receiveEntities(entities, moment().format()));
 			yield put(initializeFinish(freshAuthContext, userId));
-		} catch (error) {
-			// TODO put error action
+		} else {
 			console.error('Could not normalize user.');
-			return;
 		}
 	} else {
 		yield put(initializeFinish(freshAuthContext));
