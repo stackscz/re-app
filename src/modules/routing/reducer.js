@@ -38,7 +38,7 @@ export default createReducer(
 
 				if (routesSync) {
 					return state
-						.set('location', action.payload)
+						.set('location', location)
 						// last route is the interesting one
 						.set('locationRoute', routes ? routes.pop() : undefined)
 						// provide whole route chain too
