@@ -17,11 +17,23 @@ export default function LoginForm(props) {
 			<label htmlFor="inputEmail" className="sr-only">
 				Username
 			</label>
-			<input type="text" id="inputEmail" className="form-control" placeholder="Email address" />
+			<input
+				type="text"
+				id="inputEmail"
+				className="form-control"
+				placeholder="Email address"
+				defaultValue="username"
+			/>
 			<label htmlFor="inputPassword" className="sr-only">
 				Password
 			</label>
-			<input type="password" id="inputPassword" className="form-control" placeholder="Password" />
+			<input
+				type="password"
+				id="inputPassword"
+				className="form-control"
+				placeholder="Password"
+				defaultValue="password"
+			/>
 			<button className="btn btn-success" type="submit">Sign in</button>
 		</form>
 	);

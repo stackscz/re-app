@@ -14,7 +14,7 @@ import {
 import { getEntitySchemas } from 'modules/entityDescriptors/selectors';
 import { sagas, actions } from 'modules/auth';
 import {
-	loginSuccess,
+	receiveIdentity,
 } from 'modules/auth/actions';
 import {
 	forgetEntity,
@@ -67,7 +67,7 @@ describe('modules/auth/sagas:authorize test - login success', (t) => {
 		expect(next.value).toEqual(put(receiveEntities(normalizedEntities, moment().format())));
 		next = saga.next();
 
-		expect(next.value).toEqual(put(loginSuccess('username', authState.context)));
+		expect(next.value).toEqual(put(receiveIdentity('username', authState.context)));
 		next = saga.next();
 
 	});
@@ -90,8 +90,8 @@ describe('modules/auth/sagas:loginTask test - login failure', () => {
 		message: 'Login failed.'
 	};
 
-	it('authorize Saga must put LOGIN_FAILURE action in case of login failure', () => {
-		expect(saga.throw(loginResult).value).toEqual(put(actions.loginFailure(loginResult)));
+	it('authorize Saga must put RECEIVE_LOGIN_FAILURE action in case of login failure', () => {
+		expect(saga.throw(loginResult).value).toEqual(put(actions.receiveLoginFailure(loginResult)));
 	});
 
 });
@@ -124,7 +124,7 @@ describe('modules/auth/sagas:logoutTask test - logout success', () => {
 		expect(next.value).toEqual(put(forgetEntity()));
 		next = saga.next();
 	});
-	it('authorize Saga must put LOGOUT_SUCCESS action after successful logout', () => {
-		expect(next.value).toEqual(put(actions.logoutSuccess(authState.context)));
+	it('authorize Saga must put RECEIVE_LOGOUT_SUCCESS action after successful logout', () => {
+		expect(next.value).toEqual(put(actions.receiveLogoutSuccess(authState.context)));
 	});
 });

@@ -12,11 +12,12 @@ import type { AuthModuleState } from 'types/AuthModuleState';
 import {
 	INITIALIZE,
 	INITIALIZE_FINISH,
+	RECEIVE_IDENTITY,
 	LOGIN,
-	LOGIN_SUCCESS,
-	LOGIN_FAILURE,
-	LOGOUT_SUCCESS,
-	LOGOUT_FAILURE,
+	RECEIVE_LOGIN_SUCCESS,
+	RECEIVE_LOGIN_FAILURE,
+	RECEIVE_LOGOUT_SUCCESS,
+	RECEIVE_LOGOUT_FAILURE,
 } from './actions';
 
 export default createReducer(
@@ -46,15 +47,26 @@ export default createReducer(
 		[INITIALIZE_FINISH]: [
 			t.struct({
 				context: AuthContext,
-				userId: t.maybe(EntityId),
 			}),
 			(state, action) => {
-				const { context, userId } = action.payload;
+				const { context } = action.payload;
 				return state.merge({
 					context,
-					userId,
 					initializing: false,
 					initialized: true,
+				});
+			},
+		],
+		[RECEIVE_IDENTITY]: [
+			t.struct({
+				userId: t.maybe(EntityId),
+				context: AuthContext,
+			}),
+			(state, action) => {
+				const { userId, context } = action.payload;
+				return state.merge({
+					userId,
+					context,
 				});
 			},
 		],
@@ -64,21 +76,21 @@ export default createReducer(
 				authenticating: true,
 			});
 		},
-		[LOGIN_SUCCESS]: [
+		[RECEIVE_LOGIN_SUCCESS]: [
 			t.struct({
-				context: AuthContext,
 				userId: EntityId,
+				context: AuthContext,
 			}),
 			(state, action) => {
-				const { context, userId } = action.payload;
+				const { userId, context } = action.payload;
 				return state.merge({
-					context,
 					userId,
+					context,
 					authenticating: false,
 				});
 			},
 		],
-		[LOGIN_FAILURE]: [
+		[RECEIVE_LOGIN_FAILURE]: [
 			t.struct({
 				error: Error,
 			}),
@@ -90,7 +102,7 @@ export default createReducer(
 				});
 			},
 		],
-		[LOGOUT_SUCCESS]: [
+		[RECEIVE_LOGOUT_SUCCESS]: [
 			t.struct({
 				context: AuthContext,
 			}),
@@ -99,10 +111,11 @@ export default createReducer(
 				return state.merge({
 					context,
 					userId: null,
+					error: null,
 				});
 			},
 		],
-		[LOGOUT_FAILURE]: [
+		[RECEIVE_LOGOUT_FAILURE]: [
 			t.struct({
 				error: Error,
 			}),

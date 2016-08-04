@@ -9,11 +9,11 @@ import {
 	INITIALIZE,
 	INITIALIZE_FINISH,
 	LOGIN,
-	LOGIN_FAILURE,
-	LOGIN_SUCCESS,
+	RECEIVE_LOGIN_FAILURE,
+	RECEIVE_IDENTITY,
 	LOGOUT,
-	LOGOUT_FAILURE,
-	LOGOUT_SUCCESS,
+	RECEIVE_LOGOUT_FAILURE,
+	RECEIVE_LOGOUT_SUCCESS,
 } from 'modules/auth/actions';
 
 describe('modules/auth/reducer', () => {
@@ -117,13 +117,13 @@ describe('modules/auth/reducer', () => {
 		});
 	});
 
-	describe(`should handle ${LOGIN_FAILURE}`, () => {
+	describe(`should handle ${RECEIVE_LOGIN_FAILURE}`, () => {
 		it('should throw on invalid payload.', () => {
 			expect(() => {
 				reducer(
 					undefined,
 					{
-						type: LOGIN_FAILURE,
+						type: RECEIVE_LOGIN_FAILURE,
 					}
 				);
 			}).toThrow(/invalid payload/);
@@ -133,7 +133,7 @@ describe('modules/auth/reducer', () => {
 				reducer(
 					undefined,
 					{
-						type: LOGIN_FAILURE,
+						type: RECEIVE_LOGIN_FAILURE,
 						payload: {
 							error: {
 								code: 100,
@@ -159,13 +159,13 @@ describe('modules/auth/reducer', () => {
 		});
 	});
 
-	describe(`should handle ${LOGIN_SUCCESS}`, () => {
+	describe(`should handle ${RECEIVE_IDENTITY}`, () => {
 		it('should throw invalid payload.', () => {
 			expect(() => {
 				reducer(
 					undefined,
 					{
-						type: LOGIN_SUCCESS,
+						type: RECEIVE_IDENTITY,
 					}
 				);
 			}).toThrow(/invalid payload/);
@@ -175,7 +175,7 @@ describe('modules/auth/reducer', () => {
 				reducer(
 					undefined,
 					{
-						type: LOGIN_SUCCESS,
+						type: RECEIVE_IDENTITY,
 						payload: {
 							userId: 'john',
 							context: {},
@@ -196,7 +196,7 @@ describe('modules/auth/reducer', () => {
 		});
 	});
 
-	describe(`should handle ${LOGOUT_SUCCESS}`, () => {
+	describe(`should handle ${RECEIVE_LOGOUT_SUCCESS}`, () => {
 		it('should unset user.', () => {
 			let state = reducer(
 				Immutable.from({
@@ -209,14 +209,14 @@ describe('modules/auth/reducer', () => {
 			// state = reducer(
 			// 	state,
 			// 	{
-			// 		type: LOGOUT_SUCCESS,
+			// 		type: RECEIVE_LOGOUT_SUCCESS,
 			// 	}
 			// );
 			expect(
 				reducer(
 					state,
 					{
-						type: LOGOUT_SUCCESS,
+						type: RECEIVE_LOGOUT_SUCCESS,
 						payload: {
 							context: {}
 						}

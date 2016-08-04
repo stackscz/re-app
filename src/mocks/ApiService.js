@@ -62,7 +62,8 @@ function logBoldMessage(message) {
 
 function isCredentialsValid(credentials) {
 	if (!credentials) return false;
-	return (credentials.username === 'username' && credentials.password === 'password');
+	return (credentials.username === 'username' && credentials.password === 'password') ||
+		(credentials.username === 'username2' && credentials.password === 'password2')
 }
 
 function getInclude(modelName) {
@@ -124,14 +125,16 @@ export default ({
 	 * @returns {Promise}
 	 */
 	refreshAuth: (apiContext, authContext) => {
-		logBoldMessage('ApiService.initializeAuth called');
+		logBoldMessage('ApiService.refreshAuth called');
 		return DelayedPromise((resolve) => {
 			// possibly set user and possibly modify authContext
-			const updatedAuthContext = {
-				authContext,
-				user: { username: 'username' }
-			};
-			resolve(updatedAuthContext);
+			if (authContext.username) {
+				resolve({
+					authContext,
+					user: { username: authContext.username }
+				});
+			}
+			resolve({ authContext });
 		});
 	},
 	/**
@@ -150,13 +153,15 @@ export default ({
 			if (isCredentialsValid(credentials)) {
 				// set user and possibly modify authContext
 				resolve({
-					authContext: authContext,
+					authContext: {
+						...authContext,
+						username: credentials.username,
+					},
 					user: {
-						username: credentials.username
+						username: credentials.username,
 					}
 				});
 			} else {
-				// TODO rethink error result format
 				reject({
 					code: 401,
 					message: 'Invalid credentials',
