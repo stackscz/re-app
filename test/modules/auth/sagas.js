@@ -10,11 +10,14 @@ import {
 	getUser,
 	getAuthContext,
 	getAuthState,
+	getUserId,
 } from 'modules/auth/selectors';
 import { getEntitySchemas } from 'modules/entityDescriptors/selectors';
 import { sagas, actions } from 'modules/auth';
 import {
 	receiveIdentity,
+	receiveLoginSuccess,
+	receiveLogoutSuccess,
 } from 'modules/auth/actions';
 import {
 	forgetEntity,
@@ -24,6 +27,9 @@ import {
 import ApiServiceImpl from 'mocks/ApiService';
 
 import entityDescriptors from 'mocks/entityDescriptors';
+
+import startSaga from 'utils/test/startSaga';
+import nextEffect from 'utils/test/nextEffect';
 
 const apiContext = {
 	service: ApiServiceImpl,
@@ -38,93 +44,270 @@ const authState = {
 	authenticating: false,
 };
 
-describe('modules/auth/sagas:authorize test - login success', (t) => {
+describe('modules/auth/sagas:refreshIdentityTask', (t) => {
 
+	const saga = sagas.refreshIdentityTask();
+	let next = startSaga(saga);
 
-	it('should work', () => {
-		const saga = sagas.loginTask({}, apiContext, authState.context);
-		let next = saga.next();
-
-		expect(next.value).toEqual(select(getApiService));
-		next = saga.next(ApiServiceImpl);
-
-		expect(next.value).toEqual(call(ApiServiceImpl.login, {}, apiContext, authState.context));
-		next = saga.next({ user: { username: 'username' }, authContext: {} });
-
-		expect(next.value).toEqual(select(getAuthState));
-		next = saga.next(authState);
-
-		expect(next.value).toEqual(select(getEntitySchemas));
-		next = saga.next(entityDescriptors.schemas);
-
-		const normalizedEntities = {
-			users: {
-				username: {
+	next = nextEffect(
+		saga,
+		next,
+		select(getApiService),
+		ApiServiceImpl
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getApiContext),
+		{}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getAuthContext),
+		{}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		call(
+			ApiServiceImpl.refreshAuth,
+			{},
+			{}
+		),
+		{
+			user: {
+				username: 'username'
+			},
+			authContext: {}
+		}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getAuthState),
+		{
+			userModelName: 'User'
+		}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getUserId),
+		'username2'
+	);
+	next = nextEffect(
+		saga,
+		next,
+		call(
+			sagas.normalizeUserTask,
+			{
+				username: 'username'
+			}
+		),
+		{
+			userId: 'username',
+			entities: {
+				'User': {
 					username: 'username'
 				}
 			}
-		};
-		expect(next.value).toEqual(put(receiveEntities(normalizedEntities, moment().format())));
-		next = saga.next();
-
-		expect(next.value).toEqual(put(receiveIdentity('username', authState.context)));
-		next = saga.next();
-
-	});
+		}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		put(
+			receiveEntities(
+				{
+					User: {
+						username: 'username'
+					}
+				},
+				moment().format()
+			)
+		)
+	);
+	next = nextEffect(
+		saga,
+		next,
+		put(
+			receiveIdentity(
+				'username',
+				{}
+			)
+		)
+	);
+	next = nextEffect(
+		saga,
+		next,
+		put(
+			forgetEntity(
+				'User',
+				'username2'
+			)
+		)
+	);
 
 });
 
 describe('modules/auth/sagas:loginTask test - login failure', () => {
 
-	const saga = sagas.loginTask({}, apiContext, authState);
+	const saga = sagas.loginTask({ username: 'username', password: 'password' });
+	let next = startSaga(saga);
 
-	it('authorize Saga must select ApiService', () => {
-		expect(saga.next().value).toEqual(select(getApiService));
-	});
-	it('authorize Saga must call ApiService.login', () => {
-		expect(saga.next(ApiServiceImpl).value).toEqual(call(ApiServiceImpl.login, {}, apiContext, authState));
-	});
-
-	var loginResult = {
-		code: 400,
-		message: 'Login failed.'
-	};
-
-	it('authorize Saga must put RECEIVE_LOGIN_FAILURE action in case of login failure', () => {
-		expect(saga.throw(loginResult).value).toEqual(put(actions.receiveLoginFailure(loginResult)));
-	});
+	next = nextEffect(
+		saga,
+		next,
+		select(getApiService),
+		ApiServiceImpl
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getApiContext),
+		{}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getAuthContext),
+		{}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		call(
+			ApiServiceImpl.login,
+			{ username: 'username', password: 'password' },
+			{},
+			{}
+		),
+		{
+			user: {
+				username: 'username'
+			},
+			authContext: {}
+		}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		call(
+			sagas.normalizeUserTask,
+			{
+				username: 'username'
+			}
+		),
+		{
+			userId: 'username',
+			entities: {
+				'User': {
+					username: 'username'
+				}
+			}
+		}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getAuthState),
+		{
+			userModelName: 'User'
+		}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getUserId),
+		'username2'
+	);
+	next = nextEffect(
+		saga,
+		next,
+		put(
+			receiveEntities(
+				{
+					User: {
+						username: 'username'
+					}
+				},
+				moment().format()
+			)
+		)
+	);
+	next = nextEffect(
+		saga,
+		next,
+		put(
+			receiveLoginSuccess(
+				'username',
+				{}
+			)
+		)
+	);
+	next = nextEffect(
+		saga,
+		next,
+		put(
+			forgetEntity(
+				'User',
+				'username2'
+			)
+		)
+	);
 
 });
 
 describe('modules/auth/sagas:logoutTask test - logout success', () => {
-	const saga = sagas.logoutTask();
 
-	let next = saga.next();
-	it('authorize Saga must select ApiService', () => {
-		expect(next.value).toEqual(select(getApiService));
-		next = saga.next(ApiServiceImpl);
-	});
-	it('authorize Saga must select authState', () => {
-		expect(next.value).toEqual(select(getAuthContext));
-		next = saga.next({});
-	});
-	it('authorize Saga must select authState', () => {
-		expect(next.value).toEqual(select(getAuthState));
-		next = saga.next(authState.context);
-	});
-	it('authorize Saga must select apiContext', () => {
-		expect(next.value).toEqual(select(getApiContext));
-		next = saga.next(apiContext);
-	});
-	it('authorize Saga must call ApiService.logout', () => {
-		expect(next.value).toEqual(call(ApiServiceImpl.logout, apiContext, authState.context));
-		next = saga.next(authState.context);
-	});
-	it('authorize Saga must put FORGET_ENTITY action after successful logout', () => {
-		expect(next.value).toEqual(put(forgetEntity()));
-		next = saga.next();
-	});
-	it('authorize Saga must put RECEIVE_LOGOUT_SUCCESS action after successful logout', () => {
-		expect(next.value).toEqual(put(actions.receiveLogoutSuccess(authState.context)));
-	});
+	const saga = sagas.logoutTask();
+	let next = startSaga(saga);
+	next = nextEffect(
+		saga,
+		next,
+		select(getApiService),
+		ApiServiceImpl
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getAuthContext),
+		{}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getApiContext),
+		{}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		call(ApiServiceImpl.logout, {}, {}),
+		{}
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getAuthState),
+		{ userModelName: 'User' }
+	);
+	next = nextEffect(
+		saga,
+		next,
+		select(getUserId),
+		12345
+	);
+	next = nextEffect(
+		saga,
+		next,
+		put(receiveLogoutSuccess({}))
+	);
+	next = nextEffect(
+		saga,
+		next,
+		put(forgetEntity('User', 12345))
+	);
+
 });

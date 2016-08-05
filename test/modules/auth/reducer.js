@@ -84,7 +84,7 @@ describe('modules/auth/reducer', () => {
 						someMore: 'context',
 					},
 					authenticating: false,
-					userId: undefined,
+					userId: null,
 					userModelName: 'users',
 					error: null,
 					initialized: true,

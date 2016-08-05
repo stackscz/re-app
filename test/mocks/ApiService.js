@@ -9,10 +9,11 @@ const badCredetials = { username: 'johndoe', password: 'password' };
 
 describe('mocks/ApiService', () => {
 
-	it('#refreshAuth resolves with authContext', () => {
+	it('#refreshAuth resolves with {user, authContext}', () => {
 
+		const apiContext = {};
 		const authContext = {};
-		return ApiService.refreshAuth(authContext)
+		return ApiService.refreshAuth(apiContext, authContext)
 			.then(() => {
 				expect(true).toBe(true, 'refreshAuth() should always resolve');
 			})

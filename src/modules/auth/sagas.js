@@ -19,7 +19,11 @@ import {
 	forgetEntity,
 } from 'modules/entityStorage/actions';
 
-import { getAuthState, getAuthContext } from './selectors';
+import {
+	getAuthState,
+	getAuthContext,
+	getUserId,
+} from './selectors';
 import {
 	LOGIN,
 	RECEIVE_IDENTITY,
@@ -72,7 +76,7 @@ export function* refreshIdentityTask() {
 	}
 
 	const { userModelName } = yield select(getAuthState);
-	const originalUserId = yield select((state) => state.auth.userId);
+	const originalUserId = yield select(getUserId);
 
 	const {
 		userId,
@@ -134,7 +138,7 @@ export function* loginTask(credentials) {
 	} = yield call(normalizeUserTask, user);
 
 	const { userModelName } = yield select(getAuthState);
-	const originalUserId = yield select((state) => state.auth.userId);
+	const originalUserId = yield select(getUserId);
 
 	yield put(receiveEntities(entities, moment().format()));
 	yield put(receiveLoginSuccess(userId, freshAuthContext));
@@ -170,7 +174,7 @@ export function* logoutTask() {
 	}
 
 	const { userModelName } = yield select(getAuthState);
-	const originalUserId = yield select((state) => state.auth.userId);
+	const originalUserId = yield select(getUserId);
 
 	yield put(receiveLogoutSuccess(freshAuthContext));
 	yield put(forgetEntity(userModelName, originalUserId));

@@ -8,3 +8,5 @@ import {
 } from 'modules/entityStorage/selectors';
 export const getUser = state =>
 	getDenormalizedEntitySelector(state.auth.userModelName, state.auth.userId)(state);
+
+export const getUserId = state => state.auth.userId;
