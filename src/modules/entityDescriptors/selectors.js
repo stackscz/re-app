@@ -45,26 +45,3 @@ export const getEntityMappingGetter = (modelName) => (state) => {
 	}
 	return mapping;
 };
-
-const resourceMethodMap = {
-	DETAIL: 'get',
-	INDEX: 'get',
-	CREATE: 'post',
-	UPDATE: 'put',
-	DELETE: 'delete',
-};
-
-export const getEntityResourceSelector = (modelName, resourceId) =>
-	(state) => {
-		const resource = _.get(state, ['entityDescriptors', 'resources', modelName, resourceId]);
-		if (resource) {
-			if (!resource.method) {
-				return {
-					...resource,
-					method: resourceMethodMap[resourceId],
-				};
-			}
-			return resource;
-		}
-		return undefined;
-	};

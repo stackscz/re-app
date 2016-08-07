@@ -15,7 +15,6 @@ describe('modules/entityDescriptors/reducer', () => {
 			reducer(undefined, {})
 		).toEqual(
 			{
-				resources: {},
 				schemas: {},
 				fieldsets: {},
 				initialized: false,

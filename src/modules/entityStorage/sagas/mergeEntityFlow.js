@@ -17,7 +17,6 @@ import { getAuthContext } from 'modules/auth/selectors';
 import {
 	getEntitySchemaGetter,
 	getEntitySchemas,
-	getEntityResourceSelector,
 } from 'modules/entityDescriptors/selectors';
 import stripReadOnlyProperties from 'modules/entityDescriptors/utils/stripReadOnlyProperties';
 import {
@@ -85,23 +84,19 @@ export function *persistEntityTask(action) {
 		const strippedEntity = stripReadOnlyProperties(denormalizedEntity, entitySchema);
 		let persistResult;
 		if (remoteEntityId) {
-			const updateEntityResource = yield select(getEntityResourceSelector(modelName, 'UPDATE'));
 			persistResult = yield call(
 				apiService.updateEntity,
 				modelName,
 				remoteEntityId,
 				strippedEntity,
-				updateEntityResource,
 				apiContext,
 				authContext
 			);
 		} else {
-			const createEntityResource = yield select(getEntityResourceSelector(modelName, 'CREATE'));
 			persistResult = yield call(
 				apiService.createEntity,
 				modelName,
 				strippedEntity,
-				createEntityResource,
 				apiContext,
 				authContext
 			);

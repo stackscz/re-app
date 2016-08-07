@@ -19,7 +19,6 @@ import {
 } from 'modules/auth/selectors';
 import {
 	getEntitySchemas,
-	getEntityResourceSelector,
 } from 'modules/entityDescriptors/selectors';
 import {
 	ENSURE_ENTITY_INDEX,
@@ -42,11 +41,9 @@ export function *ensureEntityIndexTask(action) {
 	yield put(attemptFetchEntityIndex(indexHash));
 	try {
 		const normalizedFilter = normalizeFilter(filter);
-		const entityIndexResource = yield select(getEntityResourceSelector(modelName, 'INDEX'));
 		const result = yield call(
 			ApiService.getEntityIndex,
 			modelName,
-			entityIndexResource,
 			normalizedFilter,
 			apiContext,
 			authContext

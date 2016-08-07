@@ -14,7 +14,6 @@ import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
 import {
 	getEntitySchemas,
-	getEntityResourceSelector,
 } from 'modules/entityDescriptors/selectors';
 import {
 	ENSURE_ENTITY,
@@ -38,12 +37,10 @@ export function *ensureEntityTask(action) {
 
 	yield put(attemptFetchEntity(modelName, entityId));
 	try {
-		const ensureEntityResource = yield select(getEntityResourceSelector(modelName, 'DETAIL'));
 		const result = yield call(
 			apiService.getEntity,
 			modelName,
 			entityId,
-			ensureEntityResource,
 			apiContext,
 			authContext
 		);

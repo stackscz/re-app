@@ -7,7 +7,6 @@ import { takeEvery } from 'redux-saga';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
-import { getEntityResourceSelector } from 'modules/entityDescriptors/selectors';
 import {
 	DELETE_ENTITY,
 	receiveDeleteEntitySuccess,
@@ -21,12 +20,10 @@ export function *deleteEntityTask(action) {
 	const authContext = yield select(getAuthContext);
 
 	try {
-		const deleteEntityResource = yield select(getEntityResourceSelector(modelName, 'DELETE'));
 		yield call(
 			ApiService.deleteEntity,
 			modelName,
 			entityId,
-			deleteEntityResource,
 			apiContext,
 			authContext
 		);
