@@ -6,10 +6,10 @@ import Immutable from 'seamless-immutable';
 import createNormalizrSchema from 'modules/entityDescriptors/utils/createNormalizrSchema';
 import normalize from 'modules/entityDescriptors/utils/normalize';
 
-import schemas from './data/schemas';
+import definitions from './data/definitions';
 
-const invalidSchemas = {
-	posts: {}
+const invalidDefinitions = {
+	Post: {}
 };
 
 describe('modules/entityDescriptors/utils/normalize', () => {
@@ -61,13 +61,13 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 
 		it('should throw when unknown collection', () => {
 			expect(() => {
-				normalize({}, 'cats', schemas);
+				normalize({}, 'Cat', definitions);
 			}).toThrow(/Unknown collection/);
 		});
 
-		it('should throw when invalid schemas dictionary', () => {
+		it('should throw when invalid definitions dictionary', () => {
 			expect(() => {
-				normalize({}, 'posts', invalidSchemas);
+				normalize({}, 'Post', invalidDefinitions);
 			}).toThrow(/Invalid value/);
 		});
 
@@ -76,11 +76,11 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 	describe('should normalize properly', () => {
 
 		it('should normalize single object', () => {
-			const normalizationResult = normalize(objToNormalize, 'posts', schemas);
+			const normalizationResult = normalize(objToNormalize, 'Post', definitions);
 			expect(normalizationResult).toEqual({
 				result: 1,
 				entities: {
-					posts: {
+					Post: {
 						1: {
 							id: 1,
 							title: 'Some post',
@@ -90,7 +90,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 							],
 						},
 					},
-					tags: {
+					Tag: {
 						'tag-1': {
 							name: 'tag-1',
 						},
@@ -103,11 +103,11 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 		});
 
 		it('should normalize array of objects', () => {
-			const normalizationResult = normalize(arrayToNormalize, 'posts', schemas);
+			const normalizationResult = normalize(arrayToNormalize, 'Post', definitions);
 			expect(normalizationResult).toEqual({
 				result: [1, 2],
 				entities: {
-					posts: {
+					Post: {
 						1: {
 							id: 1,
 							title: 'Some post',
@@ -124,7 +124,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 							],
 						},
 					},
-					tags: {
+					Tag: {
 						'tag-1': {
 							name: 'tag-1',
 						},
@@ -156,11 +156,11 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 				],
 			};
 
-			const normalizationResult = normalize(objectWithAdditionalProps, 'posts', schemas);
+			const normalizationResult = normalize(objectWithAdditionalProps, 'Post', definitions);
 			expect(normalizationResult).toEqual({
 				result: 1,
 				entities: {
-					posts: {
+					Post: {
 						1: {
 							id: 1,
 							title: 'Some post',
@@ -170,7 +170,7 @@ describe('modules/entityDescriptors/utils/normalize', () => {
 							],
 						},
 					},
-					tags: {
+					Tag: {
 						'tag-1': {
 							name: 'tag-1',
 						},

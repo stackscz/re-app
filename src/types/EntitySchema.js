@@ -1,17 +1,17 @@
 // @flow
-import _ from 'lodash';
 import { $Refinement } from 'tcomb';
 import type { EntityFieldSchema } from 'types/EntityFieldSchema';
 
-const hasDisplayField = (schema) => !!schema.fields[schema.displayFieldName];
-const hasIdField = (schema) => !!schema.fields[schema.idFieldName];
-const isDictionary = (dictionary) => _.every(dictionary, (item, key) => item.name === key);
-export type EntitySchema = Object & { // TODO migrate to model arch.
-	name: string,
-	idFieldName: string,
-	displayFieldName: string,
-	isFilterable: boolean,
-	fields: {
+const hasDisplayProperty = (definition) =>
+	!!definition.properties[definition['x-displayPropertyName']];
+
+const hasIdProperty = (definition) =>
+	!!definition.properties[definition['x-idPropertyName']];
+
+export type EntitySchema = Object & {
+	// 'x-idPropertyName': string,
+	// 'x-displayPropertyName': string,
+	properties: {
 		[key: string]: EntityFieldSchema
-	} & $Refinement<typeof isDictionary>,
-} & $Refinement<typeof hasDisplayField> & $Refinement<typeof hasIdField>
+	},
+} & $Refinement<typeof hasDisplayProperty> & $Refinement<typeof hasIdProperty>

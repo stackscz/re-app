@@ -1,11 +1,11 @@
 # `entityDescriptors`
 
-Keeps entity schemas.
+Keeps entity definitions.
 
 Initial state of module:
 
     {
-    	schemas: {}, // schemas decription object
+    	definitions: {}, // definitions decription object
     	fieldsets: {}, // fieldsets description object
     	initialized: false, // initialization flag
     }

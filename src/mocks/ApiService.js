@@ -8,23 +8,23 @@ import entityDescriptors from './entityDescriptors';
 import type { ApiService } from 'types/ApiService';
 
 // setup db
-const schemas = entityDescriptors.schemas;
+const definitions = entityDescriptors.definitions;
 const models = {};
 import { DataSource } from 'loopback-datasource-juggler';
 const db = new DataSource('memory');
-_.each(entityDescriptors.schemas, (schema, modelName) => {
+_.each(entityDescriptors.definitions, (definition, modelName) => {
 	models[modelName] = db.createModel(
 		modelName,
 		_.pickBy(
-			_.mapValues(schema.fields, (field, fieldName) => {
+			_.mapValues(definition.properties, (field, fieldName) => {
 				if (field.type === 'association') {
 					return undefined;
 				}
-				if (fieldName === schema.idFieldName) {
+				if (fieldName === definition['x-idPropertyName']) {
 					return {
 						type: field.type,
 						id: true,
-						generated: schema.idFieldName === 'id',
+						generated: definition['x-idPropertyName'] === 'id',
 					}
 				}
 				return {
@@ -36,7 +36,7 @@ _.each(entityDescriptors.schemas, (schema, modelName) => {
 		{
 			idInjection: false,
 			relations: _.pickBy(
-				_.mapValues(schema.fields, (field, fieldName) => {
+				_.mapValues(definition.properties, (field, fieldName) => {
 					if (field.type === 'association') {
 						return {
 							model: field.modelName,
@@ -67,7 +67,7 @@ function isCredentialsValid(credentials) {
 }
 
 function getInclude(modelName) {
-	return _.keys(_.pickBy(schemas[modelName].fields, (field) => {
+	return _.keys(_.pickBy(definitions[modelName].properties, (field) => {
 		return field.type === 'association';
 	}));
 }
@@ -92,7 +92,7 @@ function createNotFoundError(details) {
 function createUnknownCollectionError(modelName) {
 	return {
 		code: 400,
-		message: `Unknown collection name "${modelName}"`,
+		message: `Unknown model "${modelName}"`,
 		details: {
 			modelName,
 		},
@@ -257,7 +257,7 @@ export default ({
 			if (!model) {
 				return reject(createUnknownCollectionError(modelName));
 			}
-			const pkName = schemas[modelName].idFieldName;
+			const pkName = definitions[modelName]['x-idPropertyName'];
 			model.findOne(
 				{
 					where: { [pkName]: id },
@@ -300,7 +300,7 @@ export default ({
 					if (err) {
 						return reject(err);
 					}
-					const pkName = schemas[modelName].idFieldName;
+					const pkName = definitions[modelName]['x-idPropertyName'];
 					const pkVal = savedModelInstance[pkName];
 					models[modelName].findOne(
 						{
@@ -336,7 +336,7 @@ export default ({
 			if (!model) {
 				return reject(createUnknownCollectionError(modelName));
 			}
-			const pkName = schemas[modelName].idFieldName;
+			const pkName = definitions[modelName]['x-idPropertyName'];
 			model.findOne(
 				{ where: { [pkName]: id } },
 				(err, persistedEntity) => {
@@ -379,7 +379,7 @@ export default ({
 			if (!model) {
 				return reject(createUnknownCollectionError(modelName));
 			}
-			const pkName = schemas[modelName].idFieldName;
+			const pkName = definitions[modelName]['x-idPropertyName'];
 			model.findOne(
 				{ where: { [pkName]: id } },
 				(err, persistedEntity) => {

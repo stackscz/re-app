@@ -87,8 +87,8 @@ export function mergeEntity(modelName, data, noInteraction = false) {
  * Request remote for entity persistence, actor is responsible for providing non-colliding entityId
  */
 export const PERSIST_ENTITY = 're-app/entityStorage/PERSIST_ENTITY';
-export function persistEntity(entitySchema, entityId, entity, noInteraction = false) {
-	return { type: PERSIST_ENTITY, payload: { entitySchema, entityId, entity, noInteraction } };
+export function persistEntity(modelName, entitySchema, entityId, entity, noInteraction = false) {
+	return { type: PERSIST_ENTITY, payload: { modelName, entitySchema, entityId, entity, noInteraction } };
 }
 
 /**

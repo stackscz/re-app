@@ -1,81 +1,42 @@
 export default {
-	resources: {
-		posts: {
-			INDEX: {
-				path: '/postsx',
-				method: 'get',
-			},
-		},
-	},
-	schemas: {
-		posts: {
-			name: 'posts',
-			displayFieldName: 'title',
-			idFieldName: 'id',
-			isFilterable: false,
-			fields: {
+	definitions: {
+		Post: {
+			'x-idPropertyName': 'id',
+			'x-displayPropertyName': 'title',
+			properties: {
 				id: {
-					name: 'id',
-					type: 'Integer',
+					type: 'integer',
+					readOnly: true,
 				},
 				title: {
-					name: 'title',
-					type: 'String',
+					type: 'string',
 				},
 				tags: {
-					name: 'tags',
-					type: 'association',
-					isMultiple: true,
-					modelName: 'tags',
+					type: 'array',
+					items: {
+						$ref: '#/definitions/Tag',
+					},
 				},
 			},
 		},
-		tags: {
-			name: 'tags',
-			idFieldName: 'name',
-			displayFieldName: 'name',
-			isFilterable: false,
-			fields: {
+		Tag: {
+			'x-idPropertyName': 'name',
+			'x-displayPropertyName': 'name',
+			properties: {
 				name: {
-					name: 'name',
-					type: 'String',
+					type: 'string',
 				},
 			},
 		},
-		users: {
-			name: 'users',
-			idFieldName: 'username',
-			displayFieldName: 'username',
-			isFilterable: false,
-			fields: {
+		User: {
+			'x-idPropertyName': 'username',
+			'x-displayPropertyName': 'username',
+			properties: {
 				username: {
-					name: 'username',
-					type: 'String',
+					type: 'string',
 				},
 			},
 		},
-		// Post: {
-		// 	type: "object",
-		// 	required: [
-		// 		"id",
-		// 	],
-		// 	properties: {
-		// 		id: {
-		// 			type: "integer"
-		// 		},
-		// 		title: {
-		// 			type: "string"
-		// 		},
-		// 		tags: {
-		// 			type: "array",
-		// 			items: { $ref: "#/schemas/Tag" },
-		// 		},
-		// 	},
-		// 	'x-displayPropertyName': 'title',
-		// 	'x-idPropertyName': 'id',
-		// 	'x-isFilterable': false,
-		//
-		// },
 	},
 	fieldsets: {
 		posts: {

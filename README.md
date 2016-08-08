@@ -138,7 +138,7 @@ Handles modal windows
 
 #### entityDescriptors
 
-Keeps entity schemas and normalizr schemas (here called "mappings" for separation)
+Keeps entity definitions and normalizr schemas
 
 #### entityStorage
 

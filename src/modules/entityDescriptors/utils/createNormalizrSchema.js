@@ -1,45 +1,52 @@
 // @flow
 import _ from 'utils/lodash';
 import invariant from 'invariant';
-import type { SchemasDictionary } from 'types/SchemasDictionary';
+import type { DefinitionsDictionary } from 'types/DefinitionsDictionary';
 import { Schema, arrayOf } from 'normalizr';
 
-let cachedSchemas;
+let cachedDefinitions;
 let mappings = {};
 
 /**
- * Generates `normalizr` schemas from internal schemas
+ * Generates `normalizr` definitions from internal definitions
  *
  * @param {string} modelName
- * @param {SchemasDictionary} schemas
- * @returns {Schema} normalizr schema for collection
+ * @param {DefinitionsDictionary} definitions
+ * @returns {Schema} normalizr definition for collection
  */
-export default function createNormalizrSchema(modelName:string, schemas:SchemasDictionary) {
-	invariant(schemas[modelName], 'Unknown collection %s', JSON.stringify(modelName));
-
-	if (!_.get(schemas, modelName)) {
+export default function createNormalizrSchema(modelName:string, definitions:DefinitionsDictionary) {
+	invariant(definitions[modelName], 'Unknown collection %s', JSON.stringify(modelName));
+	if (!_.get(definitions, modelName)) {
 		return undefined;
 	}
 
-	if (cachedSchemas !== schemas) {
-		cachedSchemas = schemas;
+	if (cachedDefinitions !== definitions) {
+		cachedDefinitions = definitions;
 		mappings = {};
 
-		// create normalizr schemas
-		_.each(cachedSchemas, (schema, cachedCollectionName) => {
+
+		// create normalizr definitions
+		_.each(cachedDefinitions, (definition, cachedCollectionName) => {
 			mappings[cachedCollectionName] = new Schema(
 				cachedCollectionName,
-				{ idAttribute: schema.idFieldName }
+				{ idAttribute: definition['x-idPropertyName'] }
 			);
 		});
 
-		// define normalizr schemas
-		_.each(cachedSchemas, (schema) => {
-			_.each(schema.fields, (field) => {
-				if (field.type === 'association') {
-					const assocMapping = mappings[field.modelName];
-					mappings[schema.name].define({
-						[field.name]: field.isMultiple ? arrayOf(assocMapping) : assocMapping,
+		// define normalizr definitions
+		_.each(cachedDefinitions, (definition, modelNameToDefine) => {
+			_.each(definition.properties, (prop, propName) => {
+				const assocModelPointer = _.get(prop, '$ref') || _.get(prop, ['items', '$ref']);
+				if (assocModelPointer) {
+					const assocModelName = _(assocModelPointer).split('/').pop();
+					// console.log(modelNameToDefine);
+					// console.log(assocModelName);
+					// console.log(prop);
+					const isMany = _.get(prop, 'type') === 'array';
+					// console.log(isMany);
+					const assocMapping = mappings[assocModelName];
+					mappings[modelNameToDefine].define({
+						[propName]: isMany ? arrayOf(assocMapping) : assocMapping,
 					});
 				}
 			});

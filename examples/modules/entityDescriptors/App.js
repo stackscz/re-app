@@ -48,7 +48,7 @@ export default class App extends React.Component {
 		return (
 			<div className="App">
 				<p>
-					On app bootstrap, entityDescriptors saga first checks if <code>schemas</code> is empty.
+					On app bootstrap, entityDescriptors saga first checks if <code>definitions</code> is empty.
 					When empty, it tries to fetch descriptors object from ApiService.
 				</p>
 				<div className="row">

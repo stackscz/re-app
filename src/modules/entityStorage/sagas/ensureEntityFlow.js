@@ -13,7 +13,7 @@ import type { Error } from 'types/Error';
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
 import {
-	getEntitySchemas,
+	getEntityDefinitions,
 } from 'modules/entityDescriptors/selectors';
 import {
 	ENSURE_ENTITY,
@@ -46,8 +46,8 @@ export function *ensureEntityTask(action) {
 		);
 		apiServiceResultTypeInvariant(result, EntityResult);
 
-		const entitySchemas = yield select(getEntitySchemas);
-		const normalizationResult = normalize(result.data, modelName, entitySchemas);
+		const entityDefinitions = yield select(getEntityDefinitions);
+		const normalizationResult = normalize(result.data, modelName, entityDefinitions);
 		yield put(receiveEntities(normalizationResult.entities, moment().format()));
 	} catch (error) {
 		rethrowError(error);

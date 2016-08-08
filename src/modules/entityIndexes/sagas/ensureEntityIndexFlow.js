@@ -18,7 +18,7 @@ import {
 	getAuthContext,
 } from 'modules/auth/selectors';
 import {
-	getEntitySchemas,
+	getEntityDefinitions,
 } from 'modules/entityDescriptors/selectors';
 import {
 	ENSURE_ENTITY_INDEX,
@@ -49,8 +49,8 @@ export function *ensureEntityIndexTask(action) {
 			authContext
 		);
 		apiServiceResultTypeInvariant(result, EntityIndexResult);
-		const entitySchemas = yield select(getEntitySchemas);
-		const normalized = normalize(result.data, modelName, entitySchemas);
+		const entityDefinitions = yield select(getEntityDefinitions);
+		const normalized = normalize(result.data, modelName, entityDefinitions);
 		const nowTime = moment().format();
 		yield put(receiveEntities(normalized.entities, nowTime));
 		yield put(receiveEntityIndex(indexHash, normalized.result, result.existingCount, nowTime));

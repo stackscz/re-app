@@ -216,42 +216,21 @@ export default createReducer(
 		],
 		[PERSIST_ENTITY]: [
 			t.struct({
+				modelName: t.String,
 				entitySchema: EntitySchema,
 				entityId: EntityId,
 				entity: t.Object,
 				noInteraction: t.Boolean,
 			}),
 			(state, action) => {
-				const { entitySchema, entityId, entity } = action.payload;
-				const modelName = entitySchema.name;
+				const { modelName, entityId, entity } = action.payload;
 
 				let newState = state;
-				newState = newState.updateIn(
-					['collections', modelName, entityId],
-					(value, newEntity) => {
-						let newValue = value;
-						if (!newValue) {
-							newValue = Immutable.from({});
-						}
-						return newValue.merge(
-							{
-								...newEntity,
-								[entitySchema.idFieldName]: entityId,
-							}
-						);
-					},
-					entity
-				);
+				newState = newState.setIn(['collections', modelName, entityId], entity);
 				newState = setStatusWithDefaults(newState, modelName, entityId, (currentStatus) => ({
 					persisting: true,
 					transient: currentStatus ? currentStatus.transient : true,
 				}));
-
-				// newState = newState.setIn(
-				// 	['errors', modelName, entityId],
-				// 	{}
-				// );
-
 				return newState;
 			},
 		],

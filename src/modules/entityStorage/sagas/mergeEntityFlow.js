@@ -1,4 +1,5 @@
 // @flow
+import _ from 'lodash';
 import moment from 'moment';
 import hash from 'object-hash';
 
@@ -15,9 +16,12 @@ import normalize from 'modules/entityDescriptors/utils/normalize';
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
 import {
-	getEntitySchemaGetter,
-	getEntitySchemas,
+	getEntityDefinitionSelector,
+	getEntityDefinitions,
 } from 'modules/entityDescriptors/selectors';
+import {
+	getEntitySelector,
+} from 'modules/entityStorage/selectors';
 import stripReadOnlyProperties from 'modules/entityDescriptors/utils/stripReadOnlyProperties';
 import {
 	getEntityStatusGetter,
@@ -33,22 +37,27 @@ import {
 
 export function *mergeEntityTask(action) {
 	const { modelName, data, noInteraction } = action.payload;
-	const entitySchema = yield select(getEntitySchemaGetter(modelName));
+	const entitySchema = yield select(getEntityDefinitionSelector(modelName));
 
-	let entityId = data[entitySchema.idFieldName];
+	let entityId = data[entitySchema['x-idPropertyName']];
 	if (!entityId) {
 		entityId = hash({ data, r: Math.random() });
 	}
 
-	const entitySchemas = yield select(getEntitySchemas);
+	const existingEntity = yield select(getEntitySelector(modelName, entityId));
+	const updatedEntity = _.assign({}, existingEntity || {}, data);
+	const entityDefinitions = yield select(getEntityDefinitions);
 	const normalizedData = normalize(
-		{ ...data, [entitySchema.idFieldName]: entityId },
+		{
+			...updatedEntity,
+			[entitySchema['x-idPropertyName']]: entityId,
+		},
 		entitySchema.name,
-		entitySchemas
+		entityDefinitions
 	);
 	const normalizedEntity = normalizedData.entities[modelName][normalizedData.result];
 
-	yield put(persistEntity(entitySchema, entityId, normalizedEntity, noInteraction));
+	yield put(persistEntity(modelName, entitySchema, entityId, normalizedEntity, noInteraction));
 }
 
 export function *persistEntityTask(action) {
@@ -64,7 +73,7 @@ export function *persistEntityTask(action) {
 	typeInvariant(apiService, ApiService, 'entityStorage module depends on api module');
 
 	// EntityMapping is needed to normalize entity
-	const entitySchemas = yield select(getEntitySchemas);
+	const entityDefinitions = yield select(getEntityDefinitions);
 
 	const apiContext = yield select(getApiContext);
 	const authContext = yield select(getAuthContext);
@@ -109,7 +118,7 @@ export function *persistEntityTask(action) {
 				...persistResult.data,
 			},
 			entitySchema.name,
-			entitySchemas
+			entityDefinitions
 		);
 		remoteEntityId = normalizationResult.result;
 		yield put(

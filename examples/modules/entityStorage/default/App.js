@@ -44,13 +44,13 @@ const store = createStore(
 
 @app(
 	store,
-	(state) => state.entityDescriptors.initialized, // show splashscreen until schemas are loaded
-	(() => <div>loading schemas</div>)() // splashscreen element
+	(state) => state.entityDescriptors.initialized, // show splashscreen until definitions are loaded
+	(() => <div>loading definitions</div>)() // splashscreen element
 )
 @container(
 	(state) => ({
 		state,
-		postsSchema: state.entityDescriptors.schemas.posts,
+		postsSchema: state.entityDescriptors.definitions.posts,
 		postsStatuses: _.get(state.entityStorage.statuses, ['posts'], {}),
 		posts: getDenormalizedEntitiesSelector(
 			'posts',
@@ -68,7 +68,7 @@ const store = createStore(
 			dispatch(
 				mergeEntity(
 					'posts',
-					_.assign({}, postData, { [postsSchema.idFieldName]: postHash })
+					_.assign({}, postData, { [postsSchema['x-idPropertyName']]: postHash })
 				)
 			);
 		},
@@ -229,7 +229,7 @@ export default class App extends React.Component {
 												[tags: {Object.values(post.tags || []).map((tag) => tag).join(', ')}]
 												<a
 													href="#"
-													onClick={(e) => { deletePost(post[postsSchema.idFieldName], e); }}
+													onClick={(e) => { deletePost(post[postsSchema['x-idPropertyName']], e); }}
 													className="btn btn-xs btn-danger"
 												>
 													&times;

@@ -7,7 +7,7 @@ import type { Entity } from 'types/Entity';
 import type { EntityId } from 'types/EntityId';
 import type { CollectionName } from 'types/CollectionName';
 import type { NormalizedEntityDictionary } from 'types/NormalizedEntityDictionary';
-import type { SchemasDictionary } from 'types/SchemasDictionary';
+import type { DefinitionsDictionary } from 'types/DefinitionsDictionary';
 
 /**
  * Construct nested object or array of nested objects from entities dictionary
@@ -15,16 +15,16 @@ import type { SchemasDictionary } from 'types/SchemasDictionary';
  * @param {EntityId | Array<EntityId> | Entity | Array<Entity>} ids - entities spec
  * @param {CollectionName} modelName
  * @param {NormalizedEntityDictionary} entityDictionary
- * @param {SchemasDictionary} schemas
+ * @param {DefinitionsDictionary} definitions
  * @param {?number} maxLevel - max level of nesting when denormalizing
  */
 export default function denormalize(ids:EntityId | Array<EntityId> | Entity | Array<Entity>,
 									modelName:CollectionName,
 									entityDictionary:NormalizedEntityDictionary,
-									schemas:SchemasDictionary,
+									definitions:DefinitionsDictionary,
 									maxLevel:number = 1):Entity|Array<Entity> {
-	const normalizrCollectionSchema = createNormalizrSchema(modelName, schemas);
-	const entitySchema = schemas[modelName];
+	const normalizrCollectionSchema = createNormalizrSchema(modelName, definitions);
+	const entitySchema = definitions[modelName];
 
 	let finalNormalizrCollectionSchema = normalizrCollectionSchema;
 	if (typeof maxLevel !== 'undefined') {
@@ -34,7 +34,7 @@ export default function denormalize(ids:EntityId | Array<EntityId> | Entity | Ar
 	let result;
 	if (_.isArray(ids)) {
 		result = _.filter(_.map(ids, id => {
-			const entityId = _.isObject(id) ? id[entitySchema.idFieldName] : id;
+			const entityId = _.isObject(id) ? id[entitySchema['x-idPropertyName']] : id;
 			const entity = _.get(entityDictionary, [modelName, entityId]);
 			if (!entity) {
 				return undefined;
@@ -46,7 +46,7 @@ export default function denormalize(ids:EntityId | Array<EntityId> | Entity | Ar
 			);
 		}), (item) => item);
 	} else {
-		const entityId = _.isObject(ids) ? ids[entitySchema.idFieldName] : ids;
+		const entityId = _.isObject(ids) ? ids[entitySchema['x-idPropertyName']] : ids;
 		result = denormalizrDenormalize(
 			_.get(entityDictionary, [modelName, entityId]),
 			entityDictionary,

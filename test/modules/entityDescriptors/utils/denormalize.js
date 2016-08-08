@@ -7,10 +7,10 @@ import { Schema, arrayOf } from 'normalizr';
 import createNormalizrSchema from 'modules/entityDescriptors/utils/createNormalizrSchema';
 import denormalize from 'modules/entityDescriptors/utils/denormalize';
 
-import schemas from './data/schemas';
+import definitions from './data/definitions';
 
 const entityDictionary = {
-	posts: {
+	Post: {
 		1: {
 			id: '1',
 			title: 'Some post',
@@ -37,7 +37,7 @@ const entityDictionary = {
 			author: '2',
 		},
 	},
-	tags: {
+	Tag: {
 		'tag-1': {
 			name: 'tag-1',
 		},
@@ -48,7 +48,7 @@ const entityDictionary = {
 			name: 'tag-3',
 		},
 	},
-	users: {
+	User: {
 		1: {
 			id: '1',
 			email: 'john@doe.com',
@@ -75,21 +75,21 @@ describe('modules/entityDescriptors/utils/denormalize', () => {
 			denormalize(['1', '2']);
 		}).toThrow(/Invalid value/);
 		expect(() => {
-			denormalize(['1', '2'], 'posts');
+			denormalize(['1', '2'], 'Post');
 		}).toThrow(/Invalid value/);
 		expect(() => {
-			denormalize(['1', '2'], 'posts');
+			denormalize(['1', '2'], 'Post');
 		}).toThrow(/Invalid value/);
 		expect(() => {
-			denormalize(['1', '2'], 'posts', {}, {});
+			denormalize(['1', '2'], 'Post', {}, {});
 		}).toThrow(/Unknown collection/);
 		expect(() => {
-			denormalize(['1', '2'], 'foo', entityDictionary, schemas);
+			denormalize(['1', '2'], 'foo', entityDictionary, definitions);
 		}).toThrow(/Unknown collection/);
 		expect(() => {
 			denormalize(['1', '2'], 'foo', entityDictionary, {foo: {name:'foo'}});
 		// }).toNotThrow();
-		}).toThrow(/SchemasDictionary/);
+		}).toThrow(/DefinitionsDictionary/);
 	});
 
 	describe('should denormalize single entity properly', () => {
@@ -112,11 +112,11 @@ describe('modules/entityDescriptors/utils/denormalize', () => {
 		};
 
 		it('should denormalize properly with entity id', () => {
-			const denormalizationResult = denormalize('1', 'posts', entityDictionary, schemas);
+			const denormalizationResult = denormalize('1', 'Post', entityDictionary, definitions);
 			expect(denormalizationResult).toEqual(expectedResult);
 		});
 		it('should denormalize properly with entity object', () => {
-			const denormalizationResult = denormalize({ id: '1' }, 'posts', entityDictionary, schemas);
+			const denormalizationResult = denormalize({ id: '1' }, 'Post', entityDictionary, definitions);
 			expect(denormalizationResult).toEqual(expectedResult);
 		});
 		it('should denormalize properly with maxLevel > 1', () => {
@@ -135,7 +135,7 @@ describe('modules/entityDescriptors/utils/denormalize', () => {
 				}
 			];
 
-			const denormalizationResult = denormalize('1', 'posts', entityDictionary, schemas, 2);
+			const denormalizationResult = denormalize('1', 'Post', entityDictionary, definitions, 2);
 			expect(_.isEqual(denormalizationResult, circularExpectedResult)).toBe(true);
 
 		});
@@ -177,12 +177,12 @@ describe('modules/entityDescriptors/utils/denormalize', () => {
 		];
 
 		it('should denormalize properly with entity ids array', () => {
-			const denormalizationResult = denormalize(['1', '3'], 'posts', entityDictionary, schemas);
+			const denormalizationResult = denormalize(['1', '3'], 'Post', entityDictionary, definitions);
 			expect(denormalizationResult).toEqual(expectedResult);
 		});
 
 		it('should denormalize properly with entity objects array', () => {
-			const denormalizationResult = denormalize([{ id: '1' }, { id: '3' }], 'posts', entityDictionary, schemas);
+			const denormalizationResult = denormalize([{ id: '1' }, { id: '3' }], 'Post', entityDictionary, definitions);
 			expect(denormalizationResult).toEqual(expectedResult);
 		});
 	});

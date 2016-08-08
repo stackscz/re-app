@@ -15,7 +15,7 @@ describe('modules/entityDescriptors/reducer', () => {
 			reducer(undefined, {})
 		).toEqual(
 			{
-				schemas: {},
+				definitions: {},
 				fieldsets: {},
 				initialized: false,
 			}
@@ -31,13 +31,11 @@ describe('modules/entityDescriptors/reducer', () => {
 	it('should handle RECEIVE_ENTITY_DESCRIPTORS', () => {
 		const entityDescriptors = {
 			resources: {},
-			schemas: {
-				posts: {
-					name: 'posts',
-					idFieldName: 'id',
-					displayFieldName: 'title',
-					isFilterable: true,
-					fields: {
+			definitions: {
+				Post: {
+					'x-idPropertyName': 'id',
+					'x-displayPropertyName': 'title',
+					properties: {
 						id: {
 							name: 'id',
 							type: 'integer',

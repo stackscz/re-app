@@ -7,9 +7,9 @@ import Immutable from 'seamless-immutable';
 import { Schema, arrayOf } from 'normalizr';
 import createNormalizrSchema from 'modules/entityDescriptors/utils/createNormalizrSchema';
 
-import schemas from './data/schemas';
+import definitions from './data/definitions';
 
-function areSchemasEqual(a, b) {
+function areDefinitionsEqual(a, b) {
 	return isEqualWith(a, b, (objValue) => {
 		if (isFunction(objValue)) {
 			return true;
@@ -25,91 +25,88 @@ describe('modules/entityDescriptors/utils/createNormalizrSchema', () => {
 		}).toThrow(/modelName/);
 		expect(() => {
 			createNormalizrSchema('items');
-		}).toThrow(/SchemasDictionary/);
+		}).toThrow(/DefinitionsDictionary/);
 	});
 
-	it('should check type of schemas', () => {
+	it('should check type of definitions', () => {
 		expect(() => {
-			createNormalizrSchema('posts', { some: 'invalidSchemasDictionary' });
-		}).toThrow(/SchemasDictionary/);
+			createNormalizrSchema('Post', { some: 'invalidDefinitionsDictionary' });
+		}).toThrow(/DefinitionsDictionary/);
 	});
 
-	const expectedNormalizrSchemas = {
-		posts: new Schema('posts'),
-		tags: new Schema('tags', { idAttribute: 'name' }),
-		users: new Schema('users'),
+	const expectedNormalizrDefinitions = {
+		Post: new Schema('Post'),
+		Tag: new Schema('Tag', { idAttribute: 'name' }),
+		User: new Schema('User'),
 	};
-	expectedNormalizrSchemas.posts.define({
-		author: expectedNormalizrSchemas.users,
-		tags: arrayOf(expectedNormalizrSchemas.tags),
+	expectedNormalizrDefinitions.Post.define({
+		author: expectedNormalizrDefinitions.User,
+		tags: arrayOf(expectedNormalizrDefinitions.Tag),
 	});
-	expectedNormalizrSchemas.tags.define({
-		posts: arrayOf(expectedNormalizrSchemas.posts),
+	expectedNormalizrDefinitions.Tag.define({
+		posts: arrayOf(expectedNormalizrDefinitions.Post),
 	});
-	expectedNormalizrSchemas.users.define({
-		articles: arrayOf(expectedNormalizrSchemas.posts),
+	expectedNormalizrDefinitions.User.define({
+		articles: arrayOf(expectedNormalizrDefinitions.Post),
 	});
 
-	it('should create valid normalizr schema from re-app schemas', () => {
+	it('should create valid normalizr schema from re-app definitions', () => {
 		expect(
-			areSchemasEqual(
-				createNormalizrSchema('posts', schemas),
-				expectedNormalizrSchemas.posts
+			areDefinitionsEqual(
+				createNormalizrSchema('Post', definitions),
+				expectedNormalizrDefinitions.Post
 			)
-		).toBe(true, 'resulting schema is invalid for posts');
+		).toBe(true, 'resulting schema is invalid for Post');
 		expect(
-			areSchemasEqual(
-				createNormalizrSchema('tags', schemas),
-				expectedNormalizrSchemas.tags
+			areDefinitionsEqual(
+				createNormalizrSchema('Tag', definitions),
+				expectedNormalizrDefinitions.Tag
 			)
-		).toBe(true, 'resulting schema is invalid for tags');
+		).toBe(true, 'resulting schema is invalid for Tag');
 		expect(
-			areSchemasEqual(
-				createNormalizrSchema('users', schemas),
-				expectedNormalizrSchemas.users
+			areDefinitionsEqual(
+				createNormalizrSchema('User', definitions),
+				expectedNormalizrDefinitions.User
 			)
-		).toBe(true, 'resulting schema is invalid for users');
+		).toBe(true, 'resulting schema is invalid for User');
 
 	});
 
 
 	it('should memoize results', () => {
 
-		const immutableSchemas = Immutable.from(schemas);
-		const modifiedImmutableSchemas = immutableSchemas.merge({
-			tags: {
-				fields: {
+		const immutableDefinitions = Immutable.from(definitions);
+		const modifiedImmutableDefinitions = immutableDefinitions.merge({
+			Tag: {
+				properties: {
 					author: {
-						name: 'author',
-						type: 'association',
-						modelName: 'users',
-						isMultiple: false,
+						$ref: '#/definitions/User'
 					}
 				}
 			}
 		}, { deep: true });
-		expectedNormalizrSchemas.tags.define({
-			author: expectedNormalizrSchemas.users,
+		expectedNormalizrDefinitions.Tag.define({
+			author: expectedNormalizrDefinitions.User,
 		});
 
 		expect(
-			areSchemasEqual(
-				createNormalizrSchema('tags', modifiedImmutableSchemas),
-				expectedNormalizrSchemas.tags
+			areDefinitionsEqual(
+				createNormalizrSchema('Tag', modifiedImmutableDefinitions),
+				expectedNormalizrDefinitions.Tag
 			)
-		).toBe(true, 'resulting schema is invalid for memoized tags');
+		).toBe(true, 'resulting schema is invalid for memoized Tag');
 		expect(
-			areSchemasEqual(
-				createNormalizrSchema('users', modifiedImmutableSchemas),
-				expectedNormalizrSchemas.users
+			areDefinitionsEqual(
+				createNormalizrSchema('User', modifiedImmutableDefinitions),
+				expectedNormalizrDefinitions.User
 			)
-		).toBe(true, 'resulting schema is invalid for memoized users');
+		).toBe(true, 'resulting schema is invalid for memoized User');
 		expect(
-			areSchemasEqual(
-				createNormalizrSchema('posts', modifiedImmutableSchemas),
-				expectedNormalizrSchemas.posts
+			areDefinitionsEqual(
+				createNormalizrSchema('Post', modifiedImmutableDefinitions),
+				expectedNormalizrDefinitions.Post
 			)
-		).toBe(true, 'resulting schema is invalid for memoized users');
+		).toBe(true, 'resulting schema is invalid for memoized User');
 
 	});
 

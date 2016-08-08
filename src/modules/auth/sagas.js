@@ -10,7 +10,7 @@ import rethrowError from 'utils/rethrowError';
 import isOfType from 'utils/isOfType';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
-import { getEntitySchemas } from 'modules/entityDescriptors/selectors';
+import { getEntityDefinitions } from 'modules/entityDescriptors/selectors';
 
 import normalize from 'modules/entityDescriptors/utils/normalize';
 
@@ -46,11 +46,11 @@ export function *normalizeUserTask(user) {
 		};
 	}
 	const { userModelName } = yield select(getAuthState);
-	const entitySchemas = yield select(getEntitySchemas);
+	const entityDefinitions = yield select(getEntityDefinitions);
 	const {
 		result: userId,
 		entities,
-	} = normalize(user, userModelName, entitySchemas);
+	} = normalize(user, userModelName, entityDefinitions);
 	return {
 		userId,
 		entities,

@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import { getEntitySchemas } from 'modules/entityDescriptors/selectors';
+import { getEntityDefinitions } from 'modules/entityDescriptors/selectors';
 import denormalize from 'modules/entityDescriptors/utils/denormalize';
 
-export const getEntityGetter = (modelName, id) => (state) => {
+export const getEntitySelector = (modelName, id) => (state) => {
 	const collection = state.entityStorage.collections[modelName];
 	if (!collection) {
 		return undefined;
@@ -20,7 +20,7 @@ export const getDenormalizedEntitySelector = (modelName, id, maxLevel = 1) =>
 			id,
 			modelName,
 			entityDictionary,
-			getEntitySchemas(state),
+			getEntityDefinitions(state),
 			maxLevel
 		);
 	};
@@ -34,7 +34,7 @@ export const getDenormalizedEntitiesSelector = (modelName, entities, maxLevel = 
 			entities,
 			modelName,
 			state.entityStorage.collections,
-			getEntitySchemas(state),
+			getEntityDefinitions(state),
 			maxLevel
 		);
 	};

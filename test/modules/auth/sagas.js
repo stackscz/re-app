@@ -12,7 +12,7 @@ import {
 	getAuthState,
 	getUserId,
 } from 'modules/auth/selectors';
-import { getEntitySchemas } from 'modules/entityDescriptors/selectors';
+import { getEntityDefinitions } from 'modules/entityDescriptors/selectors';
 import { sagas, actions } from 'modules/auth';
 import {
 	receiveIdentity,

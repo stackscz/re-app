@@ -9,7 +9,7 @@ import {
 	receiveEntityDescriptorsFailure,
 } from './actions';
 
-import type { SchemasDictionary } from 'types/SchemasDictionary';
+import type { DefinitionsDictionary } from 'types/DefinitionsDictionary';
 import type { FieldsetsDictionary } from 'types/FieldsetsDictionary';
 import type { Error } from 'types/Error';
 import t from 'tcomb';
@@ -31,7 +31,7 @@ export function *loadEntityDescriptorsTask() {
 	try {
 		entityDescriptors = yield call(ApiService.getEntityDescriptors, apiContext, authContext);
 		apiServiceResultTypeInvariant(entityDescriptors, t.struct({
-			schemas: SchemasDictionary,
+			definitions: DefinitionsDictionary,
 			fieldsets: FieldsetsDictionary,
 		}));
 		yield put(receiveEntityDescriptors(entityDescriptors));
@@ -43,8 +43,8 @@ export function *loadEntityDescriptorsTask() {
 }
 
 export function *entityDescriptorsFlow() {
-	const schemasInitialized = yield select(isInitialized);
-	if (!schemasInitialized) {
+	const definitionsInitialized = yield select(isInitialized);
+	if (!definitionsInitialized) {
 		yield call(loadEntityDescriptorsTask);
 	}
 }

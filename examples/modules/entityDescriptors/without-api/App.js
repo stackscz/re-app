@@ -23,13 +23,13 @@ const store = createStore(
 	{
 		entityDescriptors: { // entityDescriptors instead provided as initial store state
 			initialized: true, // note the 'initialized' flag
-			schemas: {
+			definitions: {
 				tags: {
 					name: 'tags',
-					idFieldName: 'name',
-					displayFieldName: 'name',
+					'x-idPropertyName': 'name',
+					x-displayPropertyName: 'name',
 					isFilterable: false,
-					fields: {
+					properties: {
 						name: {
 							name: 'name',
 							type: 'string'

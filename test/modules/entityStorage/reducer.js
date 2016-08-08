@@ -21,20 +21,16 @@ describe('modules/entityStorage/reducer', () => {
 	};
 
 	const entitySchema = {
-		name: 'posts',
-		idFieldName: 'id',
-		displayFieldName: 'title',
-		isFilterable: true,
-		fields: {
+		'x-idPropertyName': 'id',
+		'x-displayPropertyName': 'title',
+		properties: {
 			id: {
-				name: 'id',
 				type: 'integer',
-				label: 'Id',
+				'x-label': 'Id',
 			},
 			title: {
-				name: 'title',
 				type: 'string',
-				label: 'Title',
+				'x-label': 'Title',
 			},
 		},
 	};
@@ -468,6 +464,7 @@ describe('modules/entityStorage/reducer', () => {
 				'store entity with proper status',
 				undefined,
 				{
+					modelName: 'Post',
 					entitySchema,
 					entityId: newEntityId,
 					entity: {
@@ -479,7 +476,7 @@ describe('modules/entityStorage/reducer', () => {
 				{
 					toInclude: {
 						collections: {
-							posts: {
+							Post: {
 								[newEntityId]: {
 									id: newEntityId,
 									title: 'Some Post',
@@ -487,7 +484,7 @@ describe('modules/entityStorage/reducer', () => {
 							},
 						},
 						statuses: {
-							posts: {
+							Post: {
 								[newEntityId]: {
 									transient: true,
 									persisting: true,
@@ -498,10 +495,10 @@ describe('modules/entityStorage/reducer', () => {
 				}
 			],
 			[
-				'merges entity shallowly',
+				'replaces entity',
 				{
 					collections: {
-						posts: {
+						Post: {
 							[newEntityId]: {
 								id: newEntityId,
 								title: 'Some Post',
@@ -515,7 +512,7 @@ describe('modules/entityStorage/reducer', () => {
 						},
 					},
 					statuses: {
-						posts: {
+						Post: {
 							[newEntityId]: {
 								transient: true,
 								persisting: true,
@@ -525,6 +522,7 @@ describe('modules/entityStorage/reducer', () => {
 					errors: {},
 				},
 				{
+					modelName: 'Post',
 					entitySchema,
 					entityId: newEntityId,
 					entity: {
@@ -540,22 +538,22 @@ describe('modules/entityStorage/reducer', () => {
 				},
 				{
 					expect: (state) => {
-						expect(state.collections.posts[newEntityId].someAssoc).toEqual(['4']);
-						expect(state.collections.posts[newEntityId].someOtherAssoc).toEqual(['1', '2', '3']);
-						expect(state.collections.posts[newEntityId].someEmbedded).toEqual({ qux: 'other' });
+						expect(state.collections.Post[newEntityId].some).toEqual(undefined);
+						expect(state.collections.Post[newEntityId].someAssoc).toEqual(['4']);
+						expect(state.collections.Post[newEntityId].someOtherAssoc).toEqual(['1', '2', '3']);
+						expect(state.collections.Post[newEntityId].someEmbedded).toEqual({ qux: 'other' });
 					},
 					toInclude: {
 						collections: {
-							posts: {
+							Post: {
 								[newEntityId]: {
 									id: newEntityId,
 									title: 'Some Post',
-									some: 'Additional prop',
 								}
 							},
 						},
 						statuses: {
-							posts: {
+							Post: {
 								[newEntityId]: {
 									transient: true,
 									persisting: true,

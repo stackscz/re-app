@@ -36,13 +36,13 @@ const store = createStore(
 			userModelName: 'users',
 		},
 		entityDescriptors: {
-			schemas: {
+			definitions: {
 				users: {
 					name: 'users',
-					idFieldName: 'username',
-					displayFieldName: 'username',
+					'x-idPropertyName': 'username',
+					'x-displayPropertyName': 'username',
 					isFilterable: false,
-					fields: {
+					properties: {
 						id: {
 							name: 'id',
 							type: 'Number',

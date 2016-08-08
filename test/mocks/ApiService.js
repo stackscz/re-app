@@ -89,21 +89,21 @@ describe('mocks/ApiService', () => {
 		describe('#createEntity works as expected', () => {
 
 			it('should create entity "tags"', () => {
-				return ApiService.createEntity('tags', tag)
+				return ApiService.createEntity('Tag', tag)
 					.then((result) => {
 						expect(result).toInclude({ data: tag });
 					});
 			});
 
 			it('should create entity "posts"', () => {
-				return ApiService.createEntity('posts', post)
+				return ApiService.createEntity('Post', post)
 					.then((result) => {
 						expect(result).toInclude({ data: post });
 					});
 			});
 
 			it('should fail on unknown collection', () => {
-				return ApiService.createEntity('wierdos', tag)
+				return ApiService.createEntity('Wierdo', tag)
 					.then(() => {
 						expect(true).toBe(false);
 					})
@@ -117,14 +117,14 @@ describe('mocks/ApiService', () => {
 		describe('#getEntity works as expected', () => {
 
 			it('should get posts 1', () => {
-				return ApiService.getEntity('posts', '1')
+				return ApiService.getEntity('Post', '1')
 					.then((result) => {
 						expect(result).toInclude({ data: post });
 					});
 			});
 
 			it('should fail on unknown collection', () => {
-				return ApiService.getEntity('wierdos', '1')
+				return ApiService.getEntity('Wierdo', '1')
 					.then((result) => {
 						expect(true).toBe(false);
 					})
@@ -134,7 +134,7 @@ describe('mocks/ApiService', () => {
 			});
 
 			it('should fail on unknown entity', () => {
-				return ApiService.getEntity('posts', '2')
+				return ApiService.getEntity('Post', '2')
 					.then((result) => {
 						expect(true).toBe(false);
 					})
@@ -148,7 +148,7 @@ describe('mocks/ApiService', () => {
 		describe('#getEntityIndex works as expected', () => {
 
 			it('should get posts', () => {
-				return ApiService.getEntityIndex('posts')
+				return ApiService.getEntityIndex('Post')
 					.then((result) => {
 						expect(result).toInclude({ existingCount: 1 });
 						expect(result.data).toBeAn(Array);
@@ -157,7 +157,7 @@ describe('mocks/ApiService', () => {
 			});
 
 			it('should fail on unknown collection', () => {
-				return ApiService.getEntityIndex('wierdos')
+				return ApiService.getEntityIndex('Wierdo')
 					.then((result) => {
 						expect(true).toBe(false);
 					})
@@ -172,14 +172,14 @@ describe('mocks/ApiService', () => {
 
 			const postEdit = { title: 'Edit: Title 1' };
 			it('should update posts 1', () => {
-				return ApiService.updateEntity('posts', '1', postEdit)
+				return ApiService.updateEntity('Post', '1', postEdit)
 					.then((result) => {
 						expect(result).toInclude({ data: postEdit });
 					});
 			});
 
 			it('should fail on unknown collection', () => {
-				return ApiService.updateEntity('wierdos', '1', postEdit)
+				return ApiService.updateEntity('Wierdo', '1', postEdit)
 					.then((result) => {
 						expect(true).toBe(false);
 					})
@@ -189,7 +189,7 @@ describe('mocks/ApiService', () => {
 			});
 
 			it('should fail on unknown entity', () => {
-				return ApiService.updateEntity('posts', '2', postEdit)
+				return ApiService.updateEntity('Post', '2', postEdit)
 					.then((result) => {
 						expect(true).toBe(false);
 					})
@@ -202,15 +202,15 @@ describe('mocks/ApiService', () => {
 
 		describe('#deleteEntity works as expected', () => {
 
-			it('should delete posts 1', () => {
-				return ApiService.deleteEntity('posts', '1')
+			it('should delete Post 1', () => {
+				return ApiService.deleteEntity('Post', '1')
 					.then((result) => {
 						expect(result).toBe(undefined);
 					});
 			});
 
-			it('should fail on unknown collection', () => {
-				return ApiService.deleteEntity('wierdos', '1')
+			it('should fail on unknown model', () => {
+				return ApiService.deleteEntity('Wierdo', '1')
 					.then((result) => {
 						expect(true).toBe(false);
 					})
@@ -220,7 +220,7 @@ describe('mocks/ApiService', () => {
 			});
 
 			it('should fail on unknown entity', () => {
-				return ApiService.deleteEntity('posts', '2')
+				return ApiService.deleteEntity('Post', '2')
 					.then((result) => {
 						expect(true).toBe(false);
 					})
