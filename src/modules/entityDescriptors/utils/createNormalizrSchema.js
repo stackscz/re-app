@@ -2,7 +2,7 @@
 import _ from 'utils/lodash';
 import invariant from 'invariant';
 import type { DefinitionsDictionary } from 'types/DefinitionsDictionary';
-import { Schema, arrayOf } from 'normalizr';
+import { Schema } from 'normalizr'; // arrayOf
 
 let cachedDefinitions;
 let mappings = {};
@@ -34,23 +34,24 @@ export default function createNormalizrSchema(modelName:string, definitions:Defi
 		});
 
 		// define normalizr definitions
-		_.each(cachedDefinitions, (definition, modelNameToDefine) => {
-			_.each(definition.properties, (prop, propName) => {
-				const assocModelPointer = _.get(prop, '$ref') || _.get(prop, ['items', '$ref']);
-				if (assocModelPointer) {
-					const assocModelName = _(assocModelPointer).split('/').pop();
-					// console.log(modelNameToDefine);
-					// console.log(assocModelName);
-					// console.log(prop);
-					const isMany = _.get(prop, 'type') === 'array';
-					// console.log(isMany);
-					const assocMapping = mappings[assocModelName];
-					mappings[modelNameToDefine].define({
-						[propName]: isMany ? arrayOf(assocMapping) : assocMapping,
-					});
-				}
-			});
-		});
+		// _.each(cachedDefinitions, (schema, modelNameToDefine) => {
+		// 	const resolvedSchema = flattenAllOf({ ...schema, definitions });
+		// 	_.each(resolvedSchema.properties, (prop, propName) => {
+		// 		const assocModelPointer = _.get(prop, '$ref') || _.get(prop, ['items', '$ref']);
+		// 		if (assocModelPointer) {
+		// 			const assocModelName = _(assocModelPointer).split('/').pop();
+		// 			// console.log(modelNameToDefine);
+		// 			// console.log(assocModelName);
+		// 			// console.log(prop);
+		// 			const isMany = _.get(prop, 'type') === 'array';
+		// 			// console.log(isMany);
+		// 			const assocMapping = mappings[assocModelName];
+		// 			mappings[modelNameToDefine].define({
+		// 				[propName]: isMany ? arrayOf(assocMapping) : assocMapping,
+		// 			});
+		// 		}
+		// 	});
+		// });
 	}
 
 

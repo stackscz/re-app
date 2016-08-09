@@ -34,12 +34,16 @@ export default function normalize(obj:Entity | Array<Entity>,
 		obj,
 		normalizeMultiple ? arrayOf(normalizrSchema) : normalizrSchema,
 		{
-			assignEntity: (result, propertyName, propertyValue, entity, entityMapping) => {
-				const field = _.get(definitions, [entityMapping.getKey(), 'properties', propertyName]);
-				if (field) { // assign only if it is known field
-					result[propertyName] = propertyValue;
-				}
-			},
+			// assignEntity: (result, propertyName, propertyValue, entity, entityMapping) => {
+			// 	const resolvedDefinition = resolveSchema(
+			// 		_.get(definitions, entityMapping.getKey()),
+			// 		definitions
+			// 	);
+			// 	const property = _.get(resolvedDefinition, ['properties', propertyName]);
+			// 	if (property) { // assign only if it is known field
+			// 		result[propertyName] = propertyValue;
+			// 	}
+			// },
 		}
 	);
 
