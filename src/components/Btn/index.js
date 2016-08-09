@@ -22,6 +22,7 @@ export default class Btn extends React.Component {
 			be,
 			getBlissModuleClassName,
 			getBlissElementClassName,
+			modifiers,
 			children,
 			href,
 			to,

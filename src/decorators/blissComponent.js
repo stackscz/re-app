@@ -66,6 +66,7 @@ export default ComposedComponent => class extends React.Component {
 		return (
 			<ComposedComponent
 				{...otherProps}
+				modifiers={modifiers}
 				getBlissModuleClassName={getBlissModuleClassName}
 				bm={getBlissModuleClassName}
 				getBlissElementClassName={getBlissElementClassName}
