@@ -52,7 +52,7 @@ export function *mergeEntityTask(action) {
 			...updatedEntity,
 			[entitySchema['x-idPropertyName']]: entityId,
 		},
-		entitySchema.name,
+		modelName,
 		entityDefinitions
 	);
 	const normalizedEntity = normalizedData.entities[modelName][normalizedData.result];
@@ -61,12 +61,11 @@ export function *mergeEntityTask(action) {
 }
 
 export function *persistEntityTask(action) {
-	const { entitySchema, entityId, noInteraction } = action.payload;
+	const { modelName, entitySchema, entityId, noInteraction } = action.payload;
 	if (noInteraction) {
 		// do not call api
 		return;
 	}
-	const modelName = entitySchema.name;
 
 	// ApiService is needed to merge entity
 	const apiService = yield select(getApiService);
@@ -117,7 +116,7 @@ export function *persistEntityTask(action) {
 				...denormalizedEntity,
 				...persistResult.data,
 			},
-			entitySchema.name,
+			modelName,
 			entityDefinitions
 		);
 		remoteEntityId = normalizationResult.result;
