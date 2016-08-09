@@ -1,58 +1,141 @@
 // @flow
-import _ from 'lodash';
-import { denormalize as denormalizrDenormalize } from 'denormalizr';
-import createNormalizrSchema from './createNormalizrSchema';
-import trimSchema from './trimSchema';
+/* eslint-disable no-use-before-define, no-param-reassign */
+import _, { merge } from 'lodash';
+import dereferenceSchema from './dereferenceSchema';
+// import { isImmutable, setIn, getIn } from './immutableUtils';
+import { setIn } from './immutableUtils';
+import type { JsonSchema } from 'types/JsonSchema';
 import type { Entity } from 'types/Entity';
-import type { EntityId } from 'types/EntityId';
-import type { CollectionName } from 'types/CollectionName';
 import type { NormalizedEntityDictionary } from 'types/NormalizedEntityDictionary';
-import type { DefinitionsDictionary } from 'types/DefinitionsDictionary';
+
+function resolveEntityOrId(entityOrId, schema, entityDictionary) {
+	const idPropertyName = _.get(schema, 'x-idPropertyName');
+	const modelName = _.get(schema, 'x-model');
+	let entityId;
+	if (_.isObject(entityOrId)) {
+		entityId = entityOrId[idPropertyName];
+	} else {
+		entityId = entityOrId;
+	}
+	const entity = _.get(entityDictionary, [modelName, entityId]);
+
+	return {
+		entity,
+		id: entityId,
+	};
+}
+
+function visitObject(obj, schema, entityDictionary, bag, maxLevel, currentLevel) {
+	let denormalized = obj;
+	_.each(_.get(schema, 'properties'), (propertySchema, key) => {
+		// console.log('FOR KEY:', key, 'FOUND SCHEMA:', findSchemaForProperty(schema, key));
+		if (propertySchema && obj[key]) {
+			denormalized = setIn(
+				denormalized,
+				[key],
+				visit(obj[key], propertySchema, entityDictionary, bag, maxLevel, currentLevel + 1) // eslint-disable-line
+			);
+		}
+	});
+	return denormalized;
+}
+function visitEntity(obj, schema, entityDictionary, bag, maxLevel, currentLevel) {
+	const modelName = _.get(schema, 'x-model');
+	const { entity, id } = resolveEntityOrId(obj, schema, entityDictionary);
+
+	if (!bag.hasOwnProperty(modelName)) {
+		bag[modelName] = {};
+	}
+
+	if (!bag[modelName].hasOwnProperty(id)) {
+		// Ensure we don't mutate it non-immutable objects
+		const newObj = merge({}, entity);
+
+		// Need to set this first so that if it is referenced within the call to
+		// visitObject, it will already exist.
+		bag[modelName][id] = newObj;
+		bag[modelName][id] = visitObject(newObj, schema, entityDictionary, bag, maxLevel, currentLevel);
+
+		const allOf = _.get(schema, 'allOf');
+		if (allOf) {
+			_.each(allOf, (subModelSchema) => {
+				const subModelSchemaModelName = _.get(subModelSchema, 'x-model');
+				if (subModelSchemaModelName) {
+					bag[modelName][id] = {
+						...bag[modelName][id],
+						...visitEntity(
+							entityDictionary[subModelSchema['x-model']][id],
+							subModelSchema,
+							entityDictionary,
+							bag,
+							maxLevel,
+							currentLevel
+						),
+					};
+				} else {
+					bag[modelName][id] = {
+						...bag[modelName][id],
+						...visitObject(
+							bag[modelName][id],
+							subModelSchema,
+							entityDictionary,
+							bag,
+							maxLevel,
+							currentLevel
+						),
+					};
+				}
+			});
+		}
+	}
+
+	return bag[modelName][id];
+}
+function visitArray(arr, schema, entityDictionary, bag, maxLevel, currentLevel) {
+	return arr.map(
+		(item) => visit(
+			item,
+			schema.items,
+			entityDictionary,
+			bag,
+			maxLevel,
+			currentLevel
+		)
+	);
+}
+
+function visit(obj, schema, entityDictionary, bag, maxLevel, currentLevel = 0) {
+	if (!(maxLevel >= currentLevel)) {
+		return obj;
+	}
+
+	const type = _.get(schema, 'type', 'object');
+	if (obj === null || typeof obj === 'undefined' || !_.isObject(schema)) {
+		return obj;
+	}
+
+	const modelName = _.get(schema, 'x-model');
+	if (modelName && type === 'object') {
+		return visitEntity(obj, schema, entityDictionary, bag, maxLevel, currentLevel);
+	} else if (type === 'array') {
+		return visitArray(obj, schema, entityDictionary, bag, maxLevel, currentLevel);
+	}
+	// return obj;
+	return visitObject(obj, schema, entityDictionary, bag, maxLevel, currentLevel);
+}
 
 /**
- * Construct nested object or array of nested objects from entities dictionary
+ * Construct nested value by schema from entities dictionary
  *
  * @param {EntityId | Array<EntityId> | Entity | Array<Entity>} ids - entities spec
- * @param {CollectionName} modelName
+ * @param {JsonSchema} schema to denormalize by
  * @param {NormalizedEntityDictionary} entityDictionary
- * @param {DefinitionsDictionary} definitions
  * @param {?number} maxLevel - max level of nesting when denormalizing
  */
-export default function denormalize(ids:EntityId | Array<EntityId> | Entity | Array<Entity>,
-									modelName:CollectionName,
+export default function denormalize(obj,
+									schema:JsonSchema,
 									entityDictionary:NormalizedEntityDictionary,
-									definitions:DefinitionsDictionary,
 									maxLevel:number = 1):Entity|Array<Entity> {
-	const normalizrCollectionSchema = createNormalizrSchema(modelName, definitions);
-	const entitySchema = definitions[modelName];
-
-	let finalNormalizrCollectionSchema = normalizrCollectionSchema;
-	if (typeof maxLevel !== 'undefined') {
-		finalNormalizrCollectionSchema = trimSchema(normalizrCollectionSchema, maxLevel);
-	}
-
-	let result;
-	if (_.isArray(ids)) {
-		result = _.filter(_.map(ids, id => {
-			const entityId = _.isObject(id) ? id[entitySchema['x-idPropertyName']] : id;
-			const entity = _.get(entityDictionary, [modelName, entityId]);
-			if (!entity) {
-				return undefined;
-			}
-			return denormalizrDenormalize(
-				entity,
-				entityDictionary,
-				finalNormalizrCollectionSchema
-			);
-		}), (item) => item);
-	} else {
-		const entityId = _.isObject(ids) ? ids[entitySchema['x-idPropertyName']] : ids;
-		result = denormalizrDenormalize(
-			_.get(entityDictionary, [modelName, entityId]),
-			entityDictionary,
-			finalNormalizrCollectionSchema
-		);
-	}
-
-	return result;
+	const dereferencedSchema = dereferenceSchema(schema);
+	return visit(obj, dereferencedSchema, entityDictionary, {}, maxLevel);
 }

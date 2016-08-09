@@ -58,8 +58,10 @@ export function *mergeEntityTask(action) {
 			...updatedEntity,
 			[entitySchema['x-idPropertyName']]: entityId,
 		},
-		modelName,
-		entityDefinitions
+		{
+			$ref: `#/definitions/${modelName}`,
+			definitions: entityDefinitions,
+		}
 	);
 	const normalizedEntity = normalizedData.entities[modelName][normalizedData.result];
 
@@ -152,8 +154,10 @@ export function *persistEntityTask(action) {
 		entities,
 	} = normalize(
 		persistResult.data,
-		modelName,
-		entityDefinitions
+		{
+			$ref: `#/definitions/${modelName}`,
+			definitions: entityDefinitions,
+		}
 	);
 	yield put(
 		receivePersistEntitySuccess(

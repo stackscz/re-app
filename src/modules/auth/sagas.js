@@ -54,7 +54,13 @@ export function *normalizeUserTask(user) {
 	const {
 		result: userId,
 		entities,
-	} = normalize(user, userModelName, entityDefinitions);
+	} = normalize(
+		user,
+		{
+			$ref: `#/definitions/${userModelName}`,
+			definitions: entityDefinitions,
+		},
+	);
 	return {
 		userId,
 		entities,

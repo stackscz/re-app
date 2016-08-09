@@ -54,7 +54,16 @@ export function *ensureEntityIndexTask(action) {
 		const {
 			result,
 			entities,
-		} = normalize(apiCallResult.data, modelName, entityDefinitions);
+		} = normalize(
+			apiCallResult.data,
+			{
+				type: 'array',
+				items: {
+					$ref: `#/definitions/${modelName}`,
+				},
+				definitions: entityDefinitions,
+			}
+		);
 		const nowTime = moment().format();
 
 		// const modelIdPropertyName = yield select(getModelIdPropertyName(modelName));

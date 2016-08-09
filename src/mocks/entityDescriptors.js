@@ -1,6 +1,6 @@
 export default {
 	definitions: {
-		Post: {
+		PostSummary: {
 			'x-idPropertyName': 'id',
 			'x-displayPropertyName': 'title',
 			properties: {
@@ -11,13 +11,24 @@ export default {
 				title: {
 					type: 'string',
 				},
-				tags: {
-					type: 'array',
-					items: {
-						$ref: '#/definitions/Tag',
+			},
+		},
+		Post: {
+			allOf: [
+				{
+					$ref: '#/definitions/PostSummary',
+				},
+				{
+					properties: {
+						tags: {
+							type: 'array',
+							items: {
+								$ref: '#/definitions/Tag',
+							},
+						},
 					},
 				},
-			},
+			],
 		},
 		Tag: {
 			'x-idPropertyName': 'name',
@@ -38,7 +49,7 @@ export default {
 			},
 		},
 	},
-	fieldsets: {
+	'x-fieldsets': {
 		posts: {
 			detail: ['title', 'tags'],
 			grid: ['title'],

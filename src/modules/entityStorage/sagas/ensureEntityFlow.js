@@ -88,7 +88,13 @@ export function *ensureEntityTask(action) {
 	const {
 		result,
 		entities,
-	} = normalize(apiCallResult.data, modelName, entityDefinitions);
+	} = normalize(
+		apiCallResult.data,
+		{
+			$ref: `#/definitions/${modelName}`,
+			definitions: entityDefinitions,
+		}
+	);
 
 	const refs = {
 		[modelName]: {

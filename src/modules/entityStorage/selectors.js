@@ -24,9 +24,11 @@ export const getDenormalizedEntitySelector = (modelName, entityId, maxLevel = 1)
 		}
 		return denormalize(
 			entityId,
-			modelName,
+			{
+				$ref: `#/definitions/${modelName}`,
+				definitions: getEntityDefinitions(state),
+			},
 			entityDictionary,
-			getEntityDefinitions(state),
 			maxLevel
 		);
 	};
@@ -38,9 +40,14 @@ export const getDenormalizedEntitiesSelector = (modelName, entities, maxLevel = 
 		}
 		return denormalize(
 			entities,
-			modelName,
+			{
+				type: 'array',
+				items: {
+					$ref: `#/definitions/${modelName}`,
+				},
+				definitions: getEntityDefinitions(state),
+			},
 			state.entityStorage.collections,
-			getEntityDefinitions(state),
 			maxLevel
 		);
 	};
