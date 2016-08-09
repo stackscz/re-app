@@ -37,6 +37,7 @@ export default class Link extends React.Component {
 			be,
 			getBlissModuleClassName,
 			getBlissElementClassName,
+			modifiers,
 			...otherProps,
 			} = this.props;
 		const { routes } = this.context;
