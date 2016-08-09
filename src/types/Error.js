@@ -2,5 +2,5 @@
 export type Error = {
 	code: number,
 	message: string,
-	data?: {},
+	data?: any,
 };
