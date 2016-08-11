@@ -162,6 +162,24 @@ export default createReducer(
 					),
 				}, { deep: true });
 
+				// set statuses for entities
+				newState = newState.merge({
+					statuses: _.mapValues(
+						normalizedEntities,
+						(entityList, statusCollectionName) => _.mapValues(entityList, (x, statusEntityId) => {
+							const currentStatus = _.get(
+								state,
+								['statuses', statusCollectionName, statusEntityId]
+							);
+							return _.merge({}, defaultStatus, currentStatus, {
+								validAtTime,
+								transient: false,
+								fetching: false,
+							});
+						})
+					),
+				}, { deep: true });
+
 				// cleanup transient statuses and errors
 				_.each(refs, (refsForModel, refModelName) => {
 					const modelStatuses = _.get(newState, ['statuses', refModelName]);

@@ -74,6 +74,16 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 						title: 'A Title k4j4k3543',
 					},
 				}
+			},
+			statuses: {
+				posts: {
+					transient1: {
+						transient: true,
+					},
+					transient2: {
+						transient: true,
+					},
+				}
 			}
 		}
 	};
@@ -120,7 +130,7 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 				]
 			},
 			[],
-			['4', '2', '1', 'transient2', '3', 'transient1']
+			['transient2', 'transient1']
 		],
 	];
 

@@ -34,7 +34,13 @@ export const getDynamicEntityIndexContentSelector =
 			const result = [...index.content];
 			let noUnlisted = true;
 			_.each(collection, (entity, entityId) => {
-				if (_.isMatch(entity, normalizedFilter.where) && !indexEntityIdsMap[entityId]) {
+				const isTransient = _.get(
+					state,
+					['entityStorage', 'statuses', index.modelName, entityId, 'transient']
+				);
+				const isMatch = _.isMatch(entity, normalizedFilter.where);
+				const isUnlisted = !indexEntityIdsMap[entityId];
+				if (isTransient && isMatch && isUnlisted) {
 					noUnlisted = false;
 					result.push(entityId);
 				}
