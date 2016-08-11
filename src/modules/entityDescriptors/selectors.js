@@ -8,3 +8,13 @@ export const getEntityFieldsets = (state) =>
 export const getEntityDefinitionSelector = (modelName) =>
 	(state) =>
 		_.get(state, ['entityDescriptors', 'definitions', modelName]);
+
+import getIdPropertyName from 'modules/entityDescriptors/utils/getIdPropertyName';
+export const getModelIdPropertyName = (modelName) =>
+	(state) =>
+		getIdPropertyName(
+			{
+				$ref: `#/definitions/${modelName}`,
+				definitions: state.entityDescriptors.definitions,
+			}
+		);

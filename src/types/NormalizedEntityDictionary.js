@@ -5,5 +5,5 @@ import type { NormalizedEntity } from 'types/NormalizedEntity';
 export type NormalizedEntityDictionary = {
 	[key: CollectionName]:{
 		[key: EntityId]: NormalizedEntity
-	},
+	}
 };

@@ -4,13 +4,17 @@ import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
 
 import t from 'tcomb';
 import moment from 'moment';
+import hash from 'object-hash';
 import type { Error } from 'types/Error';
 
 import rethrowError from 'utils/rethrowError';
 import isOfType from 'utils/isOfType';
 
 import { getApiContext, getApiService } from 'modules/api/selectors';
-import { getEntityDefinitions } from 'modules/entityDescriptors/selectors';
+import {
+	getEntityDefinitions,
+	getModelIdPropertyName,
+} from 'modules/entityDescriptors/selectors';
 
 import normalize from 'modules/entityDescriptors/utils/normalize';
 
@@ -84,7 +88,18 @@ export function* refreshIdentityTask() {
 	} = yield call(normalizeUserTask, user);
 
 	if (userId) {
-		yield put(receiveEntities(entities, moment().format()));
+		const userIdPropertyName = yield select(getModelIdPropertyName(userModelName));
+		const where = { [userIdPropertyName]: userId };
+		const refs = {
+			[userModelName]: {
+				[hash(where)]: {
+					where,
+					entityId: userId,
+				},
+			},
+		};
+
+		yield put(receiveEntities(refs, entities, moment().format()));
 		yield put(receiveIdentity(userId, freshAuthContext));
 	} else {
 		yield put(receiveIdentity(null, freshAuthContext));
@@ -140,7 +155,18 @@ export function* loginTask(credentials) {
 	const { userModelName } = yield select(getAuthState);
 	const originalUserId = yield select(getUserId);
 
-	yield put(receiveEntities(entities, moment().format()));
+	const userIdPropertyName = yield select(getModelIdPropertyName(userModelName));
+	const where = { [userIdPropertyName]: userId };
+	const refs = {
+		[userModelName]: {
+			[hash(where)]: {
+				where,
+				entityId: userId,
+			},
+		},
+	};
+
+	yield put(receiveEntities(refs, entities, moment().format()));
 	yield put(receiveLoginSuccess(userId, freshAuthContext));
 
 	if (originalUserId && originalUserId !== userId) {

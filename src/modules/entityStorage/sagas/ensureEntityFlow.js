@@ -3,8 +3,14 @@ import { takeEvery } from 'redux-saga';
 
 import normalize from 'modules/entityDescriptors/utils/normalize';
 import moment from 'moment';
+import hash from 'object-hash';
 
-import { rethrowError, apiServiceResultTypeInvariant, typeInvariant } from 'utils';
+import {
+	rethrowError,
+	isOfType,
+	apiServiceResultTypeInvariant,
+	typeInvariant,
+} from 'utils';
 
 import type { ApiService } from 'types/ApiService';
 import type { EntityResult } from 'types/EntityResult';
@@ -23,7 +29,7 @@ import {
 } from '../actions';
 
 export function *ensureEntityTask(action) {
-	const { modelName, entityId } = action.payload;
+	const { modelName, where } = action.payload;
 
 	// ApiService is needed to ensure entity
 	const apiService = yield select(getApiService);
@@ -35,25 +41,65 @@ export function *ensureEntityTask(action) {
 
 	// TODO split lazy and accurate modes of fetching
 
-	yield put(attemptFetchEntity(modelName, entityId));
+	yield put(attemptFetchEntity(modelName, where));
+	let apiCallResult;
 	try {
-		const result = yield call(
+		apiCallResult = yield call(
 			apiService.getEntity,
 			modelName,
-			entityId,
+			where,
 			apiContext,
 			authContext
 		);
-		apiServiceResultTypeInvariant(result, EntityResult);
-
-		const entityDefinitions = yield select(getEntityDefinitions);
-		const normalizationResult = normalize(result.data, modelName, entityDefinitions);
-		yield put(receiveEntities(normalizationResult.entities, moment().format()));
 	} catch (error) {
 		rethrowError(error);
-		apiServiceResultTypeInvariant(error, Error);
-		yield put(receiveFetchEntityFailure(modelName, entityId, error));
+		if (!isOfType(error, Error)) {
+			yield put(receiveFetchEntityFailure(
+				modelName,
+				where,
+				{
+					code: 5000,
+					message: 'Invalid error',
+					data: error,
+				}
+			));
+			return;
+		}
+		yield put(receiveFetchEntityFailure(modelName, where, error));
+		return;
 	}
+
+
+	apiServiceResultTypeInvariant(apiCallResult, EntityResult);
+	if (!isOfType(apiCallResult, EntityResult)) {
+		yield put(receiveFetchEntityFailure(
+			modelName,
+			where,
+			{
+				code: 5000,
+				message: 'Invalid entity response',
+				data: apiCallResult,
+			}
+		));
+		return;
+	}
+
+	const entityDefinitions = yield select(getEntityDefinitions);
+	const {
+		result,
+		entities,
+	} = normalize(apiCallResult.data, modelName, entityDefinitions);
+
+	const refs = {
+		[modelName]: {
+			[hash(where)]: {
+				where,
+				entityId: result,
+			},
+		},
+	};
+
+	yield put(receiveEntities(refs, entities, moment().format()));
 }
 
 export default function *entityFlow() {

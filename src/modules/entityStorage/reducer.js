@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import invariant from 'invariant';
+import hash from 'object-hash';
 import Immutable from 'seamless-immutable';
 import t from 'tcomb';
 
@@ -8,7 +9,6 @@ import { createReducer } from 're-app/utils';
 import {
 	ENSURE_ENTITY,
 	ATTEMPT_FETCH_ENTITY,
-	RECEIVE_ENTITY,
 	RECEIVE_ENTITIES,
 	RECEIVE_FETCH_ENTITY_FAILURE,
 	MERGE_ENTITY,
@@ -22,32 +22,11 @@ import {
 } from './actions';
 
 import type { Error } from 'types/Error';
-import type { EntitySchema } from 'types/EntitySchema';
+// import type { EntitySchema } from 'types/EntitySchema';
 import type { CollectionName } from 'types/CollectionName';
 import type { EntityId } from 'types/EntityId';
 import type { EntityStatus } from 'types/EntityStatus';
 import type { NormalizedEntityDictionary } from 'types/NormalizedEntityDictionary';
-const ReceiveEntityActionPayload = t.refinement(
-	t.struct({
-		modelName: CollectionName,
-		entityId: EntityId,
-		normalizedEntities: NormalizedEntityDictionary,
-		validAtTime: t.String,
-	}),
-	(x) => {
-		const requestedEntityPresent = _.get(
-				x.normalizedEntities,
-				[x.modelName, x.entityId]
-			) === x.entityId;
-		// TODO const entitiesProperlyNormalized =
-		return requestedEntityPresent;
-	},
-	'ReceiveEntityActionPayload'
-);
-const ReceiveEntitiesActionPayload = t.struct({
-	normalizedEntities: NormalizedEntityDictionary,
-	validAtTime: t.String,
-});
 
 const defaultStatus = {
 	transient: false,
@@ -84,11 +63,22 @@ function setStatusWithDefaults(state, modelName, entityId, getNewStatus) {
 
 export default createReducer(
 	t.struct({
+		refs: t.dict(
+			CollectionName,
+			t.dict(
+				t.String,
+				t.struct({
+					where: t.Object,
+					entityId: t.maybe(EntityId),
+				})
+			)
+		),
 		collections: NormalizedEntityDictionary,
 		statuses: t.dict(CollectionName, t.dict(EntityId, t.maybe(EntityStatus))),
-		errors: t.dict(CollectionName, t.dict(EntityId, t.maybe(t.Object))),
+		errors: t.dict(CollectionName, t.dict(EntityId, t.maybe(Error))),
 	}),
 	Immutable.from({
+		refs: {},
 		collections: {},
 		statuses: {},
 		errors: {},
@@ -97,11 +87,21 @@ export default createReducer(
 		[ENSURE_ENTITY]: [
 			t.struct({
 				modelName: t.String,
-				entityId: EntityId,
+				where: t.Object,
 			}),
 			(state, action) => {
-				const { modelName, entityId } = action.payload;
-				return setStatusWithDefaults(state, modelName, entityId, (currentStatus) => ({
+				const { modelName, where } = action.payload;
+				let newState = state;
+
+				const whereHash = hash(where);
+				let statusEntityId = _.get(state, ['refs', modelName, whereHash, 'entityId']);
+				if (!statusEntityId) {
+					newState = newState.setIn(['refs', modelName, whereHash], {
+						where,
+					});
+					statusEntityId = whereHash;
+				}
+				return setStatusWithDefaults(newState, modelName, statusEntityId, (currentStatus) => ({
 					transient: currentStatus ? currentStatus.transient : true,
 				}));
 			},
@@ -109,83 +109,76 @@ export default createReducer(
 		[ATTEMPT_FETCH_ENTITY]: [
 			t.struct({
 				modelName: t.String,
-				entityId: EntityId,
+				where: t.Object,
 			}),
 			(state, action) => {
-				const { modelName, entityId } = action.payload;
-				return setStatusWithDefaults(state, modelName, entityId, (currentStatus) => ({
+				const { modelName, where } = action.payload;
+				const whereHash = hash(where);
+				let statusEntityId = _.get(state, ['refs', modelName, whereHash, 'entityId']);
+				if (!statusEntityId) {
+					statusEntityId = whereHash;
+				}
+				return setStatusWithDefaults(state, modelName, statusEntityId, (currentStatus) => ({
 					transient: currentStatus ? currentStatus.transient : true,
 					fetching: true,
 				}));
 			},
 		],
-		[RECEIVE_ENTITY]: [
-			ReceiveEntityActionPayload,
-			(state, action) => {
-				const {
-					normalizedEntities,
-					validAtTime,
-				} = action.payload;
-
-				let newState = state;
-				newState = newState.merge({
-					collections: normalizedEntities,
-					statuses: _.mapValues(
-						normalizedEntities,
-						(entityList, statusCollectionName) => _.mapValues(entityList, (x, statusEntityId) => {
-							const currentStatus = _.get(
-								state,
-								['statuses', statusCollectionName, statusEntityId],
-								{}
-							);
-							return _.merge({}, defaultStatus, currentStatus, {
-								validAtTime,
-								transient: false,
-							});
-						})
-					),
-				}, { deep: true });
-
-				return newState;
-			},
-		],
 		[RECEIVE_ENTITIES]: [
-			ReceiveEntitiesActionPayload,
+			t.struct({
+				refs: t.Object,
+				normalizedEntities: NormalizedEntityDictionary,
+				validAtTime: t.String,
+			}),
 			(state, action) => {
-				const { normalizedEntities, validAtTime } = action.payload;
+				const { refs, normalizedEntities, validAtTime } = action.payload;
 
 				let newState = state;
+
+				// set entities to state
 				newState = setEntitiesToState(state, normalizedEntities);
+
+				// merge received refs
+				newState = newState.setIn(['refs'], newState.refs.merge(refs, { deep: true }));
+
+				// set statuses for refs
 				newState = newState.merge({
 					statuses: _.mapValues(
-						normalizedEntities,
-						(entityList, statusModelName) => _.mapValues(entityList, (x, statusEntityId) => {
+						refs,
+						(refsForModel, refModelName) => _.reduce(refsForModel, (modelSatuses, ref) => {
 							const currentStatus = _.get(
 								state,
-								['statuses', statusModelName, statusEntityId]
+								['statuses', refModelName, ref.entityId]
 							);
-							return _.merge({}, defaultStatus, currentStatus, {
-								validAtTime,
-								transient: false,
-								fetching: false,
-							});
-						})
+							return {
+								...modelSatuses,
+								[ref.entityId]: _.merge({}, defaultStatus, currentStatus, {
+									validAtTime,
+									transient: false,
+									fetching: false,
+								}),
+							};
+						}, {})
 					),
 				}, { deep: true });
-				_.each(
-					normalizedEntities,
-					(entityDictionary, modelName) => {
-						newState = newState.updateIn(
-							['errors', modelName],
-							(entitiesErrors) => {
-								if (entitiesErrors) {
-									return entitiesErrors.without(_.keys(entityDictionary));
-								}
-								return {};
-							}
+
+				// cleanup transient statuses and errors
+				_.each(refs, (refsForModel, refModelName) => {
+					const modelStatuses = _.get(newState, ['statuses', refModelName]);
+					if (modelStatuses) {
+						newState = newState.setIn(
+							['statuses', refModelName],
+							modelStatuses.without(_.keys(refsForModel))
 						);
 					}
-				);
+					const modelErrors = _.get(newState, ['errors', refModelName]);
+					if (modelErrors) {
+						newState = newState.setIn(
+							['errors', refModelName],
+							modelErrors.without(_.keys(refsForModel))
+						);
+					}
+				});
 
 				return newState;
 			},
@@ -193,23 +186,24 @@ export default createReducer(
 		[RECEIVE_FETCH_ENTITY_FAILURE]: [
 			t.struct({
 				modelName: t.String,
-				entityId: EntityId,
+				where: t.Object,
 				error: Error,
 			}),
 			(state, action) => {
-				const { modelName, entityId, error } = action.payload;
+				const { modelName, where, error } = action.payload;
 				let newState = state;
-				newState = setStatusWithDefaults(newState, modelName, entityId, () => ({
+				newState = setStatusWithDefaults(newState, modelName, hash(where), () => ({
 					transient: true,
 					fetching: false,
 				}));
-				newState = newState.setIn(['errors', modelName, entityId], error);
+				newState = newState.setIn(['errors', modelName, hash(where)], error);
 				return newState;
 			},
 		],
 		[MERGE_ENTITY]: [
 			t.struct({
 				modelName: t.String,
+				where: t.Object,
 				data: t.Object,
 				noInteraction: t.Boolean,
 			}),
@@ -217,8 +211,8 @@ export default createReducer(
 		[PERSIST_ENTITY]: [
 			t.struct({
 				modelName: t.String,
-				entitySchema: EntitySchema,
 				entityId: EntityId,
+				where: t.Object,
 				entity: t.Object,
 				noInteraction: t.Boolean,
 			}),
@@ -287,7 +281,7 @@ export default createReducer(
 			t.struct({
 				modelName: t.String,
 				entityId: EntityId,
-				error: t.Object,
+				error: Error,
 			}),
 			(state, action) => {
 				const { modelName, entityId, error } = action.payload;
@@ -410,6 +404,16 @@ export default createReducer(
 						);
 					}
 				});
+				const invalidRefHashes = _.reduce(state.refs[modelName], (invalidRefs, currentRef) => {
+					if (currentRef.entityId === entityId) {
+						return [...invalidRefs, hash(currentRef.where)];
+					}
+					return invalidRefs;
+				}, []);
+				newState = newState.setIn(
+					['refs', modelName],
+					newState.refs[modelName].without(invalidRefHashes)
+				);
 				return newState;
 			},
 		],

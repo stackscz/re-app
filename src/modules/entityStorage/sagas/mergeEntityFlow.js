@@ -3,7 +3,11 @@ import _ from 'lodash';
 import moment from 'moment';
 import hash from 'object-hash';
 
-import { rethrowError, typeInvariant, apiServiceResultTypeInvariant } from 're-app/utils';
+import {
+	rethrowError,
+	isOfType,
+	typeInvariant,
+} from 'utils';
 import type { ApiService } from 'types/ApiService';
 import type { EntityResult } from 'types/EntityResult';
 import type { EntityValidationError } from 'types/EntityValidationError';
@@ -18,13 +22,14 @@ import { getAuthContext } from 'modules/auth/selectors';
 import {
 	getEntityDefinitionSelector,
 	getEntityDefinitions,
+	getModelIdPropertyName,
 } from 'modules/entityDescriptors/selectors';
 import {
 	getEntitySelector,
 } from 'modules/entityStorage/selectors';
 import stripReadOnlyProperties from 'modules/entityDescriptors/utils/stripReadOnlyProperties';
 import {
-	getEntityStatusGetter,
+	getEntityStatusSelector,
 	getDenormalizedEntitySelector,
 } from '../selectors';
 import {
@@ -36,10 +41,11 @@ import {
 } from '../actions';
 
 export function *mergeEntityTask(action) {
-	const { modelName, data, noInteraction } = action.payload;
+	const { modelName, where, data, noInteraction } = action.payload;
 	const entitySchema = yield select(getEntityDefinitionSelector(modelName));
+	const pkName = yield select(getModelIdPropertyName(modelName));
 
-	let entityId = data[entitySchema['x-idPropertyName']];
+	let entityId = data[pkName];
 	if (!entityId) {
 		entityId = hash({ data, r: Math.random() });
 	}
@@ -57,11 +63,11 @@ export function *mergeEntityTask(action) {
 	);
 	const normalizedEntity = normalizedData.entities[modelName][normalizedData.result];
 
-	yield put(persistEntity(modelName, entitySchema, entityId, normalizedEntity, noInteraction));
+	yield put(persistEntity(modelName, entityId, where, normalizedEntity, noInteraction));
 }
 
 export function *persistEntityTask(action) {
-	const { modelName, entitySchema, entityId, noInteraction } = action.payload;
+	const { modelName, entityId, where, noInteraction } = action.payload;
 	if (noInteraction) {
 		// do not call api
 		return;
@@ -76,7 +82,7 @@ export function *persistEntityTask(action) {
 
 	const apiContext = yield select(getApiContext);
 	const authContext = yield select(getAuthContext);
-	const entityStatus = yield select(getEntityStatusGetter(modelName, entityId));
+	const entityStatus = yield select(getEntityStatusSelector(modelName, entityId));
 
 	let remoteEntityId = entityId;
 	let transientEntityId;
@@ -85,55 +91,79 @@ export function *persistEntityTask(action) {
 		transientEntityId = entityId;
 	}
 
-	try {
-		const denormalizedEntity = yield select(
-			getDenormalizedEntitySelector(modelName, entityId)
-		);
-		const strippedEntity = stripReadOnlyProperties(denormalizedEntity, entitySchema);
-		let persistResult;
-		if (remoteEntityId) {
-			persistResult = yield call(
-				apiService.updateEntity,
-				modelName,
-				remoteEntityId,
-				strippedEntity,
-				apiContext,
-				authContext
-			);
-		} else {
-			persistResult = yield call(
-				apiService.createEntity,
-				modelName,
-				strippedEntity,
-				apiContext,
-				authContext
-			);
+	const denormalizedEntity = yield select(
+		getDenormalizedEntitySelector(modelName, entityId)
+	);
+	// const modelSchema = yield select(getEntityDefinitionSelector(modelName));
+	const strippedEntity = stripReadOnlyProperties(
+		denormalizedEntity,
+		{
+			$ref: `#/definitions/${modelName}`,
+			definitions: entityDefinitions,
 		}
-		apiServiceResultTypeInvariant(persistResult, EntityResult);
+	);
 
-		const normalizationResult = normalize(
-			{
-				...denormalizedEntity,
-				...persistResult.data,
-			},
+	let persistResult;
+	try {
+		const apiServiceMethodName = remoteEntityId ? 'updateEntity' : 'createEntity';
+		persistResult = yield call(
+			apiService[apiServiceMethodName],
 			modelName,
-			entityDefinitions
-		);
-		remoteEntityId = normalizationResult.result;
-		yield put(
-			receivePersistEntitySuccess(
-				modelName,
-				remoteEntityId,
-				normalizationResult.entities,
-				transientEntityId,
-				moment().format()
-			)
+			where,
+			strippedEntity,
+			apiContext,
+			authContext
 		);
 	} catch (error) {
 		rethrowError(error);
-		apiServiceResultTypeInvariant(error, EntityValidationError);
+		if (!isOfType(error, EntityValidationError)) {
+			yield put(receivePersistEntityFailure(
+				modelName,
+				entityId,
+				{
+					code: 5000,
+					message: 'Invalid error',
+					data: error,
+				}
+			));
+			return;
+		}
 		yield put(receivePersistEntityFailure(modelName, entityId, error));
+		return;
 	}
+
+	if (!isOfType(persistResult, EntityResult)) {
+		yield put(
+			receivePersistEntityFailure(
+				modelName,
+				entityId,
+				{
+					code: 5000,
+					message: 'Invalid entity response',
+					data: persistResult,
+				}
+			)
+		);
+		return;
+	}
+
+	const {
+		result: resultEntityId,
+		entities,
+	} = normalize(
+		persistResult.data,
+		modelName,
+		entityDefinitions
+	);
+	yield put(
+		receivePersistEntitySuccess(
+			modelName,
+			resultEntityId,
+			entities,
+			transientEntityId,
+			moment().format()
+		)
+	);
 }
 
 export default function *mergeEntityFlow() {

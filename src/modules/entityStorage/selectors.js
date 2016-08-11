@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import hash from 'object-hash';
 import { getEntityDefinitions } from 'modules/entityDescriptors/selectors';
 import denormalize from 'modules/entityDescriptors/utils/denormalize';
 
@@ -9,15 +10,20 @@ export const getEntitySelector = (modelName, id) => (state) => {
 	}
 	return collection[id];
 };
-export const getDenormalizedEntitySelector = (modelName, id, maxLevel = 1) =>
+
+export const getEntityIdByRef = (modelName, where) =>
+	(state) =>
+		_.get(state.entityStorage, ['refs', modelName, hash(where), 'entityId']);
+
+export const getDenormalizedEntitySelector = (modelName, entityId, maxLevel = 1) =>
 	(state) => {
 		const entityDictionary = state.entityStorage.collections;
-		const entity = _.get(entityDictionary, [modelName, id]);
-		if (!modelName || !id || !entity) {
+		const entity = _.get(entityDictionary, [modelName, entityId]);
+		if (!modelName || !entityId || !entity) {
 			return undefined;
 		}
 		return denormalize(
-			id,
+			entityId,
 			modelName,
 			entityDictionary,
 			getEntityDefinitions(state),
@@ -39,11 +45,8 @@ export const getDenormalizedEntitiesSelector = (modelName, entities, maxLevel = 
 		);
 	};
 
+export const getEntityStatusSelector = (modelName, entityId) =>
+	(state) => _.get(state.entityStorage, ['statuses', modelName, entityId]);
 
-export const getEntityStatusGetter = (modelName, id) => (state) => {
-	const statusesCollection = state.entityStorage.statuses[modelName];
-	if (!statusesCollection) {
-		return undefined;
-	}
-	return statusesCollection[id];
-};
+export const getEntityErrorSelector = (modelName, entityId) =>
+	(state) => _.get(state.entityStorage, ['errors', modelName, entityId]);

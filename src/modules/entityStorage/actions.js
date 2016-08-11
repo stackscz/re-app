@@ -6,16 +6,16 @@
  * @param entityId
  */
 export const ENSURE_ENTITY = 're-app/entityStorage/ENSURE_ENTITY';
-export function ensureEntity(modelName, entityId) {
-	return { type: ENSURE_ENTITY, payload: { modelName, entityId } };
+export function ensureEntity(modelName, where) {
+	return { type: ENSURE_ENTITY, payload: { modelName, where } };
 }
 
 /**
  * Request single entity from remote
  */
 export const ATTEMPT_FETCH_ENTITY = 're-app/entityStorage/ATTEMPT_FETCH_ENTITY';
-export function attemptFetchEntity(modelName, entityId) {
-	return { type: ATTEMPT_FETCH_ENTITY, payload: { modelName, entityId } };
+export function attemptFetchEntity(modelName, where) {
+	return { type: ATTEMPT_FETCH_ENTITY, payload: { modelName, where } };
 }
 
 /**
@@ -23,19 +23,8 @@ export function attemptFetchEntity(modelName, entityId) {
  *
  */
 export const RECEIVE_FETCH_ENTITY_FAILURE = 're-app/entityStorage/RECEIVE_FETCH_ENTITY_FAILURE';
-export function receiveFetchEntityFailure(modelName, entityId, error) {
-	return { type: RECEIVE_FETCH_ENTITY_FAILURE, payload: { modelName, entityId, error } };
-}
-
-/**
- *
- * @deprecated
- *
- * @type {string}
- */
-export const RECEIVE_ENTITY = 're-app/entityStorage/RECEIVE_ENTITY';
-export function receiveEntity(modelName, entityId, normalizedEntities, validAtTime) {
-	return { type: RECEIVE_ENTITY, payload: { modelName, entityId, normalizedEntities, validAtTime } };
+export function receiveFetchEntityFailure(modelName, where, error) {
+	return { type: RECEIVE_FETCH_ENTITY_FAILURE, payload: { modelName, where, error } };
 }
 
 /**
@@ -68,8 +57,8 @@ export function receiveEntity(modelName, entityId, normalizedEntities, validAtTi
  * @type {object}
  */
 export const RECEIVE_ENTITIES = 're-app/entityStorage/RECEIVE_ENTITIES';
-export function receiveEntities(normalizedEntities, validAtTime) {
-	return { type: RECEIVE_ENTITIES, payload: { normalizedEntities, validAtTime } };
+export function receiveEntities(refs, normalizedEntities, validAtTime) {
+	return { type: RECEIVE_ENTITIES, payload: { refs, normalizedEntities, validAtTime } };
 }
 
 /**
@@ -79,16 +68,16 @@ export function receiveEntities(normalizedEntities, validAtTime) {
  * - set status to transient: true when entity does not exist in storage or is transient
  */
 export const MERGE_ENTITY = 're-app/entityStorage/MERGE_ENTITY';
-export function mergeEntity(modelName, data, noInteraction = false) {
-	return { type: MERGE_ENTITY, payload: { modelName, data, noInteraction } };
+export function mergeEntity(modelName, where, data, noInteraction = false) {
+	return { type: MERGE_ENTITY, payload: { modelName, where, data, noInteraction } };
 }
 
 /**
  * Request remote for entity persistence, actor is responsible for providing non-colliding entityId
  */
 export const PERSIST_ENTITY = 're-app/entityStorage/PERSIST_ENTITY';
-export function persistEntity(modelName, entitySchema, entityId, entity, noInteraction = false) {
-	return { type: PERSIST_ENTITY, payload: { modelName, entitySchema, entityId, entity, noInteraction } };
+export function persistEntity(modelName, entityId, where, entity, noInteraction = false) {
+	return { type: PERSIST_ENTITY, payload: { modelName, entityId, where, entity, noInteraction } };
 }
 
 /**

@@ -1,6 +1,7 @@
 // @flow
 
 import hash from 'object-hash';
+// import _ from 'lodash';
 import moment from 'moment';
 
 import { apiServiceResultTypeInvariant } from 're-app/utils';
@@ -41,19 +42,41 @@ export function *ensureEntityIndexTask(action) {
 	yield put(attemptFetchEntityIndex(indexHash));
 	try {
 		const normalizedFilter = normalizeFilter(filter);
-		const result = yield call(
+		const apiCallResult = yield call(
 			ApiService.getEntityIndex,
 			modelName,
 			normalizedFilter,
 			apiContext,
 			authContext
 		);
-		apiServiceResultTypeInvariant(result, EntityIndexResult);
+		apiServiceResultTypeInvariant(apiCallResult, EntityIndexResult);
 		const entityDefinitions = yield select(getEntityDefinitions);
-		const normalized = normalize(result.data, modelName, entityDefinitions);
+		const {
+			result,
+			entities,
+		} = normalize(apiCallResult.data, modelName, entityDefinitions);
 		const nowTime = moment().format();
-		yield put(receiveEntities(normalized.entities, nowTime));
-		yield put(receiveEntityIndex(indexHash, normalized.result, result.existingCount, nowTime));
+
+		// const modelIdPropertyName = yield select(getModelIdPropertyName(modelName));
+		// const refs = {
+		// 	[modelName]: _.reduce(
+		// 		result,
+		// 		(acc, id) => {
+		// 			const where = { [modelIdPropertyName]: id };
+		// 			return {
+		// 				...acc,
+		// 				[hash(where)]: {
+		// 					where,
+		// 					entityId: id,
+		// 				},
+		// 			};
+		// 		},
+		// 		{}
+		// 	),
+		// };
+
+		yield put(receiveEntities({}, entities, nowTime));
+		yield put(receiveEntityIndex(indexHash, result, apiCallResult.existingCount, nowTime));
 	} catch (e) {
 		apiServiceResultTypeInvariant(e, Error);
 		yield put(fetchEntityIndexFailure(indexHash, e));

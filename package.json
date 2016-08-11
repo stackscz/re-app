@@ -1,6 +1,6 @@
 {
   "name": "re-app",
-  "version": "0.22.0-dev.10",
+  "version": "0.22.0-dev.11",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": {
@@ -76,6 +76,7 @@
   "dependencies": {
     "history": "^1.17.0",
     "json-schema-defaults": "^0.1.1",
+    "json-schema-deref-local": "^0.2.1",
     "jsonschema": "^1.1.0",
     "react-json-inspector": "^7.0.0",
     "react-modal2": "^3.0.2",
