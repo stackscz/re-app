@@ -6,6 +6,8 @@ import {
 	getDynamicEntityIndexContentSelector,
 } from 'modules/entityIndexes/selectors';
 
+import { definitions } from 'mocks/entityDescriptors'
+
 describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector', () => {
 
 	it('returns undefined for unknown index', () => {
@@ -16,6 +18,9 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 	it('returns unmodified index when unknown collection', () => {
 		const expectedContent = ['1', '2', '3'];
 		const noCollectionsState = {
+			entityDescriptors: {
+				definitions,
+			},
 			entityIndexes: {
 				indexes: {
 					idxid: {
@@ -31,10 +36,13 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 
 	const indexHash = 'nbhj45b32jk543b2k';
 	const state = {
+		entityDescriptors: {
+			definitions,
+		},
 		entityIndexes: {
 			indexes: {
 				[indexHash]: {
-					modelName: 'posts',
+					modelName: 'Post',
 					filter: undefined,
 					content: ['1', '2', '4'],
 				}
@@ -42,7 +50,7 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 		},
 		entityStorage: {
 			collections: {
-				posts: {
+				Post: {
 					1: {
 						id: '1',
 						parent: '10',
@@ -76,7 +84,7 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 				}
 			},
 			statuses: {
-				posts: {
+				Post: {
 					transient1: {
 						transient: true,
 					},
@@ -130,7 +138,7 @@ describe('modules/entityIndexes/selectors/getDynamicEntityIndexContentSelector',
 				]
 			},
 			[],
-			['transient2', 'transient1']
+			['4', '2', '1', 'transient2', '3', 'transient1']
 		],
 	];
 

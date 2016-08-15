@@ -1,13 +1,22 @@
-import _ from 'lodash';
+import _, { uniq, concat } from 'lodash';
 import hash from 'object-hash';
 
 import normalizeFilter from './utils/normalizeFilter';
+import getComposingModels from 'modules/entityDescriptors/utils/getComposingModels';
+import getDependentModels from 'modules/entityDescriptors/utils/getDependentModels';
 
 import type { EntityIndexFilter } from 'types/EntityIndexFilter';
 
-export const getEntityIndexSelector = (indexHash) =>
-	(state) =>
-		state.entityIndexes.indexes[indexHash];
+export const getEntityIndexSelector =
+	(indexHash:string|{modelName:string, filter: EntityIndexFilter}) =>
+		(state) => {
+			let finalIndexHash = indexHash;
+			if (!_.isString(finalIndexHash)) {
+				const { modelName, filter } = indexHash;
+				finalIndexHash = hash({ modelName, filter });
+			}
+			return _.get(state, ['entityIndexes', 'indexes', finalIndexHash]);
+		};
 
 /**
  * Selects index.content with transient entities matching `where` key value of filter, sorted
@@ -19,41 +28,75 @@ export const getDynamicEntityIndexContentSelector =
 		(state) => {
 			let finalIndexHash = indexHash;
 			if (!_.isString(finalIndexHash)) {
-				finalIndexHash = hash(indexHash);
+				const { modelName, filter } = indexHash;
+				finalIndexHash = hash({ modelName, filter });
 			}
 			const index = _.get(state, ['entityIndexes', 'indexes', finalIndexHash]);
 			if (!index || !index.content) {
 				return undefined;
 			}
-			const collection = _.get(state, ['entityStorage', 'collections', index.modelName]);
-			if (!collection) {
-				return index.content;
-			}
+			const compositingModels = getComposingModels(
+				{
+					$ref: `#/definitions/${index.modelName}`,
+					definitions: state.entityDescriptors.definitions,
+				}
+			);
+			const dependentModels = getDependentModels(
+				index.modelName,
+				state.entityDescriptors.definitions
+			);
+			const groupedModels = uniq(concat([index.modelName], dependentModels, compositingModels));
+
 			const normalizedFilter = normalizeFilter(index.filter);
 			const indexEntityIdsMap = _.zipObject(index.content, index.content.map(() => true));
 			const result = [...index.content];
+
 			let noUnlisted = true;
-			_.each(collection, (entity, entityId) => {
-				const isTransient = _.get(
-					state,
-					['entityStorage', 'statuses', index.modelName, entityId, 'transient']
-				);
-				const isMatch = _.isMatch(entity, normalizedFilter.where);
-				const isUnlisted = !indexEntityIdsMap[entityId];
-				if (isTransient && isMatch && isUnlisted) {
-					noUnlisted = false;
-					result.push(entityId);
+			let foundCollection = false;
+			_.each(groupedModels, (compositingModelName) => {
+				const collection = _.get(state, ['entityStorage', 'collections', compositingModelName]);
+				if (!collection) {
+					return;
 				}
+				foundCollection = true;
+				_.each(collection, (entity, entityId) => {
+					const isMatch = _.isMatch(entity, normalizedFilter.where);
+					const isUnlisted = !indexEntityIdsMap[entityId];
+					if (isMatch && isUnlisted) {
+						noUnlisted = false;
+						result.push(entityId);
+					}
+				});
 			});
+			if (!foundCollection) {
+				return index.content;
+			}
+
 			if (noUnlisted) {
 				return result;
 			}
+
+			// return result;
 
 			return _.orderBy(
 				result,
 				normalizedFilter.order.map(
 					(sortSpec) =>
-						(entityId) => _.get(collection, [entityId, _.trimStart(sortSpec, '-')])
+						(entityId) => _.reduce(groupedModels, (propValue, modelName) => {
+							if (propValue) {
+								return propValue;
+							}
+							return _.get(
+								state,
+								[
+									'entityStorage',
+									'collections',
+									modelName,
+									entityId,
+									_.trimStart(sortSpec, '-'),
+								]
+							);
+						}, undefined)
 				),
 				normalizedFilter.order.map(
 					(sortSpec) =>
@@ -67,7 +110,8 @@ export const getDynamicEntityIndexSelector =
 		(state) => {
 			let finalIndexHash = indexHash;
 			if (!_.isString(finalIndexHash)) {
-				finalIndexHash = hash(indexHash);
+				const { modelName, filter } = indexHash;
+				finalIndexHash = hash({ modelName, filter });
 			}
 			const index = _.get(state, ['entityIndexes', 'indexes', finalIndexHash]);
 			if (!index || !index.content) {

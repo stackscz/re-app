@@ -76,8 +76,8 @@ export function mergeEntity(modelName, where, data, noInteraction = false) {
  * Request remote for entity persistence, actor is responsible for providing non-colliding entityId
  */
 export const PERSIST_ENTITY = 're-app/entityStorage/PERSIST_ENTITY';
-export function persistEntity(modelName, entityId, where, entity, noInteraction = false) {
-	return { type: PERSIST_ENTITY, payload: { modelName, entityId, where, entity, noInteraction } };
+export function persistEntity(modelName, entityId, where, normalizedEntities, noInteraction = false) {
+	return { type: PERSIST_ENTITY, payload: { modelName, entityId, where, normalizedEntities, noInteraction } };
 }
 
 /**
@@ -123,8 +123,8 @@ export function deleteEntity(modelName, entityId) {
  * - set entity status to deleting: true, transient: true
  */
 export const RECEIVE_DELETE_ENTITY_SUCCESS = 're-app/entityStorage/RECEIVE_DELETE_ENTITY_SUCCESS';
-export function receiveDeleteEntitySuccess(modelName, entityId) {
-	return { type: RECEIVE_DELETE_ENTITY_SUCCESS, payload: { modelName, entityId } };
+export function receiveDeleteEntitySuccess(modelNames, entityId) {
+	return { type: RECEIVE_DELETE_ENTITY_SUCCESS, payload: { modelNames, entityId } };
 }
 
 /**
@@ -133,8 +133,8 @@ export function receiveDeleteEntitySuccess(modelName, entityId) {
  * - set entity status to deleting: true, transient: true
  */
 export const RECEIVE_DELETE_ENTITY_FAILURE = 're-app/entityStorage/RECEIVE_DELETE_ENTITY_FAILURE';
-export function receiveDeleteEntityFailure(modelName, entityId) {
-	return { type: RECEIVE_DELETE_ENTITY_FAILURE, payload: { modelName, entityId } };
+export function receiveDeleteEntityFailure(modelName, entityId, error) {
+	return { type: RECEIVE_DELETE_ENTITY_FAILURE, payload: { modelName, entityId, error } };
 }
 
 /**

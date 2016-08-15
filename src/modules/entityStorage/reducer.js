@@ -231,14 +231,15 @@ export default createReducer(
 				modelName: t.String,
 				entityId: EntityId,
 				where: t.Object,
-				entity: t.Object,
+				normalizedEntities: NormalizedEntityDictionary,
 				noInteraction: t.Boolean,
 			}),
 			(state, action) => {
-				const { modelName, entityId, entity } = action.payload;
+				const { modelName, entityId, normalizedEntities } = action.payload;
 
 				let newState = state;
-				newState = newState.setIn(['collections', modelName, entityId], entity);
+				// newState = newState.setIn(['collections', modelName, entityId], entity);
+				newState = setEntitiesToState(newState, normalizedEntities);
 				newState = setStatusWithDefaults(newState, modelName, entityId, (currentStatus) => ({
 					persisting: true,
 					transient: currentStatus ? currentStatus.transient : true,
@@ -342,6 +343,7 @@ export default createReducer(
 			t.struct({
 				modelName: t.String,
 				entityId: EntityId,
+				where: t.maybe(t.Object),
 			}),
 			(state, action) => {
 				const { modelName, entityId } = action.payload;
@@ -363,20 +365,24 @@ export default createReducer(
 		],
 		[RECEIVE_DELETE_ENTITY_SUCCESS]: [
 			t.struct({
-				modelName: t.String,
+				modelNames: t.list(t.String),
 				entityId: EntityId,
 			}),
 			(state, action) => {
-				const { modelName, entityId } = action.payload;
-				return state
-					.setIn(
-						['collections', modelName],
-						state.collections[modelName].without(`${entityId}`)
-					)
-					.setIn(
-						['statuses', modelName],
-						state.statuses[modelName].without(`${entityId}`)
-					);
+				const { modelNames, entityId } = action.payload;
+				let newState = state;
+				_.each(modelNames, (modelName) => {
+					newState = newState
+						.setIn(
+							['collections', modelName],
+							state.collections[modelName].without(`${entityId}`)
+						)
+						.setIn(
+							['statuses', modelName],
+							state.statuses[modelName].without(`${entityId}`)
+						);
+				});
+				return newState;
 			},
 		],
 		[RECEIVE_DELETE_ENTITY_FAILURE]: [

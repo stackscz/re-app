@@ -20,7 +20,6 @@ import normalize from 'modules/entityDescriptors/utils/normalize';
 import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
 import {
-	getEntityDefinitionSelector,
 	getEntityDefinitions,
 	getModelIdPropertyName,
 } from 'modules/entityDescriptors/selectors';
@@ -42,10 +41,9 @@ import {
 
 export function *mergeEntityTask(action) {
 	const { modelName, where, data, noInteraction } = action.payload;
-	const entitySchema = yield select(getEntityDefinitionSelector(modelName));
-	const pkName = yield select(getModelIdPropertyName(modelName));
+	const idPropertyName = yield select(getModelIdPropertyName(modelName));
 
-	let entityId = data[pkName];
+	let entityId = data[idPropertyName];
 	if (!entityId) {
 		entityId = hash({ data, r: Math.random() });
 	}
@@ -53,19 +51,22 @@ export function *mergeEntityTask(action) {
 	const existingEntity = yield select(getEntitySelector(modelName, entityId));
 	const updatedEntity = _.assign({}, existingEntity || {}, data);
 	const entityDefinitions = yield select(getEntityDefinitions);
-	const normalizedData = normalize(
+	const {
+		// result,
+		entities,
+	} = normalize(
 		{
 			...updatedEntity,
-			[entitySchema['x-idPropertyName']]: entityId,
+			[idPropertyName]: entityId,
 		},
 		{
 			$ref: `#/definitions/${modelName}`,
 			definitions: entityDefinitions,
 		}
 	);
-	const normalizedEntity = normalizedData.entities[modelName][normalizedData.result];
+	// const normalizedEntity = entities[modelName][result];
 
-	yield put(persistEntity(modelName, entityId, where, normalizedEntity, noInteraction));
+	yield put(persistEntity(modelName, entityId, where, entities, noInteraction));
 }
 
 export function *persistEntityTask(action) {

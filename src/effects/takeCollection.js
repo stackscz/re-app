@@ -1,3 +1,4 @@
+import { includes } from 'lodash';
 import { take } from 'redux-saga/effects';
 
 export default function takeCollection(actionType, name) {
@@ -5,7 +6,10 @@ export default function takeCollection(actionType, name) {
 		if (!action.payload) {
 			return false;
 		}
-		const { modelName } = action.payload;
-		return modelName === name && action.type === actionType;
+		const { modelName, modelNames } = action.payload;
+		return action.type === actionType && (
+				modelName === name ||
+				includes(modelNames, name)
+			);
 	});
 }

@@ -146,25 +146,27 @@ export default createReducer(
 		},
 		[RECEIVE_DELETE_ENTITY_SUCCESS]: (state, action) => {
 			// remove entity id from all indexes of collection and invalidate them
-			const { modelName, entityId } = action.payload;
+			const { modelNames, entityId } = action.payload;
 			let newState = state;
 			_.each(newState.indexes, (index, indexId) => {
-				if (index.modelName === modelName) {
-					const entityIdIndex = _.indexOf(index.content, entityId);
-					if (entityIdIndex > -1) {
-						newState = newState.setIn(
-							['indexes', indexId, 'content'],
-							index.content.flatMap(
-								(containedEntityId) =>
-									(containedEntityId === entityId ? [] : containedEntityId)
-							)
-						);
-						newState = newState.setIn(
-							['indexes', indexId, 'valid'],
-							false
-						);
+				_.each(modelNames, (modelName) => {
+					if (index.modelName === modelName) {
+						const entityIdIndex = _.indexOf(index.content, entityId);
+						if (entityIdIndex > -1) {
+							newState = newState.setIn(
+								['indexes', indexId, 'content'],
+								index.content.flatMap(
+									(containedEntityId) =>
+										(containedEntityId === entityId ? [] : containedEntityId)
+								)
+							);
+							newState = newState.setIn(
+								['indexes', indexId, 'valid'],
+								false
+							);
+						}
 					}
-				}
+				});
 			});
 			return newState;
 		},

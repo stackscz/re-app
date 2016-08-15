@@ -64,7 +64,7 @@ function visitEntity(obj, schema, entityDictionary, bag, maxLevel, currentLevel)
 					bag[modelName][id] = {
 						...bag[modelName][id],
 						...visitEntity(
-							entityDictionary[subModelSchema['x-model']][id],
+							_.get(entityDictionary, [subModelSchema['x-model'], id], {}),
 							subModelSchema,
 							entityDictionary,
 							bag,
