@@ -9,21 +9,26 @@ import getComposingModels from 'modules/entityDescriptors/utils/getComposingMode
 import getDependentModels from 'modules/entityDescriptors/utils/getDependentModels';
 
 export default function *reloadInvalidIndexesTask(action) {
-	const { modelName } = action.payload;
+	const { modelName, modelNames } = action.payload;
 	const indexes = yield select((state) => state.entityIndexes.indexes);
 
 	const definitions = yield select(getEntityDefinitions);
 
-	const cm = getComposingModels({
-		$ref: `#/definitions/${modelName}`,
-		definitions,
-	});
-	const dm = getDependentModels(modelName, definitions);
-	const affectedModelNames = uniq(concat(cm, dm));
+	let affectedModelNames = modelNames;
+	if (!affectedModelNames) {
+		const cm = getComposingModels({
+			$ref: `#/definitions/${modelName}`,
+			definitions,
+		});
+		const dm = getDependentModels(modelName, definitions);
+		affectedModelNames = uniq(concat(cm, dm));
+	}
 
 	for (const indexHash of Object.keys(indexes)) {
 		const index = indexes[indexHash];
+		console.log('CHECKING INDEX', index);
 		if (includes(affectedModelNames, index.modelName) && !index.valid) {
+			console.log('RELOADING INDEX', index);
 			yield put(ensureEntityIndex(index.modelName, index.filter));
 		}
 	}

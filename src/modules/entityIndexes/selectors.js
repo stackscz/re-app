@@ -10,6 +10,9 @@ import type { EntityIndexFilter } from 'types/EntityIndexFilter';
 export const getEntityIndexSelector =
 	(indexHash:string|{modelName:string, filter: EntityIndexFilter}) =>
 		(state) => {
+			if (!indexHash) {
+				return undefined;
+			}
 			let finalIndexHash = indexHash;
 			if (!_.isString(finalIndexHash)) {
 				const { modelName, filter } = indexHash;
@@ -26,6 +29,9 @@ export const getEntityIndexSelector =
 export const getDynamicEntityIndexContentSelector =
 	(indexHash:string|{modelName:string, filter: EntityIndexFilter}) =>
 		(state) => {
+			if (!indexHash) {
+				return undefined;
+			}
 			let finalIndexHash = indexHash;
 			if (!_.isString(finalIndexHash)) {
 				const { modelName, filter } = indexHash;
@@ -108,6 +114,9 @@ export const getDynamicEntityIndexContentSelector =
 export const getDynamicEntityIndexSelector =
 	(indexHash:string|{modelName:string, filter: EntityIndexFilter}) =>
 		(state) => {
+			if (!indexHash) {
+				return undefined;
+			}
 			let finalIndexHash = indexHash;
 			if (!_.isString(finalIndexHash)) {
 				const { modelName, filter } = indexHash;
