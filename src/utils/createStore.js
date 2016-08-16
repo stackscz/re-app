@@ -20,11 +20,12 @@ function createRouter(routerConfig:RouterConfig = {}) {
 }
 
 function runSaga(sagaMiddleware:Function, saga:Function):void {
-	sagaMiddleware.run(saga).done.catch((error) => {
-		// TODO logging
-		console.error(error);
-		runSaga(sagaMiddleware, saga);
-	});
+	sagaMiddleware.run(saga);
+	// .done.catch((error) => {
+	// 	// TODO logging
+	// 	console.error(error);
+	// 	runSaga(sagaMiddleware, saga);
+	// });
 }
 
 export default function createStore(config:StoreConfig = {}, initialState = {}):Object {
