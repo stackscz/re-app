@@ -33,7 +33,7 @@ const exampleState = {
 
 describe('modules/entityIndexes/reducer', () => {
 
-	const eeiPayload = {
+	const indexSpec = {
 		modelName: 'posts',
 		filter: { where: { parentId: '10' } },
 	};
@@ -45,13 +45,16 @@ describe('modules/entityIndexes/reducer', () => {
 			[
 				'ensure index first time',
 				undefined,
-				eeiPayload,
+				{
+					...indexSpec,
+					force: false,
+				},
 				{
 					toEqual: {
 						indexes: {
-							[hash(eeiPayload)]: {
-								modelName: eeiPayload.modelName,
-								filter: eeiPayload.filter,
+							[hash(indexSpec)]: {
+								modelName: indexSpec.modelName,
+								filter: indexSpec.filter,
 								fetching: false,
 								error: undefined,
 							}
@@ -65,9 +68,9 @@ describe('modules/entityIndexes/reducer', () => {
 				'ensure existing index',
 				{
 					indexes: {
-						[hash(eeiPayload)]: {
-							modelName: eeiPayload.modelName,
-							filter: eeiPayload.filter,
+						[hash(indexSpec)]: {
+							modelName: indexSpec.modelName,
+							filter: indexSpec.filter,
 							fetching: true,
 							content: ['1', '2', '3'],
 							error: undefined,
@@ -76,13 +79,16 @@ describe('modules/entityIndexes/reducer', () => {
 					existingCounts: {},
 					limit: 20,
 				},
-				eeiPayload,
+				{
+					...indexSpec,
+					force: false,
+				},
 				{
 					toEqual: {
 						indexes: {
-							[hash(eeiPayload)]: {
-								modelName: eeiPayload.modelName,
-								filter: eeiPayload.filter,
+							[hash(indexSpec)]: {
+								modelName: indexSpec.modelName,
+								filter: indexSpec.filter,
 								fetching: true,
 								content: ['1', '2', '3'],
 								error: undefined,
