@@ -13,6 +13,7 @@ import {
 	INITIALIZE,
 	INITIALIZE_FINISH,
 	RECEIVE_IDENTITY,
+	RECEIVE_REFRESH_IDENTITY_FAILURE,
 	LOGIN,
 	RECEIVE_LOGIN_SUCCESS,
 	RECEIVE_LOGIN_FAILURE,
@@ -67,6 +68,18 @@ export default createReducer(
 				return state.merge({
 					userId,
 					context,
+					error: null,
+				});
+			},
+		],
+		[RECEIVE_REFRESH_IDENTITY_FAILURE]: [
+			t.struct({
+				error: Error,
+			}),
+			(state, action) => {
+				const { error } = action.payload;
+				return state.merge({
+					error,
 				});
 			},
 		],

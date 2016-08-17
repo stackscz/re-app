@@ -41,6 +41,7 @@ import {
 	receiveLoginFailure,
 	receiveLogoutSuccess,
 	receiveLogoutFailure,
+	receiveRefreshIdentityFailure,
 } from './actions';
 
 export function *normalizeUserTask(user) {
@@ -81,8 +82,10 @@ export function* refreshIdentityTask() {
 		));
 	} catch (error) {
 		rethrowError(error);
-		// TODO put error action
-		console.error('refreshAuth should always resolve');
+		yield put(
+			receiveRefreshIdentityFailure(error)
+		);
+		return;
 	}
 
 	const { userModelName } = yield select(getAuthState);

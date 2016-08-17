@@ -17,3 +17,4 @@ export const getUser = state =>
 	)(state);
 
 export const getUserId = state => state.auth.userId;
+export const getAuthError = state => state.auth.error;

@@ -20,6 +20,11 @@ export function receiveIdentity(userId, context) {
 	return { type: RECEIVE_IDENTITY, payload: { userId, context } };
 }
 
+export const RECEIVE_REFRESH_IDENTITY_FAILURE = 're-app/auth/RECEIVE_REFRESH_IDENTITY_FAILURE';
+export function receiveRefreshIdentityFailure(error) {
+	return { type: RECEIVE_REFRESH_IDENTITY_FAILURE, payload: { error } };
+}
+
 // log user in using credentials
 export const LOGIN = 're-app/auth/LOGIN';
 export function login(credentials) {
