@@ -27,18 +27,25 @@ import {
 	receiveEntityIndex,
 	fetchEntityIndexFailure,
 } from '../actions';
+import {
+	getEntityIndexSelector,
+} from '../selectors';
 
 import {
 	receiveEntities,
 } from 'modules/entityStorage/actions';
 
 export function *ensureEntityIndexTask(action) {
-	const { modelName, filter } = action.payload;
+	const { modelName, filter, force } = action.payload;
 	const indexHash = hash({ modelName, filter });
 	const apiContext = yield select(getApiContext);
 	const ApiService = yield select(getApiService);
 	const authContext = yield select(getAuthContext);
-	// const { modelName, filter } = yield select(getEntityIndexSelector(indexHash));
+	const { content } = yield select(getEntityIndexSelector(indexHash));
+	if (content && !force) {
+		// do not fetch unnecessarily
+		return;
+	}
 	yield put(attemptFetchEntityIndex(indexHash));
 	try {
 		const normalizedFilter = normalizeFilter(filter);

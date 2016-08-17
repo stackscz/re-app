@@ -43,6 +43,7 @@ export default createReducer(
 			t.struct({
 				modelName: CollectionName,
 				filter: EntityIndexFilter,
+				force: t.Boolean,
 			}),
 			(state, action) => {
 				const { modelName, filter } = action.payload;

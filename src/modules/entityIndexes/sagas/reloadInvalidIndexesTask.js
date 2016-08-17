@@ -29,7 +29,7 @@ export default function *reloadInvalidIndexesTask(action) {
 		console.log('CHECKING INDEX', index);
 		if (includes(affectedModelNames, index.modelName) && !index.valid) {
 			console.log('RELOADING INDEX', index);
-			yield put(ensureEntityIndex(index.modelName, index.filter));
+			yield put(ensureEntityIndex(index.modelName, index.filter, true));
 		}
 	}
 }
