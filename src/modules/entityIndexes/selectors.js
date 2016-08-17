@@ -85,7 +85,7 @@ export const getDynamicEntityIndexContentSelector =
 			// return result;
 
 			return _.orderBy(
-				result,
+				uniq(result),
 				normalizedFilter.order.map(
 					(sortSpec) =>
 						(entityId) => _.reduce(groupedModels, (propValue, modelName) => {
@@ -123,7 +123,7 @@ export const getDynamicEntityIndexSelector =
 				finalIndexHash = hash({ modelName, filter });
 			}
 			const index = _.get(state, ['entityIndexes', 'indexes', finalIndexHash]);
-			if (!index || !index.content) {
+			if (!index) {
 				return undefined;
 			}
 			return {
