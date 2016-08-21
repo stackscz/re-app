@@ -1,4 +1,5 @@
 // @flow
+import { get as g } from 'lodash';
 import { takeLatest } from 'redux-saga';
 import { take, fork, call, put, select, cancel } from 'redux-saga/effects';
 
@@ -15,8 +16,12 @@ import {
 	getEntityDefinitions,
 	getModelIdPropertyName,
 } from 'modules/entityDescriptors/selectors';
+import {
+	RECEIVE_ENTITY_DESCRIPTORS,
+} from 'modules/entityDescriptors/actions';
 
 import normalize from 'modules/entityDescriptors/utils/normalize';
+import dereferenceSchemaAsync from 'modules/entityDescriptors/utils/dereferenceSchemaAsync';
 
 import {
 	receiveEntities,
@@ -51,16 +56,13 @@ export function *normalizeUserTask(user) {
 		};
 	}
 	const { userModelName } = yield select(getAuthState);
-	const entityDefinitions = yield select(getEntityDefinitions);
+	const { [userModelName]: userSchema } = yield select(getEntityDefinitions);
 	const {
 		result: userId,
 		entities,
 	} = normalize(
 		user,
-		{
-			$ref: `#/definitions/${userModelName}`,
-			definitions: entityDefinitions,
-		},
+		userSchema
 	);
 	return {
 		userId,
@@ -250,7 +252,18 @@ export function* authFlow() {
 	}
 }
 
+export function *bootstrap() {
+	const entityDescriptorsInitialized = yield select(
+		(state) => g(state, 'entityDescriptors.initialized')
+	);
+	if (!entityDescriptorsInitialized) {
+		yield takeLatest(RECEIVE_ENTITY_DESCRIPTORS, authFlow);
+	} else {
+		yield call(authFlow);
+	}
+}
+
 export default [
-	authFlow,
+	bootstrap,
 	watchRefreshIdentity,
 ];
