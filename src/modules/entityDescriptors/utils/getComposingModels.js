@@ -1,11 +1,9 @@
 import _ from 'lodash';
-import dereferenceSchema from './dereferenceSchema';
 
 export default function getComposingModels(schema) {
-	const dereferencedSchema = dereferenceSchema(schema);
-	const modelName = _.get(dereferencedSchema, 'x-model');
+	const modelName = _.get(schema, 'x-model');
 	const result = modelName ? [modelName] : [];
-	const allOf = _.get(dereferencedSchema, 'allOf');
+	const allOf = _.get(schema, 'allOf');
 	if (allOf) {
 		return _.reduce(
 			allOf,

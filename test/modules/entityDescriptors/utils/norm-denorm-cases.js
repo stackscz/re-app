@@ -1,11 +1,12 @@
+import dereferenceSchema from 'modules/entityDescriptors/utils/dereferenceSchema';
 import definitions from './data/definitions';
 
 export default [
 	[
-		{
+		dereferenceSchema({
 			$ref: '#/definitions/PostDetail',
 			definitions,
-		},
+		}),
 		{
 			id: 1,
 			title: 'Some post',
@@ -53,13 +54,13 @@ export default [
 		},
 	],
 	[
-		{
+		dereferenceSchema({
 			type: 'array',
 			items: {
 				$ref: '#/definitions/PostDetail',
 			},
 			definitions,
-		},
+		}),
 		[
 			{
 				id: 1,
@@ -129,13 +130,13 @@ export default [
 		},
 	],
 	[
-		{
+		dereferenceSchema({
 			type: 'array',
 			items: {
 				$ref: '#/definitions/PostDetail',
 			},
 			definitions,
-		},
+		}),
 		[
 			{
 				id: 1,
@@ -314,10 +315,10 @@ export default [
 		},
 	],
 	[
-		{
+		dereferenceSchema({
 			$ref: '#/definitions/Tag',
 			definitions,
-		},
+		}),
 		{
 			name: 'tag-foo',
 			data: {

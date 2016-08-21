@@ -1,4 +1,4 @@
-import _, { uniq, concat } from 'lodash';
+import _, { uniq, concat, get as g } from 'lodash';
 import hash from 'object-hash';
 
 import normalizeFilter from './utils/normalizeFilter';
@@ -42,10 +42,7 @@ export const getDynamicEntityIndexContentSelector =
 				return undefined;
 			}
 			const compositingModels = getComposingModels(
-				{
-					$ref: `#/definitions/${index.modelName}`,
-					definitions: state.entityDescriptors.definitions,
-				}
+				g(state, ['entityDescriptors', 'definitions', index.modelName])
 			);
 			const dependentModels = getDependentModels(
 				index.modelName,

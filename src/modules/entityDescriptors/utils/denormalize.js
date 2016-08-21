@@ -1,7 +1,6 @@
 // @flow
 /* eslint-disable no-use-before-define, no-param-reassign */
 import _, { merge } from 'lodash';
-import dereferenceSchema from './dereferenceSchema';
 // import { isImmutable, setIn, getIn } from './immutableUtils';
 import { setIn } from './immutableUtils';
 import type { JsonSchema } from 'types/JsonSchema';
@@ -136,6 +135,5 @@ export default function denormalize(obj,
 									schema:JsonSchema,
 									entityDictionary:NormalizedEntityDictionary,
 									maxLevel:number = 1):Entity|Array<Entity> {
-	const dereferencedSchema = dereferenceSchema(schema);
-	return visit(obj, dereferencedSchema, entityDictionary, {}, maxLevel);
+	return visit(obj, schema, entityDictionary, {}, maxLevel);
 }

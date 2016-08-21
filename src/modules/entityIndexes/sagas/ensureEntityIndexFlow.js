@@ -1,7 +1,7 @@
 // @flow
 
 import hash from 'object-hash';
-// import _ from 'lodash';
+import { get as g } from 'lodash';
 import moment from 'moment';
 
 import { apiServiceResultTypeInvariant } from 're-app/utils';
@@ -65,10 +65,7 @@ export function *ensureEntityIndexTask(action) {
 			apiCallResult.data,
 			{
 				type: 'array',
-				items: {
-					$ref: `#/definitions/${modelName}`,
-				},
-				definitions: entityDefinitions,
+				items: g(entityDefinitions, modelName),
 			}
 		);
 		const nowTime = moment().format();

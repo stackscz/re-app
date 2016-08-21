@@ -1,13 +1,11 @@
 import _ from 'lodash';
-import dereferenceSchema from './dereferenceSchema';
 
 export default function getIdPropertyName(schema) {
-	const dereferencedSchema = dereferenceSchema(schema);
-	const idPropertyName = _.get(dereferencedSchema, 'x-idPropertyName');
+	const idPropertyName = _.get(schema, 'x-idPropertyName');
 	if (idPropertyName) {
 		return idPropertyName;
 	}
-	const allOf = _.get(dereferencedSchema, 'allOf');
+	const allOf = _.get(schema, 'allOf');
 	if (allOf) {
 		return _.reduce(allOf, (currentIdPropertyName, partialSchema) => {
 			if (currentIdPropertyName) {

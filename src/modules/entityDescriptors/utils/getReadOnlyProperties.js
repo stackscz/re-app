@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import _ from 'lodash';
-import dereferenceSchema from './dereferenceSchema';
 
 function visitSchema(schema, readOnlyProperties) {
 	const properties = _.get(schema, 'properties');
@@ -16,8 +15,7 @@ function visitSchema(schema, readOnlyProperties) {
 	}
 }
 
-export default function getReadOnlyProperties(schemaWithReferences) {
-	const schema = dereferenceSchema(schemaWithReferences);
+export default function getReadOnlyProperties(schema) {
 	const readOnlyProperties = {};
 	visitSchema(schema, readOnlyProperties);
 	return _.keys(readOnlyProperties);

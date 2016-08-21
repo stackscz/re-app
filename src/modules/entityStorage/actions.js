@@ -113,8 +113,8 @@ export function receivePersistEntityFailure(modelName, entityId, error) {
  * - set entity status to deleting: true, transient: true
  */
 export const DELETE_ENTITY = 're-app/entityStorage/DELETE_ENTITY';
-export function deleteEntity(modelName, entityId) {
-	return { type: DELETE_ENTITY, payload: { modelName, entityId } };
+export function deleteEntity(modelName, entityId, where) {
+	return { type: DELETE_ENTITY, payload: { modelName, entityId, where } };
 }
 
 /**
@@ -123,8 +123,8 @@ export function deleteEntity(modelName, entityId) {
  * - set entity status to deleting: true, transient: true
  */
 export const RECEIVE_DELETE_ENTITY_SUCCESS = 're-app/entityStorage/RECEIVE_DELETE_ENTITY_SUCCESS';
-export function receiveDeleteEntitySuccess(modelNames, entityId) {
-	return { type: RECEIVE_DELETE_ENTITY_SUCCESS, payload: { modelNames, entityId } };
+export function receiveDeleteEntitySuccess(modelNames, entityId, relations = {}) {
+	return { type: RECEIVE_DELETE_ENTITY_SUCCESS, payload: { modelNames, entityId, relations } };
 }
 
 /**

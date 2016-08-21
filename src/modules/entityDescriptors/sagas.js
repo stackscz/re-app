@@ -18,6 +18,12 @@ import { getApiContext, getApiService } from 'modules/api/selectors';
 import { getAuthContext } from 'modules/auth/selectors';
 import { isInitialized } from 'modules/entityDescriptors/selectors';
 
+import {
+	dereferenceDefinitions,
+} from './utils';
+
+import isOfType from 'utils/isOfType';
+
 export function *loadEntityDescriptorsTask() {
 	const apiContext = yield select(getApiContext);
 	const ApiService = yield select(getApiService);
@@ -30,16 +36,49 @@ export function *loadEntityDescriptorsTask() {
 	let entityDescriptors;
 	try {
 		entityDescriptors = yield call(ApiService.getEntityDescriptors, apiContext, authContext);
-		apiServiceResultTypeInvariant(entityDescriptors, t.struct({
-			definitions: DefinitionsDictionary,
-			fieldsets: FieldsetsDictionary,
-		}));
-		yield put(receiveEntityDescriptors(entityDescriptors));
 	} catch (e) {
 		rethrowError(e);
 		apiServiceResultTypeInvariant(e, Error);
 		yield put(receiveEntityDescriptorsFailure(e));
+		return;
 	}
+
+	if (
+		!isOfType(entityDescriptors, t.struct({
+			definitions: DefinitionsDictionary,
+			fieldsets: FieldsetsDictionary,
+		}))
+	) {
+		yield put(receiveEntityDescriptorsFailure({
+			message: 'Inavlid response',
+		}));
+		return;
+	}
+
+	let dereferencedDefinitions;
+	try {
+		dereferencedDefinitions = yield call(
+			dereferenceDefinitions,
+			entityDescriptors.definitions
+		);
+	} catch (error) {
+		if (error.name === 'ReferenceError') {
+			yield put(receiveEntityDescriptorsFailure({
+				message: 'Circular schema',
+			}));
+			return;
+		}
+		rethrowError(error);
+	}
+
+	yield put(
+		receiveEntityDescriptors(
+			{
+				...entityDescriptors,
+				definitions: dereferencedDefinitions,
+			}
+		)
+	);
 }
 
 export function *entityDescriptorsFlow() {

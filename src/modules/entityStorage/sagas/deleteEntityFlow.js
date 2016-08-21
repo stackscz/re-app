@@ -1,4 +1,4 @@
-import { uniq, concat } from 'lodash';
+import { uniq, concat, get as g } from 'lodash';
 import rethrowError from 'utils/rethrowError';
 import apiServiceResultTypeInvariant from 'utils/apiServiceResultTypeInvariant';
 import type { Error } from 'types/Error';
@@ -21,6 +21,9 @@ import {
 import getComposingModels from 'modules/entityDescriptors/utils/getComposingModels';
 import getDependentModels from 'modules/entityDescriptors/utils/getDependentModels';
 
+import {
+	getAssociationsProperties,
+} from 'modules/entityDescriptors/utils';
 
 export function *deleteEntityTask(action) {
 	const { modelName, entityId, where } = action.payload;
@@ -28,14 +31,6 @@ export function *deleteEntityTask(action) {
 	const ApiService = yield select(getApiService);
 	const authContext = yield select(getAuthContext);
 	const idPropertyName = yield select(getModelIdPropertyName(modelName));
-	const definitions = yield select(getEntityDefinitions);
-
-	const cm = getComposingModels({
-		$ref: `#/definitions/${modelName}`,
-		definitions,
-	});
-	const dm = getDependentModels(modelName, definitions);
-	const affectedModelNames = uniq(concat(cm, dm));
 
 	let finalWhere = where;
 	if (!finalWhere) {
@@ -54,12 +49,21 @@ export function *deleteEntityTask(action) {
 			apiContext,
 			authContext
 		);
-		yield put(receiveDeleteEntitySuccess(affectedModelNames, entityId));
 	} catch (error) {
 		rethrowError(error);
 		apiServiceResultTypeInvariant(error, Error);
 		yield put(receiveDeleteEntityFailure(modelName, entityId, error));
+		return;
 	}
+
+	const definitions = yield select(getEntityDefinitions);
+
+	const cm = getComposingModels(g(definitions, modelName));
+	const dm = getDependentModels(modelName, definitions);
+	const affectedModelNames = uniq(concat(cm, dm));
+
+	const relations = getAssociationsProperties(definitions, modelName);
+	yield put(receiveDeleteEntitySuccess(affectedModelNames, entityId, relations));
 }
 
 export default function *deleteEntityFlow() {

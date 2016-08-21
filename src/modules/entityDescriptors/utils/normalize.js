@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign */
 import _ from 'lodash';
 import isObject from 'lodash/isObject';
-import dereferenceSchema from './dereferenceSchema';
 import type { EntityId } from 'types/EntityId';
 import type { JsonSchema } from 'types/JsonSchema';
 import type { NormalizedEntityDictionary } from 'types/NormalizedEntityDictionary';
@@ -105,22 +104,22 @@ function visitEntity(obj, schema, bag) {
 		});
 	}
 
-	const mappedBy = _.get(schema, 'x-mappedBy');
-	if (mappedBy) {
-		const fk = mappedBy;
-		console.log(fk);
-		// if(entitySchema[fk] instanceof IterableSchema && parentId) {
-		// 	if(!stored[fk]) {
-		// 		stored[fk] = [];
-		// 	}
-		// 	stored[fk] = Array.from(new Set([
-		// 		...stored[fk],
-		// 		parentId
-		// 	]));
-		// } else if (parentId && !stored[fk]) {
-		// 	stored[fk] = parentId;
-		// }
-	}
+	// const mappedBy = _.get(schema, 'x-mappedBy');
+	// if (mappedBy) {
+	// 	const fk = mappedBy;
+	// 	console.log(fk);
+	// 	// if(entitySchema[fk] instanceof IterableSchema && parentId) {
+	// 	// 	if(!stored[fk]) {
+	// 	// 		stored[fk] = [];
+	// 	// 	}
+	// 	// 	stored[fk] = Array.from(new Set([
+	// 	// 		...stored[fk],
+	// 	// 		parentId
+	// 	// 	]));
+	// 	// } else if (parentId && !stored[fk]) {
+	// 	// 	stored[fk] = parentId;
+	// 	// }
+	// }
 
 	return id;
 }
@@ -158,12 +157,11 @@ function visit(obj, schema, bag, parentId) {
  * Normalizes value according to json schema
  *
  * @param {Entity | Array<Entity>} obj value to normalize
- * @param {JsonSchema} schema to normalize value by
+ * @param {JsonSchema} dereferencedSchema - schema without $refs to normalize value by
  * @returns {{entities:NormalizedEntityDictionary, result:EntityId|Array<EntityId>}|*}
  */
 export default function normalize(obj:any,
-								  schema:JsonSchema):NormalizationResult {
-	const dereferencedSchema = dereferenceSchema(schema);
+								  dereferencedSchema:JsonSchema):NormalizationResult {
 	const bag = {};
 	const result = visit(obj, dereferencedSchema, bag);
 	return {

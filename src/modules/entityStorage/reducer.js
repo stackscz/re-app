@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { get as g } from 'lodash';
 import invariant from 'invariant';
 import hash from 'object-hash';
 import Immutable from 'seamless-immutable';
@@ -367,20 +367,55 @@ export default createReducer(
 			t.struct({
 				modelNames: t.list(t.String),
 				entityId: EntityId,
+				relations: t.dict(t.String, t.list(t.String)),
 			}),
 			(state, action) => {
-				const { modelNames, entityId } = action.payload;
+				const { modelNames, entityId, relations } = action.payload;
 				let newState = state;
 				_.each(modelNames, (modelName) => {
-					newState = newState
-						.setIn(
+					const modelCollection = g(state, ['collections', modelName]);
+					if (modelCollection) {
+						newState = newState.setIn(
 							['collections', modelName],
-							state.collections[modelName].without(`${entityId}`)
-						)
-						.setIn(
-							['statuses', modelName],
-							state.statuses[modelName].without(`${entityId}`)
+							modelCollection.without(`${entityId}`)
 						);
+					}
+
+					const modelStatuses = g(state, ['statuses', modelName]);
+					if (modelStatuses) {
+						newState = newState.setIn(
+							['statuses', modelName],
+							modelStatuses.without(`${entityId}`)
+						);
+					}
+				});
+				_.each(relations, (properties, modelName) => {
+					const modelCollection = g(state, ['collections', modelName]);
+					if (modelCollection) {
+						_.each(modelCollection, (entity, relatedEntityId) => {
+							let newEntity = entity;
+							_.each(properties, (propertyName) => {
+								let newPropertyValue = g(newEntity, propertyName);
+								if (newPropertyValue) {
+									if (_.isArray(newPropertyValue)) {
+										newPropertyValue = newPropertyValue.filter(
+											(x) => `${x}` !== `${entityId}`
+										);
+									} else {
+										newPropertyValue = undefined;
+									}
+									newEntity = newEntity.setIn(
+										[propertyName],
+										newPropertyValue
+									);
+								}
+							});
+							newState = newState.setIn(
+								['collections', modelName, relatedEntityId],
+								newEntity
+							);
+						});
+					}
 				});
 				return newState;
 			},

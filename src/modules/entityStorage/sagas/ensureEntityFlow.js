@@ -1,3 +1,4 @@
+import { get as g } from 'lodash';
 import { call, select, put } from 'redux-saga/effects';
 import { takeEvery } from 'redux-saga';
 
@@ -8,7 +9,6 @@ import hash from 'object-hash';
 import {
 	rethrowError,
 	isOfType,
-	apiServiceResultTypeInvariant,
 	typeInvariant,
 } from 'utils';
 
@@ -69,8 +69,6 @@ export function *ensureEntityTask(action) {
 		return;
 	}
 
-
-	apiServiceResultTypeInvariant(apiCallResult, EntityResult);
 	if (!isOfType(apiCallResult, EntityResult)) {
 		yield put(receiveFetchEntityFailure(
 			modelName,
@@ -90,10 +88,7 @@ export function *ensureEntityTask(action) {
 		entities,
 	} = normalize(
 		apiCallResult.data,
-		{
-			$ref: `#/definitions/${modelName}`,
-			definitions: entityDefinitions,
-		}
+		g(entityDefinitions, modelName),
 	);
 
 	const refs = {

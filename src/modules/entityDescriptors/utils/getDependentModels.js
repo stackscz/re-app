@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { get as g } from 'lodash';
 import getComposingModels from './getComposingModels';
 
 export default function getDependentModels(modelName, definitions) {
@@ -7,10 +7,7 @@ export default function getDependentModels(modelName, definitions) {
 	_.each(definitions, (definition) => {
 		const otherModelName = _.get(definition, 'x-model');
 		if (otherModelName) {
-			const composingModels = getComposingModels({
-				$ref: `#/definitions/${otherModelName}`,
-				definitions,
-			});
+			const composingModels = getComposingModels(g(definitions, otherModelName));
 			if (_.includes(composingModels, modelName)) {
 				result.push(otherModelName);
 			}

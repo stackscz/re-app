@@ -12,9 +12,4 @@ export const getEntityDefinitionSelector = (modelName) =>
 import getIdPropertyName from 'modules/entityDescriptors/utils/getIdPropertyName';
 export const getModelIdPropertyName = (modelName) =>
 	(state) =>
-		getIdPropertyName(
-			{
-				$ref: `#/definitions/${modelName}`,
-				definitions: state.entityDescriptors.definitions,
-			}
-		);
+		getIdPropertyName(_.get(state, ['entityDescriptors', 'definitions', modelName]));

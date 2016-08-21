@@ -1,5 +1,4 @@
+import { memoize } from 'lodash';
 import deref from 'json-schema-deref-local';
 
-export default function dereferenceSchema(schema) {
-	return deref(schema);
-}
+export default memoize((schema) => deref(schema));

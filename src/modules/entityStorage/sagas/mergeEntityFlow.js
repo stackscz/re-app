@@ -59,10 +59,7 @@ export function *mergeEntityTask(action) {
 			...updatedEntity,
 			[idPropertyName]: entityId,
 		},
-		{
-			$ref: `#/definitions/${modelName}`,
-			definitions: entityDefinitions,
-		}
+		_.get(entityDefinitions, modelName)
 	);
 	// const normalizedEntity = entities[modelName][result];
 
@@ -100,10 +97,7 @@ export function *persistEntityTask(action) {
 	// const modelSchema = yield select(getEntityDefinitionSelector(modelName));
 	const strippedEntity = stripReadOnlyProperties(
 		denormalizedEntity,
-		{
-			$ref: `#/definitions/${modelName}`,
-			definitions: entityDefinitions,
-		}
+		_.get(entityDefinitions, modelName)
 	);
 
 	let persistResult;
@@ -155,10 +149,7 @@ export function *persistEntityTask(action) {
 		entities,
 	} = normalize(
 		persistResult.data,
-		{
-			$ref: `#/definitions/${modelName}`,
-			definitions: entityDefinitions,
-		}
+		_.get(entityDefinitions, modelName)
 	);
 	yield put(
 		receivePersistEntitySuccess(

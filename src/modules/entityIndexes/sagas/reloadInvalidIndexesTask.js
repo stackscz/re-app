@@ -1,4 +1,4 @@
-import { uniq, concat, includes } from 'lodash';
+import { uniq, concat, includes, get as g } from 'lodash';
 import { put, select } from 'redux-saga/effects';
 import { ensureEntityIndex } from '../actions';
 import {
@@ -16,10 +16,7 @@ export default function *reloadInvalidIndexesTask(action) {
 
 	let affectedModelNames = modelNames;
 	if (!affectedModelNames) {
-		const cm = getComposingModels({
-			$ref: `#/definitions/${modelName}`,
-			definitions,
-		});
+		const cm = getComposingModels(g(definitions, modelName));
 		const dm = getDependentModels(modelName, definitions);
 		affectedModelNames = uniq(concat(cm, dm));
 	}

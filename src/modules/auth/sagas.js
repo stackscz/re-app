@@ -21,7 +21,6 @@ import {
 } from 'modules/entityDescriptors/actions';
 
 import normalize from 'modules/entityDescriptors/utils/normalize';
-import dereferenceSchemaAsync from 'modules/entityDescriptors/utils/dereferenceSchemaAsync';
 
 import {
 	receiveEntities,

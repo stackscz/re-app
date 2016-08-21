@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { get as g } from 'lodash';
 import hash from 'object-hash';
 import { getEntityDefinitions } from 'modules/entityDescriptors/selectors';
 import denormalize from 'modules/entityDescriptors/utils/denormalize';
@@ -24,10 +24,7 @@ export const getDenormalizedEntitySelector = (modelName, entityId, maxLevel = 1)
 		}
 		return denormalize(
 			entityId,
-			{
-				$ref: `#/definitions/${modelName}`,
-				definitions: getEntityDefinitions(state),
-			},
+			g(getEntityDefinitions(state), modelName),
 			entityDictionary,
 			maxLevel
 		);
@@ -42,9 +39,7 @@ export const getDenormalizedEntitiesSelector = (modelName, entities, maxLevel = 
 			entities,
 			{
 				type: 'array',
-				items: {
-					$ref: `#/definitions/${modelName}`,
-				},
+				items: g(getEntityDefinitions(state), modelName),
 				definitions: getEntityDefinitions(state),
 			},
 			state.entityStorage.collections,
