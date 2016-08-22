@@ -128,3 +128,14 @@ export const getDynamicEntityIndexSelector =
 				content: getDynamicEntityIndexContentSelector(finalIndexHash)(state),
 			};
 		};
+
+export const getEntityIndexStatus =
+	({ modelName, filter }) =>
+		(state) => {
+			const indexHash = hash({ modelName, filter });
+			const index = _.get(state, ['entityIndexes', 'indexes', indexHash]);
+			if (!index) {
+				return {};
+			}
+			return index;
+		};
