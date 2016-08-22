@@ -9,6 +9,7 @@ import type { EntityId } from 'types/EntityId';
 import type { EntityIndexFilter } from 'types/EntityIndexFilter';
 import {
 	ENSURE_ENTITY_INDEX,
+	FORGET_ENTITY_INDEX,
 	ATTEMPT_FETCH_ENTITY_INDEX,
 	RECEIVE_ENTITY_INDEX,
 	RECEIVE_FETCH_ENTITY_INDEX_FAILURE,
@@ -61,6 +62,18 @@ export default createReducer(
 					);
 				}
 				return state;
+			},
+		],
+		[FORGET_ENTITY_INDEX]: [
+			t.struct({
+				modelName: CollectionName,
+				filter: EntityIndexFilter,
+			}),
+			(state, action) => {
+				const { modelName, filter } = action.payload;
+				const indexHash = hash({ modelName, filter });
+				const indexes = state.indexes.without(indexHash);
+				return state.setIn('indexes', indexes);
 			},
 		],
 		[ATTEMPT_FETCH_ENTITY_INDEX]: [
