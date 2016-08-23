@@ -3,6 +3,11 @@ export function ensureEntityIndex(modelName, filter, force = false) {
 	return { type: ENSURE_ENTITY_INDEX, payload: { modelName, filter, force } };
 }
 
+export const FORGET_ENTITY_INDEX = 're-app/entityIndexes/FORGET_ENTITY_INDEX';
+export function forgetEntityIndex(modelName, filter) {
+	return { type: FORGET_ENTITY_INDEX, payload: { modelName, filter } };
+}
+
 export const ATTEMPT_FETCH_ENTITY_INDEX = 're-app/entityIndexes/ATTEMPT_FETCH_ENTITY_INDEX';
 export function attemptFetchEntityIndex(indexHash) {
 	return { type: ATTEMPT_FETCH_ENTITY_INDEX, payload: { indexHash } };
