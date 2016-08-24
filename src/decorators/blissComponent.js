@@ -9,6 +9,7 @@ export default ComposedComponent => class extends React.Component {
 		children: T.node,
 		moduleName: T.string,
 		modifiers: T.string,
+		customClass: T.string,
 	}
 
 	constructor(props) {
@@ -44,29 +45,37 @@ export default ComposedComponent => class extends React.Component {
 	}
 
 	getElementClassName(elementName, modifiers, className) {
+		const {
+			customClass,
+		} = this.props;
 		const normalizedModifiers = this.normalizeModifiers(modifiers);
-		return this.getClassName(`${this.getModuleName()}-${elementName}`, normalizedModifiers, className);
+		return this.getClassName(`${this.getModuleName()}-${elementName}`, normalizedModifiers, [className, customClass].join(' '));
 	}
 
-	getModuleClassName(modifiers, userModifiers, className) {
+	getModuleClassName(modifiers, userModifiers, className, customClass) {
 		const normalizedModifiers = this.normalizeModifiers(modifiers);
 		const normalizedUserModifiers = this.normalizeModifiers(userModifiers);
 		const allModifiers = normalizedModifiers.concat(normalizedUserModifiers);
-		return this.getClassName(this.getModuleName(), allModifiers, className);
+		return this.getClassName(this.getModuleName(), allModifiers, [className, customClass].join(' '));
 	}
 
 	render() {
 		const {
 			children,
 			modifiers,
+			customClass,
 			...otherProps,
-			} = this.props;
-		const getBlissModuleClassName = (userModifiers, className) => this.getModuleClassName(modifiers, userModifiers, className);
+		} = this.props;
+
+		const getBlissModuleClassName = (userModifiers, className) => this.getModuleClassName(modifiers, userModifiers, className, customClass);
+
 		const getBlissElementClassName = this.getElementClassName;
+
 		return (
 			<ComposedComponent
 				{...otherProps}
 				modifiers={modifiers}
+				customClass={customClass}
 				getBlissModuleClassName={getBlissModuleClassName}
 				bm={getBlissModuleClassName}
 				getBlissElementClassName={getBlissElementClassName}
