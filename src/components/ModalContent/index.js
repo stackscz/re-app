@@ -13,7 +13,7 @@ export default class ModalContent extends React.Component {
 		return (
 			<div
 				className="ModalContent"
-				style={{ display: 'inline-block' }}
+				style={{ display: 'inline-block', position: 'relative' }}
 				onClick={(e) => e.stopPropagation()}
 			>
 				{children}
