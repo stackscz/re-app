@@ -43,12 +43,13 @@ export default createReducer(
 		[ENSURE_ENTITY_INDEX]: [
 			t.struct({
 				modelName: CollectionName,
+				indexName: t.maybe(t.String),
 				filter: EntityIndexFilter,
 				force: t.Boolean,
 			}),
 			(state, action) => {
-				const { modelName, filter } = action.payload;
-				const indexHash = hash({ modelName, filter });
+				const { modelName, indexName, filter } = action.payload;
+				const indexHash = indexName || hash({ modelName, filter });
 				const index = state.indexes[indexHash];
 				if (!index) {
 					return state.setIn(

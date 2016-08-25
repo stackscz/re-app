@@ -1,6 +1,6 @@
 export const ENSURE_ENTITY_INDEX = 're-app/entityIndexes/ENSURE_ENTITY_INDEX';
-export function ensureEntityIndex(modelName, filter, force = false) {
-	return { type: ENSURE_ENTITY_INDEX, payload: { modelName, filter, force } };
+export function ensureEntityIndex(modelName, filter, force = false, indexName) {
+	return { type: ENSURE_ENTITY_INDEX, payload: { modelName, filter, force, indexName } };
 }
 
 export const FORGET_ENTITY_INDEX = 're-app/entityIndexes/FORGET_ENTITY_INDEX';

@@ -130,10 +130,17 @@ export const getDynamicEntityIndexSelector =
 		};
 
 export const getEntityIndexStatus =
-	({ modelName, filter }) =>
+	(indexHash) =>
 		(state) => {
-			const indexHash = hash({ modelName, filter });
-			const index = _.get(state, ['entityIndexes', 'indexes', indexHash]);
+			if (!indexHash) {
+				return undefined;
+			}
+			let finalIndexHash = indexHash;
+			if (!_.isString(finalIndexHash)) {
+				const { modelName, filter } = indexHash;
+				finalIndexHash = hash({ modelName, filter });
+			}
+			const index = _.get(state, ['entityIndexes', 'indexes', finalIndexHash]);
 			if (!index) {
 				return {};
 			}

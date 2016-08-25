@@ -36,8 +36,8 @@ import {
 } from 'modules/entityStorage/actions';
 
 export function *ensureEntityIndexTask(action) {
-	const { modelName, filter, force } = action.payload;
-	const indexHash = hash({ modelName, filter });
+	const { modelName, indexName, filter, force } = action.payload;
+	const indexHash = indexName || hash({ modelName, filter });
 	const apiContext = yield select(getApiContext);
 	const ApiService = yield select(getApiService);
 	const authContext = yield select(getAuthContext);
@@ -103,8 +103,8 @@ function *takeLatestEnsure(saga) {
 		const action = yield take((testedAction) =>
 			testedAction.type === ENSURE_ENTITY_INDEX && testedAction.payload
 		);
-		const { modelName, filter } = action.payload;
-		const indexHash = hash({ modelName, filter });
+		const { modelName, indexName, filter } = action.payload;
+		const indexHash = indexName || hash({ modelName, filter });
 		if (!ensureEntityIndexTasks[indexHash] || !ensureEntityIndexTasks[indexHash].isRunning()) {
 			ensureEntityIndexTasks[indexHash] = yield fork(saga, action);
 		}
