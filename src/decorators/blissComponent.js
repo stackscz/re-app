@@ -59,6 +59,7 @@ export default ComposedComponent => class extends React.Component {
 		const {
 			children,
 			modifiers,
+			moduleName,
 			...otherProps,
 			} = this.props;
 		const getBlissModuleClassName = (userModifiers, className) => this.getModuleClassName(modifiers, userModifiers, className);
