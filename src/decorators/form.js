@@ -14,11 +14,20 @@ export default function form({
 	validate: userValidate,
 	initialValues: userInitialValues,
 	...config,
-}) {
+} = {}) {
 	const initialValues = mergeWithArrays({}, jsonSchemaDefaults(schema), userInitialValues);
 	const validate = (values, props) => {
-		const validateJsonSchemaErrors = schema ?
-			validateByJsonSchema(values, schema, errorMessages) : {};
+
+		const {
+			schema: propsSchema,
+			errorMessages: propsErrorMessages,
+		} = props;
+
+		const validateJsonSchemaErrors = validateByJsonSchema(
+			values,
+			propsSchema || schema,
+			propsErrorMessages || errorMessages
+		);
 		const userValidateErrors = userValidate ?
 			userValidate(values, props) : {};
 
