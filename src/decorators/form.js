@@ -17,7 +17,6 @@ export default function form({
 } = {}) {
 	const initialValues = mergeWithArrays({}, jsonSchemaDefaults(schema), userInitialValues);
 	const validate = (values, props) => {
-
 		const {
 			schema: propsSchema,
 			errorMessages: propsErrorMessages,

@@ -9,7 +9,7 @@ export default ComposedComponent => class extends React.Component {
 		children: T.node,
 		moduleName: T.string,
 		modifiers: T.string,
-	}
+	};
 
 	constructor(props) {
 		super(props);
@@ -59,7 +59,7 @@ export default ComposedComponent => class extends React.Component {
 		const {
 			children,
 			modifiers,
-			moduleName,
+			moduleName, // eslint-disable-line
 			...otherProps,
 			} = this.props;
 		const getBlissModuleClassName = (userModifiers, className) => this.getModuleClassName(modifiers, userModifiers, className);
