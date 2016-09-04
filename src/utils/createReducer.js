@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { get as g } from 'lodash';
 import { typeInvariant } from 're-app/utils';
 import invariant from 'invariant';
 import t from 'tcomb';
@@ -62,6 +62,14 @@ export default function createReducer(...params) {
 					actionPayloadType,
 					`Action ${action.type} has invalid payload`
 				);
+			}
+
+			if (process.env.NODE_ENV !== 'production') {
+				// log error in action
+				const actionError = g(action, 'payload.error');
+				if (actionError) {
+					console.error(actionError, action);
+				}
 			}
 
 			resultState = handler(state, action);
