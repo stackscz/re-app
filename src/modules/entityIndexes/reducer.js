@@ -8,6 +8,7 @@ import type { CollectionName } from 'types/CollectionName';
 import type { EntityId } from 'types/EntityId';
 import type { EntityIndexFilter } from 'types/EntityIndexFilter';
 import {
+	CREATE_ENTITY_INDEX,
 	ENSURE_ENTITY_INDEX,
 	FORGET_ENTITY_INDEX,
 	ATTEMPT_FETCH_ENTITY_INDEX,
@@ -40,6 +41,30 @@ export default createReducer(
 		existingCounts: {},
 	}),
 	{
+		[CREATE_ENTITY_INDEX]: [
+			t.struct({
+				modelName: CollectionName,
+				indexName: t.String,
+				filter: t.maybe(EntityIndexFilter),
+			}),
+			(state, action) => {
+				const { modelName, indexName, filter } = action.payload;
+				const indexHash = indexName || hash({ modelName, filter });
+				const index = state.indexes[indexHash];
+				if (!index) {
+					return state.setIn(
+						['indexes', indexHash],
+						{
+							modelName,
+							filter,
+							fetching: false,
+							error: undefined,
+						}
+					);
+				}
+				return state;
+			},
+		],
 		[ENSURE_ENTITY_INDEX]: [
 			t.struct({
 				modelName: CollectionName,
