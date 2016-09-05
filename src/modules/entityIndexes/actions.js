@@ -1,3 +1,8 @@
+export const CREATE_ENTITY_INDEX = 're-app/entityIndexes/CREATE_ENTITY_INDEX';
+export function createEntityIndex(modelName, filter, indexName) {
+	return { type: CREATE_ENTITY_INDEX, payload: { modelName, filter, indexName } };
+}
+
 export const ENSURE_ENTITY_INDEX = 're-app/entityIndexes/ENSURE_ENTITY_INDEX';
 export function ensureEntityIndex(modelName, filter, force = false, indexName) {
 	return { type: ENSURE_ENTITY_INDEX, payload: { modelName, filter, force, indexName } };
