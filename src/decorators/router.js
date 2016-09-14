@@ -3,7 +3,7 @@ import React from 'react';
 import { Router as ReactRouter, createRoutes } from 'react-router';
 import createHistory from 'utils/createHistory';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { setRoutes, locationReached } from 'modules/routing/actions';
+import { setRoutes } from 'modules/routing/actions';
 
 /**
  * Wraps component with react-router + redux-router
@@ -19,9 +19,9 @@ export default function router(store, configHistory) {
 			store,
 			{ selectLocationState: (state) => (state.reduxRouting) }
 		);
-		history.listen((location) => {
-			store.dispatch(locationReached(location));
-		});
+		// history.listen((location) => {
+		// 	store.dispatch(locationReached(location));
+		// });
 
 		class Container extends React.Component {
 
