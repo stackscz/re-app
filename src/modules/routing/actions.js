@@ -4,8 +4,8 @@ export function setRoutes(routes) {
 }
 
 export const NAVIGATE = 're-app/routing/NAVIGATE';
-export function navigate(to, replace = false) {
-	return { type: NAVIGATE, payload: { to, replace } };
+export function navigate(to, replace = false, reload = false) {
+	return { type: NAVIGATE, payload: { to, replace, reload } };
 }
 
 export const LOCATION_REACHED = 're-app/routing/LOCATION_REACHED';

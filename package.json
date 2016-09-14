@@ -1,6 +1,6 @@
 {
   "name": "re-app",
-  "version": "0.22.0-dev.25",
+  "version": "0.22.0-dev.26",
   "description": "react + redux frontend codebase",
   "main": "lib/index.js",
   "repository": {
@@ -105,7 +105,7 @@
     "react-router": "^2.0.0",
     "react-router-redux": "^4.0.0",
     "redux": "^3.5.1",
-    "redux-form": "^6.0.0-rc.4",
+    "redux-form": "^6.0.2",
     "redux-saga": "^0.10.3",
     "seamless-immutable": "^6.1.0",
     "tcomb": "^3.2.2",

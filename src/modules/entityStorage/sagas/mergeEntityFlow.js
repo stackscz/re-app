@@ -23,9 +23,6 @@ import {
 	getEntityDefinitions,
 	getModelIdPropertyName,
 } from 'modules/entityDescriptors/selectors';
-import {
-	getEntitySelector,
-} from 'modules/entityStorage/selectors';
 import stripReadOnlyProperties from 'modules/entityDescriptors/utils/stripReadOnlyProperties';
 import {
 	getEntityStatusSelector,
@@ -48,7 +45,7 @@ export function *mergeEntityTask(action) {
 		entityId = hash({ data, r: Math.random() });
 	}
 
-	const existingEntity = yield select(getEntitySelector(modelName, entityId));
+	const existingEntity = yield select(getDenormalizedEntitySelector(modelName, entityId));
 	const updatedEntity = _.assign({}, existingEntity || {}, data);
 	const entityDefinitions = yield select(getEntityDefinitions);
 	const {
