@@ -45,7 +45,7 @@ export function *mergeEntityTask(action) {
 		entityId = hash({ data, r: Math.random() });
 	}
 
-	const existingEntity = yield select(getDenormalizedEntitySelector(modelName, entityId));
+	const existingEntity = yield select(getDenormalizedEntitySelector(modelName, entityId, 9999));
 	const updatedEntity = _.assign({}, existingEntity || {}, data);
 	const entityDefinitions = yield select(getEntityDefinitions);
 	const {
@@ -89,7 +89,7 @@ export function *persistEntityTask(action) {
 	}
 
 	const denormalizedEntity = yield select(
-		getDenormalizedEntitySelector(modelName, entityId)
+		getDenormalizedEntitySelector(modelName, entityId, 999)
 	);
 	// const modelSchema = yield select(getEntityDefinitionSelector(modelName));
 	const strippedEntity = stripReadOnlyProperties(
