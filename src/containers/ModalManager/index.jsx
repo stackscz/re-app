@@ -1,6 +1,6 @@
 import React, { PropTypes as T } from 'react';
 import ReactDOM from 'react-dom';
-import _ from 'lodash';
+import _, { get as g } from 'lodash';
 import Modal from 'components/Modal';
 import container from 'decorators/container';
 import { closeModal } from 'modules/modals/actions';
@@ -89,11 +89,14 @@ export default class ModalManager extends React.Component {
 				transitionEnterTimeout={transitionEnterTimeout}
 				transitionLeaveTimeout={transitionLeaveTimeout}
 			>
-				{_.map(modals, (modalElement, modalName) => (
-					<Modal key={modalName} onClose={() => { handleCloseModal(modalName); }}>
-						{modalElement}
-					</Modal>
-				))}
+				{_.map(modals, (modalElement, modalName) => {
+					const modalProps = g(modalElement, 'props.modalProps', {});
+					return (
+						<Modal key={modalName} onClose={() => { handleCloseModal(modalName); }} {...modalProps}>
+							{modalElement}
+						</Modal>
+					);
+				})}
 			</ReactCSSTransitionGroup>
 		);
 	}
