@@ -5,6 +5,7 @@
     "stage-0"
   ],
   "plugins": [
+    "./babel-plugins/react-component-display-name",
     "syntax-flow",
     "transform-decorators-legacy",
     "transform-runtime",
