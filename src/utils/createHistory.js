@@ -4,23 +4,30 @@ import createHistoryLib from 'history/lib/createBrowserHistory';
 import useQueries from 'history/lib/useQueries';
 import withScroll from 'scroll-behavior';
 import qs from 'qs';
+import { assign } from 'lodash';
 
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 
 var history = undefined;
-if (canUseDOM) {
-	history = withScroll(useRouterHistory(createHistoryLib)({
-		parseQueryString: function (queryString) {
-			const parsedQueryObject = qs.parse(queryString);
-			return parseValues(parsedQueryObject);
-		},
-		stringifyQuery: function (query) {
-			return qs.stringify(query, {encode: false});
-		}
-	}));
-}
-
-export default function createHistory() {
+export default function createHistory(config = {}) {
+	if (!history && canUseDOM) {
+		history = withScroll(
+			useRouterHistory(createHistoryLib)(
+				assign(
+					{
+						parseQueryString: function (queryString) {
+							const parsedQueryObject = qs.parse(queryString);
+							return parseValues(parsedQueryObject);
+						},
+						stringifyQuery: function (query) {
+							return qs.stringify(query, { encode: false });
+						}
+					},
+					config
+				)
+			)
+		);
+	}
 	return history;
 }
 

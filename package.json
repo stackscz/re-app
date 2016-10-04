@@ -74,6 +74,7 @@
     "webpack-node-externals": "^1.0.0"
   },
   "dependencies": {
+    "anchorate": "^1.1.0",
     "history": "^1.17.0",
     "json-schema-defaults": "^0.2.0",
     "json-schema-deref-local": "^0.2.1",
@@ -84,7 +85,7 @@
     "react-portal": "^2.1.3",
     "redux-batched-subscribe": "^0.1.5",
     "redux-logger": "^2.6.1",
-    "scroll-behavior": "^0.7.0"
+    "scroll-behavior": "^0.8.1"
   },
   "peerDependencies": {
     "classnames": "^2.2.3",

@@ -4,6 +4,7 @@ import { Router as ReactRouter, createRoutes } from 'react-router';
 import createHistory from 'utils/createHistory';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { setRoutes } from 'modules/routing/actions';
+import { anchorate } from 'anchorate';
 
 /**
  * Wraps component with react-router + redux-router
@@ -55,6 +56,7 @@ export default function router(store, configHistory) {
 			render() {
 				return (
 					<ReactRouter
+						onUpdate={anchorate}
 						history={history}
 						routes={routes}
 						createElement={this.createRouteElement}
