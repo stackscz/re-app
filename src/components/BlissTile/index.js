@@ -175,20 +175,65 @@ export default class BlissTile extends React.Component {
 						</div>
 					)}
 
-
-					{map((propExample, j) => (
-						<div key={j} className={be('propsSection')}>
+					{propExamples && propExamples.length ? (
+						map((propExample, j) => (
+							<div key={j} className={be('propsSection')}>
+								<h2 className={be('propsSectionTitle')}>
+									Example properties set #{j + 1}
+								</h2>
+								<pre>
+									<code>{JSON.stringify(propExample, null, 2)}</code>
+								</pre>
+								<div>
+									{configurations.map((configuration, i) => {
+										const exampleId = hash({ c: configuration, p: propExample });
+										return (
+											<div key={`${j}_${i}`} className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+												<div className={be('example')} id={exampleId}>
+													<a
+														href={`#${exampleId}`}
+														className={be('exampleAnchor')}
+													>
+														anchor
+													</a>
+													<pre className={be('code')}>
+														<code>
+															{jsxToString(
+																<DemoComponent
+																	modifiers={generateModifiers(configuration)}
+																	{...propExample}
+																/>,
+																{
+																	displayName: componentName,
+																}
+															)}
+														</code>
+													</pre>
+													<div className={be('result')}>
+														<div className={be('resultCanvas')}>
+															<DemoComponent
+																modifiers={generateModifiers(configuration)}
+																{...propExample}
+															/>
+														</div>
+													</div>
+												</div>
+											</div>
+										);
+									})}
+								</div>
+							</div>
+						), propExamples)
+					) : (
+						<div className={be('propsSection')}>
 							<h2 className={be('propsSectionTitle')}>
-								Example properties set #{j + 1}
+								With defaultProps
 							</h2>
-							<pre>
-								<code>{JSON.stringify(propExample, null, 2)}</code>
-							</pre>
-							<div>
+							<div className="row row-eq-height">
 								{configurations.map((configuration, i) => {
-									const exampleId = hash({ c: configuration, p: propExample });
+									const exampleId = hash({ c: configuration });
 									return (
-										<div key={`${j}_${i}`} className="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+										<div key={i}>
 											<div className={be('example')} id={exampleId}>
 												<a
 													href={`#${exampleId}`}
@@ -201,7 +246,6 @@ export default class BlissTile extends React.Component {
 														{jsxToString(
 															<DemoComponent
 																modifiers={generateModifiers(configuration)}
-																{...propExample}
 															/>,
 															{
 																displayName: componentName,
@@ -213,7 +257,6 @@ export default class BlissTile extends React.Component {
 													<div className={be('resultCanvas')}>
 														<DemoComponent
 															modifiers={generateModifiers(configuration)}
-															{...propExample}
 														/>
 													</div>
 												</div>
@@ -223,49 +266,8 @@ export default class BlissTile extends React.Component {
 								})}
 							</div>
 						</div>
-					), propExamples)}
+					)}
 
-					<div className={be('propsSection')}>
-						<h2 className={be('propsSectionTitle')}>
-							With defaultProps
-						</h2>
-						<div className="row row-eq-height">
-							{configurations.map((configuration, i) => {
-								const exampleId = hash({ c: configuration });
-								return (
-									<div key={i}>
-										<div className={be('example')} id={exampleId}>
-											<a
-												href={`#${exampleId}`}
-												className={be('exampleAnchor')}
-											>
-												anchor
-											</a>
-											<pre className={be('code')}>
-												<code>
-													{jsxToString(
-														<DemoComponent
-															modifiers={generateModifiers(configuration)}
-														/>,
-														{
-															displayName: componentName,
-														}
-													)}
-												</code>
-											</pre>
-											<div className={be('result')}>
-												<div className={be('resultCanvas')}>
-													<DemoComponent
-														modifiers={generateModifiers(configuration)}
-													/>
-												</div>
-											</div>
-										</div>
-									</div>
-								);
-							})}
-						</div>
-					</div>
 				</div>
 			</div>
 		);
