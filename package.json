@@ -75,11 +75,13 @@
   },
   "dependencies": {
     "anchorate": "^1.1.0",
+    "gonzales-pe": "^3.4.4",
     "history": "^1.17.0",
     "json-schema-defaults": "^0.2.0",
     "json-schema-deref-local": "^0.2.1",
     "json-schema-ref-parser": "^3.1.2",
     "jsonschema": "^1.1.0",
+    "jsx-to-string": "^0.2.16",
     "react-json-inspector": "^7.0.0",
     "react-modal2": "^3.0.2",
     "react-portal": "^2.1.3",
