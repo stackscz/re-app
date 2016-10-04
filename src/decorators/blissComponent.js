@@ -5,6 +5,8 @@ import _ from 'lodash';
 
 export default ComposedComponent => class extends React.Component {
 
+	static displayName = ComposedComponent.displayName || ComposedComponent.name;
+
 	static propTypes = {
 		children: T.node,
 		moduleName: T.string,
